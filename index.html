@@ -15,6 +15,24 @@
 <div id="vis"></div>
 
 <script>
+  // Initialize random data for testing
+  let data = [...Array(10)]
+  let selectedPoints = [...Array(2)]
+
+  // Initialize Array for selecting next chart
+  let chooseAChart = [
+          makeTreeMap,
+          makeStackedBarChart,
+          makePieChart,
+          makeTreeMap,
+          makeStackedBarChart,
+          makePieChart
+  ]
+
+  //TODO: Uncomment when ready chooseAChart.sort(() => Math.random() - 0.5)
+
+  // Keep track of which page/trial we're on
+  currTrial = 0
 
   // Create svg for charts to be placed
   let svg = d3.select('#vis')
@@ -22,7 +40,6 @@
   // Create constant text for in experiment instructions
   const instructions = "Here are the instructions for this experiment"
   let label = document.getElementById('labelElement')
-
 
   // Create experiment in progress page
   function startButtonPress() {
@@ -47,6 +64,8 @@
     nextButton.setAttribute('onclick', 'nextButtonPress()')
     nextButton.innerHTML = 'Next'
     document.body.appendChild(nextButton)
+
+    chooseAChart[currTrial](randomizeData(), randomizeSelectedPoints())
   }
 
   // What to do when next button is pressed
@@ -54,12 +73,48 @@
     let textEntry = document.getElementById('textEntry')
       if (textEntry.value != null) {
         console.log(textEntry.value)
-        // TODO: Go to the next cool chart
+        if (currTrial < chooseAChart.length - 1){
+          currTrial++
+          chooseAChart[currTrial](randomizeData(), randomizeSelectedPoints())
+        }
+
       } else {
         console.log('Ya gotta enter a value')
         //TODO: Make this a cool lil warning
       }
   }
 
+  function makeTreeMap(data, points) {
+    // TODO: This is a stub
+      console.log('called makeTreeMap')
+
+  }
+
+  function makeStackedBarChart(data, points) {
+    // TODO: This is a stub
+    console.log('called makeStackedBarChart')
+
+  }
+
+  function makePieChart(data, points) {
+    // TODO: This is a stub
+    console.log('called makePieChart')
+
+  }
+
+  //Randomize data
+  function randomizeData() {
+    data = [...Array(10)].map(() => Math.floor(Math.random() * 101))
+    return data
+  }
+
+  // select two data points
+  function randomizeSelectedPoints() {
+    selectedPoints = [...Array(2)].map(() => Math.floor(Math.random() * 10))
+    while (selectedPoints[0] === selectedPoints[1]) {
+      selectedPoints[1] = Math.floor(Math.random() * 10)
+    }
+    return selectedPoints
+  }
 
 </script>
