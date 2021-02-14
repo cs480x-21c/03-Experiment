@@ -1,13 +1,65 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
-
 <style>
 </style>
 
 <body>
   <h1> Experiment </h1>
+  <label id="labelElement">
+    Welcome to the experiment, press some buttons, answer some questions and don't worry your pretty lil head.
+  </label>
+  <p></p>
+  <input id="readyButton" type="button" value="I'm ready to start" onclick="startButtonPress()">
 </body>
 
+<div id="vis"></div>
+
 <script>
-  console.log(d3); // test if d3 is loaded
+
+  // Create svg for charts to be placed
+  let svg = d3.select('#vis')
+
+  // Create constant text for in experiment instructions
+  const instructions = "Here are the instructions for this experiment"
+  let label = document.getElementById('labelElement')
+
+
+  // Create experiment in progress page
+  function startButtonPress() {
+    svg.append('svg')
+            .attr('height', 500)
+            .attr('width', 500)
+    label.innerText = instructions
+    document.getElementById('readyButton')
+      .remove()
+
+    let input = document.createElement("INPUT")
+    input.setAttribute('id', 'textEntry')
+    input.setAttribute('type', 'text')
+    input.setAttribute('placeholder', 'Enter guess here!')
+    input.setAttribute('autofocus', 'true')
+    document.body.appendChild(input)
+    document.body.appendChild(document.createElement('br'))
+
+    // Create next button
+    let nextButton = document.createElement('button')
+    nextButton.setAttribute('id', 'nextButton')
+    nextButton.setAttribute('onclick', 'nextButtonPress()')
+    nextButton.innerHTML = 'Next'
+    document.body.appendChild(nextButton)
+  }
+
+  // What to do when next button is pressed
+  function nextButtonPress() {
+    let textEntry = document.getElementById('textEntry')
+      if (textEntry.value != null) {
+        console.log(textEntry.value)
+        // TODO: Go to the next cool chart
+      } else {
+        console.log('Ya gotta enter a value')
+        //TODO: Make this a cool lil warning
+      }
+  }
+
+
 </script>
