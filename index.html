@@ -2,7 +2,7 @@
 
 <style></style>
 
-<body>
+<body style="font-family: sans-serif;">
     <main id="mainContent" style="
       display: flex;
       flex-direction: column;
@@ -18,13 +18,15 @@
                    justify-content: center;
                    align-items: center;">
             <form name="viz-1" netlify>
-                <p>
+                <p style="text-align: center;">
+                    Two values are marked with dots. <br> What do you think the percent of the smaller value to the larger value?<br> Please put your answer Below.<br> e.g. If you think the smaller one is exactly a half of the bigger one,<br> please input
+                    "50".
                 </p>
-                <p>
-                    <label>Answer <input type="email" name="email" /></label>
-                </p>
-                <p>
-                    <button type="submit">Send</button>
+                <p style="text-align: center;">
+                    <label>Answer 
+                        <input type="email" name="email" />
+                        <button type="submit">Send</button>
+                    </label>
                 </p>
             </form>
         </div>
@@ -34,13 +36,15 @@
                    justify-content: center;
                    align-items: center;">
             <form name="viz-2" netlify>
-                <p>
+                <p style="text-align: center;">
+                    Two values are marked with dots. <br> What do you think the percent of the smaller value to the larger value?<br> Please put your answer Below.<br> e.g. If you think the smaller one is exactly a half of the bigger one,<br> please input
+                    "50".
                 </p>
-                <p>
-                    <label>Answer <input type="email" name="email" /></label>
-                </p>
-                <p>
-                    <button type="submit">Send</button>
+                <p style="text-align: center;">
+                    <label>Answer 
+                        <input type="email" name="email" />
+                        <button type="submit">Send</button>
+                    </label>
                 </p>
             </form>
         </div>
@@ -50,18 +54,29 @@
                    justify-content: center;
                    align-items: center;">
             <form name="viz-3" netlify>
-                <p>
-
+                <p style="text-align: center;">
+                    Two values are marked with dots. <br> What do you think the percent of the smaller value to the larger value?<br> Please put your answer Below.<br> e.g. If you think the smaller one is exactly a half of the bigger one,<br> please input
+                    "50".
                 </p>
-                <p>
-                    <label>Answer <input type="email" name="email" /></label>
-                </p>
-                <p>
-                    <button type="submit">Send</button>
+                <p style="text-align: center;">
+                    <label>Answer 
+                        <input type="email" name="email" />
+                        <button type="submit">Send</button>
+                    </label>
                 </p>
             </form>
         </div>
 
+        <div id="complete" style="transform: translateX(100vw);
+                   display: flex;
+                   flex-direction: column;
+                   justify-content: center;
+                   align-items: center;
+                   width: 500;
+                   height: 500;">
+            <h1>Thanks</h1>
+            <h3>Click <a href="/">here</a> to retake</h3>
+        </div>
 
     </main>
 </body>
@@ -142,6 +157,18 @@
                     return i === nextr;
                 })
                 .style("transform", "translateX(0)");
+        } else {
+
+            elements
+                .filter(function(d, i) {
+                    return i === previousRandom;
+                })
+                .style("transform", "translateX(-100vw)");
+
+            d3.select("#complete")
+                .style("transition", "ease-in-out transform 0.7s")
+                .style("transform", "translateX(0)");
+
         }
     });
 </script>
