@@ -83,7 +83,12 @@
     // Check that the entry space isn't blank
       if (textEntry.value !== '') {
         // Store the recorded data
-        answers.push({type:currTrialType, error:calculateError(textEntry.value)})
+
+        let stats = calculateError(textEntry.value)
+        answers.push({vis:currTrialType, truePercent:stats[0], reportedPercent:stats[1], error:stats[2]})
+
+        // If this is the last trial change button to submit
+        if (currTrial === chooseAChart.length - 1) document.getElementById('nextButton').innerHTML = 'Submit'
 
         // As long as we're not and the end of the list set up for next trial
         if (currTrial < chooseAChart.length - 1){
@@ -107,17 +112,37 @@
   }
 
   function calculateError(reportedPercentage) {
+    // TODO: Make this clean up reportedPercentage if format is strange
     let truePercentage = Math.abs(currData[currSelectedPoints[0]] - currData[currSelectedPoints[1]])
     let error = Math.log2(Math.abs(reportedPercentage - truePercentage) + (1/8))
     if (error === -3) error = 0
-    return error
+    return [truePercentage, reportedPercentage, error]
   }
-  
-  function makeTreeMap(data, points) {
-    // TODO: This is a stub
-      console.log('called makeTreeMap')
-      console.log('Looking for points: ' + points)
-    return 'Tree Map'
+
+  // https://www.d3-graph-gallery.com/graph/treemap_json.html
+  function makeTreeMap(arrayData, points) {
+    const data = {children: arrayData.map(element => ({value: element}))}
+
+    const root = d3.hierarchy(data).sum(function (d) {
+      return d.value
+    })
+
+    d3.treemap()
+      .size([498, 498])
+      .paddingOuter(1)
+      (root)
+
+    svg
+      .selectAll('rect')
+      .data(root.leaves())
+      .enter()
+      .append('rect')
+            .attr('x', function (d) { return d.x0; })
+            .attr('y', function (d) { return d.y0; })
+            .attr('width', function (d) { return d.x1 - d.x0; })
+            .attr('height', function (d) { return d.y1 - d.y0; })
+            .style("fill", "slateblue")
+
   }
 
   function makeStackedBarChart(data, points) {
