@@ -4,7 +4,7 @@
 </style>
 
 <body>
-  <h1> Experiment </h1>
+  <h1 id="header"> Experiment </h1>
   <label id="labelElement">
     Welcome to the experiment, press some buttons, answer some questions and don't worry your pretty lil head.
   </label>
@@ -24,6 +24,7 @@
   currTrialType = ''
 
   // Initialize Array for selecting next chart
+  // TODO: Up this to 60 total trials
   let chooseAChart = [
           makeTreeMap,
           makeStackedBarChart,
@@ -121,8 +122,17 @@
 
   // https://www.d3-graph-gallery.com/graph/treemap_json.html
   function makeTreeMap(arrayData, points) {
-    const data = {children: arrayData.map(element => ({value: element}))}
+    // Update header with squares to compare as letters
+    document.getElementById('header').innerText = 'Compare square "' + String.fromCharCode(points[0] + 65) + '" versus square "' + String.fromCharCode(points[1] + 65) + '"'
 
+    // Convert data array into JSON format
+    const data = {
+      children: arrayData.map(function (element, index) {
+        return {key: String.fromCharCode(index + 65), value: element};
+      })
+    }
+
+    // Tree map stuff is below here
     const root = d3.hierarchy(data).sum(function (d) {
       return d.value
     })
@@ -132,7 +142,7 @@
       .paddingOuter(1)
       (root)
 
-    svg
+    svg.select('svg')
       .selectAll('rect')
       .data(root.leaves())
       .enter()
@@ -141,8 +151,21 @@
             .attr('y', function (d) { return d.y0; })
             .attr('width', function (d) { return d.x1 - d.x0; })
             .attr('height', function (d) { return d.y1 - d.y0; })
-            .style("fill", "slateblue")
+            .style('stroke', 'black')
+            .style("fill", "white")
 
+
+    svg.select('svg')
+      .selectAll('text')
+      .data(root.leaves())
+      .enter()
+      .append('text')
+            .attr("x", function(d){ return d.x0+5})
+            .attr("y", function(d){ return d.y0+20})
+            .text(function(d){ return d.data.key })
+            .attr("fill", "black")
+
+    return 'Tree Map'
   }
 
   function makeStackedBarChart(data, points) {
