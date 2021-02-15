@@ -29,10 +29,14 @@
           makePieChart
   ]
 
+  // Initialize Array to store the data
+  let answers = []
+
   //TODO: Uncomment when ready chooseAChart.sort(() => Math.random() - 0.5)
 
   // Keep track of which page/trial we're on
   currTrial = 0
+  currTrialType = ''
 
   // Create svg for charts to be placed
   let svg = d3.select('#vis')
@@ -57,6 +61,7 @@
     input.setAttribute('autofocus', 'true')
     document.body.appendChild(input)
     document.body.appendChild(document.createElement('br'))
+    // TODO: Make the enter key press next button
 
     // Create next button
     let nextButton = document.createElement('button')
@@ -65,17 +70,27 @@
     nextButton.innerHTML = 'Next'
     document.body.appendChild(nextButton)
 
-    chooseAChart[currTrial](randomizeData(), randomizeSelectedPoints())
+    currTrialType = chooseAChart[currTrial](randomizeData(), randomizeSelectedPoints())
   }
 
   // What to do when next button is pressed
   function nextButtonPress() {
     let textEntry = document.getElementById('textEntry')
-      if (textEntry.value != null) {
-        console.log(textEntry.value)
+    // Check that the entry space isn't blank
+      if (textEntry.value !== '') {
+        // Store the recorded data
+        answers.push({type:currTrialType, error:calculateError(textEntry.value)})
+
+        // As long as we're not and the end of the list set up for next trial
         if (currTrial < chooseAChart.length - 1){
           currTrial++
-          chooseAChart[currTrial](randomizeData(), randomizeSelectedPoints())
+          textEntry.value = ''
+          currTrialType = chooseAChart[currTrial](randomizeData(), randomizeSelectedPoints())
+
+        } else {
+          console.log('Thanks for taking the thing, all done')
+          console.log(answers)
+          // TODO: Make this change the screen
         }
 
       } else {
@@ -84,22 +99,29 @@
       }
   }
 
+  function calculateError(reportedPercentage) {
+    let truePercentage = Math.abs(data[selectedPoints[0]] - data[selectedPoints[1]])
+    let error = Math.log2(Math.abs(reportedPercentage - truePercentage) + (1/8))
+    if (error === -3) error = 0
+    return error
+  }
+  
   function makeTreeMap(data, points) {
     // TODO: This is a stub
       console.log('called makeTreeMap')
-
+    return 'Tree Map'
   }
 
   function makeStackedBarChart(data, points) {
     // TODO: This is a stub
     console.log('called makeStackedBarChart')
-
+    return 'Stacked Bar Chart'
   }
 
   function makePieChart(data, points) {
     // TODO: This is a stub
     console.log('called makePieChart')
-
+    return 'Pie Chart'
   }
 
   //Randomize data
