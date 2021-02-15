@@ -10,54 +10,64 @@
       align-items: center;
       height: 100%;
     ">
-        <section style="position: relative">
 
-            <div id="viz" style="transform: translateX(100vw);">
-                <form name="viz-1" netlify>
-                    <p>
-                    </p>
-                    <p>
-                        <label>Answer <input type="email" name="email" /></label>
-                    </p>
-                    <p>
-                        <button type="submit">Send</button>
-                    </p>
-                </form>
-            </div>
-            <div id="viz" style="transform: translateX(100vw);">
-                <form name="viz-2" netlify>
-                    <p>
-                    </p>
-                    <p>
-                        <label>Answer <input type="email" name="email" /></label>
-                    </p>
-                    <p>
-                        <button type="submit">Send</button>
-                    </p>
-                </form>
-            </div>
-            <div id="viz" style="transform: translateX(100vw);">
-                <form name="viz-3" netlify>
-                    <p>
 
-                    </p>
-                    <p>
-                        <label>Answer <input type="email" name="email" /></label>
-                    </p>
-                    <p>
-                        <button type="submit">Send</button>
-                    </p>
-                </form>
-            </div>
+        <div class="viz" id="viz1" style="transform: translateX(100vw);
+                   display: flex;
+                   flex-direction: column-reverse;
+                   justify-content: center;
+                   align-items: center;">
+            <form name="viz-1" netlify>
+                <p>
+                </p>
+                <p>
+                    <label>Answer <input type="email" name="email" /></label>
+                </p>
+                <p>
+                    <button type="submit">Send</button>
+                </p>
+            </form>
+        </div>
+        <div class="viz" id="viz2" style="transform: translateX(100vw);
+                   display: flex;
+                   flex-direction: column-reverse;
+                   justify-content: center;
+                   align-items: center;">
+            <form name="viz-2" netlify>
+                <p>
+                </p>
+                <p>
+                    <label>Answer <input type="email" name="email" /></label>
+                </p>
+                <p>
+                    <button type="submit">Send</button>
+                </p>
+            </form>
+        </div>
+        <div class="viz" id="viz3" style="transform: translateX(100vw);
+                   display: flex;
+                   flex-direction: column-reverse;
+                   justify-content: center;
+                   align-items: center;">
+            <form name="viz-3" netlify>
+                <p>
 
-        </section>
+                </p>
+                <p>
+                    <label>Answer <input type="email" name="email" /></label>
+                </p>
+                <p>
+                    <button type="submit">Send</button>
+                </p>
+            </form>
+        </div>
 
-        <!-- <button id="nextButton">Next</button> -->
+
     </main>
 </body>
 
 <script>
-    const elements = d3.selectAll("#viz");
+    const elements = d3.selectAll(".viz");
 
     const width = 500;
     const height = 500;
@@ -68,30 +78,30 @@
 
     const svg1 = d3.create("svg")
         .attr("width", width)
-        .attr("height", height);
+        .attr("height", height)
+        .style("background", "blue");
 
     const svg2 = d3.create("svg")
         .attr("width", width)
-        .attr("height", height);
+        .attr("height", height)
+        .style("background", "red");
+
 
     const svg3 = d3.create("svg")
         .attr("width", width)
         .attr("height", height)
+        .style("background", "green");
+
 
 
     /* ^ PUT CODE HERE ^ */
 
-    elements.each((d, i, node) => {
-        console.log(d)
-        console.log(i)
-        if (i + 1 === 1) {
-            node[i].append(svg1.node());
-        } else if (i + 1 === 2) {
-            node[i].append(svg2.node());
-        } else if (i + 1 === 3) {
-            node[i].append(svg3.node());
-        }
-    })
+    d3.select("#viz1")
+        .append(() => svg1.node());
+    d3.select("#viz2")
+        .insert(() => svg2.node());
+    d3.select("#viz3")
+        .insert(() => svg3.node());
 
     let previousRandom = Math.round(Math.random() * (elements.size() - 1));
     const randomsSelected = [previousRandom];
