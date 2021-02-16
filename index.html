@@ -132,6 +132,9 @@
       })
     }
 
+    // Clear SVG before drawing
+    d3.selectAll('svg > *').remove()
+
     // Tree map stuff is below here
     const root = d3.hierarchy(data).sum(function (d) {
       return d.value
@@ -168,14 +171,49 @@
     return 'Tree Map'
   }
 
-  function makeStackedBarChart(data, points) {
+  // https://www.d3-graph-gallery.com/graph/barplot_stacked_basicWide.html
+  function makeStackedBarChart(arrayData, points) {
     // TODO: This is a stub
-    console.log('called makeStackedBarChart')
-    console.log('Looking for points: ' + points)
+    // Update header with sections to compare as letters
+    document.getElementById('header').innerText = 'Compare section "' + String.fromCharCode(points[0] + 65) + '" versus section "' + String.fromCharCode(points[1] + 65) + '"'
+
+    // Convert data array into JSON format
+    const data = {
+      children: arrayData.map(function (element, index) {
+        return {key: String.fromCharCode(index + 65), value: element};
+      })
+    }
+
+    // Clear SVG before drawing
+    d3.selectAll('svg > *').remove()
+
+    // Stacked chart stuff is below here
+    // let row
+    // for (row in data) {
+    //  svg.selectAll('rect')
+    //   .data()
+    // }
+
+    let cleanData = arrayData.map(function (element) {
+      return (element / d3.sum(arrayData)) * svg.height
+    })
+
+    let runningHeight = svg.height
+
+    console.log(runningHeight)
+    svg.select('svg')
+      .selectAll('rect')
+      .data(arrayData)
+      .enter().append('rect')
+            .attr('height', function (d) { return d})
+            .attr('width', d3.svg.width)
+            .attr('y', runningHeight - this.height)
+            .attr('x', svg.width * 0.4)
+
     return 'Stacked Bar Chart'
   }
 
-  function makePieChart(data, points) {
+  function makePieChart(arrayData, points) {
     // TODO: This is a stub
     console.log('called makePieChart')
     console.log('Looking for points: ' + points)
