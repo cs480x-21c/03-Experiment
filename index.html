@@ -1,4 +1,4 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3.v6.js"></script>
 
 <style></style>
 
@@ -87,7 +87,12 @@
     const width = 500;
     const height = 500;
 
+    // Creates an array of size 5-10 with data between 0-100
+    const getRandomData = () => {
+        let a = new Array(d3.randomInt(5, 11)()).fill(undefined);
 
+        return a.map(d => d3.randomInt(0, 101)());
+    }
 
     /*  PUT CODE HERE */
 
@@ -142,7 +147,7 @@
         .style("transition", "ease-in-out transform 0.7s");
 
     elements.selectAll("form").on("submit", function(e, i, d) {
-        d3.event.preventDefault();
+        e.preventDefault()
         if (randomsSelected.length < elements.size()) {
             elements
                 .filter(function(d, i) {
