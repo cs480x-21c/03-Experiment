@@ -25,97 +25,99 @@
       <input type="button" value="Save, Next" onclick="saveNext()" />
     </fieldset>
   </form>
+
+  <script>
+    console.log(d3); // test if d3 is loaded
+
+    //Setup
+    var tracker = 1;
+    var trackerMax = 6;
+    var track = document.getElementById('tracker');
+    track.value = tracker + "/" + trackerMax;
+
+    var filepath = 'data.csv';
+    var data = [{
+      "participantID": 'elene',
+      "trialNum": 0,
+      "vis": 'bar',
+      "truePercent": 75,
+      "reportedPercent": 65
+    }];
+    var csvData = new Array();
+    csvData.push('"participantID","trialNum","vis","truePercent","reportedPercent"');
+
+    function appendCSV() {
+      data.forEach(function(item, index, array) {
+        csvData.push('"' + item.participantID + '","' + item.trialNum + '","' + item.vis + '","' + item.truePercent + '","' + item.reportedPercent + '"');
+      });
+
+    }
+
+
+
+
+
+
+
+    function end() {
+      console.log("end");
+      //write data to csv
+      //appendCSV();
+      const rows = [
+      ['elene', 0, 'bar', 75, 65],
+      ['elene', 0, 'bar', 75, 65]
+  ];
+      let csvContent = "data:text/csv;charset=utf-8,"
+        + rows.map(e => e.join(",")).join("\n");
+      var encodedUri = encodeURI(csvContent);
+      window.open(encodedUri);
+      //End
+    //  location.replace('endingPage.html');
+    }
+
+    function increaseTrack() {
+      console.log("incr");
+      track = document.getElementById('tracker');
+      tracker = tracker + 1;
+      if (tracker > trackerMax) {
+        end();
+      } else {
+        track.value = tracker + "/" + trackerMax;
+      }
+    }
+
+    var svg = d3.select('#vis')
+      .attr('width', 500)
+      .attr('height', 500);
+
+    function generateRandomNumber() {
+      console.log("random");
+    }
+
+    function generateBarGraph() {
+      console.log("bar");
+    }
+
+    function generatePieChart() {
+      console.log("pie");
+    }
+
+    function generateStackedBarChart() {
+      console.log("Stacked");
+    }
+
+    function displayRandomGraph() {
+      console.log("Display Random Graph");
+      //save data
+    }
+
+    function saveNext() {
+      displayRandomGraph();
+      increaseTrack();
+    }
+  </script>
 </body>
 
-<script>
-  console.log(d3); // test if d3 is loaded
 
-  //Setup
-  var tracker = 1;
-  var trackerMax = 6;
-  var track = document.getElementById('tracker');
-  track.value = tracker + "/" + trackerMax;
-
-  var filepath = 'data.csv';
-  var data = [{
-    "participantID": 'elene',
-    "trialNum": 0,
-    "vis": 'bar',
-    "truePercent": 75,
-    "reportedPercent": 65
-  }];
-  var csvData = new Array();
-  csvData.push('"participantID","trialNum","vis","truePercent","reportedPercent"');
-
-  function appendCSV() {
-    data.forEach(function(item, index, array) {
-      csvData.push('"' + item.participantID + '","' + item.trialNum + '","' + item.vis + '","' + item.truePercent + '","' + item.reportedPercent + '"');
-    });
-
-  }
-
-
-
-
-
-
-
-  function end() {
-    console.log("end");
-    //write data to csv
-    //appendCSV();
-    const rows = [
-    ['elene', 0, 'bar', 75, 65],
-    ['elene', 0, 'bar', 75, 65]
-];
-    let csvContent = "data:text/csv;charset=utf-8,"
-      + rows.map(e => e.join(",")).join("\n");
-    var encodedUri = encodeURI(csvContent);
-    window.open(encodedUri);
-    //End
-  //  location.replace('endingPage.html');
-  }
-
-  function increaseTrack() {
-    console.log("incr");
-    track = document.getElementById('tracker');
-    tracker = tracker + 1;
-    if (tracker > trackerMax) {
-      end();
-    } else {
-      track.value = tracker + "/" + trackerMax;
-    }
-  }
-
-  var svg = d3.select('#vis')
-    .attr('width', 500)
-    .attr('height', 500);
-
-  function generateRandomNumber() {
-    console.log("random");
-  }
-
-  function generateBarGraph() {
-    console.log("bar");
-  }
-
-  function generatePieChart() {
-    console.log("pie");
-  }
-
-  function generateStackedBarChart() {
-    console.log("Stacked");
-  }
-
-  function displayRandomGraph() {
-    console.log("Display Random Graph");
-    //save data
-  }
-
-  function saveNext() {
-    displayRandomGraph();
-    increaseTrack();
-  }
-</script>
 
 </html>
