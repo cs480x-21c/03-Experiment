@@ -42,7 +42,8 @@
   function end(){
     console.log("end");
     //location.replace('endingPage.html');
-    fs.write(filepath, data, 'a');
+    //fs.write(filepath, data, 'a');
+    fs.writeFileSync(filepath,content,'a')
     //write data to csv
   }
 
@@ -52,9 +53,8 @@
     tracker = tracker +1;
     if(tracker > trackerMax){
       end();
-
     } else {
-        track.value = tracker +"/ "+trackerMax;
+        track.value = tracker +"/"+trackerMax;
   }
   }
 
