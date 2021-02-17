@@ -57,11 +57,21 @@
 
 
 
+
+
+
   function end() {
     console.log("end");
     //write data to csv
-    appendCSV();
-
+    //appendCSV();
+    const rows = [
+    ['elene', 0, 'bar', 75, 65],
+    ['elene', 0, 'bar', 75, 65]
+];
+    let csvContent = "data:text/csv;charset=utf-8,"
+      + rows.map(e => e.join(",")).join("\n");
+    var encodedUri = encodeURI(csvContent);
+    window.open(encodedUri);
     //End
   //  location.replace('endingPage.html');
   }
