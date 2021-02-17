@@ -1,0 +1,56 @@
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+
+ <title>TESSTT</title>
+<style>
+</style>
+
+<body>
+  <h1> Experiment </h1>
+  <svg id="vis"> </svg>
+  <p>This is a paragraph explaining what is the graph
+    and THE QUESTION
+  </p>
+  <form>
+   <fieldset>
+   <label>THE QUESTION </label>
+   <input type = "text"
+     id = "txtAnswer"/>
+   <input type = "button"
+     value = "Save, Next"
+     onclick = "saveNext()"/>
+   </fieldset>
+  </form>
+</body>
+
+
+<script>
+  console.log(d3); // test if d3 is loaded
+  var svg = d3.select('#vis')
+    .attr('width', 500)
+    .attr('height', 500);
+
+  function generateRandomNumber(){
+      console.log("random");
+  }
+  function generateBarGraph(){
+      console.log("bar");
+  }
+  function generatePieChart(){
+      console.log("pie");
+  }
+  function generateStackedBarChart(){
+      console.log("Stacked");
+  }
+
+  function displayRandomGraph(){
+    console.log("Display Random Graph");
+  }
+
+  function saveNext(){
+  console.log("Executing function saveNext");
+  var txtAnswer = document.getElementById("txtAnswer");
+  console.log("Value Inputted : "+ txtAnswer.value)
+  displayRandomGraph();
+  }
+</script>

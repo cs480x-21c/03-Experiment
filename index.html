@@ -1,13 +1,16 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
-
-
+<title>Start Page</title>
 <style>
 </style>
 
 <body>
   <h1> Experiment </h1>
+  <p>This is the paragraph explaining the experiment and asking for permission
+  </p>
+  <form>
+   <fieldset>
+    <label>DO YOU AGREE</label>
+    <input type="button" value = "Disagree" onclick="window.location.href = 'html/endingPage.html';" value="Link" />
+    <input type="button" value = "Agree" onclick="window.location.href = 'html/generateGraphs.html';" value="Link" />
+   </fieldset>
+  </form>
 </body>
-
-<script>
-  console.log(d3); // test if d3 is loaded
-</script>
