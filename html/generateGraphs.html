@@ -5,8 +5,11 @@
 <style>
 </style>
 
-<body>
-  <h1> Experiment </h1>
+
+  <header>
+    <textarea id="tracker"></textarea>
+  </header>
+
   <svg id="vis"> </svg>
   <p>This is a paragraph explaining what is the graph
     and THE QUESTION
@@ -21,11 +24,40 @@
      onclick = "saveNext()"/>
    </fieldset>
   </form>
-</body>
-
 
 <script>
   console.log(d3); // test if d3 is loaded
+
+  //Setup
+  var tracker = 1;
+  var trackerMax =6;
+  var track = document.getElementById('tracker');
+  track.value = tracker +"/"+trackerMax;
+
+  var fs = require('fs');
+  var filepath = 'data.csv';
+  var data = "this ; is ; a ; test";
+
+
+  function end(){
+    console.log("end");
+    //location.replace('endingPage.html');
+    fs.write(filepath, data, 'a');
+    //write data to csv
+  }
+
+  function increaseTrack(){
+        console.log("incr");
+    track = document.getElementById('tracker');
+    tracker = tracker +1;
+    if(tracker > trackerMax){
+      end();
+
+    } else {
+        track.value = tracker +"/ "+trackerMax;
+  }
+  }
+
   var svg = d3.select('#vis')
     .attr('width', 500)
     .attr('height', 500);
@@ -48,9 +80,8 @@
   }
 
   function saveNext(){
-  console.log("Executing function saveNext");
-  var txtAnswer = document.getElementById("txtAnswer");
-  console.log("Value Inputted : "+ txtAnswer.value)
   displayRandomGraph();
+  increaseTrack();
   }
+
 </script>
