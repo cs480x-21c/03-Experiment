@@ -34,17 +34,14 @@
   var track = document.getElementById('tracker');
   track.value = tracker +"/"+trackerMax;
 
-  var fs = require('fs');
   var filepath = 'data.csv';
   var data = "this ; is ; a ; test";
 
 
   function end(){
     console.log("end");
-    //location.replace('endingPage.html');
-    //fs.write(filepath, data, 'a');
-    fs.writeFileSync(filepath,content,'a')
     //write data to csv
+    location.replace('endingPage.html');
   }
 
   function increaseTrack(){
