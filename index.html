@@ -1,33 +1,53 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
+
  <title>TESSTT</title>
 <style>
 </style>
 
 <body>
   <h1> Experiment </h1>
+  <svg id="vis"> </svg>
   <form>
    <fieldset>
-   <label>Type your name: </label>
+   <label>Type your answer: </label>
    <input type = "text"
      id = "txtAnswer" />
    <input type = "button"
      value = "Save, Next"
      onclick = "saveNext()"/>
-   <input type = "text"
-     id = "txtOutput" />
    </fieldset>
   </form>
 </body>
 
+
 <script>
   console.log(d3); // test if d3 is loaded
-  // from textBoxes.html
+
+  function generateRandomNumber(){
+      console.log("random");
+  }
+  function generateBarGraph(){
+      console.log("bar");
+  }
+  function generatePieChart(){
+      console.log("pie");
+  }
+  function generateStackedBarChart(){
+      console.log("Stacked");
+  }
+
+  function displayRandomGraph(){
+    console.log("Display Random Graph");
+  }
+
   function saveNext(){
-  var txtAnswer = document.getElementById("txtAnswer");
-  var txtOutput = document.getElementById("txtOutput");
-  //var s = 'nothing';
-  var s = txtAnswer.value;
-  txtOutput.value = "Saved " + s;
-  } // end sayHi
+  console.log("saveNext");
+  //var txtAnswer = document.getElementById("txtAnswer");
+//  var txtOutput = document.getElementById("txtOutput");
+//  var s = txtAnswer.value;
+//  txtOutput.value = "Saved " + s;
+   console.log();
+  displayRandomGraph();
+  }
 </script>
