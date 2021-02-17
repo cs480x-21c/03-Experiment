@@ -1,56 +1,114 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<head>
+  <title>Experiment Graphs</title>
+</head>
 
-
- <title>TESSTT</title>
-<style>
-</style>
 
 <body>
-  <h1> Experiment </h1>
+  <header>
+    <textarea id="tracker"></textarea>
+  </header>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+
   <svg id="vis"> </svg>
   <p>This is a paragraph explaining what is the graph
     and THE QUESTION
   </p>
   <form>
-   <fieldset>
-   <label>THE QUESTION </label>
-   <input type = "text"
-     id = "txtAnswer"/>
-   <input type = "button"
-     value = "Save, Next"
-     onclick = "saveNext()"/>
-   </fieldset>
+    <fieldset>
+      <label>THE QUESTION </label>
+      <input type="text" id="txtAnswer" />
+      <input type="button" value="Save, Next" onclick="saveNext()" />
+    </fieldset>
   </form>
-</body>
 
+  <script>
+    console.log(d3); // test if d3 is loaded
 
-<script>
-  console.log(d3); // test if d3 is loaded
-  var svg = d3.select('#vis')
-    .attr('width', 500)
-    .attr('height', 500);
+    //Setup
+    var tracker = 6;
+    var trackerMax = 6;
+    var track = document.getElementById('tracker');
+    track.value = tracker + "/" + trackerMax;
 
-  function generateRandomNumber(){
+    var filepath = 'data.csv';
+    var data = [{
+      "participantID": 'elene',
+      "trialNum": 0,
+      "vis": 'bar',
+      "truePercent": 75,
+      "reportedPercent": 65
+    },{
+      "participantID": 'elene',
+      "trialNum": 0,
+      "vis": 'bar',
+      "truePercent": 75,
+      "reportedPercent": 65
+    }];
+    var csvData = new Array();
+    csvData.push('"participantID","trialNum","vis","truePercent","reportedPercent"\n"');
+
+    function appendCSV() {
+      data.forEach(function(item, index, array) {
+        csvData.push(item.participantID + '","' + item.trialNum + '","' + item.vis + '","' + item.truePercent + '","' + item.reportedPercent + '"\n"');
+      });
+
+    }
+
+    function end() {
+      console.log("end");
+      //write data to csv
+      appendCSV();
+      let csvContent = "data:text/csv;charset=utf-8 , " + csvData; //.map(e => e.join(",")).join("\n");
+
+      var encodedUri = encodeURI(csvContent);
+      var link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "my_data.csv");
+      document.body.appendChild(link);
+      link.click();
+
+    }
+
+    function increaseTrack() {
+      console.log("incr");
+      track = document.getElementById('tracker');
+      tracker = tracker + 1;
+      if (tracker > trackerMax) {
+        end();
+      } else {
+        track.value = tracker + "/" + trackerMax;
+      }
+    }
+
+    var svg = d3.select('#vis')
+      .attr('width', 500)
+      .attr('height', 500);
+
+    function generateRandomNumber() {
       console.log("random");
-  }
-  function generateBarGraph(){
+    }
+
+    function generateBarGraph() {
       console.log("bar");
-  }
-  function generatePieChart(){
+    }
+
+    function generatePieChart() {
       console.log("pie");
-  }
-  function generateStackedBarChart(){
+    }
+
+    function generateStackedBarChart() {
       console.log("Stacked");
-  }
+    }
 
-  function displayRandomGraph(){
-    console.log("Display Random Graph");
-  }
+    function displayRandomGraph() {
+      console.log("Display Random Graph");
+      //save data
+    }
 
-  function saveNext(){
-  console.log("Executing function saveNext");
-  var txtAnswer = document.getElementById("txtAnswer");
-  console.log("Value Inputted : "+ txtAnswer.value)
-  displayRandomGraph();
-  }
-</script>
+    function saveNext() {
+      displayRandomGraph();
+      increaseTrack();
+    }
+  </script>
+
+</body>
