@@ -1,56 +1,26 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
-
-
- <title>TESSTT</title>
+<title>Start Page</title>
 <style>
 </style>
 
 <body>
   <h1> Experiment </h1>
-  <svg id="vis"> </svg>
+  <p>This is the paragraph explaining the experiment and asking for permission
+  </p>
   <form>
    <fieldset>
-   <label>Type your answer: </label>
-   <input type = "text"
-     id = "txtAnswer" />
-   <input type = "button"
-     value = "Save, Next"
-     onclick = "saveNext()"/>
+    <label>DO YOU AGREE</label>
+    <input type="button" value = "Disagree" onclick="window.location.href = 'html/endingPage.html';" value="Link" />
+    <input type="button" value = "Agree" onclick="window.location.href = 'html/generateGraphs.html';" value="Link" />
    </fieldset>
   </form>
 </body>
 
 
 <script>
-  console.log(d3); // test if d3 is loaded
-  var svg = d3.select('#vis')
-    .attr('width', 500)
-    .attr('height', 500);
-
-  function generateRandomNumber(){
-      console.log("random");
+  function disagree(){
+      console.log("disagree");
   }
-  function generateBarGraph(){
-      console.log("bar");
-  }
-  function generatePieChart(){
-      console.log("pie");
-  }
-  function generateStackedBarChart(){
-      console.log("Stacked");
-  }
-
-  function displayRandomGraph(){
-    console.log("Display Random Graph");
-  }
-
-  function saveNext(){
-  console.log("saveNext");
-  //var txtAnswer = document.getElementById("txtAnswer");
-//  var txtOutput = document.getElementById("txtOutput");
-//  var s = txtAnswer.value;
-//  txtOutput.value = "Saved " + s;
-   console.log();
-  displayRandomGraph();
+  function agree(){
+      console.log("agree");
   }
 </script>
