@@ -1,107 +1,111 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-us">
+
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
 
- <title>TESSTT</title>
+<title>TESSTT</title>
 <style>
 </style>
 
 
-  <header>
-    <textarea id="tracker"></textarea>
-  </header>
+<header>
+  <textarea id="tracker"></textarea>
+</header>
 
+<body>
   <svg id="vis"> </svg>
   <p>This is a paragraph explaining what is the graph
     and THE QUESTION
   </p>
   <form>
-   <fieldset>
-   <label>THE QUESTION </label>
-   <input type = "text"
-     id = "txtAnswer"/>
-   <input type = "button"
-     value = "Save, Next"
-     onclick = "saveNext()"/>
-   </fieldset>
+    <fieldset>
+      <label>THE QUESTION </label>
+      <input type="text" id="txtAnswer" />
+      <input type="button" value="Save, Next" onclick="saveNext()" />
+    </fieldset>
   </form>
+</body>
 
 <script>
   console.log(d3); // test if d3 is loaded
 
   //Setup
   var tracker = 1;
-  var trackerMax =6;
+  var trackerMax = 6;
   var track = document.getElementById('tracker');
-  track.value = tracker +"/"+trackerMax;
+  track.value = tracker + "/" + trackerMax;
 
   var filepath = 'data.csv';
-  var data = [
-    {
-        "participantID": 'elene',
-        "trialNum": 0,
-        "vis": 'bar',
-        "truePercent": 75 ,
-        "reportedPercent": 65
-    }
-];
+  var data = [{
+    "participantID": 'elene',
+    "trialNum": 0,
+    "vis": 'bar',
+    "truePercent": 75,
+    "reportedPercent": 65
+  }];
   var csvData = new Array();
   csvData.push('"participantID","trialNum","vis","truePercent","reportedPercent"');
 
-  function appendCSV(){
-  data.forEach(function (item, index, array) {
-      csvData.push('"' + item.participantID + '","' + item.trialNum +'","' + item.vis +'","' + item.truePercent +'","' + item.reportedPercent + '"');
-  });
+  function appendCSV() {
+    data.forEach(function(item, index, array) {
+      csvData.push('"' + item.participantID + '","' + item.trialNum + '","' + item.vis + '","' + item.truePercent + '","' + item.reportedPercent + '"');
+    });
 
-}
-
-
+  }
 
 
-  function end(){
+
+
+  function end() {
     console.log("end");
     //write data to csv
     appendCSV();
 
     //End
-    location.replace('endingPage.html');
+  //  location.replace('endingPage.html');
   }
 
-  function increaseTrack(){
-        console.log("incr");
+  function increaseTrack() {
+    console.log("incr");
     track = document.getElementById('tracker');
-    tracker = tracker +1;
-    if(tracker > trackerMax){
+    tracker = tracker + 1;
+    if (tracker > trackerMax) {
       end();
     } else {
-        track.value = tracker +"/"+trackerMax;
-  }
+      track.value = tracker + "/" + trackerMax;
+    }
   }
 
   var svg = d3.select('#vis')
     .attr('width', 500)
     .attr('height', 500);
 
-  function generateRandomNumber(){
-      console.log("random");
-  }
-  function generateBarGraph(){
-      console.log("bar");
-  }
-  function generatePieChart(){
-      console.log("pie");
-  }
-  function generateStackedBarChart(){
-      console.log("Stacked");
+  function generateRandomNumber() {
+    console.log("random");
   }
 
-  function displayRandomGraph(){
+  function generateBarGraph() {
+    console.log("bar");
+  }
+
+  function generatePieChart() {
+    console.log("pie");
+  }
+
+  function generateStackedBarChart() {
+    console.log("Stacked");
+  }
+
+  function displayRandomGraph() {
     console.log("Display Random Graph");
     //save data
   }
 
-  function saveNext(){
-  displayRandomGraph();
-  increaseTrack();
+  function saveNext() {
+    displayRandomGraph();
+    increaseTrack();
   }
-
 </script>
+
+</html>
