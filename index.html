@@ -23,6 +23,9 @@
 
 <script>
   console.log(d3); // test if d3 is loaded
+  var svg = d3.select('#vis')
+    .attr('width', 500)
+    .attr('height', 500);
 
   function generateRandomNumber(){
       console.log("random");
