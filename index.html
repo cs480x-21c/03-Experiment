@@ -56,7 +56,7 @@
   .append("g")
     .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")");
 
-  var radius = HEIGHT/2
+  var radius = HEIGHT/2 - 10 // add margin to prevent clipping
 
   var pie = d3.pie()
     .value(function(d) {return d.value;})
@@ -71,17 +71,10 @@
   .innerRadius(0)
   .outerRadius(radius)
   )
+  .attr("fill", "white")
   .attr("stroke", "black")
   .style("stroke-width", "2px")
 
-
-  //add svg to bar div
-  var svg_bar = d3.select("#bar")
-    .append("svg")
-      .attr("width", WIDTH)
-      .attr("height", HEIGHT)
-      .append("g")
-        .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")")
         </script>
   </div>
   <h1> Nick Experiment</h1>
