@@ -86,7 +86,24 @@
   </div>
   <h1> Nick Experiment</h1>
   <div id="bar">
-    
+    <script>
+      // add svg for bar chart
+      var svgbar = d3.select("#bar")
+      .append("svg")
+      .attr("width", WIDTH)
+      .attr("height", HEIGHT)
+      .append("g")
+        .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")");
+
+      // add group element to svg to hold axes and bars
+      var gbar = svg.append("g").attr("transform", "translate(" + 100 + "," + 100 + ")")
+
+      gbar.append("g")
+      .attr("transform", "translate(0," + HEIGHT + ")")
+      .call(d3.axisBottom(xScale));
+
+
+    </script>
   </div>
   
 </body>
