@@ -33,13 +33,15 @@
   var dotColor = "Black"
   //Other vartiables
   var dotRadius = 10
-  //Variables used for creating the svg canvas
+  //Variables that describe the the canvas' size
+  //These are used when creating the canvas as well as when creating graphs.
+  //When creating graphs, the variables are responsable to scaling the graphs ot the correct size and placing them in the correct location.
   var margin = {top: 20, right: 20, bottom: 30, left: 40}
   var width = 500 - margin.left - margin.right
   var height = 500 - margin.top - margin.bottom
   var radius = Math.min(width, height) / 2
 
-  //The following are helpers for generating the graphs
+  //The following are helper functions for generating the graphs
   var x = d3.scaleBand()
     .range([0, width])
     .padding(0.1);
@@ -91,6 +93,11 @@
 
   //Generates a single data point used for generating the graphs
   //A data point can also be seen as one bar in the bar chart or one sliver in the pie chart
+  //data points are structured with the following informarion
+  //  data: A randomly generated number that is used for generating the charts (Currently the numbers generated are between 50 and 900)
+  //  dot: Keeps track if a dot should be rendered outside next this piece of data (Also used for colored version)
+  //  location: Stores the index of data in the array of data (Used for creating the bar charts)
+  //  parent: Was used for generating the treemap (Useless now)
   function singleDataPoint(){
     var data = {
       data: chance.integer({min: 50, max: 900}),
@@ -101,8 +108,8 @@
     return data
   }
 
-  //Randomly selects a number 5-10 and generates that number of data points for the chart
-  //This is what makes each chart varies in size
+  //Randomly selects a number 5-10 and generates that number of data points for the chart. This is what makes each chart varies in the number of sections
+  //The data is stored as an array of objects (check singleDataPoint() for info on the object)
   function createDataPoints(){
     var dataPoints = new Array(chance.integer({min: 5, max: 10}))
     for(var i = 0; i < dataPoints.length; i++){
@@ -149,6 +156,7 @@
   }
 
   //Generates and displays a horizontal bar chart
+  //Essentially it generates a vertical bar chart and then rotates the canvas 90 degrees, must be rotated back when removing the chart (Done already by the remove function)
   function horizontalBarChart(dataPoints, renderDot=false, useColor=false){
     verticalBarChart(dataPoints, renderDot, useColor)
     svg.attr('transform',function(){
@@ -160,14 +168,14 @@
             });
   }
 
-  //Removes either a horizontal chart
+  //Removes a horizontal bar chart
   function removeHorizontalBarChart(){
     svg.selectAll('bar').remove()
     svg.selectAll('rect').remove()
     removeDots()
   }
 
-  //Removes either a vertical chart
+  //Removes a vertical bar chart (Also rotates the canvas back to its original orientations)
   function removeVerticalBarChart(){
     removeHorizontalBarChart()
     svg.attr('transform',function(){
@@ -244,14 +252,21 @@
     removeDots()
   }
 
+  //Creates the canvas to draw on
   var svg = d3.select('#vis')
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom + 10)
     .append("g")
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  //Generates the data used to generate the charts
   data = createDataPoints()
   selectTwoPoints(data)
 
+
+  //Functions used to create the charts used in our experiment
   donutChart(data, true, false)
+  // pieChart(data, true, false)
+  // verticalBarChart(data, true, false)
 
 </script>
