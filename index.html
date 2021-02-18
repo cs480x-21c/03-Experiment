@@ -213,10 +213,16 @@
                 })
                 .style("transform", "translateX(-100vw)");
 
-            d3.select("#complete")
+            let complete = d3.select("#complete")
                 .style("transition", "ease-in-out transform 0.7s")
                 .style("transform", "translateX(0)")
-                .select("a")
+
+            complete.append("h5")
+                .text("Output")
+            complete.append("code")
+                .text(JSON.stringify(output));
+
+            complete.select("a")
                 .attr("tabindex", "");
         }
 
