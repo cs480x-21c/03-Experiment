@@ -2,7 +2,7 @@
 
 <style></style>
 
-<body style="font-family: sans-serif;">
+<body style="font-family: sans-serif; overflow-x: hidden;">
     <main id="mainContent" style="
       display: flex;
       flex-direction: column;
@@ -17,14 +17,14 @@
                    flex-direction: column-reverse;
                    justify-content: center;
                    align-items: center;">
-            <form name="viz-1" netlify>
+            <form name="viz-1">
                 <p style="text-align: center;">
                     Two values are marked with dots. <br> What do you think the percent of the smaller value to the larger value?<br> Please put your answer Below.<br> e.g. If you think the smaller one is exactly a half of the bigger one,<br> please input
                     "50".
                 </p>
                 <p style="text-align: center;">
                     <label>Answer 
-                        <input type="number" name="viz1-reported" />
+                        <input type="number" id="viz1" />
                         <button type="submit">Send</button>
                     </label>
                 </p>
@@ -35,14 +35,14 @@
                    flex-direction: column-reverse;
                    justify-content: center;
                    align-items: center;">
-            <form name="viz-2" netlify>
+            <form name="viz-2">
                 <p style="text-align: center;">
                     Two values are marked with dots. <br> What do you think the percent of the smaller value to the larger value?<br> Please put your answer Below.<br> e.g. If you think the smaller one is exactly a half of the bigger one,<br> please input
                     "50".
                 </p>
                 <p style="text-align: center;">
                     <label>Answer 
-                        <input type="number" name="viz2-reported" />
+                        <input type="number" id="viz2" />
                         <button type="submit">Send</button>
                     </label>
                 </p>
@@ -53,14 +53,14 @@
                    flex-direction: column-reverse;
                    justify-content: center;
                    align-items: center;">
-            <form name="viz-3" netlify>
+            <form name="viz-3">
                 <p style="text-align: center;">
                     Two values are marked with dots. <br> What do you think the percent of the smaller value to the larger value?<br> Please put your answer Below.<br> e.g. If you think the smaller one is exactly a half of the bigger one,<br> please input
                     "50".
                 </p>
                 <p style="text-align: center;">
                     <label>Answer 
-                        <input type="number" name="viz3-reported" />
+                        <input type="number" id="viz3" />
                         <button type="submit">Send</button>
                     </label>
                 </p>
@@ -144,10 +144,46 @@
             return i === previousRandom ? "translate(0)" : "translateX(100vw)";
         })
         .style("position", "absolute")
-        .style("transition", "ease-in-out transform 0.7s");
+        .style("transition", "ease-in-out transform 0.7s")
+        .select("input")
+        .attr("tabindex", (d, i) => {
+            return i === previousRandom ? "" : "-1";
+        });
 
-    elements.selectAll("form").on("submit", function(e, i, d) {
-        e.preventDefault()
+    elements.select("button")
+        .attr("tabindex", (d, i) => {
+            return i === previousRandom ? "" : "-1";
+        });
+
+    d3.select("#complete")
+        .select("a")
+        .attr("tabindex", "-1");
+
+
+    let orderCount = 1;
+    let output = [];
+
+    elements.selectAll("form").on("submit", function(e) {
+        if (!e.target[0].value || isNaN(+e.target[0].value)) {
+            e.preventDefault();
+            return
+        }
+
+        output.push({
+            trialNumber: orderCount,
+            reportedPercent: e.target[0].value,
+            vis: e.target[0].id,
+            expected: 75
+        });
+        console.log(e);
+        console.log(output);
+        orderCount++;
+
+        e.target[0].blur();
+        e.target[1].blur();
+        e.target[0].tabIndex = -1;
+        e.target[1].tabIndex = -1;
+
         if (randomsSelected.length < elements.size()) {
             elements
                 .filter(function(d, i) {
@@ -157,11 +193,18 @@
 
             let nextr = nextRandom();
 
-            elements
+            let form = elements
                 .filter(function(d, i) {
                     return i === nextr;
                 })
                 .style("transform", "translateX(0)");
+
+            form.select("input")
+                .attr("tabindex", "");
+
+            form.select("button")
+                .attr("tabindex", "");
+
         } else {
 
             elements
@@ -172,8 +215,11 @@
 
             d3.select("#complete")
                 .style("transition", "ease-in-out transform 0.7s")
-                .style("transform", "translateX(0)");
-
+                .style("transform", "translateX(0)")
+                .select("a")
+                .attr("tabindex", "");
         }
+
+        e.preventDefault();
     });
 </script>
