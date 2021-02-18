@@ -62,18 +62,26 @@
     .value(function(d) {return d.value;})
   var pieData = pie(d3.entries(testData))
 
+  var arcMaker = d3.arc()
+      .innerRadius( 50 )
+      .outerRadius( radius )
   svg_pie
   .selectAll('data')
   .data(pieData)
   .enter()
   .append('path')
-  .attr('d', d3.arc()
-  .innerRadius(0)
-  .outerRadius(radius)
-  )
+  .attr('d', arcMaker)
   .attr("fill", "white")
   .attr("stroke", "black")
   .style("stroke-width", "2px")
+
+  svg_pie
+  .selectAll('data')
+  .data(pieData)
+  .enter()
+  .append('circle')
+  .attr('r', 5)
+  .attr("transform", function(d){ return "translate(" + arcMaker.centroid(d) + ")";})
 
         </script>
   </div>
