@@ -1,40 +1,43 @@
 <HTML>
-  <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
 
 
 <style>
-  div{
+  div {
     min-width: 400px;
     min-height: 300px;
   }
-  .tree{
+
+  .tree {
     border: 1px solid green;
   }
-  .pie{
+
+  .pie {
     border: 1px solid purple;
   }
-  .bar{
+
+  .bar {
     border: 1px solid brown;
   }
 </style>
 
 <script>
   console.log(d3); // test if d3 is loaded
-  
-  var testData = {a:10, b:50, c:20, d:2,e:16,f:89}
+
+  var testData = { a: 10, b: 50, c: 20, d: 2, e: 16, f: 89 }
   //initialize global vars like width and height
   const WIDTH = 400;
   const HEIGHT = 300;
   //x and y scaling
   var xScale = d3.scaleLinear()
-      .range([0, WIDTH])
-      .domain([1450, 5000]);//TODO change these values
+    .range([0, WIDTH])
+    .domain([1450, 5000]);//TODO change these values
   var yScale = d3.scaleLinear()
-      .range([0, HEIGHT])
-      yScale.domain([9, 46]);//TODO change these values
+    .range([0, HEIGHT])
+    .domain([2, 89]);
   // function(d){return xscale(d);}
 
-  
+
   //add svg to tree div
   var svg_tree
 
@@ -44,7 +47,7 @@
 <body>
   <h1> Hunter Experiment </h1>
   <div id="tree">
-    
+
   </div>
   <h1> Clay Experiment</h1>
   <div id="pie">
@@ -56,7 +59,7 @@
   .append("g")
     .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")");
 
-  var radius = HEIGHT/2
+  var radius = HEIGHT/2 - 10 // add margin to prevent clipping
 
   var pie = d3.pie()
     .value(function(d) {return d.value;})
@@ -71,17 +74,10 @@
   .innerRadius(0)
   .outerRadius(radius)
   )
+  .attr("fill", "white")
   .attr("stroke", "black")
   .style("stroke-width", "2px")
 
-
-  //add svg to bar div
-  var svg_bar = d3.select("#bar")
-    .append("svg")
-      .attr("width", WIDTH)
-      .attr("height", HEIGHT)
-      .append("g")
-        .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")")
         </script>
   </div>
   <h1> Nick Experiment</h1>
@@ -105,10 +101,10 @@
 
     </script>
   </div>
-  
+
 </body>
 <form id="form_submit">
   <input type="submit" value="submit">
-  </form>
+</form>
 
 </HTML>
