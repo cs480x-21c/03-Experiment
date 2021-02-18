@@ -53,39 +53,32 @@
   <div id="pie">
     <script>
       var svg_pie = d3.select("#pie")
-        .append("svg")
-        .attr("width", WIDTH)
-        .attr("height", HEIGHT)
-        .append("g")
-        .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")");
+  .append("svg")
+  .attr("width", WIDTH)
+  .attr("height", HEIGHT)
+  .append("g")
+    .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")");
 
-      var radius = HEIGHT / 2
+  var radius = HEIGHT/2 - 10 // add margin to prevent clipping
 
-      var pie = d3.pie()
-        .value(function (d) { return d.value; })
-      var pieData = pie(d3.entries(testData))
+  var pie = d3.pie()
+    .value(function(d) {return d.value;})
+  var pieData = pie(d3.entries(testData))
 
-      svg_pie
-        .selectAll('data')
-        .data(pieData)
-        .enter()
-        .append('path')
-        .attr('d', d3.arc()
-          .innerRadius(0)
-          .outerRadius(radius)
-        )
-        .attr("stroke", "black")
-        .style("stroke-width", "2px")
+  svg_pie
+  .selectAll('data')
+  .data(pieData)
+  .enter()
+  .append('path')
+  .attr('d', d3.arc()
+  .innerRadius(0)
+  .outerRadius(radius)
+  )
+  .attr("fill", "white")
+  .attr("stroke", "black")
+  .style("stroke-width", "2px")
 
-
-      //add svg to bar div
-      var svg_bar = d3.select("#bar")
-        .append("svg")
-        .attr("width", WIDTH)
-        .attr("height", HEIGHT)
-        .append("g")
-        .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")")
-    </script>
+        </script>
   </div>
   <h1> Nick Experiment</h1>
   <div id="bar">
