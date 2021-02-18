@@ -24,7 +24,12 @@
 <script>
   console.log(d3); // test if d3 is loaded
 
-  var testData = { a: 10, b: 50, c: 20, d: 2, e: 16, f: 89 }
+  var testData = { a: 10, b:15, c:59, d:20, e:82}
+  // var testData = function(d){
+  //   for( i = 0; i < 6; i++){
+  //    testData.push( {i: Math.floor(Math.random() * 100) } )
+  //   }
+  // }
   //initialize global vars like width and height
   const WIDTH = 400;
   const HEIGHT = 300;
@@ -53,58 +58,61 @@
   <div id="pie">
     <script>
       var svg_pie = d3.select("#pie")
-  .append("svg")
-  .attr("width", WIDTH)
-  .attr("height", HEIGHT)
-  .append("g")
-    .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")");
+        .append("svg")
+        .attr("width", WIDTH)
+        .attr("height", HEIGHT)
+        .append("g")
+        .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")");
 
-  var radius = HEIGHT/2 - 10 // add margin to prevent clipping
+      var radius = HEIGHT / 2 - 10 // add margin to prevent clipping
 
-  var pie = d3.pie()
-    .value(function(d) {return d.value;})
-  var pieData = pie(d3.entries(testData))
+      var pie = d3.pie()
+        .value(function (d) { return d.value; })
+      var pieData = pie(d3.entries(testData))
 
-  var arcMaker = d3.arc()
-      .innerRadius( 50 )
-      .outerRadius( radius )
-  svg_pie
-  .selectAll('data')
-  .data(pieData)
-  .enter()
-  .append('path')
-  .attr('d', arcMaker)
-  .attr("fill", "white")
-  .attr("stroke", "black")
-  .style("stroke-width", "2px")
+      var pieDataTest = pie(d3.entries(testData))[1]
+      console.log( pieDataTest)
 
-  svg_pie
-  .selectAll('data')
-  .data(pieData)
-  .enter()
-  .append('circle')
-  .attr('r', 5)
-  .attr("transform", function(d){ return "translate(" + arcMaker.centroid(d) + ")";})
+      var arcMaker = d3.arc()
+        .innerRadius(50)
+        .outerRadius(radius)
+      svg_pie
+        .selectAll('data')
+        .data(pieData)
+        .enter()
+        .append('path')
+        .attr('d', arcMaker)
+        .attr("fill", "white")
+        .attr("stroke", "black")
+        .style("stroke-width", "2px")
 
-        </script>
+      svg_pie
+        .selectAll('data')
+        .data(pieData)
+        .enter()
+        .append('circle')
+        .attr('r', 5)
+        .attr("transform", function (d) { return "translate(" + arcMaker.centroid(d) + ")"; })
+
+    </script>
   </div>
   <h1> Nick Experiment</h1>
   <div id="bar">
     <script>
       // add svg for bar chart
       var svgbar = d3.select("#bar")
-      .append("svg")
-      .attr("width", WIDTH)
-      .attr("height", HEIGHT)
-      .append("g")
+        .append("svg")
+        .attr("width", WIDTH)
+        .attr("height", HEIGHT)
+        .append("g")
         .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")");
 
       // add group element to svg to hold axes and bars
-      var gbar = svg.append("g").attr("transform", "translate(" + 100 + "," + 100 + ")")
+      var gbar = svgbar.append("g").attr("transform", "translate(" + 100 + "," + 100 + ")")
 
       gbar.append("g")
-      .attr("transform", "translate(0," + HEIGHT + ")")
-      .call(d3.axisBottom(xScale));
+        .attr("transform", "translate(0," + HEIGHT + ")")
+        .call(d3.axisBottom(xScale));
 
 
     </script>
