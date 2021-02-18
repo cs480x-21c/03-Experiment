@@ -1,0 +1,19 @@
+Hello folks!_!_!_!_!_!_!_!_!_!
+
+VS Code Liveshare - Google Docs for VS Code
+
+Things to do:
+Visualizations
+- three types of visualizations
+- - use D3
+- - What type of visualizations do we want? We need three.
+- - - Bar chart (Nick)
+- - - tree chart (Hunter)
+- - - pie chart (Clay) https://github.com/d3/d3-shape/blob/v2.0.0/README.md#arc
+- - what are our testable hypotheses?
+- - 
+- - I a
+
+Project architecture
+GUID | RESPONSE1 | RESPONSE2 | RESPONSE3...
+AAAA | PAIN      | 12        | SCREAM
