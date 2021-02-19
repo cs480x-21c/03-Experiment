@@ -1,16 +1,270 @@
-<title>Start Page</title>
-<style>
-</style>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #f1f1f1;
+    }
+
+    #form {
+      background-color: #ffffff;
+      margin: 100px auto;
+      font-family: Raleway;
+      padding: 40px;
+      width: 70%;
+      min-width: 300px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input {
+      padding: 10px;
+      width: 100%;
+      font-size: 17px;
+      font-family: Raleway;
+      border: 1px solid #aaaaaa;
+    }
+
+    /* Mark input boxes that gets an error on validation: */
+    input.invalid {
+      background-color: #ffdddd;
+    }
+
+    /* Hide all steps by default: */
+    .page {
+      display: none;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 17px;
+      font-family: Raleway;
+      cursor: pointer;
+    }
+  </style>
+</head>
 
 <body>
-  <h1> Experiment </h1>
-  <p>This is the paragraph explaining the experiment and asking for permission
-  </p>
-  <form>
-   <fieldset>
-    <label>DO YOU AGREE</label>
-    <input type="button" value = "Disagree" onclick="window.location.href = 'html/endingPage.html';" value="Link" />
-    <input type="button" value = "Agree" onclick="window.location.href = 'html/generateGraphs.html';" value="Link" />
-   </fieldset>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+
+  <form id="form">
+
+    <!-- One "tab" for each step in the form: -->
+    <div class="page">
+      <h1>Experiment</h1>
+      Intro
+    </div>
+
+    <div class="page">
+      <h3>QUESTION </h3>
+      <svg id="vis"> </svg>
+      <p>This is a paragraph explaining what is the graph
+        and THE QUESTION
+      </p>
+      <p>
+        <input type="text" id="txtAnswer" />
+        <input placeholder="Percentage" oninput="this.className = ''" name="perc">
+      </p>
+    </div>
+
+    <div class="page">
+      <h1> Thank you for your time! </h1>
+
+    </div>
+
+    <div style="overflow:auto;">
+      <div style="float:right;">
+        <button type="button" id="saveNextButton" onclick="saveNext()">Next</button>
+      </div>
+    </div>
+
   </form>
+
+  <script>
+    //Initial SETUP
+    console.log(d3);
+    var tracker = 1;
+    var trackerMax = 6;
+    var currentPage = 0;
+    var maxPage = 2;
+    document.getElementById("saveNextButton").innerHTML = "Start";
+    display();
+
+
+    var width = 500,
+      height = 500;
+
+    var svg = d3.select('#vis')
+      .attr('width', 500)
+      .attr('height', 500);
+
+    var filepath = 'data.csv';
+    var data = [{
+      "participantID": 'elene',
+      "trialNum": 0,
+      "vis": 'bar',
+      "truePercent": 75,
+      "reportedPercent": 65
+    }, {
+      "participantID": 'elene',
+      "trialNum": 0,
+      "vis": 'bar',
+      "truePercent": 75,
+      "reportedPercent": 65
+    }];
+    var csvData = new Array();
+    csvData.push('"participantID","trialNum","vis","truePercent","reportedPercent"\n"');
+
+    function appendCSV() {
+      data.forEach(function(item, index, array) {
+        csvData.push(item.participantID + '","' + item.trialNum + '","' + item.vis + '","' + item.truePercent + '","' + item.reportedPercent + '"\n"');
+      });
+
+    }
+
+    function end() {
+      console.log("end");
+      //write data to csv
+      appendCSV();
+      let csvContent = "data:text/csv;charset=utf-8 , " + csvData; //.map(e => e.join(",")).join("\n");
+
+      var encodedUri = encodeURI(csvContent);
+      var link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "my_data.csv");
+      document.body.appendChild(link);
+      link.click();
+    }
+
+    function generateRandomNumber() {
+      console.log("random");
+    }
+
+    function generateBarGraph() {
+      console.log("bar");
+
+      //xaxis
+      var x = d3.scaleBand()
+        .range([0, width]);
+      //.domain(data.map(function(d) { return d.(xaxis data); }))
+      svg.append('g')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(d3.axisBottom(x))
+        .selectAll('text')
+        .attr('transform', 'translate(-10,0)rotate(-45)')
+        .style('text-anchor', 'end');
+
+      //yaxis
+      var y = d3.scaleLinear()
+        //.domain([num, num])
+        .range([heightt, 0]);
+      svg.append('g')
+        .call(d3.axisLeft(y));
+
+      //barchart plotting data
+      svg.selectAll('mybar')
+        //.data(data)
+        .enter()
+        .append('rect')
+        //.attr('x', function(d) { return x(d.(xaxisdata)); })
+        //.attr('y', function(d) { return y(d.(yaxisdata)); })
+        .attr('width', x.bandwidth())
+        //.attr('height', function(d) { return height - y(d.(yaxisdata)); })
+        .attr('stroke', 'black')
+        .style('stroke-width', '2px');
+      //we might have to add a dot maybe within the two random bars?
+    }
+
+    function generatePieChart() {
+      console.log("pie");
+
+      //Radius of pie chart is half the length of the width or height
+      var radius = width / 2;
+
+      //Setting the color scale
+      var color = d3.scaleOrdinal();
+      //.domain(data)
+      //.range([is this just white?])
+
+      var pie = d.pie();
+      //.value(function(d) { return d.(ymeasureabledata); })
+
+      //We graph this variable of data entries
+      //var data_ready = pie.(d3.entries(data));
+
+      svg.selectAll('mypie')
+        //.data(data_ready)
+        .enter()
+        .append('path')
+        //We have to graph each arc of the data point
+        .attr('d', d3.arc()
+          .innerRadius(0)
+          .outerRadius(radius))
+        .attr('stroke', 'black')
+        .style('stroke-width', '2px');
+      //we might have to add the dot?
+    }
+
+    function generateStackedBarChart() {
+      console.log("Stacked");
+    }
+
+    function displayRandomGraph() {
+      console.log("Display Random Graph");
+      //save data
+    }
+
+    function display() {
+      console.log("display   tracker " + tracker + "  currentPage " + currentPage);
+
+      var p = document.getElementsByClassName("page");
+      p[currentPage].style.display = "block";
+
+      if (currentPage == maxPage) {
+        document.getElementById("saveNextButton").innerHTML = "Download the results";//.style.display = "Download";
+      } else if (tracker == trackerMax) {
+        document.getElementById("saveNextButton").innerHTML = "Finish and Save";
+      } else {
+        document.getElementById("saveNextButton").innerHTML = "Next";
+      }
+    }
+
+
+    function saveNext() {
+      //console.log("nextPrev currentPage " + currentPage)
+      if (currentPage == maxPage) {
+        end();
+        console.log("END")
+        display();
+        return false;
+      }
+      var p = document.getElementsByClassName("page");
+      if (currentPage == 0 || tracker == trackerMax) {
+        p[currentPage].style.display = "none";
+        currentPage = currentPage + 1;
+      } else {
+        tracker = tracker + 1;
+      }
+      display();
+    }
+  </script>
+
 </body>
+
+</html>
