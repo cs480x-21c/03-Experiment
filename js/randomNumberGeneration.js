@@ -5,7 +5,7 @@ function getRandomInt(min, max){  //range includes min, does not include max
 	return adjRand
 }
 
-
+//Return array is in the format of: [[random numbers], [designated bars for comparison]]
 function barRandomGen(){
 	var numBars = 7;   //control for number of bars
 	var randomNumbers = [];  //array for random numbers
@@ -58,6 +58,7 @@ function barRandomGen(){
 	return result;
 }
 
+//Return array is in the format of: [[random numbers], [designated pie slices for comparison]]
 function pieRandomGen(){
 	var numSlices = 7;    //control for number of pie slices
 	var randomNumbers = [];  //array for random numbers
@@ -129,6 +130,7 @@ function pieRandomGen(){
 	return result;
 }
 
+//Return array is in the format of: [bar 1 size, [random numbers for bar 1], designated element in bar 1, bar 2 size, [random numbers for bar 2], designated element for bar 2]
 function stackedBarRandomGen(){
 	var numStacked1 = 4;   //number of stacked areas for bar 1
 	var numStacked2 = 3;   //number of stacked areas for bar 2
