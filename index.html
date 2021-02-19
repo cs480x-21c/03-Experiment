@@ -34,11 +34,6 @@
       border: 1px solid #aaaaaa;
     }
 
-    /* Mark input boxes that gets an error on validation: */
-    input.invalid {
-      background-color: #ffdddd;
-    }
-
     /* Hide all steps by default: */
     .page {
       display: none;
@@ -49,7 +44,7 @@
     }
 
     button {
-      background-color: #4CAF50;
+      background-color: #1f75fe;
       color: #ffffff;
       border: none;
       padding: 10px 20px;
@@ -68,18 +63,24 @@
     <!-- One "tab" for each step in the form: -->
     <div class="page">
       <h1>Experiment</h1>
-      Intro
+      <p>Thank you for agreeing to participate in our experiment!</p>
+      <p>Through a series of questions we will be testing !!ourHypothesis!!</p>
+      <p>Next pages will display different graphs. You will be asked to determine how different values compare percentage wise in size</p>
+      <p>Click "Agree" button to start!</p>
     </div>
 
     <div class="page">
-      <h3>QUESTION </h3>
+      <h3 id="questionHeader">QUESTION </h3>
       <svg id="vis"> </svg>
-      <p>This is a paragraph explaining what is the graph
-        and THE QUESTION
+      <p>
+        Two values are marked with dots on the visual above.
       </p>
       <p>
+        What do you think the percent of the smaller value to the larger value is?
+      </p>
+      <p>Example: If you think the smaller value is half of the larger value, please input 50</p>
+      <p>
         <input type="text" id="txtAnswer" />
-        <input placeholder="Percentage" oninput="this.className = ''" name="perc">
       </p>
     </div>
 
@@ -90,6 +91,7 @@
 
     <div style="overflow:auto;">
       <div style="float:right;">
+        <button type="button" id="disagreeButon" onclick="disagree()">Disagree</button>
         <button type="button" id="saveNextButton" onclick="saveNext()">Next</button>
       </div>
     </div>
@@ -99,11 +101,12 @@
   <script>
     //Initial SETUP
     console.log(d3);
-    var tracker = 1;
-    var trackerMax = 6;
+    var tracker = 0;
+    var numDisplay = 6; //Number of Display we want to have
     var currentPage = 0;
     var maxPage = 2;
-    document.getElementById("saveNextButton").innerHTML = "Start";
+    document.getElementById("disagreeButon").innerHTML = "Disagree";
+    document.getElementById("saveNextButton").innerHTML = "Agree";
     display();
 
 
@@ -137,6 +140,7 @@
       });
 
     }
+
 
     function end() {
       console.log("end");
@@ -230,6 +234,13 @@
       //save data
     }
 
+    //ADD this
+    function checkAnswers() {
+      return true;
+      //return false;
+    }
+
+    //display pages and buttons
     function display() {
       console.log("display   tracker " + tracker + "  currentPage " + currentPage);
 
@@ -237,31 +248,55 @@
       p[currentPage].style.display = "block";
 
       if (currentPage == maxPage) {
-        document.getElementById("saveNextButton").innerHTML = "Download the results";//.style.display = "Download";
-      } else if (tracker == trackerMax) {
+        document.getElementById("saveNextButton").innerHTML = "Download the results"; //.style.display = "Download";
+      } else if (tracker == numDisplay) {
         document.getElementById("saveNextButton").innerHTML = "Finish and Save";
-      } else {
+      } else if (currentPage > 0) {
         document.getElementById("saveNextButton").innerHTML = "Next";
       }
+
+      document.getElementById("questionHeader").innerHTML = "Question " + tracker + "/" + numDisplay;
     }
 
 
+    //Pressing Agree/Next/Save/Download button
     function saveNext() {
       //console.log("nextPrev currentPage " + currentPage)
-      if (currentPage == maxPage) {
+      if (tracker == numDisplay + 1) {
         end();
         console.log("END")
         display();
         return false;
       }
       var p = document.getElementsByClassName("page");
-      if (currentPage == 0 || tracker == trackerMax) {
+      if (tracker == 0) {
+        document.getElementById("disagreeButon").style.display = "none";
         p[currentPage].style.display = "none";
         currentPage = currentPage + 1;
-      } else {
-        tracker = tracker + 1;
       }
+      if (tracker > 0 && tracker <= numDisplay) {
+        if (!checkAnswers()) {
+          console.log("EMPTYYYY");
+          return false;
+        }
+        //add to data
+        if (tracker == numDisplay) {
+          p[currentPage].style.display = "none";
+          currentPage = currentPage + 1;
+        }
+
+      }
+      tracker = tracker + 1;
       display();
+    }
+
+    //Pressing Disagree Button
+    function disagree() {
+      var p = document.getElementsByClassName("page");
+      p[currentPage].style.display = "none";
+      currentPage = maxPage;
+      document.getElementById("disagreeButon").style.display = "none";
+      saveNext();
     }
   </script>
 
