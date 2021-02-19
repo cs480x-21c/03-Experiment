@@ -87,9 +87,7 @@
     .append('path')
     .attr('d', arcCreator)
     
-    .attr('fill', function(d) { 
-      return colorScale(d.data.key); 
-    })
+    .attr('fill', 'white')
     .attr('stroke', 'black')
     .attr('stroke-width', '2px');
 
