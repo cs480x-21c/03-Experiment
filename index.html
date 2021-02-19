@@ -1,13 +1,32 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
 
+  <script src="https://d3js.org/d3.v4.min.js"></script>
 
-<style>
-</style>
+  <script type="text/javascript" src="main.js"></script>
 
-<body>
-  <h1> Experiment </h1>
-</body>
+  <script type="text/javascript" src="Vis/BarChart.js"></script>
+  <script type="text/javascript" src="Vis/RadarChart.js"></script>
+  <script type="text/javascript" src="Vis/TreeMap.js"></script>
 
-<script>
-  console.log(d3); // test if d3 is loaded
-</script>
+  <script type="text/javascript" src="Results/ResultsController.js"></script>
+
+  <script type="text/javascript" src="Random/RandomFactory.js"></script>
+
+  <style>
+  </style>
+
+  <head>
+    <title>A3: A Vis Experiment</title>
+  </head>
+
+  <body onload="main()">
+    <form>
+      <label for="answer"></label>
+        <!-- TODO: make input not allow people to enter and navigate somehow-->
+        <!-- TODO: make button look... better-->
+        <input type="number" name="input" id="answer" step="1">
+      <button type="button" name="submit" value="trialButton" id="nextChart" onclick="makeNewChart()"></button>
+    </form>
+  </body>
+</html>
