@@ -94,6 +94,16 @@
         return a.map(d => d3.randomInt(0, 101)());
     }
 
+    // returns a list of two random indexes from the given random data
+    const randomSelection = (randomData) => {
+        let i1, i2;
+        do {
+            i1 = d3.randomInt(0, randomData.length)();
+            i2 = d3.randomInt(0, randomData.length)();
+        } while (i1 === i2);
+        return [i1, i2];
+    }
+
     /*  PUT CODE HERE */
 
     const svg1 = d3.create("svg")
@@ -108,6 +118,8 @@
 
 
     // SVG 3
+    const svg3Data = getRandomData();
+    const svg3SelectedData = randomSelection(svg3Data);
     const arcs = d3.pie()(getRandomData());
     const arc = d3.arc()
         .innerRadius(0)
@@ -135,7 +147,8 @@
         .join("g")
         .attr("transform", d => `translate(${(arcLabel()).centroid(d)})`)
         .call(text => text.append("circle")
-            .attr("fill", "black")
+            .attr("fill",
+                d => (d.index === svg3SelectedData[0] || d.index === svg3SelectedData[1]) ? "black" : "none")
             .attr("r", 3)
             .attr("width", 6)
             .attr("height", 6));
