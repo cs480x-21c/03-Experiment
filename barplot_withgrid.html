@@ -38,7 +38,7 @@
     
     <svg width="950" height="650"></svg>
     
-    <form name="myform" onSubmit="return handleClick()">
+    <form name="myform" onSubmit="return handleClick()"> 
         <input name="Submit"  type="submit" value="Submit" >
         <input type="text" id="myVal" placeholder="Add some text&hellip;">
     </form>
@@ -181,18 +181,57 @@
 
         const actualSizeDiff = (vals[1]-vals[0])/(vals[1])
         console.log(actualSizeDiff)
+        
+        //keep track of submissions?
+        var index = 0;
+        const dataset = ["Estimated Value", "Actual Value", "Distance Between Bars"]
 
         //Supposed to grab the typed text when the user clicks the submit button
         //I don't think it works though
         //I stole the code from the internet
         function handleClick(event){
+            index = index + 1;
+            console.log("index " + index)
             console.log(document.getElementById("myVal").value)
-            draw(document.getElementById("myVal").value)
             const estVal = document.getElementById("myVal").value;
-            const dataset = [{estimatedValue: estVal, actualValue: actualSizeDiff, barsBetween}];
-            return false;
+            //const dataset = [{estimatedValue: estVal, actualValue: actualSizeDiff, distanceBetweenBars: barsBetween}];
+            dataset.push(estVal, actualSizeDiff, barsBetween);
+            console.log(dataset)
+            if(index >= 5) {
+              downloadCSV(dataset.join("\n"), 'barplotdata.csv');
+            }
+//            for (var i = 0; i < 5; i++) {
+                //draw(document.getElementById("myVal").value) //makes it reset?
+//            }
+          return false;
         }
         
+        function downloadCSV(csv, filename) {
+          var csvFile;
+          var downloadLink;
+
+          // CSV file
+          csvFile = new Blob([csv], {type: "text/csv"});
+
+          // Download link
+          downloadLink = document.createElement("a");
+
+          // File name
+          downloadLink.download = filename;
+
+          // Create a link to the file
+          downloadLink.href = window.URL.createObjectURL(csvFile);
+
+          // Hide download link
+          downloadLink.style.display = "none";
+
+          // Add the link to DOM
+          document.body.appendChild(downloadLink);
+
+          // Click download link
+          downloadLink.click();
+        }
+
         //TODO:
         //fix so that "myval" that is collected from the user is saved somewhere permanent
             //I wanted to create a csv and add it a new line with this info
