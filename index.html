@@ -7,10 +7,14 @@
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="http://chancejs.com/chance.min.js"></script>
+<script src="https://unpkg.com/d3-simple-slider"></script>
 
 <body>
-  <h1> Experiment </h1>
-  <svg id="vis"> </svg>
+<h1> Experiment </h1>
+<svg id="vis"> </svg>
+<div id="slideDiv"> </div>
+<div> <button type="button" onclick="submitPressed()">Submit Answer</button> </div>
+
 </body>
 
 <script>
@@ -43,29 +47,30 @@
 
   //The following are helper functions for generating the graphs
   var x = d3.scaleBand()
-    .range([0, width])
-    .padding(0.1);
+          .range([0, width])
+          .padding(0.1);
+
   var y = d3.scaleLinear()
-    .range([height, 0]);
+          .range([height, 0]);
 
   const pie = d3.pie()
-    .sort(null)
-    .value(d => d.data);
+          .sort(null)
+          .value(d => d.data);
 
   const pieSorted = d3.pie()
-    .value(d => d.data);
+          .value(d => d.data);
 
   const pieArc = d3.arc()
-    .innerRadius(0)
-    .outerRadius(radius * 0.8);
+          .innerRadius(0)
+          .outerRadius(radius * 0.8);
 
   const donutArc = d3.arc()
-    .innerRadius(radius * 0.5)
-    .outerRadius(radius * 0.8)
+          .innerRadius(radius * 0.5)
+          .outerRadius(radius * 0.8)
 
   const outerArc = d3.arc()
-    .innerRadius(radius * 0.9)
-    .outerRadius(radius * 0.9)
+          .innerRadius(radius * 0.9)
+          .outerRadius(radius * 0.9)
 
   //Removes all of the dots from screen
   function removeDots(){
@@ -85,6 +90,7 @@
 
   //Returns the color to use for rendering the dot
   function getDotColor(isVisable, renderDot){
+    //console.log(isVisable)
     if(isVisable.dot && renderDot)
       return dotColor
     return noColor
@@ -110,7 +116,7 @@
   //Randomly selects a number 5-10 and generates that number of data points for the chart. This is what makes each chart varies in the number of sections
   //The data is stored as an array of objects (check singleDataPoint() for info on the object)
   function createDataPoints(){
-    var dataPoints = new Array(chance.integer({min: 5, max: 10}))
+    var dataPoints = new Array(chance.integer({min: 8, max: 8})) //Change min and max to be differing values if randomized number of bars/segments
     for(var i = 0; i < dataPoints.length; i++){
       dataPoints[i] = singleDataPoint()
       dataPoints[i].location = i
@@ -135,23 +141,23 @@
     y.domain([0, d3.max(dataPoints, function(d) { return d.data+(margin.top*2) + (dotRadius*2); })]);
 
     svg.selectAll("bar")
-      .data(dataPoints).enter()
-      .append("rect")
-        .style("fill", d => getColor(d, useColor))
-        .attr("x", d => x(d.location)-(width/2))
-        .attr("y", d => y(d.data)-(height/2))
-        .attr("height", d => height - y(d.data))
-        .attr("width", x.bandwidth())
-        .attr("stroke", "black")
-        .style("stroke-width", "2px")
+            .data(dataPoints).enter()
+            .append("rect")
+            .style("fill", d => getColor(d, useColor))
+            .attr("x", d => x(d.location)-(width/2))
+            .attr("y", d => y(d.data)-(height/2))
+            .attr("height", d => height - y(d.data))
+            .attr("width", x.bandwidth())
+            .attr("stroke", "black")
+            .style("stroke-width", "2px")
 
     svg.selectAll('dots')
-      .data(dataPoints).enter()
-      .append('circle')
-        .style("fill", d => getDotColor(d, renderDot))
-        .attr('r', dotRadius)
-        .attr("cx", d => (x(d.location)-(width/2)) + (x.bandwidth()/2))
-        .attr("cy", d => y(d.data)-(height/2) - dotRadius*2)
+            .data(dataPoints).enter()
+            .append('circle')
+            .style("fill", d => getDotColor(d, renderDot))
+            .attr('r', dotRadius)
+            .attr("cx", d => (x(d.location)-(width/2)) + (x.bandwidth()/2))
+            .attr("cy", d => y(d.data)-(height/2) - dotRadius*2)
   }
 
   //Generates and displays a horizontal bar chart
@@ -159,12 +165,12 @@
   function horizontalBarChart(dataPoints, renderDot=false, useColor=false){
     verticalBarChart(dataPoints, renderDot, useColor)
     svg.attr('transform',function(){
-                var me = svg.node()
-                var x1 = me.getBBox().width/2 - (height/2) + margin.top/2;
-                var y1 = me.getBBox().height/2 + margin.left/2;
+      var me = svg.node()
+      var x1 = me.getBBox().width/2 - (height/2) + margin.top/2;
+      var y1 = me.getBBox().height/2 + margin.left/2;
 
-                return `rotate(90, ${x1}, ${y1})`;
-            });
+      return `rotate(90, ${x1}, ${y1})`;
+    });
   }
 
   //Removes a horizontal bar chart
@@ -178,71 +184,71 @@
   function removeVerticalBarChart(){
     removeHorizontalBarChart()
     svg.attr('transform',function(){
-                var me = svg.node()
-                var x1 = me.getBBox().width/2 - (height/2) + margin.top/2;
-                var y1 = me.getBBox().height/2 + margin.left/2;
+      var me = svg.node()
+      var x1 = me.getBBox().width/2 - (height/2) + margin.top/2;
+      var y1 = me.getBBox().height/2 + margin.left/2;
 
-                return `rotate(-90, ${x1}, ${y1})`;
-            });
+      return `rotate(-90, ${x1}, ${y1})`;
+    });
   }
 
   //Generates and displays a pie chart
   function pieChart(dataPoints, renderDot=false, useColor=false){
     svg.selectAll('path')
-      .data(pie(dataPoints))
-      .enter()
-      .append('path')
-      .attr('d', pieArc)
-      .attr('fill', d => getColor(d.data, useColor))
-      .attr("stroke", "black")
-      .style("stroke-width", "2px")
+            .data(pie(dataPoints))
+            .enter()
+            .append('path')
+            .attr('d', pieArc)
+            .attr('fill', d => getColor(d.data, useColor))
+            .attr("stroke", "black")
+            .style("stroke-width", "2px")
 
 
     svg.selectAll('dots')
-      .data(pie(dataPoints))
-      .enter()
-      .append('circle')
-        .style("fill", d => getDotColor(d.data, renderDot))
-        .attr('r', dotRadius)
-        .attr('transform', function(d) {
-            var pos = outerArc.centroid(d);
-            return 'translate(' + pos + ')';
-        })
+            .data(pie(dataPoints))
+            .enter()
+            .append('circle')
+            .style("fill", d => getDotColor(d.data, renderDot))
+            .attr('r', dotRadius)
+            .attr('transform', function(d) {
+              var pos = outerArc.centroid(d);
+              return 'translate(' + pos + ')';
+            })
   }
 
   //Generates and displays a donut chart
   function donutChart(dataPoints, renderDot=false, useColor=false){
     svg.selectAll('path')
-      .data(pie(dataPoints))
-      .enter()
-      .append('path')
-      .attr('d', donutArc)
-      .attr('fill', d => getColor(d.data, useColor))
-      .attr("stroke", "black")
-      .style("stroke-width", "2px")
+            .data(pie(dataPoints))
+            .enter()
+            .append('path')
+            .attr('d', donutArc)
+            .attr('fill', d => getColor(d.data, useColor))
+            .attr("stroke", "black")
+            .style("stroke-width", "2px")
 
     svg.selectAll("dots")
-    .data(pie(dataPoints))
-    .enter()
-    .append("circles")
-      .style("fill", "black")
-        .attr('r', dotRadius)
-        .attr('transform', function(d) {
-          var pos = outerArc.centroid(d);
-          return 'translate(' + pos + ')';
-        })
+            .data(pie(dataPoints))
+            .enter()
+            .append("circles")
+            .style("fill", "black")
+            .attr('r', dotRadius)
+            .attr('transform', function(d) {
+              var pos = outerArc.centroid(d);
+              return 'translate(' + pos + ')';
+            })
 
 
     svg.selectAll('dots')
-      .data(pie(dataPoints))
-      .enter()
-      .append('circle')
-        .style("fill", d => getDotColor(d.data, renderDot))
-        .attr('r', dotRadius)
-        .attr('transform', function(d) {
-            var pos = outerArc.centroid(d);
-            return 'translate(' + pos + ')';
-        })
+            .data(pie(dataPoints))
+            .enter()
+            .append('circle')
+            .style("fill", d => getDotColor(d.data, renderDot))
+            .attr('r', dotRadius)
+            .attr('transform', function(d) {
+              var pos = outerArc.centroid(d);
+              return 'translate(' + pos + ')';
+            })
   }
 
   //Removes either a pie or donut chart
@@ -265,22 +271,92 @@
     return 1 - (Math.abs(points[0] - points[1])/points[1])
   }
 
+  //Create the slider
+  function makeSlider(){
+
+    var slider = d3.sliderBottom()
+            .min(0)
+            .max(1)
+            .width(400)
+            .tickFormat(d3.format('.2%'))
+            .ticks(4)
+            .default(0.50)
+            .on('onchange', val => {
+              hoverVal = val;
+            });
+
+    d3.select('#slideDiv')
+            .append('svg')
+            .attr('width', 500)
+            .attr('height', 100)
+            .append('g')
+            .attr('transform', 'translate(30,30)')
+            .call(slider);
+  }
+
+  function submitPressed(){
+    valueSubmitted = hoverVal;
+    answer = getExpected(data);
+    userID = 1; //Change this
+
+    if(trialsSubmitted < 60) {
+      submitAnswer(valueSubmitted, answer, userID);
+    }
+  }
+
+  function submitAnswer(valueSubmitted, answer, userID){
+    var json = JSON.stringify({
+      given:valueSubmitted,
+      expected:answer,
+      UID:userID
+    });
+
+    //Haley - Convert to CSV and store someplace
+
+    console.log(json);
+
+    trialsSubmitted ++;
+    data = createDataPoints();
+    selectTwoPoints(data);
+    if(trialsSubmitted < 20){
+      removeHorizontalBarChart();
+      horizontalBarChart(data, false, true);
+    }
+    else if(trialsSubmitted === 20){
+      removeHorizontalBarChart();
+      pieChart(data, false, true);
+    }
+    else if(trialsSubmitted < 40){
+      removeCircleChart();
+      pieChart(data, false, true);
+    }
+    else if(trialsSubmitted < 60){
+      removeCircleChart();
+      donutChart(data, false, true);
+    }
+    else if(trialsSubmitted === 60){
+      removeCircleChart();
+    }
+  }
+
+  var trialsSubmitted = 0;
+  var hoverVal = 0.5;
+
   //Creates the canvas to draw on
   var svg = d3.select('#vis')
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom + 10)
-    .append("g")
-      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom + 10)
+          .append("g")
+          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
   //Generates the data used to generate the charts
-  data = createDataPoints()
+  var data = createDataPoints()
   selectTwoPoints(data)
-
+  makeSlider()
 
   //Functions used to create the charts used in our experiment
-  donutChart(data, true, false)
+  horizontalBarChart(data, false, true)
   // pieChart(data, true, false)
   // verticalBarChart(data, true, false)
-  console.log(getExpected(data))
 
 </script>
