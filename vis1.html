@@ -25,9 +25,21 @@ var svg = d3.select("#bar-chart")
 // setting up the random data
 var data = []
 for(i=0; i<5 ;i++){
-    data.push(Math.floor(Math.random()*100))
+    data.push(Math.floor(Math.random()*101))
 }
 console.log(data)
+
+//selecting the two random bars
+var bar1 = Math.floor(Math.random()*5)
+var bar2 = Math.floor(Math.random()*5)
+
+while (bar2 == bar1){
+  bar2 = Math.floor(Math.random()*4)
+}
+
+var barMax = Math.max(data[bar1],data[bar2])
+var barMin = Math.min(data[bar1],data[bar2])
+console.log(barMax,barMin)
 
 // setting up the axes
 var x = d3.scaleLinear()
@@ -37,7 +49,7 @@ var x = d3.scaleLinear()
 svg
   .append("g")
   .attr("transform", "translate(0,"+ (height - margin.bottom) +")")     
-  .call(d3.axisBottom().scale(x).ticks(5));
+  .call(d3.axisBottom().scale(x).ticks(0));
 
 var y = d3.scaleLinear()
   .domain([0, 100])        
@@ -46,8 +58,9 @@ var y = d3.scaleLinear()
 svg
 .append("g")
 .attr("transform", "translate("+ margin.left+","+ 0 +")")     
-.call(d3.axisLeft().scale(y).ticks(5));
+.call(d3.axisLeft().scale(y).ticks(0));
 
+// setting up the bars
 svg.selectAll("bar-charts")
 .data(data)
 .enter()
@@ -64,6 +77,19 @@ svg.selectAll("bar-charts")
 })
 .attr("fill", "white")
 .attr("stroke","black")
+
+//setting up the bar markers
+svg.append("circle")
+.attr("cx", x(bar1+1))
+.attr("cy",450)
+.attr("r",5)
+.attr("fill","black")
+
+svg.append("circle")
+.attr("cx", x(bar2+1))
+.attr("cy",450)
+.attr("r",5)
+.attr("fill","black")
 
 
 </script>
