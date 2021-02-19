@@ -62,7 +62,6 @@
     input.setAttribute('placeholder', 'Enter guess here!')
     document.body.appendChild(input)
     document.body.appendChild(document.createElement('br'))
-    // TODO: Make the enter key press next button
 
     // Create next button
     let nextButton = document.createElement('button')
@@ -98,6 +97,7 @@
           currTrialType = chooseAChart[currTrial](randomizeData(), randomizeSelectedPoints())
 
         } else {
+          sendData(answers);
           label.innerText = 'Thanks for taking this thing, all done, refresh the page to restart'
           textEntry.remove()
           document.getElementById('nextButton').remove()
@@ -110,6 +110,18 @@
         console.log('Ya gotta enter a value')
         //TODO: Make this a cool lil warning
       }
+  }
+
+  function sendData(){
+    fetch('/submitToMongo', {
+      method: 'POST',
+      body: JSON.stringify({answers}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {return response.json()}).then((json) =>{
+      console.log(json);
+    })
   }
 
   function calculateError(reportedPercentage) {
