@@ -58,20 +58,6 @@ var sumstat = d3.nest() // nest function allows to group the calculation per lev
 console.log(sumstat)
 
 
-data = dataset[0];
-
-
-// Compute summary statistics used for the box:
-let data_sorted = data.sort(d3.ascending);
-let q1 = d3.quantile(data_sorted, .25);
-let median = d3.quantile(data_sorted, .5);
-let q3 = d3.quantile(data_sorted, .75);
-let interQuantileRange = q3 - q1;
-let min = data_sorted[0];
-let max = data_sorted[data_sorted.length-1];
-
-console.log(min+', '+q1+', '+median+', '+q3+', '+max)
-
 let y = d3.scaleLinear()
   .domain([0,1])
   .range([height, 0]);
