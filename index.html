@@ -85,7 +85,6 @@
 
   //Returns the color to use for rendering the dot
   function getDotColor(isVisable, renderDot){
-    console.log(isVisable)
     if(isVisable.dot && renderDot)
       return dotColor
     return noColor
@@ -252,6 +251,20 @@
     removeDots()
   }
 
+  //Returns the expected difference between the two selected points of data
+  function getExpected(data){
+    points = []
+    for(var i = 0; i < data.length; i++){
+      if(data[i].dot)
+        points.unshift(data[i].data)
+    }
+    points.sort(function(a, b) {
+      return a - b;
+    });
+    console.log(points)
+    return 1 - (Math.abs(points[0] - points[1])/points[1])
+  }
+
   //Creates the canvas to draw on
   var svg = d3.select('#vis')
     .attr("width", width + margin.left + margin.right)
@@ -268,5 +281,6 @@
   donutChart(data, true, false)
   // pieChart(data, true, false)
   // verticalBarChart(data, true, false)
+  console.log(getExpected(data))
 
 </script>
