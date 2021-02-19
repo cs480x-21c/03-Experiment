@@ -5,10 +5,12 @@ function getRandomInt(min, max){  //range includes min, does not include max
 	return adjRand
 }
 
+
 function barRandomGen(){
+	var numBars = 5;   //control for number of bars
 	var randomNumbers = [];  //array for random numbers
 	
-	for(var i = 0; i < 5; i++){
+	for(var i = 0; i < numBars; i++){
 		var findNum = true;  //loop control for finding non-duplicate numbers
 		
 		var newRand = 0;   //new random number to be placed in array
@@ -31,17 +33,17 @@ function barRandomGen(){
 		}		
 	}
 	
-	//at this point we have array of five random numbers, non-duplicates, between 3 and 100
+	//at this point we have array of numBars random numbers, non-duplicates, between 3 and 100
 	//need to designate two spots to compare
 	
 	
 	
-	var firstNum = getRandomInt(1, 6);   //get random number between 1 and 5
+	var firstNum = getRandomInt(0, numBars);   //get random number between 0 and number of bars
 	
 	var secondNum = 0;
 	var findSecond = true; //need to find the second number
 	while (findSecond){
-		var newRand = getRandomInt(1, 6);  //generate second number
+		var newRand = getRandomInt(0, numBars);  //generate second number
 		if(newRand == firstNum){   //check for duplicate
 			findSecond = true;
 		}else{
@@ -57,9 +59,10 @@ function barRandomGen(){
 }
 
 function pieRandomGen(){
+	var numSlices = 5;    //control for number of pie slices
 	var randomNumbers = [];  //array for random numbers
 	
-	for(var i = 0; i < 4; i++){
+	for(var i = 0; i < (numSlices-1); i++){
 		var findNum = true;  //loop control for finding non-duplicate numbers
 		
 		var newRand = 0;   //new random number to be placed in array
@@ -68,7 +71,7 @@ function pieRandomGen(){
 		
 			//range to generate within is more complex here
 			
-			var numsRemaining = 4-i;  //number of numbers we'll need to generate after this one
+			var numsRemaining = (numSlices-1)-i;  //number of numbers we'll need to generate after this one
 			
 			var sumTillNow = 0;
 			for (var j = 0; j < randomNumbers.length; j++){  //keeping track of how much space we've used so far
@@ -95,23 +98,23 @@ function pieRandomGen(){
 	}
 	
 	var firstFourSum = 0; 
-	for (var i = 0; i < 4; i++){
+	for (var i = 0; i < (numSlices-1); i++){   //get the sum of the first 4 values chosen
 		firstFourSum = firstFourSum + randomNumbers[i];
 	}
 	
-	randomNumbers[4] = 100-firstFourSum;
+	randomNumbers[numSlices-1] = 100-firstFourSum;   //have the last number be the difference to 100
 	
-	//at this point we have array of five random numbers adding to 100, non-duplicates, between 3 and 100
+	//at this point we have array of numSlices random numbers adding to 100, non-duplicates, between 3 and 100
 	//need to designate two spots to compare
 	
 	
 	
-	var firstNum = getRandomInt(1, 6);   //get random number between 1 and 5
+	var firstNum = getRandomInt(0, numSlices);   //get random number between 0 and number of bars
 	
 	var secondNum = 0;
 	var findSecond = true; //need to find the second number
 	while (findSecond){
-		var newRand = getRandomInt(1, 6);  //generate second number
+		var newRand = getRandomInt(0, numSlices);  //generate second number
 		if(newRand == firstNum){   //check for duplicate
 			findSecond = true;
 		}else{
