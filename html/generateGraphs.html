@@ -172,7 +172,7 @@
       var subgroups = data.columns.slice(1);
 
       //The first column here is set to be the x axis with the subgroups being the stacked bars
-      var groups  = d3.map(data, function(d){ return(d.(/*first column name*/)); }).keys()
+      //var groups  = d3.map(data, function(d){ return d.(/*first column name*/); }).keys()
 
       //xaxis
       var x = d3.scaleBand()
@@ -204,7 +204,7 @@
           //we'd have to enter() more times depending on the subgroups to add all the necessary rectangles
           .data(function(d) { return d; })
           .enter().append('rect')
-            .attr('x', function(d) { return x(d.data./*first column name*/)})
+            //.attr('x', function(d) { return x(d.data.(/*first column name*/))})
             .attr('y', function(d) { return y(d[1]); })
             .attr('height', function(d) { return y(d[0]-y(d[1])); })
             .attr('width', x.bandwidth());
