@@ -165,7 +165,7 @@
 	  //get random data
 	  var gen = barRandomGen();
 	  
-	  //need an array with x and y axis data
+	  //need an array of JSON objects with x and y axis data
 	  var data = [];
 	  for(var i = 0; i < numBars; i++){
 		var newObj = {"xaxisdata":(i+1), "yaxisdata":gen[0][i]};  //create JSON objects for array with numbers 1-10 on x axis and generated data on y axis
@@ -211,6 +211,10 @@
 
     function generatePieChart() {
       console.log("pie");
+	  
+	  var gen = pieRandomGen(); //generate random pie chart
+	  
+	  var data = gen[0];   //random numbers for pie slice values ready to go
 
       //Radius of pie chart is half the length of the width or height
       var radius = width / 2;
@@ -237,6 +241,9 @@
         .attr('stroke', 'black')
         .style('stroke-width', '2px');
       //we might have to add the dot?
+	  
+	  var selectedSlice1 = gen[1][0];  //index (btwn 0 and 9) of first selected pie slice for comparison
+	  var selectedSlice2 = gen[1][1];  //index (btwn 0 and 9) of first selected pie slice for comparison
     }
 
     function generateStackedBarChart() {
@@ -290,7 +297,7 @@
 
     }
 	
-	//function for calculating what the actual correct percentage is
+	//function for calculating what the actual correct ratio percentage is given two values
 	function calculateCorrectPercentage(val1, val2){
 		var largerVal = Math.max(val1, val2);
 		var smallerVal = 0;
