@@ -12,11 +12,12 @@
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
         .attr("transform", "translate(" + width / 2 + "," + ( height/2+100 )+ ")"); // Add 100 on Y translation, cause upper bars are longer
-  
+
     function loadGraph(){
+
       var xArray=[]
       var numberOfGraphs = 5
-      for(var i=0; i<=numberOfGraphs;i++){
+      for(var i=0; i<numberOfGraphs;i++){
         xArray[i]={i:""+i+"", height: Math.round(Math.random()*10000+10) }
       }  
       console.log(xArray)
@@ -45,7 +46,35 @@
               .endAngle(function(d) { return( x(d.i)+ x.bandwidth()) })
               .padAngle(0.01)
               .padRadius(innerRadius))
+      
+        return svg
     }
-    loadGraph()
-   
 
+    const submit= function(e){
+      e.preventDefault()
+
+      var participant = 0
+      var trialNumber = 0
+      var vis = 0 
+      var truePercent = 0 
+      var reportedPercent = 0 
+      var body = JSON.stringify({id: participant, trial: trialNumber, vis: vis, truePercent: truePercent, reportedPercent: reportedPercent})
+
+      fetch('/submit',{
+        method:'POST',
+        body: body
+      })
+      .then( response=> response.json())
+      .then(json=>{
+          console.log(json)
+      })
+      svg.selectAll("*").remove()
+      loadGraph()
+      return false;  
+    };
+
+window.onload= function(){
+  loadGraph()
+  const button = document.querySelector( 'button' )
+  button.onclick = submit
+}
