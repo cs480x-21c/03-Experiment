@@ -97,9 +97,7 @@ function generateBoxPlots(minplots = 5, maxplots = 10) {
 			.attr("height", d => y(d.value.q1)-y(d.value.q3) )
 			.attr("width", boxWidth )
 			.attr("stroke", "black")
-			.style("fill", function(d) {
-				return targets.includes(parseInt(d.key)) ? 'yellow' : 'white' 
-			} );
+			.style("fill", d => targets.includes(parseInt(d.key)) ? 'yellow' : 'white' ); //TODO: replace color with dot?
 
 
 	// Show the median
