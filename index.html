@@ -227,6 +227,53 @@
 
     function generateStackedBarChart() {
       console.log("Stacked");
+      //After we read in the data, we have to list the subgroups to be stacked
+      var subgroups = data.columns.slice(1);
+
+      //The first column here is set to be the x axis with the subgroups being the stacked bars
+      //var groups  = d3.map(data, function(d){ return d.(/*first column name*/); }).keys()
+
+      //xaxis
+      var x = d3.scaleBand()
+        .domain(groups)
+        .range([0, width]);
+
+      svg.append('g')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(d3.axisBottom(x).tickSizeOuter(0));
+
+      //yaxis
+      var y = d3.scaleLinear()
+        //.domain([num, num])
+        .range([height, 0]);
+      svg.append('g')
+        .call(d3.axisLeft(y));
+
+      //color?? --> Would we need to add color here to differentiate the different subgroups?
+
+      var stackedData = d3.stack()
+        .keys(subgroups)(data);
+
+      svg.append('g')
+        .selectAll('g')
+        .data(stackedData)
+        .enter().append('g')
+        //we would add the color here...
+        .selectAll('rect')
+        //we'd have to enter() more times depending on the subgroups to add all the necessary rectangles
+        .data(function(d) {
+          return d;
+        })
+        .enter().append('rect')
+        //.attr('x', function(d) { return x(d.data.(/*first column name*/))})
+        .attr('y', function(d) {
+          return y(d[1]);
+        })
+        .attr('height', function(d) {
+          return y(d[0] - y(d[1]));
+        })
+        .attr('width', x.bandwidth());
+
     }
 
     function displayRandomGraph() {
