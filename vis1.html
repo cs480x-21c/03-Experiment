@@ -91,5 +91,33 @@ svg.append("circle")
 .attr("r",5)
 .attr("fill","black")
 
+var randomOrder = []
+for(i = 0; i<20; i++){
+  randomOrder.push("bar")
+}
+for(i = 0; i<20; i++){
+  randomOrder.push("circle")
+}
+for(i = 0; i<20; i++){
+  randomOrder.push("pie")
+}
+
+ 
+var randomize = function(arr){
+  for(i=0;i<60;i++){
+    randPos = Math.floor(Math.random()*60) // gives a random value between 0 and 59
+    while(randPos == i){
+      randPos = Math.floor(Math.random()*60) // gives a random value between 0 and 59
+    }
+    var temp = arr[i]
+    arr[i] = arr[randPos]
+    arr[randPos] = temp
+
+  }
+}
+
+randomize(randomOrder)
+console.log(randomOrder)
+
 
 </script>
