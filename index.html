@@ -1,5 +1,5 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
-
+<svg id="frame"></svg>
 
 <style>
 </style>
@@ -10,4 +10,68 @@
 
 <script>
   console.log(d3); // test if d3 is loaded
+  var svg = d3.select('#frame');
+  randomGradient(svg);
+
+  function randomGradient(svg){
+    svg
+    .attr('width', '40%')
+    .attr('height', '50%')
+    .style('padding-left', '30%')
+    .style('padding-top', '5%')
+    .attr("viewBox", '0 0 100 100')
+
+    //gradient for bars
+    var gradDefs = svg.append("defs")
+
+    var grad = gradDefs.append("linearGradient")
+    .attr("id", "barGradient")
+    .attr("x1", '0%')
+    .attr("x2", '100%')
+    .attr("y1", '0%')
+    .attr("y2", '100%')
+    .attr("gradientTransform", "rotate(50)")
+
+    grad.append("stop")
+    .attr("class", "start")
+    .attr('stop-color', 'black')
+    .attr("offset", "0")
+
+    grad.append("stop")
+    .attr('stop-color', 'white')
+    .attr("offset", "100%")
+    .attr("class", "end")
+
+
+    var data = []
+
+    //generate datapoints
+    for(i = 0; i< 10; i++){
+      var x = Math.floor(Math.random() * 99) +1;
+      data.push([x, i*7])
+    }
+    console.log(data);
+    console.log(data[0]);
+
+    var compareIndexA = Math.floor(Math.random() * 10);
+    var compareIndexB = compareIndexA;
+    //make sure compared bars are not hte same or next to each other
+    while(compareIndexA == compareIndexB | Math.abs(compareIndexA - compareIndexB) == 1){
+      compareIndexB = Math.floor(Math.random() * 10);
+    }
+    console.log(compareIndexB);
+    console.log(compareIndexA);
+
+    svg.selectAll('rect')
+    .data(data)
+    .enter().append('rect')
+    .attr('x', function(d){return d[1]})
+    .attr('y', function(d){return 100 - d[0]})
+    .attr('width', '5%')
+    .attr('height', function(d){return d[0]})
+    .attr('fill', 'url(#barGradient)')
+  }
+
+ 
+
 </script>
