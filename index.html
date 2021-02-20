@@ -1,5 +1,6 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
+<script src="https://unpkg.com/d3-horizon-chart"></script>
 
 <style>
 </style>
@@ -10,4 +11,27 @@
 
 <script>
   console.log(d3); // test if d3 is loaded
+
+
+  // http://kmandov.github.io/d3-horizon-chart/
+
+  // generate some random data
+  var series = [];
+  for (var i = 0, variance = 0; i < 1500; i++) {
+    variance += (Math.random() - 0.5) / 10;
+    series.push(Math.cos(i/100) + variance);
+  }
+
+  var horizonChart = d3.horizonChart()
+          .height(80)
+          .title('Horizon, 4-band')
+          .colors(['#313695', '#4575b4', '#74add1', '#abd9e9', '#fee090', '#fdae61', '#f46d43', '#d73027']);
+
+
+  var horizons = d3.select('body').selectAll('.horizon')
+          .data([series])
+          .enter().append('div')
+          .attr('class', 'horizon')
+          .each(horizonChart);
+
 </script>
