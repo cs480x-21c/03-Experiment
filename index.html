@@ -11,7 +11,8 @@
 <script>
   console.log(d3); // test if d3 is loaded
   var svg = d3.select('#frame');
-  randomGradient(svg);
+  var trueVal = randomGradient(svg);
+  console.log("true val: " + trueVal)
 
   function randomGradient(svg){
     svg
@@ -19,7 +20,7 @@
     .attr('height', '50%')
     .style('padding-left', '30%')
     .style('padding-top', '5%')
-    .attr("viewBox", '0 0 100 100')
+    .attr("viewBox", '0 0 100 110')
 
     //gradient for bars
     var gradDefs = svg.append("defs")
@@ -48,7 +49,7 @@
     //generate datapoints
     for(i = 0; i< 10; i++){
       var x = Math.floor(Math.random() * 99) +1;
-      data.push([x, i*7])
+      data.push([x, i*8])
     }
     console.log(data);
     console.log(data[0]);
@@ -62,6 +63,8 @@
     console.log(compareIndexB);
     console.log(compareIndexA);
 
+    var compareData = [data[compareIndexA][1]+2.5, data[compareIndexB][1]+2.5]
+
     svg.selectAll('rect')
     .data(data)
     .enter().append('rect')
@@ -70,7 +73,19 @@
     .attr('width', '5%')
     .attr('height', function(d){return d[0]})
     .attr('fill', 'url(#barGradient)')
+
+  
+    svg.selectAll("circle")
+    .data(compareData)
+    .enter().append("circle")
+    .attr('cy', '102')
+    .attr('cx', function(d){return d})
+    .attr('r', '1.5%')
+
+    return (Math.min(data[compareIndexA][0], data[compareIndexB][0]) / Math.max(data[compareIndexA][0], data[compareIndexB][0]))
   }
+
+  
 
  
 
