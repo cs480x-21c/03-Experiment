@@ -28,6 +28,18 @@
 </script>
 
 <script>
+
+  //empty array to be filled with the JSON format of a user's answers
+  var jsonObjArr = []
+  //headers array to make the csv file
+  var headers = {
+    given: 'Given Answer'.replace(/,/g, ''), // remove commas to avoid errors
+    expected: "Expected Answer",
+    chartType: "Chart Type",
+    colorType: "Color Type",
+    uid: "User ID"
+  };
+
   //Chance.js random number generator
   var chance = new Chance(new Date().getTime())
   //The colors used for rendering the chart
@@ -267,8 +279,9 @@
     points.sort(function(a, b) {
       return a - b;
     });
-    console.log(points)
-    return 1 - (Math.abs(points[0] - points[1])/points[1])
+
+    //console.log(points)
+    return 1 - (Math.abs(points[0] - points[1]) / points[1])
   }
 
   //Create the slider
@@ -298,47 +311,113 @@
     valueSubmitted = hoverVal;
     answer = getExpected(data);
     userID = 1; //Change this
+    chartType = Math.floor(trialsSubmitted/20) % 3; // 0 is Bar, 1 is Pie, 2 is Donut
+    colorType = Math.floor(trialsSubmitted/10) % 2; // 0 is Colored, 1 is Black and white
 
-    if(trialsSubmitted < 60) {
-      submitAnswer(valueSubmitted, answer, userID);
+
+    if (trialsSubmitted < 60) {
+      submitAnswer(valueSubmitted, answer, chartType, colorType, userID);
     }
   }
 
-  function submitAnswer(valueSubmitted, answer, userID){
+  function submitAnswer(valueSubmitted, answer, chartType, colorType, userID) {
     var json = JSON.stringify({
-      given:valueSubmitted,
-      expected:answer,
-      UID:userID
+      given: valueSubmitted,
+      expected: answer,
+      chart: chartType,
+      color: colorType,
+      UID: userID
     });
 
     //Haley - Convert to CSV and store someplace
 
     console.log(json);
 
+    jsonObj = JSON.parse(json);
+    //console.log(jsonObj);
+
+    jsonObjArr.push(jsonObj);
+    //console.log(jsonObjArr);
+
     trialsSubmitted ++;
     data = createDataPoints();
     selectTwoPoints(data);
     if(trialsSubmitted < 20){
       removeHorizontalBarChart();
-      horizontalBarChart(data, false, true);
+      colorType2 = Math.floor(trialsSubmitted/10) % 2 === 0;
+      horizontalBarChart(data, !colorType2, colorType2);
     }
     else if(trialsSubmitted === 20){
       removeHorizontalBarChart();
-      pieChart(data, false, true);
+      colorType2 = Math.floor(trialsSubmitted/10) % 2 === 0;
+      pieChart(data, !colorType2, colorType2);
     }
     else if(trialsSubmitted < 40){
       removeCircleChart();
-      pieChart(data, false, true);
+      colorType2 = Math.floor(trialsSubmitted/10) % 2 === 0;
+      pieChart(data, !colorType2, colorType2);
     }
     else if(trialsSubmitted < 60){
       removeCircleChart();
-      donutChart(data, false, true);
+      colorType2 = Math.floor(trialsSubmitted/10) % 2 === 0;
+      donutChart(data, !colorType2, colorType2);
     }
     else if(trialsSubmitted === 60){
       removeCircleChart();
+
+      convertToCSV(jsonObjArr);
+      exportCSVFile(headers, jsonObjArr, 'user_answers_in_csv');
     }
   }
 
+  function convertToCSV(objArray) {
+    var array = objArray;
+    var str = '';
+
+    for (var i = 0; i < array.length; i++) {
+      var line = '';
+      for (var index in array[i]) {
+        if (line != '') line += ','
+
+        line += array[i][index];
+      }
+
+      str += line + '\r\n';
+    }
+    console.log(str)
+    return str;
+  }
+
+  function exportCSVFile(headers, items, fileTitle) {
+    if (headers) {
+      items.unshift(headers);
+    }
+
+    // Convert Object to JSON
+    var jsonObject = JSON.stringify(items);
+
+    var csv = this.convertToCSV(jsonObjArr);
+
+    var exportedFilenmae = fileTitle + '.csv' || 'export.csv';
+
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    if (navigator.msSaveBlob) { // IE 10+
+      navigator.msSaveBlob(blob, exportedFilenmae);
+    } else {
+      var link = document.createElement("a");
+      if (link.download !== undefined) { // feature detection
+        // Browsers that support HTML5 download attribute
+        var url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", exportedFilenmae);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+  }
+  
   var trialsSubmitted = 0;
   var hoverVal = 0.5;
 
