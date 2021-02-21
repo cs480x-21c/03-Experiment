@@ -162,7 +162,7 @@
       svg
         .attr('width', 500)
         .attr('height', 500);
-      
+
 
       console.log("bar");
 
@@ -216,7 +216,7 @@
     }
 
     //generateBarGraph();
-    
+
     function generatePieChart() {
 
       var svg = d3.select('#vis');
@@ -314,7 +314,7 @@
       svg.append('g')
         .call(d3.axisLeft(y));
 
-        
+
       svg.append('g')
         .attr('transform', 'translate(0,' + height + ')')
         .call(d3.axisBottom(x).tickSizeOuter(0));
@@ -338,7 +338,7 @@
           return y(d[1]);
         })
         .attr('height', function (d) {
-          return y(d[0] - y(d[1]));
+          return y(d[0]) - y(d[1]);
         })
         .attr('width', x.bandwidth())
         .attr('stroke', 'black')
