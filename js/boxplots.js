@@ -148,24 +148,37 @@ function generateBoxPlots(minplots = 5, maxplots = 10) {
 	}
 }
 
-let v = generateBoxPlots();
-let x = document.getElementById("INPUT");
+
+//TODO: Refactor this out into it's own function. It can be reused
+
+let input = document.createElement("input"); 
+input.type = 'number';
+input.min = '0.01';
+input.max = '0.99';
+input.step = '0.01';
+document.body.appendChild(input);
+
+let submitButton = document.createElement('button');
+submitButton.innerHTML = 'Submit';
+submitButton.onclick = () => submit();
+document.body.appendChild(submitButton);
+
 let errorP = document.createElement("p");
 errorP.style = 'color:red';
 errorP.innerHTML = "Invalid input. Answer must be a decimal between 0 and 1";
 
-function foo() {
-	val = x.value;
+function submit() {
+	val = input.value;
 	if (val <= 0 || val >= 1) {
 		document.body.appendChild(errorP);
-		x.value = '';
+		input.value = '';
 		//console.log(errorP.innerHTML);
 	} else {
 		errorP.remove()
-		console.log(x.value); // store this to DB
+		console.log(input.value); // store this to DB
 		console.log(v); // store this to DB
 		document.getElementById('boxplot').innerHTML = '';
-		x.value = '';
+		input.value = '';
 		v = generateBoxPlots();
 	}
 }
