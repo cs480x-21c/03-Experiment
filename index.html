@@ -1,5 +1,7 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="visualizations.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3-scale-radial.js"></script>
 
 <style>
   #root {
@@ -9,9 +11,15 @@
   #experimentContents {
     display: none;
   }
+  #finish {
+    display: none;
+  }
   .errorMsg {
     color: red;
     font-size: 12px;
+    display: none;
+  }
+  .counter {
     display: none;
   }
 </style>
@@ -36,6 +44,11 @@
       <p class="errorMsg" id="expError">Please enter a number.</p>
 
     </div>
+
+    <div id="finish">
+      <p>You have completed the experiment. Thanks for participating!</p>
+    </div>
+
   </div>
 </body>
 
@@ -65,6 +78,7 @@
         if(this.participantId.trim() != '') {
           document.getElementById('start').style.display = 'none';
           document.getElementById('experimentContents').style.display = 'block';
+          document.getElementById('counter').style.display = 'block';
           this.displayNextVis();
         } else {
           document.getElementById('nameError').style.display = 'block';
@@ -92,22 +106,34 @@
       displayNextVis() {
 
         ++this.initialCount;
-        let nextVis = visIterator.next();
+        d3.select('#svg').selectAll('*').remove();
         
-        switch(nextVis.value) {
+        if(this.initialCount > this.totalVisCount) {
 
-          case 'pie':
-            console.log('pie');
-            break;
+          document.getElementById('experimentContents').style.display = 'none';
+          document.getElementById('finish').style.display = 'block';
+          document.getElementById('counter').style.display = 'none';
+          
+        } else {
 
-          case 'circle':
-          console.log('circle');
-            break;
+          let nextVis = visIterator.next();
+        
+          switch(nextVis.value) {
 
-          case 'bar':
-            console.log('bar');
-            break;
+            case 'pie':
+              generatePieChart();
+              break;
 
+            case 'circle':
+              generateCircleChart();
+              break;
+
+            case 'bar':
+              generateBarChart();
+              break;
+
+
+          }
 
         }
 
