@@ -158,9 +158,14 @@ function foo() {
 	val = x.value;
 	if (val <= 0 || val >= 1) {
 		document.body.appendChild(errorP);
+		x.value = '';
 		//console.log(errorP.innerHTML);
 	} else {
 		errorP.remove()
-		console.log(x.value);
+		console.log(x.value); // store this to DB
+		console.log(v); // store this to DB
+		document.getElementById('boxplot').innerHTML = '';
+		x.value = '';
+		v = generateBoxPlots();
 	}
 }
