@@ -179,6 +179,16 @@ console.log(visOrder)
         let truePercent = this.truePercent;
         let predictedValue = this.predictedValue;
 
+          var body = JSON.stringify({id: participant, trial: trialNum, vis: visName, truePercent: truePercent, reportedPercent: predictedValue})
+    
+          fetch('/submit',{
+            method:'POST',
+            body: body
+          })
+          .then( response=> response.json())
+          .then(json=>{
+              console.log(json)
+          })
       }
 
     }
