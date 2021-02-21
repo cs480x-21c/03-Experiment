@@ -102,8 +102,8 @@ function generateBarChart() {
 
     // set up the svg
     var svg = d3.select("#svg")
-    .attr("width", width)
-    .attr("height", height)
+    .style("width", width)
+    .style("height", height)
 
 
     // setting up the random data
@@ -191,8 +191,8 @@ function generateCircleChart() {
     
     // append the svg object to the body of the page
     var svg = d3.select("#svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .style("width", width + margin.left + margin.right)
+        .style("height", height + margin.top + margin.bottom)
       .append("g")
         .attr("transform", "translate(" + width / 2 + "," + ( height/2+100 )+ ")"); // Add 100 on Y translation, cause upper bars are longer
 
