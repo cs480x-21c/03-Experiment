@@ -11,8 +11,22 @@
 <script>
   console.log(d3); // test if d3 is loaded
   var svg = d3.select('#frame');
-  var trueVal = randomGradient(svg);
+  var chartToChoose = Math.floor(Math.random() * 3)+1;
+  var trueVal;
+  if (chartToChoose == 1) {
+    trueVal = randomGradient(svg);
+  }
+  else if (chartToChoose == 2) {
+    trueVal = randomBarGraph(svg);
+  }
+  else {
+    console.log("Probability does not shine on you today "+chartToChoose.toString());
+    trueVal = 0.5;
+  }
+  //var trueVal = randomGradient(svg);
   console.log("true val: " + trueVal)
+
+  //do other logic, and store the data based on chartToChoose, their input, and trueval
 
   function randomGradient(svg){
     svg
@@ -44,24 +58,10 @@
     .attr("class", "end")
 
 
-    var data = []
-
-    //generate datapoints
-    for(i = 0; i< 10; i++){
-      var x = Math.floor(Math.random() * 99) +1;
-      data.push([x, i*8])
-    }
-    console.log(data);
-    console.log(data[0]);
-
-    var compareIndexA = Math.floor(Math.random() * 10);
-    var compareIndexB = compareIndexA;
-    //make sure compared bars are not hte same or next to each other
-    while(compareIndexA == compareIndexB | Math.abs(compareIndexA - compareIndexB) == 1){
-      compareIndexB = Math.floor(Math.random() * 10);
-    }
-    console.log(compareIndexB);
-    console.log(compareIndexA);
+    var data = generateData();
+    var compareIndexes = generateIndexes();
+    var compareIndexA = compareIndexes[0];
+    var compareIndexB = compareIndexes[1];
 
     var compareData = [data[compareIndexA][1]+2.5, data[compareIndexB][1]+2.5]
 
@@ -83,6 +83,72 @@
     .attr('r', '1.5%')
 
     return (Math.min(data[compareIndexA][0], data[compareIndexB][0]) / Math.max(data[compareIndexA][0], data[compareIndexB][0]))
+  }
+
+  //generate the data points for the assignment. This should be uniform for all charts for consistency reasons
+  function generateData() {
+    var data = []
+
+    //generate datapoints
+    for(i = 0; i< 10; i++){
+      var x = Math.floor(Math.random() * 99) +1;
+      data.push([x, i*8])
+    }
+    console.log(data);
+    console.log(data[0]);
+    return data;
+  }
+
+  //function to generate indices (not the same, and not right next to each other)
+  function generateIndexes() {
+    var compareIndexA = Math.floor(Math.random() * 10);
+    var compareIndexB = compareIndexA;
+    //make sure compared bars are not hte same or next to each other
+    while(compareIndexA == compareIndexB | Math.abs(compareIndexA - compareIndexB) == 1){
+      compareIndexB = Math.floor(Math.random() * 10);
+    }
+    console.log(compareIndexB);
+    console.log(compareIndexA);
+    return [compareIndexA, compareIndexB];
+  }
+  
+  function randomBarGraph(svg) {
+
+    svg
+    .attr('width', '40%')
+    .attr('height', '50%')
+    .style('padding-left', '30%')
+    .style('padding-top', '5%')
+    .attr("viewBox", '0 0 100 110')
+
+    var data = generateData();
+    var compareIndexes = generateIndexes();
+    var compareIndexA = compareIndexes[0];
+    var compareIndexB = compareIndexes[1];
+
+    var compareData = [data[compareIndexA][1]+2.5, data[compareIndexB][1]+2.5]
+
+    svg.selectAll('rect')
+    .data(data)
+    .enter().append('rect')
+    .attr('x', function(d){return d[1]})
+    .attr('y', function(d){return 100 - d[0]})
+    .attr('width', '5%')
+    .attr('height', function(d){return d[0]})
+    .attr('stroke', 'black')
+    .attr('stroke-width', 0.5)
+    .attr('fill', 'white');
+
+  
+    svg.selectAll("circle")
+    .data(compareData)
+    .enter().append("circle")
+    .attr('cy', '103')
+    .attr('cx', function(d){return d})
+    .attr('r', '1.5%')
+
+    return (Math.min(data[compareIndexA][0], data[compareIndexB][0]) / Math.max(data[compareIndexA][0], data[compareIndexB][0]))
+
   }
 
   
