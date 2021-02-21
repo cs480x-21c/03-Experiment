@@ -5,7 +5,7 @@ let q = document.getElementById('message');
 let input = document.getElementById('INPUT'); 
 let submitButton = document.getElementById('SUBMIT');
 let errorP = document.getElementById('error');
-let v = null;
+let actual = null;
 
 let tests = [
 	[() => generateBoxPlots(), 'What percentage of size is the smaller highlighted boxplot of the larger highlighted boxplot?'],
@@ -14,9 +14,9 @@ let tests = [
 
 let testver = 0;
 
-function nextTrial(test, message) { //TODO: Keep track of trial count
+function nextTrial(test, message) {
 	document.getElementById('plot').innerHTML = ''; // clear plots in case one is already there
-	v = test();
+	actual = test();
 	q.innerHTML = message;
 }
 
@@ -28,21 +28,21 @@ function submit() {
 	} else {
 		errorP.innerHTML = '';
 		console.log(input.value); // TODO: store this to DB
-		console.log(v); // TODO: store this to DB
+		console.log(actual); // TODO: store this to DB
 		document.getElementById('plot').innerHTML = '';
 		input.value = '';
-		if (++trial < trialsPerTest) { // still on current test
-			nextTrial(tests[testver][0], tests[testver][1])
-		} else { // move to next test
+		
+		if (++trial >= trialsPerTest) { //increment trial count, if above trials per test, increment test count
 			trial = 0;
-			if (testver < tests.length-1) {
-				nextTrial(tests[++testver][0], tests[testver][1]);
-			} else {
-				input.remove();
-				submitButton.remove();
-				errorP.remove();
-				q.innerHTML = 'Test completed'
-			}
+			testver++;
+		}
+		if (testver >= tests.length) { //if testcount above available tests, finish survey
+			input.remove();
+			submitButton.remove();
+			errorP.remove();
+			q.innerHTML = 'Test completed'
+		} else {
+			nextTrial(tests[testver][0], tests[testver][1]) //next trial
 		}
 	}
 }
