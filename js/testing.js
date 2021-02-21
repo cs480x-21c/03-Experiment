@@ -1,4 +1,4 @@
-const trialsPerTest = 1
+const trialsPerTest = 3
 
 let trial = 0
 let q = document.getElementById('message');
@@ -20,6 +20,19 @@ let values = [
 
 let testver = 0;
 
+
+function stringify(arr) {
+	let str = '';
+	arr.forEach(row => {
+		row.forEach(val => { str += val + "," });
+		str += '\n';
+	});
+	return str;
+}
+
+
+
+
 function nextTrial(test, message) {
 	document.getElementById('plot').innerHTML = ''; // clear plots in case one is already there
 	actual = test();
@@ -27,8 +40,7 @@ function nextTrial(test, message) {
 }
 
 function submit() {
-	let val = input.value;
-	if (val <= 0 || val >= 1) {
+	if (input.value <= 0 || input.value >= 1) {
 		errorP.innerHTML = "Invalid input. Answer must be a decimal between 0 and 1";
 		input.value = '';
 	} else {
@@ -47,7 +59,7 @@ function submit() {
 			errorP.remove();
 			q.innerHTML = 'Test completed';
 			form.style = 'display:inline';
-			//console.log(values);
+			document.getElementById('testdata').innerHTML = stringify(values);
 		} else {
 			nextTrial(tests[testver][0], tests[testver][1]) //next trial
 		}
