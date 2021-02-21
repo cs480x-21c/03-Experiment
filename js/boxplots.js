@@ -148,4 +148,19 @@ function generateBoxPlots(minplots = 5, maxplots = 10) {
 	}
 }
 
-generateBoxPlots();
+let v = generateBoxPlots();
+let x = document.getElementById("INPUT");
+let errorP = document.createElement("p");
+errorP.style = 'color:red';
+errorP.innerHTML = "Invalid input. Answer must be a decimal between 0 and 1";
+
+function foo() {
+	val = x.value;
+	if (val <= 0 || val >= 1) {
+		document.body.appendChild(errorP);
+		//console.log(errorP.innerHTML);
+	} else {
+		errorP.remove()
+		console.log(x.value);
+	}
+}
