@@ -172,11 +172,10 @@ function submit() {
 	if (val <= 0 || val >= 1) {
 		document.body.appendChild(errorP);
 		input.value = '';
-		//console.log(errorP.innerHTML);
 	} else {
 		errorP.remove()
-		console.log(input.value); // store this to DB
-		console.log(v); // store this to DB
+		console.log(input.value); // TODO: store this to DB
+		console.log(v); // TODO: store this to DB
 		document.getElementById('boxplot').innerHTML = '';
 		input.value = '';
 		v = generateBoxPlots();
