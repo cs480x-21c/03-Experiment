@@ -1,13 +1,119 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 
 <style>
+  #root {
+    margin: auto;
+    text-align: center;
+  }
+  #experimentContents {
+    display: none;
+  }
+  .errorMsg {
+    color: red;
+    font-size: 12px;
+    display: none;
+  }
 </style>
 
 <body>
-  <h1> Experiment </h1>
+  <div id="root">
+    <p id="counter" class="counter">{{initialCount}}/{{totalVisCount}}</p>
+    <svg id="svg"></svg>
+    <div id="start">
+      <p>Welcome to the experiment. Please enter your name below:</p>
+      <input type="text" placeholder="Name..." v-model="participantId"/><br><br>
+      <button v-on:click="submitName">Submit</button>
+      <p class="errorMsg" id="nameError">Please enter a name.</p>
+    </div>
+    <div id="experimentContents">
+      
+      <p>In the chart above, two elements are marked. One element is larger than the other.</p>
+      <p>What percentage is the smaller element of the larger element?</p>
+      <p>Enter it into the field below. For example, if the smaller element is 50% of the larger element, enter "50".</p>
+      <input type="text" v-model="predictedValue" ref="predicted"/><br><br>
+      <button v-on:click="processInput">Submit</button>
+      <p class="errorMsg" id="expError">Please enter a number.</p>
+
+    </div>
+  </div>
 </body>
 
 <script>
   console.log(d3); // test if d3 is loaded
+
+  //placeholder that will be replaced with code to create the array.
+  let visOrder = ['bar','circle','pie']
+
+  let visIterator = visOrder.values();
+
+  let vueApp = new Vue({
+    el: '#root',
+    data: {
+      participantId: '',
+      predictedValue: '',
+      initialCount: 0
+    },
+    computed: {
+      totalVisCount: function() {
+        return visOrder.length;
+      }
+    },
+    methods: {
+
+      submitName() {
+        if(this.participantId.trim() != '') {
+          document.getElementById('start').style.display = 'none';
+          document.getElementById('experimentContents').style.display = 'block';
+          this.displayNextVis();
+        } else {
+          document.getElementById('nameError').style.display = 'block';
+        }
+      },
+
+      processInput() {
+        document.getElementById('expError').style.display = 'none';
+        let intValue = parseInt(this.predictedValue);
+
+        if(isNaN(intValue)) {
+          document.getElementById('expError').style.display = 'block';
+        } else {
+
+          /**
+           * Insert code here that sends stuff to backend
+           * */
+
+           this.displayNextVis();
+           this.predictedValue = '';
+        }
+
+      },
+
+      displayNextVis() {
+
+        ++this.initialCount;
+        let nextVis = visIterator.next();
+        
+        switch(nextVis.value) {
+
+          case 'pie':
+            console.log('pie');
+            break;
+
+          case 'circle':
+          console.log('circle');
+            break;
+
+          case 'bar':
+            console.log('bar');
+            break;
+
+
+        }
+
+      }
+
+    }
+  });
+
 </script>
