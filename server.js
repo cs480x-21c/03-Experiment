@@ -15,18 +15,7 @@ const server = http.createServer( function( request,response ) {
     handlePost( request, response ) 
   }
 })
-/*
-const readData = fs.readFileSync('trials.csv','utf8')
-const appdata= JSON.parse(readData)
 
-
-const updateFile= function(){
-  fs.writeFile('tasks.json', JSON.stringify(appdata), (error) => { 
-    // In case of a error throw err exception. 
-    if (error) throw err; 
-  }) 
-}
-*/
 //writing the csv file
 
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
@@ -40,33 +29,7 @@ const csvWriter = createCsvWriter({
       {id: 'reportedPercent', title: 'ReportedPercent'}
     ]
   });
-  /*
 
-  const data = [
-    {
-        id: 'John',
-        trial: 'Snow',
-        vis: 26,
-        truePercent: 'M',
-        reportedPercent: 'M'
-    }
-  ];
-
-  csvWriter
-  .writeRecords(data)
-  .then(()=> console.log('The CSV file was written successfully'));
-
-  //reading csv 
-*//*
-fs.createReadStream('trials.csv')
-.pipe(csv())
-.on('data', (row) => {
-    console.log(row)
-})
-.on('end',()=> {console.log("success!");
-});
-
-*/
 //handles updating new data 
 
 const updateData = function(request, response){
@@ -74,7 +37,8 @@ const updateData = function(request, response){
   request.on('data', function(data){
     jsonData = JSON.parse(data)
     console.log(jsonData)
-    csvData = jsonData.id + ',' + jsonData.trial +  "," +jsonData.vis + "," + jsonData.truePercent + "," + jsonData.reportedPercent + "\r\n"
+    jsonData.error = Math.log(Math.abs(jsonData.reportedPercent-jsonData.truePercent))+(1/8)
+    csvData = jsonData.id + ',' + jsonData.trial +  "," +jsonData.vis + "," + jsonData.truePercent + "," + jsonData.reportedPercent + "," + jsonData.error+ "\r\n"
     
     fs.appendFile('trials.csv', csvData, (err)=> {
         console.log("data was appended")
@@ -155,3 +119,49 @@ server.listen( 5000 )
 console.log('Node.js web server at port 5000 is running..')
 
 //process.env.PORT || port
+
+/*
+
+Reading the data from the csv file - if needed
+
+const readData = fs.readFileSync('trials.csv','utf8')
+const appdata= JSON.parse(readData)
+
+
+const updateFile= function(){
+  fs.writeFile('tasks.json', JSON.stringify(appdata), (error) => { 
+    // In case of a error throw err exception. 
+    if (error) throw err; 
+  }) 
+}
+*/
+
+  /*
+
+  Extra code
+
+  const data = [
+    {
+        id: 'John',
+        trial: 'Snow',
+        vis: 26,
+        truePercent: 'M',
+        reportedPercent: 'M'
+    }
+  ];
+
+  csvWriter
+  .writeRecords(data)
+  .then(()=> console.log('The CSV file was written successfully'));
+
+  //reading csv 
+*//*
+fs.createReadStream('trials.csv')
+.pipe(csv())
+.on('data', (row) => {
+    console.log(row)
+})
+.on('end',()=> {console.log("success!");
+});
+
+*/
