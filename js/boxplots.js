@@ -15,8 +15,6 @@ function generateBoxPlots(minplots = 5, maxplots = 10) {
 		targets[1] = Math.floor(Math.random() * plotcount);
 	}
 
-	//console.log(targets);
-
 	// set the dimensions and margins of the graph
 	let margin = {top: 25, right: 25, bottom: 25, left: 25};
 	let width = (75*plotcount) - margin.left - margin.right;
@@ -52,8 +50,6 @@ function generateBoxPlots(minplots = 5, maxplots = 10) {
 			return({q1: q1, median: median, q3: q3, min: min, max: max, range: max-min, iqr: q3-q1})
 		})
 		.entries(dataset)
-
-	//console.log(sumstat);
 
 	let y = d3.scaleLinear()
 	  .domain([-0.05,1])
@@ -137,15 +133,9 @@ function generateBoxPlots(minplots = 5, maxplots = 10) {
 	   	.style("width", 80)
 
 	return {
-		ranges: [
-			sumstat[targets[0]].value.range,
-			sumstat[targets[1]].value.range
-		],
-		iqrs: [
-			sumstat[targets[0]].value.iqr,
-			sumstat[targets[1]].value.iqr
-		]
-	}
+		max: Math.max(sumstat[targets[0]].value.range, sumstat[targets[1]].value.range), 
+		min: Math.min(sumstat[targets[0]].value.range, sumstat[targets[1]].value.range)
+	};
 }
 
 

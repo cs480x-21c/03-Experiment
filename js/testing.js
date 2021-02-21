@@ -1,4 +1,4 @@
-const trialsPerTest = 3
+const trialsPerTest = 1
 
 let trial = 0
 let q = document.getElementById('message');
@@ -6,12 +6,17 @@ let input = document.getElementById('INPUT');
 let submitButton = document.getElementById('SUBMIT');
 let errorP = document.getElementById('error');
 let actual = null;
+let form = document.getElementById('fs-frm');
 
 let tests = [
-	[() => generatePieChart(), 'What percentage of size is the smaller highlighted slice of the larger highlighter slice?'],
-	[() => generateBoxPlots(), 'What percentage of size is the smaller highlighted boxplot of the larger highlighted boxplot?'],
-	[() => generateBarChart(), 'What percentage of size is the smaller highlighted bar of the larger highlighter bar?']
+	[() => generatePieChart(), 'What percentage of size is the smaller highlighted slice of the larger highlighter slice?', 'Piechart'],
+	[() => generateBoxPlots(), 'What percentage of size is the smaller highlighted boxplot of the larger highlighted boxplot?', 'Boxplot'],
+	[() => generateBarChart(), 'What percentage of size is the smaller highlighted bar of the larger highlighter bar?', 'Barchart']
 ]
+
+let values = [
+	['Test','Answer','Actual Max', 'Actual Min']
+];
 
 let testver = 0;
 
@@ -28,8 +33,7 @@ function submit() {
 		input.value = '';
 	} else {
 		errorP.innerHTML = '';
-		console.log(input.value); // TODO: store this to DB
-		console.log(actual); // TODO: store this to DB
+		values.push([tests[testver][2], input.value, actual.max, actual.min]);
 		document.getElementById('plot').innerHTML = '';
 		input.value = '';
 		
@@ -41,7 +45,9 @@ function submit() {
 			input.remove();
 			submitButton.remove();
 			errorP.remove();
-			q.innerHTML = 'Test completed'
+			q.innerHTML = 'Test completed';
+			form.style = 'display:inline';
+			//console.log(values);
 		} else {
 			nextTrial(tests[testver][0], tests[testver][1]) //next trial
 		}
