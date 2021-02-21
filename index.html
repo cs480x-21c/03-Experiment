@@ -6,11 +6,14 @@
 
 <body>
   <h1> Experiment </h1>
+  <h3> Enter your guess below, what percententage is the small marked value to the large marked value?</h3>
+  <h5>  E.g. enter "50"(no quotes) to guess that the small value is half as large as the big value</h5>
 </body>
 
 <script>
   console.log(d3); // test if d3 is loaded
   var svg = d3.select('#frame');
+  setupInputBox();
   var chartToChoose = Math.floor(Math.random() * 3)+1;
   var trueVal;
   if (chartToChoose == 1) {
@@ -126,6 +129,8 @@
     var compareIndexA = compareIndexes[0];
     var compareIndexB = compareIndexes[1];
 
+    //this is to align the center of the circle with the center of the bar
+    //IMO this method shouldn't use a hardcoded val unless r of the circle is hardcoded
     var compareData = [data[compareIndexA][1]+2.5, data[compareIndexB][1]+2.5]
 
     svg.selectAll('rect')
@@ -148,6 +153,27 @@
     .attr('r', '1.5%')
 
     return (Math.min(data[compareIndexA][0], data[compareIndexB][0]) / Math.max(data[compareIndexA][0], data[compareIndexB][0]))
+
+  }
+
+  function setupInputBox() {
+    
+    var body = d3.select('body');
+    //Ref: http://bl.ocks.org/jfreels/6810705
+    body.append('input')
+    .attr('type','text')
+    .attr('name','textInput')
+    .attr('value','');
+
+    body.append('input')
+    .attr("type","button")
+    .attr("class","button")
+    .style('padding-left', '30')
+    .style('padding-top', '2')
+    .attr('value', "Submit")
+    .on('input', function(mouseEvent) { console.log("click!");});
+
+
 
   }
 
