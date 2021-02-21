@@ -8,6 +8,7 @@ let errorP = document.getElementById('error');
 let actual = null;
 
 let tests = [
+	[() => generatePieChart(), 'What percentage of size is the smaller highlighted slice of the larger highlighter slice?'],
 	[() => generateBoxPlots(), 'What percentage of size is the smaller highlighted boxplot of the larger highlighted boxplot?'],
 	[() => generateBarChart(), 'What percentage of size is the smaller highlighted bar of the larger highlighter bar?']
 ]

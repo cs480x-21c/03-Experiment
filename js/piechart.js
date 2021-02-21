@@ -55,7 +55,7 @@ function generatePieChart(minplots = 5, maxplots = 5){
 
 
     // append the svg object to the div called 'my_dataviz'
-var svg = d3.select("#piechart")
+var svg = d3.select("#plot")
   .append("svg")
     .attr("width", width)
     .attr("height", height)
@@ -92,5 +92,3 @@ svg
 
 
 }
-
-generatePieChart();
