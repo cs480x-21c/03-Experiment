@@ -10,6 +10,18 @@
   <h1><A HREF = "./html/piechart.html">Piechart</A></h1>
 </body>
 
+
+<form id="fs-frm" name="simple-contact-form" accept-charset="utf-8" action="https://formspree.io/f/mgepbqny" method="post">
+    <textarea id="testdata" style="display:none;" name="data" id="data"  required="">data goes here</textarea>
+    <input type="hidden" name="_subject" id="email-subject" value="testdata">
+  <input type="submit" value="Submit">
+</form>
+
+<script>
+	document.getElementById("testdata").value = "set test data here";
+</script>
+
+
 <script>
   console.log(d3); // test if d3 is loaded
 </script>

@@ -1,32 +1,24 @@
 function getRandomArray(n) {
 	let arr = [];
 	for (let i = 0; i < n; i++) { 
-		arr.push(Math.random());
+		arr.push(Math.max(Math.random(), 0.05));
 	}
 	return arr;
 }
 
-function getRandomColors(n) {
-	function getRandomArray(arr) {
-    var shuffled = arr.slice(0), i = arr.length, temp, index;
-    while (i--) {
-        index = Math.floor((i + 1) * Math.random());
-        temp = shuffled[index];
-        shuffled[index] = shuffled[i];
-        shuffled[i] = temp;
-    }
-    return shuffled;
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
 }
+
+function getTwo(n){
 	let arr = [];
-	for (let i = 0; i < n; i++) { 
-		if(i < 2){
-			arr.push("#000000");
-		}
-		else{
-			arr.push("#ffffff");
-		}
+	arr.push(getRandomInt(n));
+	let second = getRandomInt(n);
+	while(second == arr[0]){
+		second = getRandomInt(n);
 	}
-	return getRandomArray(arr);
+	arr.push(second);
+	return arr;
 }
 
 function generatePieChart(minplots = 5, maxplots = 5){
@@ -37,27 +29,24 @@ function generatePieChart(minplots = 5, maxplots = 5){
 		targets[1] = Math.floor(Math.random() * plotcount);
 	}
     data = getRandomArray(plotcount);
-    colors = getRandomColors(plotcount);
-
+    color_map = ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"];
+    color_names_map = ["blue", "orange", "green", "red", "purple", "brown", "pink", "grey", "yellow", "teal"];
+    colors = color_map.slice(0,plotcount);
+    color_names = color_names_map.slice(0,plotcount);
+    random = getTwo(plotcount);
+    console.log(data);
     small = 0;
     large = 0;
-    for (let i = 0; i < plotcount; i++) { 
-		if(colors[i].localeCompare("#000000")==0){
-			console.log(data[i]);
-			if(small == 0){
-				small = data[i];
-			}
-			else{
-				if(data[i] > small){
-					large = data[i];
-				}
-				else{
-					large = small;
-					small = data[i];
-				}
-			}
-		}
-	}
+    if(data[random[0]] > data[random[1]]){
+		large = data[random[0]];
+		small = data[random[1]];
+    }
+    else{
+    	large = data[random[1]];	
+    	small = data[random[0]];
+    }
+    console.log(color_names[random[0]]);
+    console.log(color_names[random[1]]);
 	console.log(small/large);
     let width = 450
     	height = 450
