@@ -1,3 +1,6 @@
+/**
+ * Creates a pie chart and returns the true percent.
+ */
 function generatePieChart() {
 
     let width = 640;
@@ -53,9 +56,11 @@ function generatePieChart() {
     data[firstMarked].marked = true;
     data[secondMarked].marked = true;
 
-    let colorScale = d3.scaleOrdinal()
-    .domain(data)
-    .range(['red', 'blue', 'yellow', 'green', 'violet']);
+    let larger = Math.max(data[firstMarked].num, data[secondMarked].num);
+    let smaller = Math.min(data[firstMarked].num, data[secondMarked].num);
+
+    let truePercent = (smaller/larger) * 100;
+    console.log(truePercent);
 
     let pie = d3.pie()
     .value(function(d) { return d.value.num; })
@@ -120,6 +125,8 @@ function generateBarChart() {
     var barMin = Math.min(data[bar1],data[bar2])
     console.log(barMax,barMin)
 
+    var truePercent = (barMin / barMax) * 100;
+
     // setting up the axes
     var x = d3.scaleLinear()
         .domain([0, 6])        
@@ -169,6 +176,8 @@ function generateBarChart() {
     .attr("cy",450)
     .attr("r",5)
     .attr("fill","black")
+
+    return truePercent;
 
 }
 

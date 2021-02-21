@@ -65,7 +65,9 @@
     data: {
       participantId: '',
       predictedValue: '',
-      initialCount: 0
+      currentCount: 0,
+      truePercent: null,
+      nextVis: null
     },
     computed: {
       totalVisCount: function() {
@@ -96,19 +98,19 @@
           /**
            * Insert code here that sends stuff to backend
            * */
-
-           this.displayNextVis();
-           this.predictedValue = '';
+          this.sendToBackend();
+          this.displayNextVis();
+          this.predictedValue = '';
         }
 
       },
 
       displayNextVis() {
 
-        ++this.initialCount;
+        ++this.currentCount;
         d3.select('#svg').selectAll('*').remove();
         
-        if(this.initialCount > this.totalVisCount) {
+        if(this.currentCount > this.totalVisCount) {
 
           document.getElementById('experimentContents').style.display = 'none';
           document.getElementById('finish').style.display = 'block';
@@ -116,26 +118,38 @@
           
         } else {
 
-          let nextVis = visIterator.next();
+          this.nextVis = visIterator.next();
         
-          switch(nextVis.value) {
+          switch(this.nextVis.value) {
 
-            case 'pie':
-              generatePieChart();
+            case 'pie': {
+              this.truePercent = generatePieChart();
               break;
+            }
 
-            case 'circle':
+            case 'circle': {
               generateCircleChart();
               break;
+            }
 
-            case 'bar':
-              generateBarChart();
+            case 'bar': {
+              this.truePercent = generateBarChart();
               break;
-
+            }
 
           }
 
         }
+
+      },
+
+      sendToBackend() {
+
+        let participant = this.participantId;
+        let trialNum = this.currentCount;
+        let visName = this.nextVis.value;
+        let truePercent = this.truePercent;
+        let predictedValue = this.predictedValue;
 
       }
 
