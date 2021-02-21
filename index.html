@@ -26,7 +26,7 @@
 
 <body>
   <div id="root">
-    <p id="counter" class="counter">{{initialCount}}/{{totalVisCount}}</p>
+    <p id="counter" class="counter">{{currentCount}}/{{totalVisCount}}</p>
     <svg id="svg"></svg>
     <div id="start">
       <p>Welcome to the experiment. Please enter your name below:</p>
@@ -55,8 +55,36 @@
 <script>
   console.log(d3); // test if d3 is loaded
 
+  var visOrder = []
+for(i = 0; i<20; i++){
+  visOrder.push("bar")
+}
+for(i = 0; i<20; i++){
+  visOrder.push("circle")
+}
+for(i = 0; i<20; i++){
+  visOrder.push("pie")
+}
+
+ 
+var randomize = function(arr){
+  for(i=0;i<60;i++){
+    randPos = Math.floor(Math.random()*60) // gives a random value between 0 and 59
+    while(randPos == i){
+      randPos = Math.floor(Math.random()*60) // gives a random value between 0 and 59
+    }
+    var temp = arr[i]
+    arr[i] = arr[randPos]
+    arr[randPos] = temp
+
+  }
+}
+
+randomize(visOrder)
+console.log(visOrder)
+
   //placeholder that will be replaced with code to create the array.
-  let visOrder = ['bar','circle','pie']
+  //let visOrder = ['bar','circle','pie']
 
   let visIterator = visOrder.values();
 
