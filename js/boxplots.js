@@ -23,7 +23,7 @@ function generateBoxPlots(minplots = 5, maxplots = 10) {
 	let height = 500 - margin.top - margin.bottom;
 
 	// append the svg object to the body of the page
-	let svg = d3.select("#boxplot")
+	let svg = d3.select("#plot")
 		.append("svg")
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
@@ -151,4 +151,4 @@ function generateBoxPlots(minplots = 5, maxplots = 10) {
 
 //TODO: Refactor this out into it's own function. It can be reused
 
-getTest(() => generateBoxPlots(), 'For the highlighted plots, what percentage in size is the smaller boxplot of the larger one (from end to end)');
+//getTest(() => generateBoxPlots(), 'For the highlighted plots, what percentage in size is the smaller boxplot of the larger one (from end to end)');

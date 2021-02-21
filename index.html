@@ -2,13 +2,24 @@
 
 
 <style>
+	div.bar {
+		display: inline-block;
+		width: 20px;
+		height: 75px;
+		margin-right: 2px;
+	}
+
 </style>
 
 <body>
-  <h1><A HREF = "./html/barchart.html">Barchart</A></h1>
-  <h1><A HREF = "./html/boxplots.html">Boxplots</A></h1>
+  <div id='plot'></div>
+  <div id='message'></div>
+  <input id='INPUT' type='number' min='0.01' max='0.99' step='0.01'>
+  <button id='SUBMIT' onclick='submit()'>Submit</button>
+  <div id='error' style='color:red'></div>
 </body>
 
-<script>
-  console.log(d3); // test if d3 is loaded
-</script>
+
+<script src="../js/boxplots.js"></script>
+<script src="../js/barchart.js"></script>
+<script src='../js/testing.js'></script>
