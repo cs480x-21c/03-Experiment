@@ -43,6 +43,11 @@
         <input type="text" id="myVal" placeholder="Add some text&hellip;">
     </form>
 
+    //Button to move on to the next visualization type
+    <a href="../barplot_withoutgrid.html">
+       <button>Next</button>
+    </a>
+
     <div id="vis-container"></div>
 
     <script>
@@ -196,14 +201,14 @@
             const estVal = document.getElementById("myVal").value;
             //const dataset = [{estimatedValue: estVal, actualValue: actualSizeDiff, distanceBetweenBars: barsBetween}];
             dataset.push(estVal, actualSizeDiff, barsBetween);
-            console.log(dataset)
+            sessionStorage.setItem("dataset experiment " + index, JSON.stringify(dataset));
+            console.log(dataset) 
             if(index >= 5) {
-              downloadCSV(dataset.join("\n"), 'barplotdata.csv');
+              var output = JSON.parse(sessionStorage.getItem("dataset experiment 5"));
+              console.log("output " + output)
+              downloadCSV(output.join("\n"), 'barplotdata.csv');
             }
-//            for (var i = 0; i < 5; i++) {
-                //draw(document.getElementById("myVal").value) //makes it reset?
-//            }
-          return false;
+            return false;
         }
         
         function downloadCSV(csv, filename) {
