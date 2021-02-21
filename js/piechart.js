@@ -38,6 +38,27 @@ function generatePieChart(minplots = 5, maxplots = 5){
 	}
     data = getRandomArray(plotcount);
     colors = getRandomColors(plotcount);
+
+    small = 0;
+    large = 0;
+    for (let i = 0; i < plotcount; i++) { 
+		if(colors[i].localeCompare("#000000")==0){
+			console.log(data[i]);
+			if(small == 0){
+				small = data[i];
+			}
+			else{
+				if(data[i] > small){
+					large = data[i];
+				}
+				else{
+					large = small;
+					small = data[i];
+				}
+			}
+		}
+	}
+	console.log(small/large);
     let width = 450
     	height = 450
     	margin = 40
@@ -58,6 +79,8 @@ var svg = d3.select("#piechart")
 var pie = d3.pie()
   .value(function(d) {return d.value; })
 var data_ready = pie(d3.entries(data))
+
+
 
 var color = d3.scaleOrdinal()
   .domain(data)
