@@ -225,7 +225,7 @@
       var width = 500;
       var height = 500;
 
-      svg
+      var g = svg
         .attr('width', 500)
         .attr('height', 500)
         .append('g')
@@ -245,7 +245,7 @@
       var pie = d3.pie();
 
 
-      svg.selectAll('mypie')
+      g.selectAll('mypie')
         .data(pie(data))
         .enter()
         .append('path')
@@ -262,10 +262,21 @@
       var selectedSlice2 = gen[1][1];  //index (btwn 0 and 9) of second selected pie slice for comparison
     }
 
-    generatePieChart();
+    //generatePieChart();
 
 
     function generateStackedBarChart() {
+
+      var svg = d3.select('#vis');
+      svg.selectAll("*").remove();
+
+      var width = 500,
+      height = 500;
+
+      svg
+        .attr('width', 500)
+        .attr('height', 500);
+
       console.log("Stacked");
 
 
@@ -278,34 +289,35 @@
       var bar2Obj = { "bar": 2, "val1": gen[4][0], "val2": gen[4][1], "val3": gen[4][2], "val4": gen[4][3], "val5": gen[4][4] };
 
       var data = [bar1Obj, bar2Obj];
+
+      console.log(data);
       //this is essentially the same as a table with columns: bar, val1, val2, val3, val4, val5
       //where "bar" is just the bar number (1 or 2) and the vals are the sizes of the stacked pieces in each bar
       //each row in the table is one of the bars (bar 1 and bar 2)
       //I'm decently sure this is the structure that the code below wants for data
 
       //After we read in the data, we have to list the subgroups to be stacked
-      var subgroups = data.columns.slice(1);
+      var subgroups = ['val1', 'val2', 'val3', 'val4', 'val5'];
 
       //The first column here is set to be the x axis with the subgroups being the stacked bars
-      //var groups  = d3.map(data, function(d){ return d.(/*first column name*/); }).keys()
+      var groups  = d3.map(data, function(d){ return d.bar; }).keys()
 
       //xaxis
       var x = d3.scaleBand()
         .domain(groups)
         .range([0, width]);
 
-      svg.append('g')
-        .attr('transform', 'translate(0,' + height + ')')
-        .call(d3.axisBottom(x).tickSizeOuter(0));
-
       //yaxis
       var y = d3.scaleLinear()
-        //.domain([num, num])
-        .range([height, 0]);
+        .domain([0, 100])
+        .range([500, 0]);
       svg.append('g')
         .call(d3.axisLeft(y));
 
-      //color?? --> Would we need to add color here to differentiate the different subgroups?
+        
+      svg.append('g')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(d3.axisBottom(x).tickSizeOuter(0));
 
       var stackedData = d3.stack()
         .keys(subgroups)(data);
@@ -321,19 +333,22 @@
           return d;
         })
         .enter().append('rect')
-        //.attr('x', function(d) { return x(d.data.(/*first column name*/))})
+        .attr('x', function(d) { return x(d.data.bar) })
         .attr('y', function (d) {
           return y(d[1]);
         })
         .attr('height', function (d) {
           return y(d[0] - y(d[1]));
         })
-        .attr('width', x.bandwidth());
+        .attr('width', x.bandwidth())
+        .attr('stroke', 'black')
+        .attr('fill', 'white');
 
       var selectedPiece1 = gen[2];  //index (btwn 0 and 4) of selected element in first bar
       var selectedPiece2 = gen[5];  //index (btwn 0 and 4) of selected element in second bar
     }
 
+    generateStackedBarChart();
 
     //function for calculating what the actual correct ratio percentage is given two values
     function calculateCorrectPercentage(val1, val2) {
