@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include("../partials/header.ejs"); -%>
+</head>
+<script src="../../viz-test.js"></script>
+
+<body>
+
+    <div id="mainContainer" class="container">
+        <h2>Test Format</h2>
+        <p>you will be shown two types of charts. each chart will have at least two sets of data on it.</p>
+        <p>for each chart, two datasets will be identified, and you will be asked to state at a given x value, which y value is greater. you will also be asked to compare the two y values at x in terms of percent (e.g. if one is half the size of the other, you would answer 50%).</p>
+        <button type="button" onclick="displayQuestion()">Start Test</button>
+    </div>
+
+<%- include ("../partials/footer.ejs") %>
+
+
+</body>
+
+</html>

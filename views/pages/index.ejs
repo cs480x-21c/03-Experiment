@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <%- include("../partials/header.ejs"); -%>
 </head>
@@ -9,22 +10,17 @@
 
 <body>
 
-
-<div id="main_">
   <div class="container">
-    <a href="/" class="lang-logo">
-      <img src="/lang-logo.png">
-    </a>
+
     <h1>horizon charts</h1>
     <p>explanation of how to read. comparison to a line graph.</p>
-    <a type="button" class="btn btn-lg btn-primary" href="/db">test yourself</a>
+    <a type="button" class="btn btn-lg btn-primary" href="/test">test yourself</a>
+    <a type="button" class="btn btn-lg btn-default" href="/db">see results thus far</a>
   </div>
-</div>
-<%- include ("../partials/footer.ejs") %>
 
-<!-- d3 code -->
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<!-- line graphs -->
-<!-- horizon charts -->
+  <%- include ("../partials/footer.ejs") %>
+
+
 </body>
+
 </html>
