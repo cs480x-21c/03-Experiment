@@ -1,0 +1,98 @@
+<!--CS 480X-->
+<!--A3-->
+<!--2/21/2021-->
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<html>
+<body>
+<p id='label' style="font-size:50px">Line Chart</p>
+<div id="wrapper">
+    <svg id="workspace"></svg>
+</div>
+</body>
+</html>
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+
+<script>
+    console.log(d3); // test if d3 is loaded
+
+    let label = document.getElementById("label")
+
+    // set the dimensions and margins of the graph
+    var margin = {top: 10, right: 30, bottom: 30, left: 60},
+        width = 460 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+    let svg = d3.select('#workspace')
+    svg.attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
+
+    // todo: read data
+    makeLineChart("http://localhost:8000/data.csv", 3, 11, 101, 3)
+
+    function makeLineChart(fileName, xToMark, xRange, yRange, numDataSets) {
+        d3.csv(fileName).then(
+            function (data) {
+
+                // Add X axis
+                let x = d3.scaleLinear()
+                    .domain([0, xRange])
+                    .range([30, width]);
+
+                let xAxis = d3.axisBottom(x)
+                xAxis.tickValues([0, xToMark, xRange])
+
+                svg.append("g")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis);
+
+                // Add Y axis
+                var y = d3.scaleLinear()
+                    .domain([0, yRange])
+                    .range([height, 30]);
+
+                let yAxis = d3.axisLeft(y)
+                yAxis.tickValues([0, yRange])
+
+                svg.append("g")
+                    .attr("transform", "translate(30,0)")
+                    .call(yAxis);
+
+                // Could do colors
+                color = ['purple','red', 'blue','green']
+
+                // Add lines
+                let cols = data.columns
+
+                for (i = 1; i <= numDataSets; i++) {
+                    svg.append('path')
+                        .datum(data)
+                        .attr("fill", "none")
+                        .attr("stroke", 'black')
+                        .attr("stroke-width", 1.5)
+                        .attr("d", d3.line()
+                            .x(function (d) {
+                                return x(d[cols[0]])
+                            })
+                            .y(function (d) {
+                                return y(d[cols[i]])
+                            })
+                        )
+                }
+            })
+    }
+
+    // Add the text to the label at the top of the page
+    function addToLabel(text) {
+        label.appendChild(document.createElement("br"))
+        label.appendChild(document.createTextNode(text))
+    }
+
+</script>
