@@ -112,8 +112,8 @@ function pieRandomGen(){
       const j = Math.floor(Math.random() * (i + 1));
       [randomNumbers[i], randomNumbers[j]] = [randomNumbers[j], randomNumbers[i]];
     }
-	
-	
+
+
 	//at this point we have array of numSlices random numbers adding to 100, non-duplicates, between 3 and 100
 	//need to designate two spots to compare
 

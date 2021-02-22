@@ -241,7 +241,7 @@
         .padding(0.2);
       svg.append('g')
         .attr('transform', 'translate(0,' + (height - margin.top) + ')')
-        .call(d3.axisBottom(x).tickSizeOuter(0));
+        .call(d3.axisBottom(x).tickValues([]));
         /*
         .selectAll('text')
         .attr('transform', 'translate(-10,0)rotate(-45)')
@@ -301,8 +301,7 @@
       var radius = width / 2 - margin;
 
 
-      var pie = d3.pie()
-		.sort(null);
+      var pie = d3.pie().sort(null);
 
 
       g.selectAll('mypie')
@@ -383,7 +382,7 @@
 
       svg.append('g')
         .attr('transform', 'translate(0,' + (height - margin.top) + ')')
-        .call(d3.axisBottom(x).tickSizeOuter(0));
+        .call(d3.axisBottom(x).tickValues([]));
 
       //yaxis
       var y = d3.scaleLinear()
