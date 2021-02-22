@@ -105,6 +105,15 @@ function pieRandomGen(){
 
 	randomNumbers[numSlices-1] = 100-firstFourSum;   //have the last number be the difference to 100
 
+	//Shuffle Numbers from
+    //https://stackoverflow.com/a/12646864
+    //DO WE NEED THIS
+    for (let i = randomNumbers.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [randomNumbers[i], randomNumbers[j]] = [randomNumbers[j], randomNumbers[i]];
+    }
+	
+	
 	//at this point we have array of numSlices random numbers adding to 100, non-duplicates, between 3 and 100
 	//need to designate two spots to compare
 

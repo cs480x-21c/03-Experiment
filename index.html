@@ -301,7 +301,8 @@
       var radius = width / 2 - margin;
 
 
-      var pie = d3.pie();
+      var pie = d3.pie()
+		.sort(null);
 
 
       g.selectAll('mypie')
