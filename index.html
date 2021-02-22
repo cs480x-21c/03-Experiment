@@ -241,17 +241,17 @@
         .padding(0.2);
       svg.append('g')
         .attr('transform', 'translate(0,' + (height - margin.top) + ')')
-        .call(d3.axisBottom(x))
+        .call(d3.axisBottom(x).tickSizeOuter(0));
+        /*
         .selectAll('text')
         .attr('transform', 'translate(-10,0)rotate(-45)')
         .style('text-anchor', 'end');
-
+*/
       //yaxis
       var y = d3.scaleLinear()
         .domain([0, 125])
-        .range([height, 0]);
-      svg.append('g')
-        //.attr('transform', 'translate(' + 30 + ')')
+        .range([height, margin.top]);
+      svg.append('g').attr("transform", "translate(0," + (-margin.bottom)+ ")")
         .call(d3.axisLeft(y));
 
       //barchart plotting data
@@ -389,8 +389,8 @@
       var y = d3.scaleLinear()
         .domain([0, 100])
         .range([height, margin.top]);
-      svg.append('g')
-        .call(d3.axisLeft(y));
+
+      svg.append('g').attr("transform", "translate(0," + (-margin.bottom)+ ")").call(d3.axisLeft(y));
 
 
       var stackedData = d3.stack()
@@ -432,13 +432,7 @@
     function calculateCorrectPercentage(val1, val2) {
       var largerVal = Math.max(val1, val2);
       var smallerVal = Math.min(val1, val2);
-      /*
-      if (largerVal == val1) {
-        smallerVal = val2;
-      } else {
-        smallerVal = val1;
-      }
-*/
+
       var correctPercentage = (smallerVal / largerVal) * 100;
 
       dataCurrent.truePercent = correctPercentage;
