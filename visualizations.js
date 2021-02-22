@@ -94,140 +94,162 @@ function generatePieChart() {
     .attr('fill', 'black')
     .attr('transform', function(d) { return `translate(${arcCreator.centroid(d)})`})
 
-}
-
-function generateBarChart() {
-
-    var margin = {top: 30, right: 30, bottom: 30, left: 30}, width = 500, height = 500
-
-    // set up the svg
-    var svg = d3.select("#svg")
-    .style("width", width)
-    .style("height", height)
-
-
-    // setting up the random data
-    var data = []
-    for(i=0; i<5 ;i++){
-        data.push(Math.floor(Math.random()*101))
-    }
-    console.log(data)
-
-    //selecting the two random bars
-    var bar1 = Math.floor(Math.random()*5)
-    var bar2 = Math.floor(Math.random()*5)
-
-    while (bar2 == bar1){
-        bar2 = Math.floor(Math.random()*4)
-    }
-
-    var barMax = Math.max(data[bar1],data[bar2])
-    var barMin = Math.min(data[bar1],data[bar2])
-    console.log(barMax,barMin)
-
-    var truePercent = (barMin / barMax) * 100;
-
-    // setting up the axes
-    var x = d3.scaleLinear()
-        .domain([0, 6])        
-        .range([margin.left, width - margin.right]);      
-
-    svg
-    .append("g")
-    .attr("transform", "translate(0,"+ (height - margin.bottom) +")")     
-    .call(d3.axisBottom().scale(x).ticks(0));
-
-    var y = d3.scaleLinear()
-    .domain([0, 100])        
-    .range([height - margin.bottom , margin.top]);      
-
-    svg
-    .append("g")
-    .attr("transform", "translate("+ margin.left+","+ 0 +")")     
-    .call(d3.axisLeft().scale(y).ticks(0));
-
-    // setting up the bars
-    svg.selectAll("bar-charts")
-    .data(data)
-    .enter()
-    .append("rect")
-    .attr("x",function(d,i){
-        return x(i+1) - 15
-    })
-    .attr("y",function(d){
-        return y(d)
-    })
-    .attr("width",30)
-    .attr("height",function(d){
-        return height - margin.bottom - y(d)
-    })
-    .attr("fill", "white")
-    .attr("stroke","black")
-
-    //setting up the bar markers
-    svg.append("circle")
-    .attr("cx", x(bar1+1))
-    .attr("cy",450)
-    .attr("r",5)
-    .attr("fill","black")
-
-    svg.append("circle")
-    .attr("cx", x(bar2+1))
-    .attr("cy",450)
-    .attr("r",5)
-    .attr("fill","black")
-
-    return truePercent;
-
+    return truePercent 
 }
 
 function generateCircleChart() {
 
-    var margin = {top: 10, right: 10, bottom: 10, left: 10},
-        width = 500 - margin.left - margin.right,
-        height = 600 - margin.top - margin.bottom,
-        innerRadius = 100,
-        outerRadius = Math.min(width, height) / 2;   // the outerRadius goes from the middle of the SVG area to the border
-    
-    // append the svg object to the body of the page
-    var svg = d3.select("#svg")
-        .style("width", width + margin.left + margin.right)
-        .style("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + ( height/2 )+ ")"); // Add 100 on Y translation, cause upper bars are longer
+  var xArray=[]
+  var numberOfGraphs = 5
+  for(var i=0; i<numberOfGraphs;i++){
+    xArray[i]={i:""+i+"", height: Math.round(Math.random()*10000+100) }
+  }  
 
-    var xArray=[]
-    var numberOfGraphs = 5
-    for(var i=0; i<numberOfGraphs;i++){
-        xArray[i]={i:""+i+"", height: Math.round(Math.random()*10000+10) }
-    }  
-    console.log(xArray)
-        // X scale
-    var x = d3.scaleBand()
-        .range([0, 2 * Math.PI])    // X axis goes from 0 to 2pi = all around the circle. If I stop at 1Pi, it will be around a half circle
-        .align(0)                  // This does nothing ?
-        .domain(xArray.map(function(d){return(d.i)})); // The domain of the X axis is the list of states.
-    
-        // Y scale
-    var y = d3.scaleRadial()
-        .range([innerRadius, outerRadius])   // Domain will be define later.
-        .domain([0, 10000]); // Domain of Y is from 0 to the max seen in the data
-    
-    // Add bars
+  //selecting the two random bars
+  var bar1 = Math.floor(Math.random()*5)
+  var bar2 = Math.floor(Math.random()*5)
+
+  while (bar2 == bar1){
+    bar2 = Math.floor(Math.random()*5)
+  }
+  console.log(bar1,bar2)
+
+  var barMax = Math.max(xArray[bar1].height,xArray[bar2].height)
+  var barMin = Math.min(xArray[bar1].height,xArray[bar2].height)
+  var actualDifference = (barMin/barMax)*100
+  console.log(barMax + "   "+ barMin+ "  "+ actualDifference)
+  truePercent = actualDifference
+
+  console.log(xArray)
+    // X scale
+  var x = d3.scaleBand()
+      .range([0, 2 * Math.PI])    // X axis goes from 0 to 2pi = all around the circle. If I stop at 1Pi, it will be around a half circle
+      .align(0)                
+      .domain(xArray.map(function(d){return(d.i)})); // The domain of the X axis is the list of states.
+
+    // Y scale
+  var y = d3.scaleRadial()
+      .range([innerRadius, outerRadius])   // Domain will be define later.
+      .domain([0, 10000]); // Domain of Y is from 0 to the max seen in the data
+
     svg.append("g")
-        .selectAll("path")
-        .data(xArray)
-        .enter()
-        .append("path")
-        .attr("fill", "#69b3a2")
-        .attr("d", d3.arc()     // imagine your doing a part of a donut plot
-            .innerRadius(innerRadius)
-            .outerRadius(function(d) {return (y((d.height)))})
-            .startAngle(function(d) { return(x(d.i)); })
-            .endAngle(function(d) { return( x(d.i)+ x.bandwidth()) })
-            .padAngle(0.01)
-            .padRadius(innerRadius))
+    .selectAll("path")
+    .data(xArray)
+    .enter()
+    .append("path")
+    .attr("fill", "#ffffff")
+    .attr("stroke", "black")
+    .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+        .innerRadius(innerRadius)
+        .outerRadius(function(d) {return (y((d.height)))})
+        .startAngle(function(d) { return(x(d.i)); })
+        .endAngle(function(d) { return( x(d.i)+ x.bandwidth()) })
+        .padAngle(0.01)
+        .padRadius(innerRadius))
+        //setting up the bar marker  
+  var bars = [bar1, bar2]
+  for (var i=0; i<2;i++){ 
+    currentBar = bars[i]
+  svg.append("g")
+  .selectAll("g")
+  .data(xArray)
+  .enter()
+  .append("g")
+    .attr("text-anchor", function(d) { return (x(currentBar) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "end" : "start"; })
+    .attr("transform", function(d) { return "rotate(" + ((x(currentBar) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(d.i)+10) + ",0)"; })
+  .append("circle")
+    .attr("fill","black")
+    .attr("r",5)
+    .attr("transform", function(d) { return (x(currentBar) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
+    .style("font-size", "11px")
+    .attr("alignment-baseline", "middle")
+}
     
-    return svg
+    return truePercent;
+
+}
+
+function generateBarChart() {
+
+  var margin = {top: 30, right: 30, bottom: 30, left: 30}, width = 500, height = 500
+
+  // set up the svg
+  var svg = d3.select("#svg")
+  .style("width", width)
+  .style("height", height)
+
+
+  // setting up the random data
+  var data = []
+  for(i=0; i<5 ;i++){
+      data.push(Math.floor(Math.random()*101))
+  }
+  console.log(data)
+
+  //selecting the two random bars
+  var bar1 = Math.floor(Math.random()*5)
+  var bar2 = Math.floor(Math.random()*5)
+
+  while (bar2 == bar1){
+      bar2 = Math.floor(Math.random()*4)
+  }
+
+  var barMax = Math.max(data[bar1],data[bar2])
+  var barMin = Math.min(data[bar1],data[bar2])
+  console.log(barMax,barMin)
+
+  var truePercent = (barMin / barMax) * 100;
+
+  // setting up the axes
+  var x = d3.scaleLinear()
+      .domain([0, 6])        
+      .range([margin.left, width - margin.right]);      
+
+  svg
+  .append("g")
+  .attr("transform", "translate(0,"+ (height - margin.bottom) +")")     
+  .call(d3.axisBottom().scale(x).ticks(0));
+
+  var y = d3.scaleLinear()
+  .domain([0, 100])        
+  .range([height - margin.bottom , margin.top]);      
+
+  svg
+  .append("g")
+  .attr("transform", "translate("+ margin.left+","+ 0 +")")     
+  .call(d3.axisLeft().scale(y).ticks(0));
+
+  // setting up the bars
+  svg.selectAll("bar-charts")
+  .data(data)
+  .enter()
+  .append("rect")
+  .attr("x",function(d,i){
+      return x(i+1) - 15
+  })
+  .attr("y",function(d){
+      return y(d)
+  })
+  .attr("width",30)
+  .attr("height",function(d){
+      return height - margin.bottom - y(d)
+  })
+  .attr("fill", "white")
+  .attr("stroke","black")
+
+  //setting up the bar markers
+  svg.append("circle")
+  .attr("cx", x(bar1+1))
+  .attr("cy",450)
+  .attr("r",5)
+  .attr("fill","black")
+
+  svg.append("circle")
+  .attr("cx", x(bar2+1))
+  .attr("cy",450)
+  .attr("r",5)
+  .attr("fill","black")
+
+  return truePercent;
 
 }

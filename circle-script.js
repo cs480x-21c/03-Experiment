@@ -24,7 +24,7 @@
       var xArray=[]
       var numberOfGraphs = 5
       for(var i=0; i<numberOfGraphs;i++){
-        xArray[i]={i:""+i+"", height: Math.round(Math.random()*10000+10) }
+        xArray[i]={i:""+i+"", height: Math.round(Math.random()*10000+100) }
       }  
 
       //selecting the two random bars
@@ -34,6 +34,7 @@
       while (bar2 == bar1){
         bar2 = Math.floor(Math.random()*5)
       }
+      console.log(bar1,bar2)
 
       var barMax = Math.max(xArray[bar1].height,xArray[bar2].height)
       var barMin = Math.min(xArray[bar1].height,xArray[bar2].height)
@@ -45,7 +46,7 @@
         // X scale
       var x = d3.scaleBand()
           .range([0, 2 * Math.PI])    // X axis goes from 0 to 2pi = all around the circle. If I stop at 1Pi, it will be around a half circle
-          .align(0)                  // This does nothing ?
+          .align(0)                
           .domain(xArray.map(function(d){return(d.i)})); // The domain of the X axis is the list of states.
     
         // Y scale
@@ -53,21 +54,39 @@
           .range([innerRadius, outerRadius])   // Domain will be define later.
           .domain([0, 10000]); // Domain of Y is from 0 to the max seen in the data
     
-      // Add bars
-      svg.append("g")
+        svg.append("g")
         .selectAll("path")
         .data(xArray)
         .enter()
         .append("path")
-          .attr("fill", "#69b3a2")
-          .attr("d", d3.arc()     // imagine your doing a part of a donut plot
-              .innerRadius(innerRadius)
-              .outerRadius(function(d) {return (y((d.height)))})
-              .startAngle(function(d) { return(x(d.i)); })
-              .endAngle(function(d) { return( x(d.i)+ x.bandwidth()) })
-              .padAngle(0.01)
-              .padRadius(innerRadius))
+        .attr("fill", "#ffffff")
+        .attr("stroke", "black")
+        .attr("d", d3.arc()     // imagine your doing a part of a donut plot
+            .innerRadius(innerRadius)
+            .outerRadius(function(d) {return (y((d.height)))})
+            .startAngle(function(d) { return(x(d.i)); })
+            .endAngle(function(d) { return( x(d.i)+ x.bandwidth()) })
+            .padAngle(0.01)
+            .padRadius(innerRadius))
+            //setting up the bar marker  
+      var bars = [bar1, bar2]
+      for (var i=0; i<2;i++){ 
+        currentBar = bars[i]
+      svg.append("g")
+      .selectAll("g")
+      .data(xArray)
+      .enter()
+      .append("g")
+        .attr("text-anchor", function(d) { return (x(currentBar) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "end" : "start"; })
+        .attr("transform", function(d) { return "rotate(" + ((x(currentBar) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(d.i)+10) + ",0)"; })
+      .append("circle")
+        .attr("fill","black")
+        .attr("r",5)
+        .attr("transform", function(d) { return (x(currentBar) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
+        .style("font-size", "11px")
+        .attr("alignment-baseline", "middle")
     }
+  }
 
 
     const submit= function(e){

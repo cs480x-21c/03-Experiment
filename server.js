@@ -4,9 +4,7 @@ const http = require( 'http' ),
       // to install the mime library used in the following line of code
       mime = require( 'mime' ),
       dir  = '',
-      port = 5000,
-      csv = require('csv-parser'),
-      converter = require('json-2-csv');
+      port = 5000
 
 const server = http.createServer( function( request,response ) {
   if( request.method === 'GET' ) {
@@ -15,20 +13,6 @@ const server = http.createServer( function( request,response ) {
     handlePost( request, response ) 
   }
 })
-
-//writing the csv file
-
-const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const csvWriter = createCsvWriter({
-    path: 'trials.csv',
-    header: [
-      {id: 'id', title: 'ParticipantID'},
-      {id: 'trial', title: 'TrialNum'},
-      {id: 'vis', title: 'Vis'},
-      {id: 'truePercent', title: 'TruePercent'},
-      {id: 'reportedPercent', title: 'ReportedPercent'}
-    ]
-  });
 
 //handles updating new data 
 
@@ -115,53 +99,4 @@ const sendFile = function( response, filename ) {
    })
 }
 
-server.listen( 5000 )
-console.log('Node.js web server at port 5000 is running..')
-
-//process.env.PORT || port
-
-/*
-
-Reading the data from the csv file - if needed
-
-const readData = fs.readFileSync('trials.csv','utf8')
-const appdata= JSON.parse(readData)
-
-
-const updateFile= function(){
-  fs.writeFile('tasks.json', JSON.stringify(appdata), (error) => { 
-    // In case of a error throw err exception. 
-    if (error) throw err; 
-  }) 
-}
-*/
-
-  /*
-
-  Extra code
-
-  const data = [
-    {
-        id: 'John',
-        trial: 'Snow',
-        vis: 26,
-        truePercent: 'M',
-        reportedPercent: 'M'
-    }
-  ];
-
-  csvWriter
-  .writeRecords(data)
-  .then(()=> console.log('The CSV file was written successfully'));
-
-  //reading csv 
-*//*
-fs.createReadStream('trials.csv')
-.pipe(csv())
-.on('data', (row) => {
-    console.log(row)
-})
-.on('end',()=> {console.log("success!");
-});
-
-*/
+server.listen( process.env.PORT || port )
