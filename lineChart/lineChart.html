@@ -9,7 +9,6 @@
 <body>
 <p id='label' style="font-size:50px">Line Chart</p>
 <div id="wrapper">
-    <svg id="legend" height="40"></svg>
     <svg id="workspace"></svg>
 </div>
 </body>
@@ -26,8 +25,6 @@
     let margin = {top: 10, right: 30, bottom: 30, left: 60},
         width = 500 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
-
-    let legend = d3.select('#legend')
 
     // append the svg object to the body of the page
     let svg = d3.select('#workspace')
@@ -101,15 +98,12 @@
 
                 color = ['#d95f02', '#1b9e77', '#7570b3', '#e7298a', '#66a61e', '#386cb0']
 
-
                 svg.append("circle").attr("cx",440).attr("cy",110).attr("r", 6).style("fill", color[marks[0] % numDataSets])
                 svg.append("circle").attr("cx",440).attr("cy",130).attr("r", 6).style("fill", color[marks[1] % numDataSets])
                 svg.append("text").attr("x", 450).attr("y", 110).text("Set A").style("font-size", "15px").attr("alignment-baseline","middle")
                 svg.append("text").attr("x", 450).attr("y", 130).text("Set B").style("font-size", "15px").attr("alignment-baseline","middle")
 
                 // Add lines
-
-                addToLabel(yCols + ", m: " + marks + " ds: " + numDataSets)
 
                 for (i = 0; i < numDataSets; i++) {
                     let dot = Math.random() * 5
