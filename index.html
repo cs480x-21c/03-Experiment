@@ -256,7 +256,7 @@
   <div id="bar">
     <script>
       // add svg for bar chart
-      var testData2 = [34, 10, 22, 54, 49]
+      var testData2 = [34, 10, 22, 54, 49];
       var svgbar = d3.select("#bar")
       .append("svg")
       .attr("width", WIDTH)
@@ -264,26 +264,31 @@
       .append("g").attr("transform", "translate(" + margn/2 + "," + (HEIGHT - margn/2) + ")");
 
       // add X axis
+      var max = testData2.reduce(function(a, b) { return Math.max(a,b); })
+      var min = testData2.reduce(function(a, b) { return Math.min(a,b); })
       var xBand = d3.scaleBand()
       .range([0, WIDTH])
-      // .domain(testData.map(function(d) { return d.value; }));
-      .domain([145, 500]);
+      .domain(min, max);
       svgbar.append("g")
       .call(d3.axisBottom(xBand));
 
       // add Y axis
+      var yaxis = d3.scaleLinear()
+      .domain([0, 100])
+      .range([HEIGHT, 0]);
       svgbar.append("g")
       .attr("transform", "translate(0," + (-1*HEIGHT) + ")")
-      .call(d3.axisLeft(yScale));
+      .call(d3.axisLeft(yaxis));
 
       // add bars
       svgbar.selectAll("mybar")
       .data(testData2)
       .enter().append("rect")
-      .attr("x", function(d, i) { return (i*size) + margn; })
-      .attr("y", function(d, i) { return HEIGHT/2 - (d*10); })
-      .attr("width", "40")
-      .attr("height", HEIGHT)
+      .attr("x", function(d, i) { return xBand.bandwidth() - margn; })
+      .attr("y", function(d) { return (-1 * HEIGHT) + d; } )
+      // .attr("y", function(d, i) { return HEIGHT/2 - (d*10); })
+      .attr("width", 10)
+      .attr("height", function(d) { return HEIGHT - d; })
       .attr("fill", "brown");
 
 
