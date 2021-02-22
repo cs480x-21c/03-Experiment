@@ -72,6 +72,8 @@
                 let cols = data.columns
 
                 for (i = 1; i <= numDataSets; i++) {
+                    let dot = Math.random() * 5
+                    let space = Math.random() * 5
                     svg.append('path')
                         .datum(data)
                         .attr("fill", "none")
@@ -85,6 +87,7 @@
                                 return y(d[cols[i]])
                             })
                         )
+                        .style("stroke-dasharray", (dot,space))
                 }
             })
     }
