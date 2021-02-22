@@ -14,9 +14,7 @@ let tests = [
 	[() => generateBarChart(), 'What percentage of size is the smaller highlighted bar of the larger highlighter bar?', 'Barchart']
 ]
 
-let values = [
-	['Test','Answer','Actual Max', 'Actual Min']
-];
+let values = [];
 
 let testver = 0;
 
