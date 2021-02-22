@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Suryanshg/03-Experiment#readme",
   "dependencies": {
-    "json-2-csv": "^3.10.2"
+    "json-2-csv": "^3.10.2",
+    "mime":"2.0.0^"
   }
 }

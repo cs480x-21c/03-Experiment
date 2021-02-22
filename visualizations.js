@@ -98,7 +98,19 @@ function generatePieChart() {
 }
 
 function generateCircleChart() {
-
+  var margin = {top: 10, right: 10, bottom: 10, left: 10},
+        width = 460 - margin.left - margin.right,
+        height = 800 - margin.top - margin.bottom,
+        innerRadius = 100,
+        outerRadius = Math.min(width, height) / 2;   // the outerRadius goes from the middle of the SVG area to the border
+    
+        var svg = d3.select("#circle-bar")
+        .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + width / 2 + "," + ( height/2+100 )+ ")"); // Add 100 on Y translation, cause upper bars are longer
+  
   var xArray=[]
   var numberOfGraphs = 5
   for(var i=0; i<numberOfGraphs;i++){
@@ -151,18 +163,18 @@ function generateCircleChart() {
   for (var i=0; i<2;i++){ 
     currentBar = bars[i]
   svg.append("g")
-  .selectAll("g")
-  .data(xArray)
-  .enter()
-  .append("g")
-    .attr("text-anchor", function(d) { return (x(currentBar) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "end" : "start"; })
-    .attr("transform", function(d) { return "rotate(" + ((x(currentBar) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(d.i)+10) + ",0)"; })
-  .append("circle")
-    .attr("fill","black")
-    .attr("r",5)
-    .attr("transform", function(d) { return (x(currentBar) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
-    .style("font-size", "11px")
-    .attr("alignment-baseline", "middle")
+    .selectAll("g")
+    .data(xArray)
+    .enter()
+    .append("g")
+      .attr("text-anchor", function(d) { return (x(currentBar) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "end" : "start"; })
+      .attr("transform", function(d) { return "rotate(" + ((x(currentBar) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")"+"translate(" + (y(d.i)+10) + ",0)"; })
+    .append("circle")
+      .attr("fill","black")
+      .attr("r",5)
+      .attr("transform", function(d) { return (x(currentBar) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
+      .style("font-size", "11px")
+      .attr("alignment-baseline", "middle")
 }
     
     return truePercent;
