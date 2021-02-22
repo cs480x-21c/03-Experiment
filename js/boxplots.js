@@ -93,7 +93,17 @@ function generateBoxPlots(minplots = 5, maxplots = 10) {
 			.attr("height", d => y(d.value.q1)-y(d.value.q3) )
 			.attr("width", boxWidth )
 			.attr("stroke", "black")
-			.style("fill", d => targets.includes(parseInt(d.key)) ? 'yellow' : 'white' ); //TODO: replace color with dot?
+			.style("fill", 'white' );
+		
+	svg.selectAll('selectionDots')
+		.data([sumstat[targets[0]], sumstat[targets[1]]])
+		.enter()
+		.append("circle")
+			.attr("cx", d => x(d.key) )
+			.attr("cy", height-15 )
+			.attr("r", 5 )
+			.style("fill", 'black' );
+		
 
 
 	// Show the median
