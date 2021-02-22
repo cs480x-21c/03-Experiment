@@ -138,7 +138,7 @@
     var data = [];
     let header = dataHeader.join(',') + '\n';
     let csv = header;
-    
+
     var participantID = Date.now();
 
     var dataCurrent = {
@@ -416,7 +416,6 @@
     //function for calculating what the actual correct ratio percentage is given two values
     function calculateCorrectPercentage(val1, val2) {
       var largerVal = Math.max(val1, val2);
-
       var smallerVal = Math.min(val1, val2);
       /*
       if (largerVal == val1) {
@@ -426,6 +425,10 @@
       }
 */
       var correctPercentage = (smallerVal / largerVal) * 100;
+      console.log("val1 val2 "+ val1 + " "+ val2);
+      console.log(smallerVal + " smaller");
+      console.log(largerVal + " larger");
+      console.log(correctPercentage + " true");
       dataCurrent.truePercent = correctPercentage;
       return correctPercentage;
     }
