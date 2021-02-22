@@ -34,7 +34,7 @@ footer {
   width: 500px;
 }
 
-@media (max-width: 500px){
+@media (max-width: 550px){
   #chart-container {
     height: 300px;
     width: 300px;
