@@ -35,7 +35,7 @@
             "translate(" + margin.left + "," + margin.top + ")");
 
     // todo: read data
-    makeLineChart("http://localhost:8000/trialValuesCopy.csv", 20, 100, 25)
+    makeLineChart("http://localhost:8000/trialValuesCopy.csv", 20, 100, 22)
 
     // Expects a chart number in range [0,29] where
     // 0-9 are 2-dataset charts
@@ -71,6 +71,8 @@
                 let marks = colsAndMarks[1]
                 let numDataSets = colsAndMarks[2]
                 let xToMark = colsAndMarks[3]
+
+                addToLabel("cols: " + yCols + " marks: " + marks + " ds: " + numDataSets)
 
                 // Add X axis
                 let x = d3.scaleLinear()
@@ -120,7 +122,7 @@
                                 return x(xVals[counter])
                             })
                             .y(function (d) {
-                                return y(d[cols[i]])
+                                return y(d[cols[yCols[i]]])
                             })
                         )
                         // .style("stroke-dasharray", (dot,space))
