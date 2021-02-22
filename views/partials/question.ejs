@@ -1,14 +1,21 @@
 <div id="chartContainer" class="container"></div>
-<div id="inputs">
-    Which y is greater?
-    <form>
+<div id="inputsContainer" class="container">
+    <form id="inputs">
+        <label for="greater">Which y is greater?</label>
         <input type="radio" id="datasetA" name="greater" value="datasetA">
         <label for="datasetA">Dataset A</label><br>
         <input type="radio" id="datasetB" name="greater" value="datasetB">
         <label for="datasetB">Dataset B</label>
+
+        <br><br>
+
+        <label>What percent is the smaller value of the larger?(e.g. if one is half the size of the other, you would write 50)</label>
+        <input id="percent" type="number">
+
+        <input type="submit" value="Next Question" onclick="recordInput()">
     </form>
 
-    What percent is the smaller value of the larger?(e.g. if one is half the size of the other, you would write 50)
-    <input id="percent" type="number">%
+    
+    
 
 </div>
