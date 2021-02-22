@@ -3,8 +3,19 @@
 
 <head>
     <%- include("../partials/header.ejs"); -%>
-    <script>
-        let questions = []
+
+</head>
+<body>
+
+    <div id="mainContainer" class="container">
+        <h2>Test Format</h2>
+        <p>you will be shown two types of charts. each chart will have at least two sets of data on it.</p>
+        <p>for each chart, two datasets will be identified, and you will be asked to state at a given x value, which y value is greater. you will also be asked to compare the two y values at x in terms of percent (e.g. if one is half the size of the other, you would answer 50%).</p>
+        <button type="button" id="startButton">Start Test</button>
+    </div>
+
+<script>
+    let questions = []
     let questionsCompleted = 0;
     
     for (let i=0;i<60;i++){
@@ -20,15 +31,18 @@
     
         // select a random premade dataset
         let question = questions.splice(Math.round((questions.length-1)*Math.random()),1);
+        
         console.log("question: "+question);
         
         // TODO: generate viz from question index
     }
     
+    document.getElementById("startButton").addEventListener("click", displayQuestion)
+
     function recordInput(){
         inputs = document.getElementsByTagName("inputs");
         console.log(inputs)
-        
+        // TODO record to database
     
         questionsCompleted++;
     
@@ -41,17 +55,6 @@
     
     
     </script>
-</head>
-<body>
-
-    <div id="mainContainer" class="container">
-        <h2>Test Format</h2>
-        <p>you will be shown two types of charts. each chart will have at least two sets of data on it.</p>
-        <p>for each chart, two datasets will be identified, and you will be asked to state at a given x value, which y value is greater. you will also be asked to compare the two y values at x in terms of percent (e.g. if one is half the size of the other, you would answer 50%).</p>
-        <button type="button" onclick="displayQuestion()">Start Test</button>
-    </div>
-
-
 <%- include ("../partials/footer.ejs") %>
 
 
