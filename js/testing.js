@@ -29,12 +29,10 @@ function stringify(arr) {
 }
 
 
-
-
 function nextTrial(test, message) {
 	document.getElementById('plot').innerHTML = ''; // clear plots in case one is already there
 	actual = test();
-	q.innerHTML = message;
+	q.innerHTML = '('+(testver*trialsPerTest+trial+1)+'/'+trialsPerTest*tests.length+'): '+message;
 }
 
 function submit() {
@@ -55,7 +53,7 @@ function submit() {
 			input.remove();
 			submitButton.remove();
 			errorP.remove();
-			q.innerHTML = 'Test completed';
+			q.innerHTML = 'Test Completed. Click \"Finish Survey\" to submit.';
 			form.style = 'display:inline';
 			document.getElementById('testdata').innerHTML = stringify(values);
 		} else {
