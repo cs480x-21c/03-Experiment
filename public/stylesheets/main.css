@@ -10,9 +10,11 @@ h1, h2, h3 {
 
 footer {
   text-align: center;
-  background-color: rgba(242, 246, 248, 0.829);
+  color:rgb(99, 97, 102);
+  background-color: rgb(230, 238, 243);
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
+  padding-bottom: 1.5em;
 }
