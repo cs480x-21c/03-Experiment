@@ -12,7 +12,7 @@
         <p>you will be shown two types of charts. each chart will have at least two sets of data on it.</p>
         <p>for each chart, two datasets will be identified, and you will be asked to state at a given x value, which y value is greater. you will also be asked to compare the two y values at x in terms of percent (e.g. if one is half the size of the other, you would answer 50%).</p>
         <button type="button" id="startButton">Start Test</button></div>
-    <div id="question" style="visibility: hidden;"><div id="chartContainer" class="container"></div>
+    <div id="question" style="display: none;"><div id="chartContainer" class="container"></div>
     <div id="inputsContainer" class="container">
         <form id="inputs">
             <label for="greater">Which y is greater?</label>
@@ -57,8 +57,8 @@
     }
     
     document.getElementById("startButton").addEventListener("click", function(){
-        document.getElementById("intro").style.visibility = "hidden";
-        document.getElementById("question").style.visibility = "visible";
+        document.getElementById("intro").style.display = "none";
+        document.getElementById("question").style.display = "block";
         displayQuestion();
     })
 
