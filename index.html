@@ -58,88 +58,31 @@
 
   var margn = 50
 
-  //test json data for treemap
-  // var treeMapData = {"children":[{"name":"boss1","children":[{"name":"mister_a","group":"A","value":28,"colname":"level3"},{"name":"mister_b","group":"A","value":19,"colname":"level3"},{"name":"mister_c","group":"C","value":18,"colname":"level3"},{"name":"mister_d","group":"C","value":19,"colname":"level3"}],"colname":"level2"},{"name":"boss2","children":[{"name":"mister_e","group":"C","value":14,"colname":"level3"},{"name":"mister_f","group":"A","value":11,"colname":"level3"},{"name":"mister_g","group":"B","value":15,"colname":"level3"},{"name":"mister_h","group":"B","value":16,"colname":"level3"}],"colname":"level2"},{"name":"boss3","children":[{"name":"mister_i","group":"B","value":10,"colname":"level3"},{"name":"mister_j","group":"A","value":13,"colname":"level3"},{"name":"mister_k","group":"A","value":13,"colname":"level3"},{"name":"mister_l","group":"D","value":25,"colname":"level3"},{"name":"mister_m","group":"D","value":16,"colname":"level3"},{"name":"mister_n","group":"D","value":28,"colname":"level3"}],"colname":"level2"}],"name":"CEO"}
-  function randomData2(){
-    return Math.floor(Math.random() * 100) % 20
-  }
   var treeMapData = {
+    "name":"CEO",
     "children":[
-    {
-      "name":"boss1",
+    { "name":"boss1",
       "children":[
-        {
-          "name":"mister_a",
-          "value":randomData2(),
-          "colname":"level3"
-        },
-        {
-          "name":"mister_b",
-          "value":randomData2(),
-          "colname":"level3"
-        },
-        {
-          "name":"mister_c",
-          "value":randomData2(),
-          "colname":"level3"
-        },
-        {
-          "name":"mister_d",
-          "value":randomData2(),
-          "colname":"level3"
-        }
-      ],
-      "colname":"level2"
-    },
-    {
-      "name":"boss2",
+        { "name":"mister_a", "value":randomData() },
+        { "name":"mister_b", "value":randomData() },
+        { "name":"mister_c", "value":randomData() },
+        { "name":"mister_d", "value":randomData() }
+      ], },
+    { "name":"boss2",
       "children":[
-        {
-          "name":"mister_e",
-          "value":randomData2(),
-          "colname":"level3"
-        },
-        {
-          "name":"mister_f",
-          "value":randomData2(),
-          "colname":"level3"
-        },
-        {
-          "name":"mister_g",
-          "value":randomData2(),
-          "colname":"level3"
-        },
-        {
-          "name":"mister_h",
-          "value":randomData2(),
-          "colname":"level3"
-        }
-      ],
-      "colname":"level2"
-    },
-    {
-      "name":"boss3",
+        { "name":"mister_e", "value":randomData() },
+        { "name":"mister_f", "value":randomData() },
+        { "name":"mister_g", "value":randomData() },
+        { "name":"mister_h", "value":randomData() }
+      ], },
+    { "name":"boss3",
       "children":[
-        {
-          "name":"mister_i",
-          "value":randomData2(),
-          "colname":"level3"
-        },
-        {
-          "name":"mister_j",
-          "value":randomData2(),
-          "colname":"level3"
-        },
-        {
-          "name":"mister_k",
-          "value":randomData2(),
-          "colname":"level3"
-        }
-      ],
-      "colname":"level2"
-    }
-  ],
-  "name":"CEO"
+        { "name":"mister_i", "value":randomData() },
+        { "name":"mister_j", "value":randomData() },
+        { "name":"mister_k", "value":randomData() },
+        { "name":"mister_l", "value":randomData() }
+      ] }
+  ]
 }
 
   // iterations = 0
@@ -161,6 +104,22 @@
         return [key1, key2];
       }
 
+      function randomTwoKeys_tree(){
+        keyMap = {0:"mister_a", 1:"mister_b", 2:"mister_c", 3:"mister_d", 4:"mister_e", 5:"mister_f", 6:"mister_g", 7:"mister_h", 8:"mister_i", 9:"mister_j", 10:"mister_k", 11:"mister_l"}
+        check=0
+        while(check==0){
+          key1 = Math.floor(Math.random()*100)%12
+          key2 = Math.floor(Math.random()*100)%12
+          if(key1 != key2){ 
+            check = 1
+          }
+        }
+        console.log("k1: ",key1," k2: ",key2)
+        keyName1 = keyMap[key1];
+        keyName2 = keyMap[key2];
+        return [keyName1,keyName2]
+      }
+
 </script>
 
 <body>
@@ -169,8 +128,8 @@
   <script>
     //points to mark
     iterations = 0
-    randomTwo = randomTwoKeys()
-    console.log("Marked Treeplot Points: ",randomTwo)
+    randomTwo_tree = randomTwoKeys_tree()
+    console.log("Marked Treeplot Points: ",randomTwo_tree)
     //add svg to tree div
     var svg_tree = d3.select('#tree')
       .append("svg")
@@ -180,7 +139,6 @@
       // .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")");
 
     var root = d3.hierarchy(treeMapData).sum(function(d){ return d.value});
-    // var root = d3.hierarchy(testData).sum(function(d){ return d.value});
 
     console.log("ROOT:")
     console.log(root)
@@ -194,6 +152,7 @@
       .data(root.leaves())
       .enter()
       .append("rect")
+      .attr("id", function(d){ return d.data.name })
       .attr('x', function (d) { console.log(d.data.name,": x: ",d.x0," y: ",d.y0); return d.x0; })
       .attr('y', function (d) { return d.y0; })
       .attr('width', function (d) { return d.x1 - d.x0; })
@@ -201,15 +160,26 @@
       .style("stroke", "black")
       .style("fill", "slateblue")
 
-    // svg_tree.selectAll("text")
-    //   .data(root.leaves())
-    //   .enter()
-    //   .append("text")
-    //     .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-    //     .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-    //     .text(function(d){ return d.data.name })
-    //     .attr("font-size", "15px")
-    //     .attr("fill", "white")
+    var point1 = svg_tree.select("#"+randomTwo_tree[0])
+    var point2 = svg_tree.select("#"+randomTwo_tree[1])
+
+    // point1.style("fill", "pink")
+    // point2.style("fill", "green")
+
+    svg_tree.selectAll('data')
+      .data(root.leaves())
+      .enter()
+      .append('circle')
+      .attr('r',function(d){
+        if(randomTwo_tree.includes(d.data.name)){
+          return 5;
+        }else{return 0;}
+      })
+      .attr("transform", function(d){
+        x_mid = d.x0 + ((d.x1-d.x0)/2)
+        y_mid = d.y0 + ((d.y1-d.y0)/2)
+        return "translate("+x_mid+" "+y_mid+")";
+      })
 
   </script>
   </div>
@@ -219,25 +189,9 @@
   <div id="pie">
     <script>
       iterations = 0
-      // function randomTwoKeys(){
-
-      //   letters = Object.keys(testData)
-      //   key1 = letters[Math.floor(Math.random() * letters.length)]
-      //   key2 = letters[Math.floor(Math.random() * letters.length)]
-      //   // if keys are equal, run again
-      //   // added iteration count to prevent statistically improbable chance that method runs forever
-      //   while( key1 === key2 ){
-      //     randomTwoKeys()
-      //     iterations++
-      //     if( iterations > 5){
-      //       iterations = 0
-      //       break;
-      //     }
-      //   }
-      //   return [key1, key2];
-      // }
+ 
       randomTwo = randomTwoKeys()
-      // console.log(randomTwo)
+      console.log("pie chart randomTwo: ",randomTwo)
       var svg_pie = d3.select("#pie")
         .append("svg")
         .attr("width", WIDTH)
