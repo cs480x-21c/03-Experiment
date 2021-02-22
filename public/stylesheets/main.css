@@ -4,6 +4,23 @@ body {
   font-family: Helvetica, sans-serif ;
 }
 
-h1 {
+h1, h2, h3 {
   font-family: 'Ubuntu', sans-serif;
+}
+
+footer {
+  text-align: center;
+  color:rgb(99, 97, 102);
+  background-color: rgb(230, 238, 243);
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 1.5em;
+}
+
+#chartContainer {
+  outline: rgb(99, 97, 102);
+  height: 500px;
+  width: 500px;
 }
