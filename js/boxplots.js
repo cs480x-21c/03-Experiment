@@ -1,12 +1,3 @@
-function getRandomArray(n) {
-	let arr = [];
-	for (let i = 0; i < n; i++) { 
-		arr.push(Math.random());
-	}
-	return arr;
-}
-
-
 function generateBoxPlots(minplots = 5, maxplots = 10) {
 	let plotcount = Math.floor(Math.random() * (maxplots+1-minplots)) + minplots;
 	let firstInd = Math.floor(Math.random() * plotcount);

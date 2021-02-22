@@ -8,6 +8,15 @@ let errorP = document.getElementById('error');
 let actual = null;
 let form = document.getElementById('fs-frm');
 
+function getRandomArray(n) {
+	let arr = [];
+	for (let i = 0; i < n; i++) { 
+		arr.push(Math.random());
+	}
+	return arr;
+}
+
+
 let tests = [
 	[() => generatePieChart(), 'What percentage of size is the smaller target slice of the larger target slice?', 'Piechart'],
 	[() => generateBoxPlots(), 'What percentage of size is the smaller highlighted boxplot of the larger highlighted boxplot?', 'Boxplot'],
