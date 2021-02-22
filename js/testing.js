@@ -21,7 +21,7 @@ function getRandomArray(n) {
 
 let tests = [
 	[() => generatePieChart(), 'What percentage of size is the smaller target slice of the larger target slice?', 'Piechart'],
-	[() => generateBoxPlots(), 'What percentage of size is the smaller highlighted boxplot of the larger highlighted boxplot?', 'Boxplot'],
+	[() => generateBoxPlots(), 'What percentage of size is the smaller dotted boxplot of the larger dotted boxplot?', 'Boxplot'],
 	[() => generateBarChart(), 'What percentage of size is the smaller highlighted bar of the larger highlighter bar?', 'Barchart']
 ]
 

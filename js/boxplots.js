@@ -20,7 +20,6 @@ function generateBoxPlots(minplots = 5, maxplots = 10) {
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-
 	// create data
 	let dataset = [];
 	for (let i = 0; i < plotcount; i++) {
