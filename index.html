@@ -26,15 +26,10 @@
 </style>
 
 <script>
-  var jsonData = {"children":[{"name":"boss1","children":[{"name":"mister_a","group":"A","value":28,"colname":"level3"},{"name":"mister_b","group":"A","value":19,"colname":"level3"},{"name":"mister_c","group":"C","value":18,"colname":"level3"},{"name":"mister_d","group":"C","value":19,"colname":"level3"}],"colname":"level2"},{"name":"boss2","children":[{"name":"mister_e","group":"C","value":14,"colname":"level3"},{"name":"mister_f","group":"A","value":11,"colname":"level3"},{"name":"mister_g","group":"B","value":15,"colname":"level3"},{"name":"mister_h","group":"B","value":16,"colname":"level3"}],"colname":"level2"},{"name":"boss3","children":[{"name":"mister_i","group":"B","value":10,"colname":"level3"},{"name":"mister_j","group":"A","value":13,"colname":"level3"},{"name":"mister_k","group":"A","value":13,"colname":"level3"},{"name":"mister_l","group":"D","value":25,"colname":"level3"},{"name":"mister_m","group":"D","value":16,"colname":"level3"},{"name":"mister_n","group":"D","value":28,"colname":"level3"}],"colname":"level2"}],"name":"CEO"}
-</script>
-
-
-<script>
   console.log(d3); // test if d3 is loaded
 
   function randomData(){
-  return Math.floor(Math.random() * 100)
+    return Math.floor(Math.random() * 100)
   }
   var testData = {
     a: randomData(),
@@ -45,63 +40,27 @@
   }
 
 
-
-  console.log(testData)
+  console.log("testData: ",testData)
   //initialize global vars like width and height
   const WIDTH = 400;
   const HEIGHT = 300;
   //x and y scaling
   var xScale = d3.scaleLinear()
-    .range([0, WIDTH])
-    .domain([1450, 5000]);//TODO change these values
+    .domain([0, 100])//TODO change these values
+    .range([0, WIDTH]);
   var yScale = d3.scaleLinear()
-    .range([HEIGHT, 0])
-    .domain([2, 89]);
+    .domain([0, 100])
+    .range([0, HEIGHT]);
+    
   // function(d){return xscale(d);}
 
 
   var margn = 50
 
+  //test json data for treemap
+  var jsonData = {"children":[{"name":"boss1","children":[{"name":"mister_a","group":"A","value":28,"colname":"level3"},{"name":"mister_b","group":"A","value":19,"colname":"level3"},{"name":"mister_c","group":"C","value":18,"colname":"level3"},{"name":"mister_d","group":"C","value":19,"colname":"level3"}],"colname":"level2"},{"name":"boss2","children":[{"name":"mister_e","group":"C","value":14,"colname":"level3"},{"name":"mister_f","group":"A","value":11,"colname":"level3"},{"name":"mister_g","group":"B","value":15,"colname":"level3"},{"name":"mister_h","group":"B","value":16,"colname":"level3"}],"colname":"level2"},{"name":"boss3","children":[{"name":"mister_i","group":"B","value":10,"colname":"level3"},{"name":"mister_j","group":"A","value":13,"colname":"level3"},{"name":"mister_k","group":"A","value":13,"colname":"level3"},{"name":"mister_l","group":"D","value":25,"colname":"level3"},{"name":"mister_m","group":"D","value":16,"colname":"level3"},{"name":"mister_n","group":"D","value":28,"colname":"level3"}],"colname":"level2"}],"name":"CEO"}
 
-</script>
-
-<body>
-  <h1> Hunter Experiment </h1>
-  <div id="tree">
-  <script>
-    //add svg to tree div
-    var svg_tree = d3.select('#tree')
-      .append("svg")
-      .attr("width",WIDTH)
-      .attr("height",HEIGHT)
-      .append("g")
-      .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")");
-
-    var root = d3.hierarchy(jsonData).sum(function(d){ return d.value});
-    var tree = d3.treemap()
-      .size([WIDTH,HEIGHT])
-      .padding(2)
-      (root)
-    
-    svg_tree.selectAll("rect")
-      .data(root.leaves())
-      .enter()
-      .append("rect")
-      .attr('x', function (d) { return d.x0; })
-      .attr('y', function (d) { return d.y0; })
-      .attr('width', function (d) { return d.x1 - d.x0; })
-      .attr('height', function (d) { return d.y1 - d.y0; })
-      .style("stroke", "black")
-      .style("fill", "slateblue")
-
-  </script>
-  </div>
-
-  
-  <h1> Clay Experiment</h1>
-  <div id="pie">
-    <script>
-      iterations = 0
+  // iterations = 0
       function randomTwoKeys(){
 
         letters = Object.keys(testData)
@@ -119,6 +78,82 @@
         }
         return [key1, key2];
       }
+
+</script>
+
+<body>
+  <h1> Hunter Experiment </h1>
+  <div id="tree">
+  <script>
+    //points to mark
+    iterations = 0
+    randomTwo = randomTwoKeys()
+    console.log("Marked Treeplot Points: ",randomTwo)
+    //add svg to tree div
+    var svg_tree = d3.select('#tree')
+      .append("svg")
+      .attr("width",WIDTH)
+      .attr("height",HEIGHT)
+      .append("g");
+      // .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")");
+
+    var root = d3.hierarchy(jsonData).sum(function(d){ return d.value});
+    // var root = d3.hierarchy(testData).sum(function(d){ return d.value});
+
+    console.log("ROOT:")
+    console.log(root)
+
+    var tree = d3.treemap()
+      .size([WIDTH,HEIGHT])
+      .padding(2)
+      (root)
+    
+    svg_tree.selectAll("rect")
+      .data(root.leaves())
+      .enter()
+      .append("rect")
+      .attr('x', function (d) { console.log(d.data.name,": x: ",d.x0," y: ",d.y0); return d.x0; })
+      .attr('y', function (d) { return d.y0; })
+      .attr('width', function (d) { return d.x1 - d.x0; })
+      .attr('height', function (d) { return d.y1 - d.y0; })
+      .style("stroke", "black")
+      .style("fill", "slateblue")
+
+    // svg_tree.selectAll("text")
+    //   .data(root.leaves())
+    //   .enter()
+    //   .append("text")
+    //     .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+    //     .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+    //     .text(function(d){ return d.data.name })
+    //     .attr("font-size", "15px")
+    //     .attr("fill", "white")
+
+  </script>
+  </div>
+
+  
+  <h1> Clay Experiment</h1>
+  <div id="pie">
+    <script>
+      iterations = 0
+      // function randomTwoKeys(){
+
+      //   letters = Object.keys(testData)
+      //   key1 = letters[Math.floor(Math.random() * letters.length)]
+      //   key2 = letters[Math.floor(Math.random() * letters.length)]
+      //   // if keys are equal, run again
+      //   // added iteration count to prevent statistically improbable chance that method runs forever
+      //   while( key1 === key2 ){
+      //     randomTwoKeys()
+      //     iterations++
+      //     if( iterations > 5){
+      //       iterations = 0
+      //       break;
+      //     }
+      //   }
+      //   return [key1, key2];
+      // }
       randomTwo = randomTwoKeys()
       console.log(randomTwo)
       var svg_pie = d3.select("#pie")
