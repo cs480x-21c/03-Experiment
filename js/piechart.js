@@ -1,3 +1,11 @@
+function getRandomArray(n) {
+	let arr = {};
+	for (let i = 0; i < n; i++) {
+		arr["" + i + ""] = Math.max(Math.random(), 0.05);
+	}
+	return arr;
+}
+
 function getRandomInt(max) {
 	return Math.floor(Math.random() * Math.floor(max));
 }
@@ -26,15 +34,20 @@ function generatePieChart(minplots = 5, maxplots = 5) {
 	colors = color_map.slice(0, plotcount);
 	color_names = color_names_map.slice(0, plotcount);
 	random = getTwo(plotcount);
+	// console.log(data);
 	small = 0;
 	large = 0;
+
 	if (data[random[0]] > data[random[1]]) {
-		large = data[random[0]];
-		small = data[random[1]];
+		large = data[random[0]]
+		small = data[random[1]]	
 	} else {
-		large = data[random[1]];
-		small = data[random[0]];
+		large = data[random[1]]
+		small = data[random[0]]
 	}
+	// console.log(color_names[random[0]]);
+	// console.log(color_names[random[1]]);
+	// console.log(small / large);
 	let width = 450
 	height = 500
 	margin = 40
@@ -52,15 +65,14 @@ function generatePieChart(minplots = 5, maxplots = 5) {
 		.append("lab")
 
 
-
 	// Compute the position of each group on the pie:
 	var pie = d3.pie()
 		.value(function (d) {
 			return d.value;
 		})
-	var data_ready = pie(d3.entries(data))
+		.sort(function(a, b){return d3.ascending(a.key, b.key);})
 
-
+	var data_ready = pie(d3.entries(data));
 
 	var color = d3.scaleOrdinal()
 		.domain(data)
