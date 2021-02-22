@@ -100,16 +100,16 @@ function generatePieChart() {
 function generateCircleChart() {
   var margin = {top: 10, right: 10, bottom: 10, left: 10},
         width = 460 - margin.left - margin.right,
-        height = 800 - margin.top - margin.bottom,
+        height = 600 - margin.top - margin.bottom,
         innerRadius = 100,
         outerRadius = Math.min(width, height) / 2;   // the outerRadius goes from the middle of the SVG area to the border
     
-        var svg = d3.select("#circle-bar")
+        var svg = d3.select("#svg")
         .append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
         .append("g")
-          .attr("transform", "translate(" + width / 2 + "," + ( height/2+100 )+ ")"); // Add 100 on Y translation, cause upper bars are longer
+          .attr("transform", "translate(" + width / 2 + "," + ( height/2)+ ")"); // Add 100 on Y translation, cause upper bars are longer
   
   var xArray=[]
   var numberOfGraphs = 5

@@ -71,7 +71,7 @@
             //setting up the bar marker  
       var bars = [bar1, bar2]
       for (var i=0; i<2;i++){ 
-        currentBar = bars[i]
+        let currentBar = bars[i]
       svg.append("g")
       .selectAll("g")
       .data(xArray)
