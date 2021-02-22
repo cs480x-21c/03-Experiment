@@ -38,6 +38,7 @@
     d: randomData(),
     e: randomData()
   }
+  var size = 5
 
 
   console.log("testData: ",testData)
@@ -155,7 +156,7 @@
       //   return [key1, key2];
       // }
       randomTwo = randomTwoKeys()
-      console.log(randomTwo)
+      // console.log(randomTwo)
       var svg_pie = d3.select("#pie")
         .append("svg")
         .attr("width", WIDTH)
@@ -170,7 +171,7 @@
       var pieData = pie(d3.entries(testData))
 
       var pieDataTest = pie(d3.entries(testData))[1]
-      console.log( pieDataTest)
+      // console.log( pieDataTest)
 
       var arcMaker = d3.arc()
         .innerRadius(50)
@@ -201,14 +202,14 @@
         .attr("transform", function (d) { return "translate(" + arcMaker.centroid(d) + ")"; })
         var ratio = 100
         // find actual ratio between two points
-        console.log( testData[randomTwo[0]] )
+        // console.log( testData[randomTwo[0]] )
         if( randomTwo[0] >= randomTwo[1]){
           ratio = (testData[randomTwo[0]] / testData[randomTwo[1]]) * 100
         }
         else{
           ratio =  (testData[randomTwo[1]] / testData[randomTwo[0]] ) * 100
         }
-        console.log(ratio)
+        // console.log(ratio)
 
     </script>
     <form id="pie_submit">
@@ -220,32 +221,35 @@
   <div id="bar">
     <script>
       // add svg for bar chart
+      var testData2 = [34, 10, 22, 54, 49]
       var svgbar = d3.select("#bar")
       .append("svg")
       .attr("width", WIDTH)
-      .attr("height", HEIGHT);
-
-      // add group element to svg to hold axes and bars
-      var gbar = svgbar.append("g").attr("transform", "translate(" + margn/2 + "," + (HEIGHT - margn/2) + ")");
+      .attr("height", HEIGHT)
+      .append("g").attr("transform", "translate(" + margn/2 + "," + (HEIGHT - margn/2) + ")");
 
       // add X axis
-      gbar.append("g")
-      .call(d3.axisBottom(xScale));
+      var xBand = d3.scaleBand()
+      .range([0, WIDTH])
+      // .domain(testData.map(function(d) { return d.value; }));
+      .domain([145, 500]);
+      svgbar.append("g")
+      .call(d3.axisBottom(xBand));
 
       // add Y axis
-      gbar.append("g")
+      svgbar.append("g")
       .attr("transform", "translate(0," + (-1*HEIGHT) + ")")
       .call(d3.axisLeft(yScale));
 
       // add bars
-      gbar.selectAll(".bar")
-      .data(testData)
+      svgbar.selectAll("mybar")
+      .data(testData2)
       .enter().append("rect")
-      // .attr("class", "bar")
-      // .attr("x", function(d) { return xScale(d); })
-      // .attr("y", function(d) { return yScale(d); })
-      // .attr("width", xScale.rangeBend())
-      // .attr("height", function(d) {return HEIGHT - yScale(d); });
+      .attr("x", function(d, i) { return (i*size) + margn; })
+      .attr("y", function(d, i) { return HEIGHT/2 - (d*10); })
+      .attr("width", "40")
+      .attr("height", HEIGHT)
+      .attr("fill", "brown");
 
 
     </script>
