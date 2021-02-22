@@ -1,15 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-
-  <title>Horizon v. Line Charts</title>
-  <meta name="description" content="A small, informal study for a CS class.">
-  
-  <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+  <%- include("partials/header.ejs"); -%>
 </head>
 
 
@@ -25,10 +17,10 @@
     </a>
     <h1>horizon charts</h1>
     <p>explanation of how to read. comparison to a line graph.</p>
-    <a type="button" class="btn btn-lg btn-primary" href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">test yourself</a>
+    <a type="button" class="btn btn-lg btn-primary" href="/db">test yourself</a>
   </div>
 </div>
-
+<%- include ("../partials/footer.ejs") %>
 
 <!-- d3 code -->
 <script src="https://d3js.org/d3.v4.min.js"></script>
