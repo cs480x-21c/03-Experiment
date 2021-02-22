@@ -387,7 +387,7 @@
       //yaxis
       var y = d3.scaleLinear()
         .domain([0, 100])
-        .range([height, 0]);
+        .range([height, margin.top]);
       svg.append('g')
         .call(d3.axisLeft(y));
 
@@ -439,10 +439,7 @@
       }
 */
       var correctPercentage = (smallerVal / largerVal) * 100;
-      console.log("val1 val2 "+ val1 + " "+ val2);
-      console.log(smallerVal + " smaller");
-      console.log(largerVal + " larger");
-      console.log(correctPercentage + " true");
+
       dataCurrent.truePercent = correctPercentage;
       return correctPercentage;
     }
