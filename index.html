@@ -246,7 +246,7 @@
         .selectAll('text')
         .attr('transform', 'translate(-10,0)rotate(-45)')
         .style('text-anchor', 'end');
-*/
+        */
       //yaxis
       var y = d3.scaleLinear()
         .domain([0, 125])
@@ -277,9 +277,16 @@
 
       var selectedBar1 = gen[1][0]; //index (btwn 0 and 9) of first selected bar for comparison
       var selectedBar2 = gen[1][1]; //index (btwn 0 and 9) of first selected bar for comparison
+      /* 
+      var selectedBars = [];
+      d3.selectAll("rect").each((d)=>{
+        //filter through all the bars to find the selected piece
+      })
+      */
+
       var dataBar1 = gen[0][selectedBar1];
-var dataBar2 = gen[0][selectedBar2];
-  dataCurrent.truePercent = calculateCorrectPercentage(dataBar1, dataBar2);
+      var dataBar2 = gen[0][selectedBar2];
+      dataCurrent.truePercent = calculateCorrectPercentage(dataBar1, dataBar2);
     }
 
 
@@ -305,22 +312,29 @@ var dataBar2 = gen[0][selectedBar2];
 
       var pie = d3.pie().sort(null);
 
+      var arcGenerator = d3.arc()
+          .innerRadius(0)
+          .outerRadius(radius);
 
       g.selectAll('mypie')
         .data(pie(data))
         .enter()
         .append('path')
         //We have to graph each arc of the data point
-        .attr('d', d3.arc()
-          .innerRadius(0)
-          .outerRadius(radius))
+        .attr('d', arcGenerator)
         .attr('stroke', 'black')
         .attr('fill', 'white')
         .style('stroke-width', '2px');
+     //   .each((d)=> { if (d.index === selectedSlice1 || d.index===selectedSlice2){
+     //     selectedSlices.push({startAngle: d.startAngle, endAngle: d.endAngle})
+     //   }});
       //we might have to add the dot?
 
       var selectedSlice1 = gen[1][0]; //index (btwn 0 and 9) of first selected pie slice for comparison
       var selectedSlice2 = gen[1][1]; //index (btwn 0 and 9) of second selected pie slice for comparison
+      //var selectedSlices = [] // contains the start and end angle of the selectedSlices
+
+
       var dataSlice1 = gen[0][selectedSlice1];
   var dataSlice2 = gen[0][selectedSlice2];
     dataCurrent.truePercent = calculateCorrectPercentage(dataSlice1, dataSlice2);
@@ -426,6 +440,12 @@ var dataBar2 = gen[0][selectedBar2];
 
       var selectedPiece1 = gen[2]; //index (btwn 0 and 4) of selected element in first bar
       var selectedPiece2 = gen[5]; //index (btwn 0 and 4) of selected element in second bar
+      /* 
+      var selectedBars = [];
+      d3.selectAll("rect").each((d)=>{
+        //filter through all the bars to find the selected piece
+      })
+      */
 
 
 	  var dataPiece1 = gen[1][selectedPiece1];
