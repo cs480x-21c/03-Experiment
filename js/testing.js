@@ -1,4 +1,4 @@
-const trialsPerTest = 3
+const trialsPerTest = 3 //TODO: Make this 20 for release
 
 let q = document.getElementById('message');
 let input = document.getElementById('INPUT'); 

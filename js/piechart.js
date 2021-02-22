@@ -26,7 +26,6 @@ function generatePieChart(minplots = 5, maxplots = 5) {
 	colors = color_map.slice(0, plotcount);
 	color_names = color_names_map.slice(0, plotcount);
 	random = getTwo(plotcount);
-	//console.log(data);
 	small = 0;
 	large = 0;
 	if (data[random[0]] > data[random[1]]) {
@@ -36,9 +35,6 @@ function generatePieChart(minplots = 5, maxplots = 5) {
 		large = data[random[1]];
 		small = data[random[0]];
 	}
-	console.log(color_names[random[0]]);
-	console.log(color_names[random[1]]);
-	//console.log(small / large);
 	let width = 450
 	height = 500
 	margin = 40
