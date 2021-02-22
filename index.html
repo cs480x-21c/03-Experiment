@@ -262,7 +262,10 @@
 
       var selectedBar1 = gen[1][0]; //index (btwn 0 and 9) of first selected bar for comparison
       var selectedBar2 = gen[1][1]; //index (btwn 0 and 9) of first selected bar for comparison
-      dataCurrent.truePercent = calculateCorrectPercentage(selectedBar1, selectedBar2);
+	  
+	  var dataBar1 = gen[0][selectedBar1];
+	  var dataBar2 = gen[0][selectedBar2];
+      dataCurrent.truePercent = calculateCorrectPercentage(dataBar1, dataBar2);
 
     }
 
@@ -305,7 +308,10 @@
 
       var selectedSlice1 = gen[1][0]; //index (btwn 0 and 9) of first selected pie slice for comparison
       var selectedSlice2 = gen[1][1]; //index (btwn 0 and 9) of second selected pie slice for comparison
-      dataCurrent.truePercent = calculateCorrectPercentage(selectedSlice1, selectedSlice2);
+	  
+	  var dataSlice1 = gen[0][selectedSlice1];
+	  var dataSlice2 = gen[0][selectedSlice2];
+      dataCurrent.truePercent = calculateCorrectPercentage(dataSlice1, dataSlice2);
     }
 
 
@@ -408,7 +414,10 @@
 
       var selectedPiece1 = gen[2]; //index (btwn 0 and 4) of selected element in first bar
       var selectedPiece2 = gen[5]; //index (btwn 0 and 4) of selected element in second bar
-      dataCurrent.truePercent = calculateCorrectPercentage(selectedPiece1, selectedPiece2);
+	  
+	  var dataPiece1 = gen[1][selectedPiece1];
+	  var dataPiece2 = gen[4][selectedPiece2];
+      dataCurrent.truePercent = calculateCorrectPercentage(dataPiece1, dataPiece2);
     }
 
 
