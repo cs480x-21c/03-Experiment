@@ -23,7 +23,7 @@ function getRandomArray(n) {
 let tests = [
 	[() => generatePieChart(), 'What percentage of size is the smaller target slice of the larger target slice?', 'Piechart'],
 	[() => generateBoxPlots(), 'What percentage of size is the smaller dotted boxplot of the larger dotted boxplot?', 'Boxplot'],
-	[() => generateBarChart(), 'What percentage of size is the smaller highlighted bar of the larger highlighter bar?', 'Barchart']
+	[() => generateBarChart(), 'What percentage of size is the smaller dotted bar of the larger dotted bar?', 'Barchart'],
 ]
 
 function stringify(matr) {
@@ -75,9 +75,9 @@ function submit() {
 function startTest() {
 	document.getElementById('START').style = 'display:none';
 	document.getElementById('explanation').style = 'display:none';
-	nextTrial(tests[testver][0], tests[testver][1]);
 	document.getElementById('SUBMIT').style = '';
 	document.getElementById('INPUT').style = '';
+	nextTrial(tests[testver][0], tests[testver][1]);
 }
 
 function finish() {

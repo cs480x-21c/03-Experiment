@@ -137,8 +137,3 @@ function generateBoxPlots(minplots = 5, maxplots = 10) {
 		min: Math.min(sumstat[targets[0]].value.range, sumstat[targets[1]].value.range)
 	};
 }
-
-
-//TODO: Refactor this out into it's own function. It can be reused
-
-//getTest(() => generateBoxPlots(), 'For the highlighted plots, what percentage in size is the smaller boxplot of the larger one (from end to end)');
