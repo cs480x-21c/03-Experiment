@@ -34,7 +34,6 @@ function generatePieChart(minplots = 5, maxplots = 5) {
 	colors = color_map.slice(0, plotcount);
 	color_names = color_names_map.slice(0, plotcount);
 	random = getTwo(plotcount);
-	// console.log(data);
 	small = 0;
 	large = 0;
 
@@ -45,16 +44,12 @@ function generatePieChart(minplots = 5, maxplots = 5) {
 		large = data[random[1]]
 		small = data[random[0]]
 	}
-	// console.log(color_names[random[0]]);
-	// console.log(color_names[random[1]]);
-	// console.log(small / large);
 	let width = 450
 	height = 500
 	margin = 40
 	var radius = Math.min(width, height) / 2 - margin
 
 
-	// append the svg object to the div called 'my_dataviz'
 	var svg = d3.select("#plot")
 		.append("svg")
 		.attr("width", width)
