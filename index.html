@@ -12,10 +12,19 @@
 </style>
 
 <body>
+	<h1 id='questionNum'>CS 4802 Survey</h1>
+	<div id='explanation'>
+		This is a study-style survey for an assignment for CS 4802. <br>
+		In this survey you will be asked to estimate relative sizes of parts of various figures. <br>
+		There will be 60 questions: 20 with pie charts, 20 with boxplots, and 20 with barcharts. <br>
+		The survey shouldn't take long to complete. <br>
+		Click the Start button to begin.
+	</div>
   	<div id='plot'></div>
   	<div id='message'></div>
-  	<input id='INPUT' type='number' min='0.01' max='0.99' step='0.01'>
-  	<button id='SUBMIT' onclick='submit()'>Submit</button>
+	<button id='START' onclick='startTest()'>Start</button>
+  	<input id='INPUT' style="display:none" type='number' min='0.01' max='0.99' step='0.01'>
+  	<button id='SUBMIT' style="display:none" onclick='submit()'>Submit</button>
   	<div id='error' style='color:red'></div>
   	<form style="display:none" id="fs-frm" name="simple-contact-form" accept-charset="utf-8" action="https://formspree.io/f/mgepbqny" method="post">
 		<textarea id="testdata" style="display:none;" name="data"  required=""></textarea>

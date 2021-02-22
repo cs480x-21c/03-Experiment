@@ -6,6 +6,7 @@ let submitButton = document.getElementById('SUBMIT');
 let errorP = document.getElementById('error');
 let actual = null;
 let form = document.getElementById('fs-frm');
+let qnum = document.getElementById('questionNum');
 
 let values = [];
 let testver = 0;
@@ -38,7 +39,8 @@ function stringify(matr) {
 function nextTrial(test, message) {
 	document.getElementById('plot').innerHTML = ''; // clear plots in case one is already there
 	actual = test();
-	q.innerHTML = '('+(testver*trialsPerTest+trial+1)+'/'+trialsPerTest*tests.length+'): '+message;
+	q.innerHTML = message;
+	qnum.innerHTML = 'Question '+(testver*trialsPerTest+trial+1)+'/'+trialsPerTest*tests.length+''
 }
 
 function submit() {
@@ -69,4 +71,10 @@ function submit() {
 }
 
 
-nextTrial(tests[testver][0], tests[testver][1]);
+function startTest() {
+	document.getElementById('START').style = 'display:none';
+	document.getElementById('explanation').style = 'display:none';
+	nextTrial(tests[testver][0], tests[testver][1]);
+	document.getElementById('SUBMIT').style = '';
+	document.getElementById('INPUT').style = '';
+}
