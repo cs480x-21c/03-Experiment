@@ -20,7 +20,7 @@
     
         // select a random premade dataset
         let question = questions.splice(Math.round((questions.length-1)*Math.random()),1);
-        chartsContainer.innerHTML = question.toString();
+        console.log("question: "+question);
         
         // TODO: generate viz from question index
     }
