@@ -9,6 +9,7 @@
 <body>
 <p id='label' style="font-size:50px">Line Chart</p>
 <div id="wrapper">
+    <svg id="legend" height="40"></svg>
     <svg id="workspace"></svg>
 </div>
 </body>
@@ -26,6 +27,8 @@
         width = 500 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
+    let legend = d3.select('#legend')
+
     // append the svg object to the body of the page
     let svg = d3.select('#workspace')
     svg.attr("width", width + margin.left + margin.right)
@@ -35,7 +38,7 @@
             "translate(" + margin.left + "," + margin.top + ")");
 
     // todo: read data
-    makeLineChart("http://localhost:8000/trialValuesCopy.csv", 20, 100, 0)
+    makeLineChart("http://localhost:8000/trialValuesCopy.csv", 20, 100, 25)
 
     // Expects a chart number in range [0,29] where
     // 0-9 are 2-dataset charts
@@ -96,7 +99,13 @@
                     .attr("transform", "translate(30,0)")
                     .call(yAxis);
 
-                color = ['#1b9e77', '#d95f02', '#7570b3', '#e7298a', '#66a61e', '#386cb0']
+                color = ['#d95f02', '#1b9e77', '#7570b3', '#e7298a', '#66a61e', '#386cb0']
+
+
+                svg.append("circle").attr("cx",440).attr("cy",110).attr("r", 6).style("fill", color[marks[0] % numDataSets])
+                svg.append("circle").attr("cx",440).attr("cy",130).attr("r", 6).style("fill", color[marks[1] % numDataSets])
+                svg.append("text").attr("x", 450).attr("y", 110).text("Set A").style("font-size", "15px").attr("alignment-baseline","middle")
+                svg.append("text").attr("x", 450).attr("y", 130).text("Set B").style("font-size", "15px").attr("alignment-baseline","middle")
 
                 // Add lines
 
