@@ -56,7 +56,7 @@
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script type='text/javascript' src='js/randomNumberGeneration.js'></script>
 
-  <form id="form">
+  <form id="form" onSubmit="return false;">
 
     <!-- One "tab" for each step in the form: -->
     <div class="page">
@@ -154,7 +154,19 @@
 
     display();
 
+	// Get the input field
+	var input = document.getElementById("txtAnswer");
 
+	// Execute a function when the user releases a key on the keyboard
+	input.addEventListener("keyup", function(event) {
+	// Number 13 is the "Enter" key on the keyboard
+		if (event.keyCode === 13) {
+			// Cancel the default action, if needed
+			event.preventDefault();
+			// Trigger the button element with a click
+			document.getElementById("saveNextButton").click();
+		}
+	});
 
     //END SETUP
 
