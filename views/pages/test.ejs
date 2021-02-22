@@ -33,13 +33,13 @@
                             other, you would write 50)</label>
 
                         <div class="input-group mb-3">
-                            <input type="number" class="form-control" placeholder="Percent" min="0" max="100">
+                            <input type="number" class="form-control" min="0" max="100">
                             <div class="input-group-append">
                                 <span class="input-group-text">%</span>
                             </div>
                         </div>
                         <br><br>
-                        <input type="submit" id="nextButton" class="btn btn-primary" value="Next Question">
+                        <button type="button" id="nextButton" class="btn btn-primary">Next Question</button>
                     </form>
                 </div>
             </div>
@@ -62,10 +62,9 @@
 
                 // select a random premade dataset
                 let num = Math.round((questions.length - 1) * Math.random());
-                console.log(Math.random());
                 let question = questions.splice(num, 1);
-
-                console.log(question);
+                
+                chartContainer.innerHTML = question[0];
 
                 // TODO: generate viz from question index
             }
@@ -77,11 +76,13 @@
             })
 
             function recordInput() {
+
                 inputs = document.getElementsByTagName("inputs");
                 console.log(inputs)
                 // TODO record to database
 
                 questionsCompleted++;
+                console.log(questionsCompleted)
 
                 if (questionsCompeted == 60) {
                     // stop, congrats, you're done!
