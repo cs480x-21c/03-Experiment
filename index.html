@@ -101,15 +101,18 @@
     //Initial SETUP
     console.log(d3);
     var tracker = 0;
-    var numDisplay = 6; //Number of Display we want to have
+    var numDisplay = 60; //Number of Display we want to have
 
     var currentPage = 0;
     var maxPage = 2;
 
-
-
-    var functionNumbers = [1, 2, 3, 1, 2, 3];
-
+    var functionNumbers = [];
+    for (let i=1; i<=3; i++){
+      for (let j=1; j<=numDisplay/3; j++){
+        functionNumbers.push(i);
+      }
+    }
+    //console.log(functionNumbers.length);
     //Shuffle Numbers from
     //https://stackoverflow.com/a/12646864
     //DO WE NEED THIS
@@ -262,11 +265,7 @@
 
       var selectedBar1 = gen[1][0]; //index (btwn 0 and 9) of first selected bar for comparison
       var selectedBar2 = gen[1][1]; //index (btwn 0 and 9) of first selected bar for comparison
-	  
-	  var dataBar1 = gen[0][selectedBar1];
-	  var dataBar2 = gen[0][selectedBar2];
-      dataCurrent.truePercent = calculateCorrectPercentage(dataBar1, dataBar2);
-
+      dataCurrent.truePercent = calculateCorrectPercentage(selectedBar1, selectedBar2);
     }
 
 
@@ -308,10 +307,7 @@
 
       var selectedSlice1 = gen[1][0]; //index (btwn 0 and 9) of first selected pie slice for comparison
       var selectedSlice2 = gen[1][1]; //index (btwn 0 and 9) of second selected pie slice for comparison
-	  
-	  var dataSlice1 = gen[0][selectedSlice1];
-	  var dataSlice2 = gen[0][selectedSlice2];
-      dataCurrent.truePercent = calculateCorrectPercentage(dataSlice1, dataSlice2);
+      dataCurrent.truePercent = calculateCorrectPercentage(selectedSlice1, selectedSlice2);
     }
 
 
@@ -414,10 +410,7 @@
 
       var selectedPiece1 = gen[2]; //index (btwn 0 and 4) of selected element in first bar
       var selectedPiece2 = gen[5]; //index (btwn 0 and 4) of selected element in second bar
-	  
-	  var dataPiece1 = gen[1][selectedPiece1];
-	  var dataPiece2 = gen[4][selectedPiece2];
-      dataCurrent.truePercent = calculateCorrectPercentage(dataPiece1, dataPiece2);
+      dataCurrent.truePercent = calculateCorrectPercentage(selectedPiece1, selectedPiece2);
     }
 
 
