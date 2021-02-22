@@ -35,11 +35,42 @@
             "translate(" + margin.left + "," + margin.top + ")");
 
     // todo: read data
-    makeLineChart("http://localhost:8000/data.csv", 7, 21, 101, 6)
+    makeLineChart("http://localhost:8000/trialValuesCopy.csv", 20, 100, 0)
 
-    function makeLineChart(fileName, xToMark, xRange, yRange, numDataSets) {
+    // Expects a chart number in range [0,29] where
+    // 0-9 are 2-dataset charts
+    // 10-19 are 4-dataset charts
+    // 20-29 are 6-dataset charts
+    function getColsMarksNumSets(chartNum) {
+        let numSets = (Math.floor(chartNum / 10) + 1) *2
+        let cols = [], mark = []
+        if (chartNum < 10) {
+            cols = [2 * chartNum, 2 * chartNum + 1]
+            mark = [...cols]
+        }
+        else if (chartNum < 20) {
+            let i = chartNum - 10
+            cols = [20 + 4 * i, 21 + 4 * i, 22 + 4 * i, 23 + 4 * i]
+            mark = [20 + 4 * i, 21 + 4 * i + chartNum % 3]
+        }
+        else {
+            let i = chartNum - 20
+            cols = [60 + 6 * i, 61 + 6 * i, 62 + 6 * i, 63 + 6 * i, 64 + 6 * i, 65 + 6 * i]
+            mark = [60 + 6 * i, 61 + 6 * i + chartNum % 5]
+        }
+        return [cols,mark, numSets, chartNum % 8 + 2]
+    }
+
+    function makeLineChart(fileName, xRange, yRange, chartNum) {
         d3.csv(fileName).then(
             function (data) {
+                let cols = data.columns
+                let xVals = d3.range(1,21)
+                let colsAndMarks = getColsMarksNumSets(chartNum)
+                let yCols = colsAndMarks[0]
+                let marks = colsAndMarks[1]
+                let numDataSets = colsAndMarks[2]
+                let xToMark = colsAndMarks[3]
 
                 // Add X axis
                 let x = d3.scaleLinear()
@@ -59,7 +90,7 @@
                     .range([height, 30]);
 
                 let yAxis = d3.axisLeft(y)
-                yAxis.tickValues([0, yRange])
+                yAxis.tickValues([0, yRange/2, yRange])
 
                 svg.append("g")
                     .attr("transform", "translate(30,0)")
@@ -68,11 +99,13 @@
                 color = ['#1b9e77', '#d95f02', '#7570b3', '#e7298a', '#66a61e', '#386cb0']
 
                 // Add lines
-                let cols = data.columns
 
-                for (i = 1; i <= numDataSets; i++) {
+                addToLabel(yCols + ", m: " + marks + " ds: " + numDataSets)
+
+                for (i = 0; i < numDataSets; i++) {
                     let dot = Math.random() * 5
                     let space = Math.random() * 5
+                    let counter = -1
                     svg.append('path')
                         .datum(data)
                         .attr("fill", "none")
@@ -80,7 +113,8 @@
                         .attr("stroke-width", 1.5)
                         .attr("d", d3.line()
                             .x(function (d) {
-                                return x(d[cols[0]])
+                                counter += 1
+                                return x(xVals[counter])
                             })
                             .y(function (d) {
                                 return y(d[cols[i]])
