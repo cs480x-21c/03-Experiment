@@ -1,12 +1,15 @@
 const trialsPerTest = 3
 
-let trial = 0
 let q = document.getElementById('message');
 let input = document.getElementById('INPUT'); 
 let submitButton = document.getElementById('SUBMIT');
 let errorP = document.getElementById('error');
 let actual = null;
 let form = document.getElementById('fs-frm');
+
+let values = [];
+let testver = 0;
+let trial = 0
 
 function getRandomArray(n) {
 	let arr = [];
@@ -16,21 +19,15 @@ function getRandomArray(n) {
 	return arr;
 }
 
-
 let tests = [
 	[() => generatePieChart(), 'What percentage of size is the smaller target slice of the larger target slice?', 'Piechart'],
 	[() => generateBoxPlots(), 'What percentage of size is the smaller highlighted boxplot of the larger highlighted boxplot?', 'Boxplot'],
 	[() => generateBarChart(), 'What percentage of size is the smaller highlighted bar of the larger highlighter bar?', 'Barchart']
 ]
 
-let values = [];
-
-let testver = 0;
-
-
-function stringify(arr) {
+function stringify(matr) {
 	let str = '';
-	arr.forEach(row => {
+	matr.forEach(row => {
 		row.forEach(val => { str += val + "," });
 		str += '\n';
 	});

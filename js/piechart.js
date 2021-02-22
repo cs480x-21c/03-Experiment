@@ -1,11 +1,3 @@
-function getRandomArray(n) {
-	let arr = [];
-	for (let i = 0; i < n; i++) {
-		arr.push(Math.max(Math.random(), 0.05));
-	}
-	return arr;
-}
-
 function getRandomInt(max) {
 	return Math.floor(Math.random() * Math.floor(max));
 }
