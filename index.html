@@ -191,7 +191,7 @@
       .attr("height", HEIGHT);
 
       // add group element to svg to hold axes and bars
-      var gbar = svgbar.append("g").attr("transform", "translate(" + margn + "," + (HEIGHT - margn/2) + ")");
+      var gbar = svgbar.append("g").attr("transform", "translate(" + margn/2 + "," + (HEIGHT - margn/2) + ")");
 
       // add X axis
       gbar.append("g")
@@ -201,6 +201,16 @@
       gbar.append("g")
       .attr("transform", "translate(0," + (-1*HEIGHT) + ")")
       .call(d3.axisLeft(yScale));
+
+      // add bars
+      gbar.selectAll(".bar")
+      .data(testData)
+      .enter().append("rect")
+      // .attr("class", "bar")
+      // .attr("x", function(d) { return xScale(d); })
+      // .attr("y", function(d) { return yScale(d); })
+      // .attr("width", xScale.rangeBend())
+      // .attr("height", function(d) {return HEIGHT - yScale(d); });
 
 
     </script>
