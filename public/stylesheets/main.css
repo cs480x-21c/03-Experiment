@@ -15,7 +15,7 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 2.5em;
+  height: 5em;
 }
 
 #page-container {
@@ -24,11 +24,32 @@ footer {
 }
 
 #content-wrap {
-  padding-bottom: 2.5rem;
+  padding-bottom: 5rem;
 }
 
 #chart-container {
   background-color: rgb(99, 97, 102);
   height: 500px;
   width: 500px;
+}
+
+@media (max-width: 500px){
+  #chart-container {
+    height: 300px;
+    width: 300px;
+  }
+}
+
+/* removing spin button*/
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
