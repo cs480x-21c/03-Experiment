@@ -99,7 +99,7 @@ function generatePieChart(minplots = 5, maxplots = 5) {
 	svg.append("g")
    	.attr("transform", "translate(" + (width / 2 - 350) + "," + 210 + ")")
    	.append("text")
-   	.text("The two slices are colored " + color_names[random[0]] + " and " + color_names[random[1]])
+   	.text("Target slices: " + color_names[random[0]] + " and " + color_names[random[1]])
    	.attr("font-weight", "bold")
 		return {
 		max: large,
