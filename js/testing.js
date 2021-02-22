@@ -9,7 +9,7 @@ let actual = null;
 let form = document.getElementById('fs-frm');
 
 let tests = [
-	[() => generatePieChart(), 'What percentage of size is the smaller highlighted slice of the larger highlighter slice?', 'Piechart'],
+	[() => generatePieChart(), 'What percentage of size is the smaller slice of the larger slice?', 'Piechart'],
 	[() => generateBoxPlots(), 'What percentage of size is the smaller highlighted boxplot of the larger highlighted boxplot?', 'Boxplot'],
 	[() => generateBarChart(), 'What percentage of size is the smaller highlighted bar of the larger highlighter bar?', 'Barchart']
 ]
