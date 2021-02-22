@@ -61,8 +61,9 @@ function submit() {
 			input.remove();
 			submitButton.remove();
 			errorP.remove();
-			q.innerHTML = 'Test Completed. Click \"Finish Survey\" to submit.';
-			form.style = 'display:inline';
+			qnum.innerHTML = 'Test Completed';
+			q.innerHTML = 'Please click \"Finish Survey\" to submit.';
+			form.style = '';
 			document.getElementById('testdata').innerHTML = stringify(values);
 		} else {
 			nextTrial(tests[testver][0], tests[testver][1]) //next trial
@@ -77,4 +78,10 @@ function startTest() {
 	nextTrial(tests[testver][0], tests[testver][1]);
 	document.getElementById('SUBMIT').style = '';
 	document.getElementById('INPUT').style = '';
+}
+
+function finish() {
+	qnum.innerHTML = "Thank you for participating!"
+	form.style = 'display:none'
+	q.innerHTML = '';
 }
