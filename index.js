@@ -20,7 +20,7 @@ express()
   .post('/saveResults', async function(req, res){
     try {
       const client = await pool.connect();
-      const result = await client.query('INSERT INTO results VALUES ('+req+')');
+      const result = await client.query('INSERT INTO results VALUES('+req+')');
       client.release();
     } catch (err) {
       console.error(err);
