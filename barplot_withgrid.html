@@ -190,8 +190,8 @@
         var plots = JSON.parse(sessionStorage.getItem("links"));
         console.log(plots);
         var i = JSON.parse(sessionStorage.getItem("i"));
-        i = i + 1;
-        console.log(i)
+        const oldi = i
+        
 
         var goToNum = plots[i];
         if (goToNum == '1') {
@@ -209,13 +209,16 @@
         }
 
         console.log(goTo);
-        sessionStorage.setItem("i", JSON.stringify(i))
+        
       
         document.getElementById("link").setAttribute("href",goTo);
      
         
         //Supposed to grab the typed text when the user clicks the submit button
         function handleClick(event){
+            i = i + 1;
+            console.log(i)
+            sessionStorage.setItem("i", JSON.stringify(i))
           
             var index = JSON.parse(sessionStorage.getItem("index"))
             if(index == "") {
@@ -240,7 +243,9 @@
           
             var output = JSON.parse(sessionStorage.getItem("dataset"));
             console.log("output " + output)
-            document.getElementById("next").disabled = false;
+            if ((i-oldi)==1) {
+              document.getElementById("next").disabled = false;
+            }
 
             if(index >= 60) {
               downloadCSV(output.join("\n"), 'barplotdata.csv');
