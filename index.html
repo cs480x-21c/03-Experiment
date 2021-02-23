@@ -1,13 +1,17 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<!DOCTYPE html>
 <html>
+<head>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>03-Experiment.html</title>
+</head>
 <body>
 <script>
     console.log(d3); // test if d3 is loaded
 
     //window.onload=drawBarChart();
-    window.onload=startPage();
+    window.onload = startPage();
 
-    var userInput;
     const csvRows = [["Type", "Smaller", "Larger", "Actual Ratio", "Guess Ratio"]];
 
     var tempData;
@@ -15,40 +19,49 @@
     var numSubmits = 0;
     var maxSubmits = 3;
 
-    function startPage(){
+    function startPage() {
+
         var start = document.createElement("BUTTON");
         var startText = document.createTextNode("Start");
         start.appendChild(startText);
         document.body.appendChild(start);
         start.classList.add('StartButton')
         start.classList.add('StartPage')
-        start.onclick = function(){drawBarChart()}
+        start.onclick = function () {
+            drawBarChart()
+        }
 
     }
 
-    function resultsPage(csvContent){
+    function resultsPage(csvContent) {
         var encodedUri = encodeURI(csvContent);
         window.open(encodedUri);
     }
 
-    function textBoxSubmit(){
+    function textBoxSubmit() {
+        var div = document.createElement("div");
+
+        div.style.height = "100px";
+
+        document.body.appendChild(div);
+
         // Text box
         var textInput = document.createElement("INPUT");
-        textInput.setAttribute("placeholder","Enter Percent E.g. 50");
-        textInput.setAttribute("type","text");
-        document.body.appendChild(textInput);
+        textInput.setAttribute("placeholder", "Enter Percent E.g. 50");
+        textInput.setAttribute("type", "text");
+        div.appendChild(textInput);
         var percentIcon = document.createElement("Percent");
         var percentIconText = document.createTextNode("%    ");
         percentIcon.style.fontFamily = "arial";
         percentIcon.appendChild(percentIconText);
-        document.body.appendChild(percentIcon);
+        div.appendChild(percentIcon);
 
         // Submit button
         var submit = document.createElement("Button");
         var submitText = document.createTextNode("Submit");
         submit.appendChild(submitText);
-        document.body.appendChild(submit);
-        submit.onclick = function(){
+        div.appendChild(submit);
+        submit.onclick = function () {
             numSubmits++;
             var text = textInput.value;
             console.log(text);
@@ -65,12 +78,13 @@
 
             console.log(csvRows);
 
-            if(numSubmits < maxSubmits) drawBarChart();
+            if (numSubmits < maxSubmits) drawBarChart();
             else resultsPage(csvContent);
+
         }
     }
 
-  //  function resultsPage
+    //  function resultsPage
 
     function drawBarChart() {
 
@@ -81,7 +95,7 @@
         textBoxSubmit();
 
         // SVG dimensions
-        var SVGWidth = 800;
+        var SVGWidth = 405;
         var SVGHeight = 600;
         //var margins = window.innerWidth/10;
         var margins = 50;
@@ -126,7 +140,12 @@
 
         // Display a simple Column Chart using the above Random Data
         //var svg = d3.select('#chartholder').selectAll('div')
-        var svg = d3.select("body")
+
+        var svgdiv = document.createElement("div");
+        svgdiv.classList.add("svgdiv");
+        document.body.appendChild(svgdiv);
+        svgdiv.id = "svgdiv";
+        var svg = d3.select("#svgdiv")
                 .append("svg")
                 .attr("width", SVGWidth)
                 .attr("height", SVGHeight)
@@ -186,120 +205,6 @@
 
 
     }
-
-
-    // // Margins
-    // var margins = {left: 50, right: 50, top: 50, bottom: 50},
-    //     width = SVGWidth - margins.left - margins.right,
-    //     height = SVGHeight - margins.top - margins.bottom;
-    //
-    // // Axis limits and bubble profiles
-    // var x = d3.scaleLinear().range([0, width]);
-    // var y = d3.scaleLinear().range([height, 0]);
-    // var bubbleSize = d3.scaleLinear().range([3, 20]);
-    // var bubbleColors = d3.scaleOrdinal().range(["red", "blue", "orange", "green", "purple"]);
-    //
-    // // SVG
-    // var svg = d3.select("body")
-    //     .append("svg")
-    //     .attr("width", SVGWidth)
-    //     .attr("height", SVGHeight)
-    //     .append("g")
-    //     .attr("transform", "translate(" + margins.left + "," + margins.top + ")");
-    //
-    // // Load CSV
-    // d3.csv("cars-sample.csv", function(error, data){
-    //     if (error) throw error;
-    //
-    //     // Format
-    //     data.forEach(function(d) {
-    //         d.Weight = +d.Weight;
-    //         d.MPG = +d.MPG;
-    //         d.size = +d.Weight;
-    //     });
-    //
-    //     // Domains
-    //     x.domain([1500, 5200]);
-    //     y.domain([8, 48]);
-    //     bubbleSize.domain([1500, 5000]);
-    //     bubbleColors.domain(["ford", "toyota", "bmw", "honda", "mercedes"]);
-    //
-    //     // Define major and minor ticks & grid
-    //     function xGridLines(){
-    //         return d3.axisBottom(x);
-    //     }
-    //
-    //     function yGridLines(){
-    //         return d3.axisLeft(y);
-    //     }
-    //
-    //     // Draw major and minor ticks & grid
-    //     svg.append("g")
-    //         .attr("class", "major-axis-grid")
-    //         .attr("transform", "translate(0, " + height + ")")
-    //         .call(xGridLines().tickSize(-height).tickFormat(""));
-    //
-    //     svg.append("g")
-    //         .attr("class", "major-axis-grid")
-    //         .call(yGridLines().tickSize(-width).tickFormat(""));
-    //
-    //     // Axes
-    //     svg.append("g")
-    //         .attr("transform", "translate(0, " + height + ")")
-    //         .call(d3.axisBottom(x).ticks(3));
-    //
-    //     svg.append("g")
-    //         .call(d3.axisLeft(y).ticks(4));
-    //
-    //     // Axis labels
-    //     svg.append("text")
-    //         .attr("transform", "translate(" + (width/2) + ", " + (height + margins.top - 10) + ")")
-    //         .style("text-anchor", "middle")
-    //         .text("Weight")
-    //         .style("font", "18px arial")
-    //
-    //     svg.append("text")
-    //         .attr("transform", "rotate(-90)")
-    //         .attr("y", 0 - margins.left)
-    //         .attr("x", 0 - (height/2))
-    //         .attr("dy", "1em")
-    //         .style("text-anchor", "middle")
-    //         .text("MPG")
-    //         .style("font", "18px arial");
-    //
-    //     // Bubble Plot
-    //     svg.selectAll("dot")
-    //         .data(data)
-    //         .enter()
-    //         .append("circle")
-    //         .attr("r", function(d) { return bubbleSize(d.size);})
-    //         .attr("cx", function(d) { return x(d.Weight);})
-    //         .attr("cy", function(d) { return y(d.MPG);})
-    //         .style("fill", function(d) { return bubbleColors(d.Manufacturer);})
-    //         .attr("fill-opacity", 0.5);
-    //
-    //
-    //
-    //
-    // });
-
-
 </script>
 </body>
 </html>
-<style>
-    .svg{
-        background-color: saddlebrown;
-    }
-    #chartholder {
-        height: 400px;
-        width: 600px;
-    }
-    .bar {
-        display: inline-block;
-        width: 15px;
-        height: 10px; /* Gets overridden by D3 height below */
-        margin-right: 2px;
-        background-color: teal;
-    }
-</style>
