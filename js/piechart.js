@@ -22,17 +22,16 @@ function getTwo(n) {
 }
 
 function generatePieChart(minplots = 5, maxplots = 5) {
-	let plotcount = Math.floor(Math.random() * 6) + minplots;
+	let plotcount = getRandomInt(5) + minplots;
 	let firstInd = Math.floor(Math.random() * plotcount);
 	let targets = [firstInd, firstInd];
 	while (targets[0] == targets[1]) {
 		targets[1] = Math.floor(Math.random() * plotcount);
 	}
 	data = getRandomArray(plotcount);
-	color_map = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"];
-	color_names_map = ["blue", "orange", "green", "red", "purple", "brown", "pink", "grey", "yellow", "teal"];
+	// console.log(data);
+	color_map = ["#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#FFFFFF"];
 	colors = color_map.slice(0, plotcount);
-	color_names = color_names_map.slice(0, plotcount);
 	random = getTwo(plotcount);
 	small = 0;
 	large = 0;
@@ -85,17 +84,34 @@ function generatePieChart(minplots = 5, maxplots = 5) {
 			return (color(d.data.key))
 		})
 		.attr("stroke", "black")
-		.style("stroke-width", "2px")
-		.style("opacity", 0.7)
+		.style("stroke-width", "1.5px")
+		.style("opacity", 1)
 
-	var g = svg.append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height + ")");
 
 	svg.append("g")
-   	.attr("transform", "translate(" + (width / 2 - 350) + "," + 210 + ")")
+   	.attr("transform", "translate(" + (width / 2 - 335) + "," + 220 + ")")
    	.append("text")
-   	.text("Target slices: " + color_names[random[0]] + " and " + color_names[random[1]])
+   	.text("Slice one:")
    	.attr("font-weight", "bold")
+
+   	svg.append("g")
+   	.attr("transform", "translate(" + (width / 2 - 215) + "," + 220 + ")")
+   	.append("text")
+   	.text("Slice two:")
+   	.attr("font-weight", "bold")
+
+   	svg.append('circle')
+   	 .attr('cx', -23)
+  .attr('cy', 215)
+  .attr('r', 15)
+  .attr('stroke', 'black')
+  .attr('fill', colors[random[1]]);
+   	svg.append('circle')
+   	 .attr('cx', 96)
+  .attr('cy', 215)
+  .attr('r', 15)
+  .attr('stroke', 'black')
+  .attr('fill', colors[random[0]]);
 		return {
 		max: large,
 		min: small
