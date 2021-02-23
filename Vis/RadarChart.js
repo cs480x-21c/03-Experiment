@@ -1,9 +1,10 @@
 
-class RadarChart
+class RadarChart extends Chart
 {
 
-    constructor()
+    constructor(svg, width, height)
     {
+        super(svg, width, height);
         this.name = "RadarChart";
     }
 

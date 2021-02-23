@@ -1,9 +1,10 @@
 
-class BarChart
+class BarChart extends Chart
 {
 
-    constructor()
+    constructor(svg, width, height)
     {
+        super(svg, width, height);
         this.name = "BarChart";
     }
 
