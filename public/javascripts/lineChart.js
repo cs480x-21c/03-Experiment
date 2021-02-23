@@ -1,6 +1,9 @@
-    //let svg = d3.select('#workspace')
-    // setup(svg, 500, 500)
-    // makeLineChart(svg, 410, 460, 20, 100, "http://localhost:8000/trialValuesCopy.csv", 22)
+   
+function lineChart(svgID, pathToCSV, chartNum) {
+    let svg = d3.select(svgID)
+    setup(svg, 500, 500)
+    makeLineChart(svg, 410, 460, 20, 100, pathToCSV, chartNum)
+}
 
     // Set the dimensions and margins of the svg for the graph
     function setup(svg, w, h) {
