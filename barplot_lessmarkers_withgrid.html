@@ -43,6 +43,11 @@
         <input type="text" id="myVal" placeholder="Add some text&hellip;">
     </form>
 
+    <a href="../barplot_moremarkers_withgrid.html">
+       <button id="next" style="margin-top:10px;" disabled>Next</button>
+    </a>
+
+
     <div id="vis-container"></div>
 
     <script>
@@ -187,6 +192,8 @@
         //I don't think it works though
         //I stole the code from the internet
         function handleClick(event){
+            var index = JSON.parse(sessionStorage.getItem("index"))
+            console.log("index " + index)
             console.log(document.getElementById("myVal").value)
             draw(document.getElementById("myVal").value)
             const estVal = document.getElementById("myVal").value;

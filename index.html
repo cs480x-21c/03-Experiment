@@ -6,8 +6,27 @@
 
 <body>
   <h1> Experiment </h1>
-</body>
-
 <script>
   console.log(d3); // test if d3 is loaded
+  var svg = d3.select("body")
+   .append("svg")
+   .attr("width", 1000)
+   .attr("height", 110);
+  svg.append('text')
+     .text("In this experiment, you are asked to judge what is the percent of a smaller value to a larger value in several charts.")
+     .attr("y", 20)
+     .attr("font-size","20px")
+  svg.append('text')
+     .text("We won't record any other information from you except your answers.")
+     .attr("y", 50)
+     .attr("font-size","20px")
+  svg.append('text')
+     .text("Click the agree button to begin or close this tab. Thank you!")
+     .attr("y", 80)
+     .attr("font-size","20px")
 </script>
+<a href="../barplot_withgrid.html">
+   <button>Agree</button>
+</a>
+
+</body>

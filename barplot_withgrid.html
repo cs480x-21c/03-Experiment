@@ -43,8 +43,8 @@
         <input type="text" id="myVal" placeholder="Add some text&hellip;">
     </form>
 
-    <a href="../barplot_withoutgrid.html">
-       <button>Next</button>
+    <a href="../barplot_lessmarkers_withgrid.html">
+       <button id="next" style="margin-top:10px;" disabled>Next</button>
     </a>
 
     <div id="vis-container"></div>
@@ -172,7 +172,7 @@
         g.append('text')
             .text("What percentage is the smaller of the larger?")
             .attr('y', innerHeight+80)
-            .attr('font-size', '1.5em')
+            .attr('font-size', '1.3em')
 
         //print to console the actual value
         console.log(100-data[loc2]['value']);
@@ -186,26 +186,37 @@
         const actualSizeDiff = (vals[1]-vals[0])/(vals[1])
         console.log(actualSizeDiff)
         
-        //keep track of submissions?
-        var index = 0;
-        const dataset = ["Estimated Value", "Actual Value", "Distance Between Bars"]
-
         //Supposed to grab the typed text when the user clicks the submit button
         //I don't think it works though
         //I stole the code from the internet
         function handleClick(event){
-            index = index + 1;
+            var index = JSON.parse(sessionStorage.getItem("index"))
+            if(index == "") {
+                index = 1;
+                sessionStorage.setItem("index", JSON.stringify(index));
+            } else {
+                index = index + 1;
+                sessionStorage.setItem("index", JSON.stringify(index));
+            }
             console.log("index " + index)
             console.log(document.getElementById("myVal").value)
             const estVal = document.getElementById("myVal").value;
-            //const dataset = [{estimatedValue: estVal, actualValue: actualSizeDiff, distanceBetweenBars: barsBetween}];
+            var dataset = JSON.parse(sessionStorage.getItem("dataset"));
+            console.log(dataset)
+            if(dataset == null) {
+                dataset = ["Estimated Value", "Actual Value", "Distance Between Bars"];
+                sessionStorage.setItem("dataset", JSON.stringify(dataset));
+            }
             dataset.push(estVal, actualSizeDiff, barsBetween);
-            sessionStorage.setItem("dataset experiment " + index, JSON.stringify(dataset));
+            sessionStorage.setItem("dataset", JSON.stringify(dataset));
             console.log(dataset) 
             if(index >= 5) {
-              var output = JSON.parse(sessionStorage.getItem("dataset experiment 5"));
+              var output = JSON.parse(sessionStorage.getItem("dataset"));
               console.log("output " + output)
-              downloadCSV(output.join("\n"), 'barplotdata.csv');
+              document.getElementById("next").disabled = false;
+//              downloadCSV(output.join("\n"), 'barplotdata.csv');
+            } else {
+              window.location.reload()
             }
             return false;
         }
