@@ -80,7 +80,7 @@
 
             console.log(csvRows);
 
-            if (numSubmits < maxSubmits) drawBarChart();
+            if (numSubmits < maxSubmits) drawPieChart();
             else resultsPage(csvContent);
 
         }
@@ -129,19 +129,7 @@
 
         console.log("Two dots: " + twoDots);
 
-
-        // // Random Dataset Method 3 (D3 Random Number Generation)
-        // var data3 = d3.range(10).map(function() {
-        //     return Math.random();
-        // });
-
-        // Concatinate the 3 Random Datasets
-        //var data = data1.concat(data2, data2);
         console.log(data2);
-
-
-        // Display a simple Column Chart using the above Random Data
-        //var svg = d3.select('#chartholder').selectAll('div')
 
         var svgdiv = document.createElement("div");
         svgdiv.classList.add("svgdiv");
@@ -151,7 +139,7 @@
                 .append("svg")
                 .attr("width", SVGWidth)
                 .attr("height", SVGHeight)
-            //.append("g")
+
         ;
 
         // Bar Chart
@@ -167,7 +155,7 @@
             .attr("y", function (d) {
                 return SVGHeight - d * 500 - barPadding;
             })
-            //.attr("transform", "translate(" + margins + "," + margins + ")")
+
             .attr("transform", function (d, i) {
                 var translate = [barPadding + barWidth * i, 0];
                 return "translate(" + translate + ")";
@@ -204,6 +192,71 @@
 
 
         tempData = ["Bar", smallerBarHeight, largerBarHeight, ratio];
+
+
+    }
+
+    function drawPieChart(){
+
+        d3.selectAll("svg > *").remove();
+
+
+        // Random Dataset Method 2 (JavaScript Random Number Generation)
+        var data2 = [];
+        var numDataPoints = 0;
+        var maxDataPoints = 9;
+        while (numDataPoints < maxDataPoints) {
+            var newNumber = Math.random();
+            if (newNumber > 0.1) {
+                data2.push(newNumber);
+                numDataPoints++;
+            }
+        }
+
+        var width = 360;
+        var height = 360;
+        var radius = Math.min(width, height) / 3;
+
+        var color = d3.scaleOrdinal(d3.schemeCategory20b);
+
+        var svg = d3.select('#svgdiv')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height)
+            .append('g')
+            .attr('transform', 'translate(' + (width / 2) +
+                ',' + (height / 2) + ')');
+
+        var arc = d3.arc()
+            .innerRadius(0)
+            .outerRadius(radius);
+
+        var pie = d3.pie()
+            .value(function(d) { return d; })
+            .sort(null);
+
+        var path = svg.selectAll('path')
+            .data(pie(data2))
+            .enter()
+            .append('path')
+            .attr('d', arc)
+            .attr('fill', "white")
+            .style("stroke","black")
+            .style("stroke-width",3);
+
+        var twoDots = [];
+        while (twoDots.length < 2) {
+            var dotIndex = Math.floor(Math.random() * maxDataPoints);
+            if (twoDots.length == 1 && twoDots[0] != dotIndex) {
+                twoDots[1] = dotIndex;
+            } else if (twoDots.length == 0) {
+                twoDots[0] = dotIndex;
+            }
+        }
+
+        var smallerWedge = Math.min(data2[twoDots[0]], data2[twoDots[1]]);
+
+        var largerWedge = Math.max(data2[twoDots[0]], data2[twoDots[1]]);
 
 
     }
