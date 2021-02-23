@@ -47,9 +47,9 @@ const links = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 d3.shuffle(links);
 const i = 0;
   
-sessionStorage.setItem(links, JSON.stringify(links));
-sessionStorage.setItem(i, JSON.stringify(i));
-var plots = JSON.parse(sessionStorage.getItem(links));
+sessionStorage.setItem(links, JSON.stringify("links"));
+sessionStorage.setItem(i, JSON.stringify("i"));
+var plots = JSON.parse(sessionStorage.getItem("links"));
 console.log(plots)
 
 var goToNum = plots[i];
