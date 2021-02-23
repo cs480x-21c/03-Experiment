@@ -187,9 +187,9 @@
         console.log(actualSizeDiff)
       
         
-        var plots = JSON.parse(sessionStorage.getItem(links));
+        var plots = JSON.parse(sessionStorage.getItem("links"));
         console.log(plots);
-        var i = JSON.parse(sessionStorage.getItem(i));
+        var i = JSON.parse(sessionStorage.getItem("i"));
         i = i + 1;
         console.log(i)
 
@@ -209,7 +209,7 @@
         }
 
         console.log(goTo);
-        sessionStorage.setItem(i, JSON.stringify(i))
+        sessionStorage.setItem(i, JSON.stringify("i"))
      
         
         //Supposed to grab the typed text when the user clicks the submit button
