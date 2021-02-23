@@ -210,7 +210,7 @@
             dataset.push(estVal, actualSizeDiff, barsBetween);
             sessionStorage.setItem("dataset", JSON.stringify(dataset));
             console.log(dataset) 
-            if(index >= 5) {
+            if(index % 5 == 0) {
               var output = JSON.parse(sessionStorage.getItem("dataset"));
               console.log("output " + output)
               document.getElementById("next").disabled = false;
