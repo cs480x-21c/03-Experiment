@@ -26,7 +26,7 @@ function displayQuestion() {
         // line chart
         chartNum = currentQuestion;
         lineChart("chart","/trialValuesCopy.csv", chartNum);
-    } else (){
+    } else {
         // horizon chart
         chartNum = currentQuestion - 30;
         makeChart("chart", 500, 500, 20, 100, "/trialValuesCopy.csv", chartNum)
