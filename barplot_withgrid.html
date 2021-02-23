@@ -238,6 +238,8 @@
             sessionStorage.setItem("dataset", JSON.stringify(dataset));
             console.log(dataset) 
           
+            var output = JSON.parse(sessionStorage.getItem("dataset"));
+            console.log("output " + output)
             document.getElementById("next").disabled = false;
 
             if(index >= 60) {
