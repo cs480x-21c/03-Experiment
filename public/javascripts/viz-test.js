@@ -118,3 +118,12 @@ $(document).keypress(function (e) {
 
     }
 });
+
+/*
+let tableText = ""
+for (let i=0; i<60; i++){
+    tableText += "chart" + i + " integer, greater" + i + " text, percent" + i + " integer, ";
+    console.log("um")
+}
+console.log(tableText);
+*/
