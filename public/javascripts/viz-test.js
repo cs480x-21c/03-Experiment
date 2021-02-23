@@ -13,30 +13,29 @@ for (let i = 0; i < totalQuestions; i++) {
 // 30-59: horizon
 
 function displayQuestion() {
-
-    chartContainer = document.getElementById("chart-container");
-
+    d3.select('#chart').selectAll('*').remove();
+    $('.horizon').remove();
     // select a random premade dataset
     let num = Math.round((questions.length - 1) * Math.random());
     let question = questions.splice(num, 1);
 
     currentQuestion = question[0]
+    //chartContainer = document.getElementById("chart-container");
     //chartContainer.innerHTML = currentQuestion;
     if (currentQuestion < 30){
         // line chart
         chartNum = currentQuestion;
-        lineChart("chart","/trialValuesCopy.csv", chartNum);
+        lineChart("#chart", 500, 500, "csv/trialValuesSine.csv", chartNum);
     } else {
         // horizon chart
         chartNum = currentQuestion - 30;
-        makeChart("chart", 500, 500, 20, 100, "/trialValuesCopy.csv", chartNum)
+        makeChart("#chart", 500, 500, 20, 100, "csv/trialValuesSine.csv", chartNum)
     }
 
     // TODO: generate viz from question index
 
     document.getElementById('viz-form').reset();
 
-    console.log("q length"+questions.length)
     if (questions.length == 0){
         document.getElementById('next-button').innerText = "Submit"
     }
@@ -67,20 +66,23 @@ $(window).on('resize', function () {
 
 function validateInput() {
     try {
-        greater = document.querySelector('input[name="greater"]:checked').value
+        greaterInput = document.querySelector('input[name="greater"]:checked')
+        greater = greaterInput.value
 
-        percent = document.querySelector('input[type="number"]').value
+        percentInput = document.querySelector('input[type="number"]')
+        percent = percentInput.value
 
-        if (percent > 100) {
-            console.log("too high")
+        if (isNaN(percent) || percent < 1 || percent > 100) {
+            percentInput.classList.add(".is-invalid")
             return false;
         }
 
+        document.querySelector('input[name="greater"]').classList.remove(".is-invalid")
+        percentInput.classList.remove(".is-invalid")
         return [greater, percent]
     } catch (e) {
-        console.log(e)
         if (e instanceof TypeError) {
-            console.log("incomplete")
+            document.querySelector('input[name="greater"]').classList.add(".is-invalid")
             return false;
         }
     }
@@ -88,7 +90,7 @@ function validateInput() {
 
 function recordInput() {
     if (validateInput()==false){
-        console.log("nope")
+        console.log("Input invalid or incomplete.")
         return;
     } else {
         [greater, percent] = validateInput();
@@ -99,23 +101,29 @@ function recordInput() {
     // TODO record to database
 
     questionsCompleted++;
-    console.log(questionsCompleted)
+    //console.log(questionsCompleted)
     currentAnsStr = currentAnswers.join(', ')
-    // like 5 for testing purposes
-    if (questionsCompleted == totalQuestions) {
+
+    if (questionsCompleted ==1){
+        currentAnsStr = '\n' + currentAnsStr +', '
+        displayQuestion()
+    } else if (questionsCompleted == totalQuestions) {
         // stop, congrats, you're done!
         // answersString = answers.flat().join(', ')
         currentAnsStr += '\n'
-            
+        document.getElementById("question").style.display = "none";
+        document.getElementById("content-wrap").innerText="Thank you for your time!"
+        
     } else {
+        currentAnsStr += ', ';
         displayQuestion()
     }
     let req = {
         data: currentAnsStr
     };
-    console.log(currentAnsStr)
+    //console.log(currentAnsStr)
     $.post('saveResults',req,function(res){
-        console.log("Response recorded.")
+        //console.log("Response recorded.")
     });
 }
 
@@ -123,9 +131,16 @@ document.getElementById("next-button").addEventListener("click", recordInput)
 
 document.getElementById("next-button").addEventListener("mouseup", function () { this.blur() })
 
+$(document).ready(function() {
+  $('form').submit(function(e) {
+    e.preventDefault();
+    recordInput();
+  });
+});
+
 $(document).keypress(function (e) {
     if (e.which == 13) {
-        console.log("enter")
+        //console.log("enter")
         // Just add your validation code here.
 
     }

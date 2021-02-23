@@ -31,6 +31,19 @@ label {
   padding: 6px 10px;
 }
 
+.invalid-feedback {
+  color: rgb(185, 38, 38);
+  display: none;
+}
+
+.is-invalid ~ .invalid-feedback {
+  display: block;
+}
+.is-invalid,
+.is-invalid ~ .form-check-label {
+  border-color: rgb(185, 38, 38);
+}
+
 .no-margin {
   margin: 0;
 }
@@ -45,10 +58,13 @@ label {
 }
 
 #chart-container {
-  background-color: rgb(99, 97, 102);
+  /*outline: 1px solid rgb(99, 97, 102);*/
   height: 500px;
   width: 500px;
   margin: 1em auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #form-container {
@@ -68,12 +84,14 @@ label {
   text-align: center;
 }
 
+/* nvm about different screen sizes
 @media (max-width: 550px){
   #chart-container {
     height: 300px;
     width: 300px;
   }
 }
+*/
 
 /* removing spin button*/
 

@@ -20,10 +20,7 @@
             <div id="question" style="display: none;">
                 <div id="chart-container" class="container"><svg id="chart"></svg></div>
                 <div id="form-container" class="container">
-                    <form id="viz-form" class="form-check">
-                        <!-- Prevent implicit submission of the form -->
-                        <button type="submit" disabled style="display: none" aria-hidden="true"></button>
-
+                    <form id="viz-form" class="form-check form-group">
                         <label for="greater">Which y is greater?</label><br>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" id="datasetA" name="greater" value="A"
@@ -34,6 +31,7 @@
                             <input class="form-check-input" type="radio" id="datasetB" name="greater" value="B">
                             <label class="form-check-label" for="datasetB">Dataset B</label>
                         </div>
+                        <div class="invalid-feedback">Please select an option.</div>
 
                         <br><br>
 
@@ -42,12 +40,13 @@
                             (e.g. if one is half the size of the
                             other, you would write 50)
                         </small>
-                        <div id="number-wrapper" class="input-group mb-3 col-xs-2">
+                        <div id="number-wrapper" class="input-group has-validation mb-3 col-xs-2">
                             <input id="number-input" type="number" class="form-control" min="0" max="100" required>
                             <div class="input-group-addon">
                                 <span class="input-group-text">%</span>
                             </div>
                         </div>
+                        <div class="invalid-feedback">Please enter a number between 1-100.</div>
 
 
                         <br>
@@ -60,7 +59,7 @@
 
         <%- include ("../partials/footer.ejs") %>
     </div>
-
+    <script src="/javascripts/viz-test.js"></script>
 </body>
 
 </html>

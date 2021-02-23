@@ -1,7 +1,7 @@
    
-function lineChart(svgID, pathToCSV, chartNum) {
+function lineChart(svgID, width, height, pathToCSV, chartNum) {
     let svg = d3.select(svgID)
-    setup(svg, 500, 500)
+    setup(svg, width, height)
     makeLineChart(svg, 410, 460, 20, 100, pathToCSV, chartNum)
 }
 
