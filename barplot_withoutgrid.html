@@ -43,7 +43,7 @@
         <input type="text" id="myVal" placeholder="Add some text&hellip;">
     </form>
     
-    <a href="barplot_lessmarkers_withoutgrid.html">
+    <a id="link">
        <button id="next" style="margin-top:10px;" disabled>Next</button>
     </a>
 
@@ -184,9 +184,39 @@
 
         const actualSizeDiff = (vals[0])/(vals[1]) * 100
         console.log(actualSizeDiff)
+      
+        var plots = JSON.parse(sessionStorage.getItem("links"));
+        console.log(plots);
+        var i = JSON.parse(sessionStorage.getItem("i"));
+        const oldi = i
+        
+
+        var goToNum = plots[i];
+        if (goToNum == '1') {
+          var goTo = 'barplot_withgrid.html'
+        } else if (goToNum == '2') {
+          var goTo = 'barplot_withoutgrid.html'
+        } else if (goToNum == '3') {
+          var goTo = 'barplot_lessmarkers_withgrid.html'
+        } else if (goToNum == '4') {
+          var goTo = 'barplot_lessmarkers_withoutgrid.html'
+        } else if (goToNum == '5') {
+          var goTo = 'barplot_moremarkers_withgrid.html'
+        } else if (goToNum == '6') {
+          var goTo = 'barplot_moremarkers_withoutgrid.html'
+        }
+
+        console.log(goTo);
+        
+      
+        document.getElementById("link").setAttribute("href",goTo);
 
         //Supposed to grab the typed text when the user clicks the submit button
         function handleClick(event){
+            i = i + 1;
+            console.log(i)
+            sessionStorage.setItem("i", JSON.stringify(i))
+          
             var index = JSON.parse(sessionStorage.getItem("index"))
             if(index == "") {
                 index = 1;
@@ -212,11 +242,15 @@
               console.log("output " + output)
               document.getElementById("next").disabled = false;
             } 
+          
+            if ((i-oldi)==1) {
+              document.getElementById("next").disabled = false;
+            }
+          
             if(index >= 60) {
               downloadCSV(output.join("\n"), 'barplotdata.csv');
             }
-            if(index % 10 != 0) {
-              window.location.reload()
+
             }
             return false;
         }
