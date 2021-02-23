@@ -3,6 +3,26 @@
 
     <script src="https://d3js.org/d3.v6.js"></script>
     <script src="main.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBZmMg_JSRGBDOsJpmPbsNLYf8EHX69FUI",
+            authDomain: "cs-4820-assignment-3.firebaseapp.com",
+            projectId: "cs-4820-assignment-3",
+            storageBucket: "gs://cs-4820-assignment-3.appspot.com",
+            messagingSenderId: "683275659371",
+            appId: "1:683275659371:web:cb1587309518208356692e"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <!-- FingerprintJS -->
+    <script async src="//cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>s
 </head>
 <body style="font-family: sans-serif; overflow-x: hidden;" onload="main()">
     <main id="mainContent" style="
@@ -74,8 +94,8 @@
                    flex-direction: column;
                    justify-content: center;
                    align-items: center;
-                   width: 500;
-                   height: 500;">
+                   width: 500px;
+                   height: 500px;">
             <h1 style="text-align: center;">Thanks for participating</h1>
             <h3>Click <a href="/">here</a> to retake</h3>
         </div>

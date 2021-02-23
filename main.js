@@ -174,13 +174,26 @@ function main() {
                 .style("transition", "ease-in-out transform 0.7s")
                 .style("transform", "translateX(0)")
 
-            complete.append("h5")
-                .text("Output")
-            complete.append("code")
-                .text(JSON.stringify(output));
+            complete.append("p")
+                .text("Your results have been recorded");
 
             complete.select("a")
                 .attr("tabindex", "");
+
+            // Load browser fingerprinting library
+            FingerprintJS.load().then(fp => {
+                fp.get().then(result => {
+                    // Create a root reference
+                    let storageRef = firebase.storage().ref();
+
+                    // Create reference to JSON file in firebase
+                    let ref = storageRef.child("public/" + result.visitorId + ".json");
+
+                    ref.putString(JSON.stringify(output)).then((snapshot) => {
+                        console.log("Uploaded to firebase");
+                    });
+                });
+            });
         }
 
         e.preventDefault();
