@@ -1,9 +1,3 @@
-/*body {*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    text-align: center;*/
-/*}*/
 
 svg {
     background-color: #ffffff;
@@ -14,6 +8,7 @@ div {
     align-items: center;
     justify-content: center;
     text-align: center;
+
 }
 
 .svgdiv {
@@ -21,4 +16,8 @@ div {
     align-items: center;
     justify-content: center;
     text-align: center;
+}
+
+#percentIcon{
+    padding-right: 10px;
 }
