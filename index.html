@@ -6,7 +6,7 @@
 
 <body>
   <h1> Experiment </h1>
-  <h3> Enter your guess below, what percententage is the small marked value to the large marked value?</h3>
+  <h3 id="description"> Enter your guess below, what percententage is the small marked value to the large marked value?</h3>
   <h5>  E.g. enter "50"(no quotes) to guess that the small value is half as large as the big value</h5>
 </body>
 
@@ -22,12 +22,15 @@
   else if (chartToChoose == 2) {
     trueVal = randomBarGraph(svg);
   }
+  else if (chartToChoose == 3){
+    trueVal = randomBubbleChart(svg);
+  }
   else {
     console.log("Probability does not shine on you today "+chartToChoose.toString());
     trueVal = 0.5;
   }
   //var trueVal = randomGradient(svg);
-  console.log("true val: " + trueVal)
+  console.log("true val: " + trueVal);
 
   //do other logic, and store the data based on chartToChoose, their input, and trueval
 
@@ -156,6 +159,68 @@
 
   }
 
+  function randomBubbleChart(svg){
+    var data = generateData();
+    var compareIndexes = generateIndexes();
+    var compareIndexA = compareIndexes[0];
+    var compareIndexB = compareIndexes[1];
+
+    d3.select("#description").text("Enter your guess below, what percententage is the thinner circle to the wider marked circle?");
+
+    var width = "40%";
+    var height = "50%";
+    svg
+    .attr('width', width)
+    .attr('height', height)
+    .style('padding-left', '30%')
+    .style('padding-top', '5%')
+    .attr("viewBox", '0 0 100 110')
+
+    var x = d3.scaleLinear()
+      .domain([0, 100])
+      .range([0, width]);
+    
+    var y = d3.scaleLinear()
+      .domain([0,100])
+      .range([height, 0]);
+    
+
+    var compareData = [data[compareIndexA][1]+2.5, data[compareIndexB][1]+2.5]
+    console.log("compareData:" + compareData);
+    console.log("compareData:" + compareData[0]);
+
+    
+    // Adding bubbles
+    svg.append("g")
+      .selectAll("dot")
+      .data(data)
+      .enter()
+      .append("circle")
+        .attr('cx', function(d){return d[1]})
+        .attr('cy', function(d){return Math.floor(Math.random() * (80 -20)) + 20})
+        .attr("r", function(d){return (d[0]/10)})
+        .style("fill", "#FFFFFF")
+        .style("opacity", function(d){
+            if(d[1] == (compareData[0]-2.5) || d[1] == (compareData[1]-2.5)){
+              return 1;
+            } else{
+              return 0;
+            }
+        })
+        .attr("stroke", "black")
+        .attr("stroke-width", function(d){
+          if(d[1] == (compareData[0]-2.5)){
+            return ".5%"
+          }
+          else if(d[1] == (compareData[1]-2.5)){
+            return "1%"
+          }
+        })
+    
+        return (Math.min(data[compareIndexA][0], data[compareIndexB][0]) / Math.max(data[compareIndexA][0], data[compareIndexB][0]))
+  }
+
+
   function setupInputBox() {
     
     var body = d3.select('body');
@@ -173,12 +238,6 @@
     .attr('value', "Submit")
     .on('input', function(mouseEvent) { console.log("click!");});
 
-
-
   }
-
-  
-
- 
 
 </script>
