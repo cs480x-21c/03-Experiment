@@ -42,6 +42,10 @@
         <input name="Submit"  type="submit" value="Submit" >
         <input type="text" id="myVal" placeholder="Add some text&hellip;">
     </form>
+    
+    <a href="../barplot_moremarkers_withoutgrid.html">
+       <button id="next" style="margin-top:10px;" disabled>Next</button>
+    </a>
 
     <div id="vis-container"></div>
 
@@ -183,31 +187,70 @@
         console.log(actualSizeDiff)
 
         //Supposed to grab the typed text when the user clicks the submit button
-        //I don't think it works though
-        //I stole the code from the internet
         function handleClick(event){
+            var index = JSON.parse(sessionStorage.getItem("index"))
+            if(index == "") {
+                index = 1;
+                sessionStorage.setItem("index", JSON.stringify(index));
+            } else {
+                index = index + 1;
+                sessionStorage.setItem("index", JSON.stringify(index));
+            }
+            console.log("index " + index)
             console.log(document.getElementById("myVal").value)
-            draw(document.getElementById("myVal").value)
             const estVal = document.getElementById("myVal").value;
-            const dataset = [{estimatedValue: estVal, actualValue: actualSizeDiff, barsBetween}];
+            var dataset = JSON.parse(sessionStorage.getItem("dataset"));
+            console.log(dataset)
+            if(dataset == null) {
+                dataset = ["Estimated Value", "Actual Value", "Distance Between Bars", "Visualization"];
+                sessionStorage.setItem("dataset", JSON.stringify(dataset));
+            }
+            dataset.push(estVal, actualSizeDiff, barsBetween, "barplotLessMarkersWithoutGrid");
+            sessionStorage.setItem("dataset", JSON.stringify(dataset));
+            console.log(dataset) 
+            if(index % 5 == 0) {
+              var output = JSON.parse(sessionStorage.getItem("dataset"));
+              console.log("output " + output)
+              document.getElementById("next").disabled = false;
+            } 
+            if(index >= 35) {
+              downloadCSV(output.join("\n"), 'barplotdata.csv');
+            }
+            if(index % 5 != 0) {
+              window.location.reload()
+            }
             return false;
         }
         
-        //TODO:
-        //fix so that "myval" that is collected from the user is saved somewhere permanent
-            //I wanted to create a csv and add it a new line with this info
-            //But idk how to do that
-        //On click, direct to the right place
-            //Right now, it essentially refreshes the page endlessly
-            //We want a limit or it to direct you to a new plot
-            //Might require another file that directs everything
+        function downloadCSV(csv, filename) {
+          var csvFile;
+          var downloadLink;
+
+          // CSV file
+          csvFile = new Blob([csv], {type: "text/csv"});
+
+          // Download link
+          downloadLink = document.createElement("a");
+
+          // File name
+          downloadLink.download = filename;
+
+          // Create a link to the file
+          downloadLink.href = window.URL.createObjectURL(csvFile);
+
+          // Hide download link
+          downloadLink.style.display = "none";
+
+          // Add the link to DOM
+          document.body.appendChild(downloadLink);
+
+          // Click download link
+          downloadLink.click();
+        }
 
         
-
-        //Do data analysis - I can do in R
+        //TODO Do data analysis - I can do in R
         
-
-
 
     </script>
   </body>
