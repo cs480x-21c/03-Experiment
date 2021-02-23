@@ -1,8 +1,8 @@
    
 function lineChart(svgID, pathToCSV, chartNum) {
-    let svg = d3.select(svgName)
+    let svg = d3.select(svgID)
     setup(svg, 500, 500)
-    makeLineChart(svg, 410, 460, 20, 100, csvName, chartNum)
+    makeLineChart(svg, 410, 460, 20, 100, pathToCSV, chartNum)
 }
 
     // Set the dimensions and margins of the svg for the graph
