@@ -51,14 +51,11 @@ const links = ["barplot_withgrid.html", "barplot_withgrid.html", "barplot_withgr
                "barplot_moremarkers_withoutgrid.html", "barplot_moremarkers_withoutgrid.html", "barplot_moremarkers_withoutgrid.html", "barplot_moremarkers_withoutgrid.html", "barplot_moremarkers_withoutgrid.html"];
 d3.shuffle(links);
 const i = 0;
-console.log(links);
-  
-console.log(links[0]);
-console.log(links[i]);
   
 sessionStorage.setItem("links", JSON.stringify("links"));
 var plots = JSON.parse(sessionStorage.getItem("links"));
-var goTo = plots[i]
+var goTo = plots[i];
+console.log(goTo);
 
 document.getElementById("link").setAttribute("href",goTo);
 
