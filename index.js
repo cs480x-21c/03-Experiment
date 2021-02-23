@@ -19,8 +19,10 @@ express()
   .get('/test', (req, res) => res.render('pages/test'))
   .post('/saveResults', async function(req, res){
     try {
+      console.log(req)
       const client = await pool.connect();
       const result = await client.query('INSERT INTO results VALUES('+req+')');
+      console.log(result)
       client.release();
     } catch (err) {
       console.error(err);
