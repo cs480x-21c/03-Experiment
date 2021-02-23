@@ -188,6 +188,29 @@
 
         //Supposed to grab the typed text when the user clicks the submit button
         function handleClick(event){
+            var plots = JSON.parse(sessionStorage.getItem(links));
+            console.log(plots)
+            var i = JSON.parse(sessionStorage.getItem(i));
+            i = i + 1
+
+            var goToNum = plots[i];
+            if (goToNum == '1') {
+              var goTo = 'barplot_withgrid.html'
+            } else if (goToNum == '2') {
+              var goTo = 'barplot_withoutgrid.html'
+            } else if (goToNum == '3') {
+              var goTo = 'barplot_lessmarkers_withgrid.html'
+            } else if (goToNum == '4') {
+              var goTo = 'barplot_lessmarkers_withoutgrid.html'
+            } else if (goToNum == '5') {
+              var goTo = 'barplot_moremarkers_withgrid.html'
+            } else if (goToNum == '6') {
+              var goTo = 'barplot_moremarkers_withoutgrid.html'
+            }
+          
+            console.log(goTo);
+            sessionStorage.setItem(i, JSON.stringify(i))
+          
             var index = JSON.parse(sessionStorage.getItem("index"))
             if(index == "") {
                 index = 1;
@@ -205,19 +228,14 @@
                 dataset = ["Estimated Value", "Actual Value", "Distance Between Bars", "Visualization"];
                 sessionStorage.setItem("dataset", JSON.stringify(dataset));
             }
-            dataset.push(estVal, actualSizeDiff, barsBetween, "barplotLessMarkersWithoutGrid");
+            dataset.push(estVal, actualSizeDiff, barsBetween, "barplotWithGrid");
             sessionStorage.setItem("dataset", JSON.stringify(dataset));
             console.log(dataset) 
-            if(index % 10 == 0) {
-              var output = JSON.parse(sessionStorage.getItem("dataset"));
-              console.log("output " + output)
-              document.getElementById("next").disabled = false;
-            } 
+          
+            window.location.replace(goTo)
+
             if(index >= 60) {
               downloadCSV(output.join("\n"), 'barplotdata.csv');
-            }
-            if(index % 10 != 0) {
-              window.location.reload()
             }
             return false;
         }
@@ -248,10 +266,8 @@
           downloadLink.click();
         }
 
-        
-        //TODO Do data analysis - I can do in R
-        
 
     </script>
   </body>
 </html>
+
