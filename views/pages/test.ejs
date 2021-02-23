@@ -20,83 +20,46 @@
             <div id="question" style="display: none;">
                 <div id="chart-container" class="container"></div>
                 <div id="form-container" class="container">
-                    <form id="inputs" class="form-check">
+                    <form id="viz-form" class="form-check">
+                        <!-- Prevent implicit submission of the form -->
+                        <button type="submit" disabled style="display: none" aria-hidden="true"></button>
+
                         <label for="greater">Which y is greater?</label><br>
-                        <input type="radio" id="datasetA" name="greater" value="datasetA">
-                        <label for="datasetA">Dataset A</label><br>
-                        <input type="radio" id="datasetB" name="greater" value="datasetB">
-                        <label for="datasetB">Dataset B</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="datasetA" name="greater" value="A"
+                                required>
+                            <label class="form-check-label" for="datasetA">Dataset A</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="datasetB" name="greater" value="B">
+                            <label class="form-check-label" for="datasetB">Dataset B</label>
+                        </div>
 
                         <br><br>
 
-                        <label>What percent is the smaller value of the larger?(e.g. if one is half the size of the
-                            other, you would write 50)</label>
-
-                        <div class="input-group mb-3">
-                            <input type="number" class="form-control" min="0" max="100">
-                            <div class="input-group-append">
+                        <label class="no-margin">What percent is the smaller value of the larger?</label><br>
+                        <small class="form-text text-muted">
+                            (e.g. if one is half the size of the
+                            other, you would write 50)
+                        </small>
+                        <div id="number-wrapper" class="input-group mb-3 col-xs-2">
+                            <input id="number-input" type="number" class="form-control" min="0" max="100" required>
+                            <div class="input-group-addon">
                                 <span class="input-group-text">%</span>
                             </div>
                         </div>
-                        <br><br>
-                        <button type="button" id="nextButton" class="btn btn-primary">Next Question</button>
-                    </form>
-                </div>
-            </div>
 
+                </div>
+                <br><br>
+                <button type="button" id="nextButton" class="btn btn-primary">Next Chart</button>
+                </form>
+
+            </div>
         </div>
 
-        <script>
-            let questions = []
-            let questionsCompleted = 0;
-
-            for (let i = 0; i < 60; i++) {
-                questions.push(i);
-            }
-            // 0-29: lines
-            // 30-59: horizon
-
-            function displayQuestion() {
-
-                chartContainer = document.getElementById("chart-container");
-
-                // select a random premade dataset
-                let num = Math.round((questions.length - 1) * Math.random());
-                let question = questions.splice(num, 1);
-                
-                chartContainer.innerHTML = question[0];
-
-                // TODO: generate viz from question index
-            }
-
-            document.getElementById("startButton").addEventListener("click", function () {
-                document.getElementById("intro").style.display = "none";
-                document.getElementById("question").style.display = "block";
-                displayQuestion();
-            })
-
-            function recordInput() {
-
-                inputs = document.getElementsByTagName("inputs");
-                console.log(inputs)
-                // TODO record to database
-
-                questionsCompleted++;
-                console.log(questionsCompleted)
-
-                if (questionsCompleted == 60) {
-                    // stop, congrats, you're done!
-                } else {
-                    displayQuestion()
-                }
-            }
-
-            document.getElementById("nextButton").addEventListener("click", recordInput)
-
-
-        </script>
-        <%- include ("../partials/footer.ejs") %>
-    </div>
+    <script src="/javascripts/viz-test.js"></script>
+    <%- include ("../partials/footer.ejs") %>
+        </div>
 
 </body>
 
