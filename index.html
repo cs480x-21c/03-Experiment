@@ -82,8 +82,8 @@
         { "name":"mister_k", "value":randomData() },
         { "name":"mister_l", "value":randomData() }
       ] }
-  ]
-}
+    ]
+  }
 
   // iterations = 0
       function randomTwoKeys(){
@@ -299,5 +299,45 @@
 <form id="form_submit">
   <input type="submit" value="submit">
 </form>
+<!-- // add svg for bar chart
+      // var testData2 = [34, 10, 22, 54, 49];
+      var testData2 = {
+        "a": randomData(),
+        "b": randomData(),
+        "c": randomData(),
+        "d": randomData(),
+        "e": randomData()
+      }
+      var svgbar = d3.select("#bar")
+        .append("svg")
+        .attr("width", WIDTH)
+        .attr("height", HEIGHT)
+        .append("g")
+          .attr("transform", "translate(" + margn/2 + "," + (HEIGHT - margn/2) + ")");
 
+      // add X axis
+      // var max = testData2.reduce(function(a, b) { return Math.max(a,b); })
+      // var min = testData2.reduce(function(a, b) { return Math.min(a,b); })
+      // console.log("max:"+max+", min:"+min)
+
+      //create X axis
+      var xBand = d3.scaleBand()
+        .domain(['a','b','c','d','e'])
+        // .domain([min,max])
+        .range([0, WIDTH]);
+        // .domain(min, max);
+      //create Y axis
+      var yaxis = d3.scaleLinear()
+        .domain([0, 100])
+        .range([HEIGHT, 0]);
+
+      //add X axis
+      svgbar.append("g")
+        .call(d3.axisBottom(xBand));
+      // add Y axis
+      svgbar.append("g")
+        // .attr('id',"yaxis")
+        .attr("transform", "translate(0," + (-1*HEIGHT) + ")")
+        .call(d3.axisLeft(yaxis)); -->
 </HTML>
+
