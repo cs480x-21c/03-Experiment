@@ -7,6 +7,7 @@
 
 <body>
   <p id='label' style="font-size:50px">Horizon Chart</p>
+    <svg id="axis" height="10" width="500"></svg>
     <div id="wrapper">
     </div>
 </body>
@@ -14,10 +15,21 @@
 <script>
   //console.log(d3); // test if d3 is loaded
 
-  makeChart(500, 500, 20, 100,'trialValues.csv',8);
+  makeChart(d3.select('axis'), 500, 500, 20, 100,'trialValues.csv',22);
 
   // http://kmandov.github.io/d3-horizon-chart/
-  function makeChart(width, height, xRange, yRange, fileName, chartNum) {
+  function makeChart(svg, width, height, xRange, yRange, fileName, chartNum) {
+
+    const margin = {top: 20, right: 10, bottom: 0, left: 10};
+    const w = width - margin.left - margin.right,
+            h = 50 - margin.top - margin.bottom;
+
+    const g = d3.select("body").append("svg")
+            .attr("width", w + margin.left + margin.right)
+            .attr("height", h + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
     let numSets = (Math.floor(chartNum / 10) + 1) * 2;
     let colNums = [], mark = [];
     if (chartNum < 10) {
@@ -35,13 +47,19 @@
       mark = [60 + 6 * i, 61 + 6 * i + chartNum % 5]
     }
 
+    // Add X axis
+    let x = d3.scaleLinear()
+            .domain([0, xRange])
+            .range([0, w]);
+
+    let xAxis = d3.axisBottom(x)
+    xAxis.tickValues([0, 5, 10, 15, xRange])
+
+    g.append("g")
+            //.attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
     d3.csv(fileName, function (data) {
-      // var series1 = data.map(function (d) {
-      //   return parseFloat(d.y5)
-      // });
-      // var series2 = data.map(function (d) {
-      //   return parseFloat(d.y21)
-      // });
       let cols = data.columns;
       let yCols = colNums;
       var series = [];
@@ -50,12 +68,11 @@
           return parseFloat(d[cols[yCols[i]]])
         }))
       }
-      //TODO: adjust height/width/labels/colors
-      //TODO: tick marks
+
       var horizonChart = d3.horizonChart()
               .height(height / 6)
-              .step(width / 20)
-              .extent([0,100])
+              .step(width / xRange)
+              .extent([0,yRange])
               .colors(['#313695', '#4575b4', '#74add1', '#abd9e9',
                 '#fee090', '#fdae61', '#f46d43', '#d73027']);
 
@@ -64,7 +81,6 @@
               .enter().append('div')
               .attr('class', 'horizon')
               .each(horizonChart);
-
     });
   }
 
