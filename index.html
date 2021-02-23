@@ -10,8 +10,8 @@
   console.log(d3); // test if d3 is loaded
   var svg = d3.select("body")
    .append("svg")
-   .attr("width", 1000)
-   .attr("height", 110);
+   .attr("width", 1600)
+   .attr("height", 130);
   svg.append('text')
      .text("In this experiment, you are asked to judge what is the percent of a smaller value to a larger value in several charts.")
      .attr("y", 20)
@@ -20,13 +20,17 @@
      .text("We won't record any other information from you except your answers.")
      .attr("y", 50)
      .attr("font-size","20px")
-  svg.append('text')
-     .text("Click the agree button to begin or close this tab. Thank you!")
+ svg.append('text')
+     .text("Once the experiment is over a csv file will download. Please send us this file as it is your results.")
      .attr("y", 80)
+     .attr("font-size","20px")
+  svg.append('text')
+     .text("Please click the agree button to begin. Thank you!")
+     .attr("y", 110)
      .attr("font-size","20px")
 </script>
 <a href="../barplot_withgrid.html">
-   <button>Agree</button>
+   <button style="margin-top:10px;">Agree</button>
 </a>
 
 </body>
