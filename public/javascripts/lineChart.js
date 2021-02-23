@@ -1,8 +1,7 @@
 
     import "https://d3js.org/d3.v6.min.js"
 
-    let svg = d3.select('#workspace')
-
+    //let svg = d3.select('#workspace')
     // setup(svg, 500, 500)
     // makeLineChart(svg, 410, 460, 20, 100, "http://localhost:8000/trialValuesCopy.csv", 22)
 
