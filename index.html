@@ -49,7 +49,7 @@
 
     // Add X axis
     let x = d3.scaleLinear()
-            .domain([0, xRange])
+            .domain([1, xRange])
             .range([0, w]);
 
     let xAxis = d3.axisBottom(x)
@@ -80,7 +80,11 @@
               .data(series)
               .enter().append('div')
               .attr('class', 'horizon')
-              .each(horizonChart);
+              .each(function(d, i) {
+                var j = i+1;
+                horizonChart.title('Horizon chart ' + j)
+                        .call(this, d);
+              });
     });
   }
 
