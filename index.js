@@ -20,7 +20,7 @@ express()
   .get('/', (req, res) => res.render('pages/index'))
   .get('/test', (req, res) => res.render('pages/test'))
   .post('/saveResults', async function (req, res) {
-    fs.writeFileSync("results.csv", req.body.data+"\n", 'utf8')
+    fs.writeFileSync("results.csv", req.body.data, 'utf8')
     console.log("le file?? "+fs.readFileSync("results.csv", "utf8"));
     /*
     try {

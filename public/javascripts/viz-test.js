@@ -21,7 +21,16 @@ function displayQuestion() {
     let question = questions.splice(num, 1);
 
     currentQuestion = question[0]
-    chartContainer.innerHTML = currentQuestion;
+    //chartContainer.innerHTML = currentQuestion;
+    if (currentQuestion < 30){
+        // line chart
+        chartNum = currentQuestion;
+        lineChart("chart","/trialValuesCopy.csv", chartNum);
+    } else (){
+        // horizon chart
+        chartNum = currentQuestion - 30;
+        makeChart("chart", 500, 500, 20, 100, "/trialValuesCopy.csv", chartNum)
+    }
 
     // TODO: generate viz from question index
 
@@ -83,31 +92,31 @@ function recordInput() {
         return;
     } else {
         [greater, percent] = validateInput();
-        answers.push([currentQuestion, greater, percent]);
+        currentAnswers = [currentQuestion, greater, percent];
+        answers.push(currentAnswers);
     }
 
     // TODO record to database
 
     questionsCompleted++;
     console.log(questionsCompleted)
-
+    currentAnsStr = currentAnswers.join(', ')
     // like 5 for testing purposes
     if (questionsCompleted == totalQuestions) {
         // stop, congrats, you're done!
-        
-
-        answersString = answers.flat().join(', ')
-        console.log(answersString)
-        let req = {
-            data: answersString
-        };
-
-        $.post('saveResults',req,function(res){
-            console.log("Responses recorded.")
-          });
+        // answersString = answers.flat().join(', ')
+        currentAnsStr += '\n'
+            
     } else {
         displayQuestion()
     }
+    let req = {
+        data: currentAnsStr
+    };
+    console.log(currentAnsStr)
+    $.post('saveResults',req,function(res){
+        console.log("Response recorded.")
+    });
 }
 
 document.getElementById("next-button").addEventListener("click", recordInput)
