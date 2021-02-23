@@ -20,14 +20,14 @@
 
     let svg = d3.select('#workspace')
 
-    setup(svg)
-    makeLineChart(svg, "http://localhost:8000/trialValuesCopy.csv", 20, 100, 22)
+    setup(svg, 500, 500)
+    makeLineChart(svg, 410, 460, 20, 100, "http://localhost:8000/trialValuesCopy.csv", 22)
 
     // Set the dimensions and margins of the svg for the graph
-    function setup(svg) {
+    function setup(svg, w, h) {
         let margin = {top: 10, right: 30, bottom: 30, left: 60},
-            width = 500 - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom;
+            width = w - margin.left - margin.right,
+            height = h - margin.top - margin.bottom;
 
         svg.attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -36,9 +36,10 @@
                 "translate(" + margin.left + "," + margin.top + ")");
     }
 
-    // Make a line chart in the svg with dimensions of xRange, yRange
-    // by reading data from the given file for the given chart number in [0,29]
-    function makeLineChart(svg, fileName, xRange, yRange, chartNum) {
+    // In the given svg, make a line chart of the given width and height.
+    // The chart has axes with from 0 to xRange and yRange
+    // and reads data from the given file for the given chart number in [0,29]
+    function makeLineChart(svg, width, height, xRange, yRange, fileName, chartNum) {
         d3.csv(fileName).then(
             function (data) {
                 let cols = data.columns
