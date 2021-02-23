@@ -250,7 +250,10 @@
             if(index >= 60) {
               downloadCSV(output.join("\n"), 'barplotdata.csv');
             }
-            return true;
+          
+            location = goTo;
+            
+            return false;
         }
         
         function downloadCSV(csv, filename) {
