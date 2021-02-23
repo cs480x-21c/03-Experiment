@@ -1,12 +1,12 @@
-import "https://unpkg.com/d3-horizon-chart"
+// import "https://unpkg.com/d3-horizon-chart"
 // http://kmandov.github.io/d3-horizon-chart/
-function makeChart(svg, width, height, xRange, yRange, fileName, chartNum) {
+function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
 
     const margin = {top: 20, right: 10, bottom: 0, left: 10};
     const w = width - margin.left - margin.right,
         h = 50 - margin.top - margin.bottom;
 
-    const g = d3.select("body").append("svg")
+    const g = d3.select(svgID)
         .attr("width", w + margin.left + margin.right)
         .attr("height", h + margin.top + margin.bottom)
         .append("g")
