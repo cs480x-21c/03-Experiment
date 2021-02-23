@@ -51,6 +51,14 @@ label {
   margin: 1em auto;
 }
 
+#form-container {
+  margin: 1em;
+}
+
+#next-button {
+  float: right;
+}
+
 #number-wrapper {
   width: 4em;
 }

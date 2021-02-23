@@ -15,7 +15,7 @@
                 <p>for each chart, two datasets will be identified, and you will be asked to state at a given x value,
                     which y value is greater. you will also be asked to compare the two y values at x in terms of
                     percent (e.g. if one is half the size of the other, you would answer 50%).</p>
-                <button type="button" id="startButton" class="btn btn-primary">Start Test</button>
+                <button type="button" id="start-button" class="btn btn-primary">Start Test</button>
             </div>
             <div id="question" style="display: none;">
                 <div id="chart-container" class="container"></div>
@@ -49,17 +49,18 @@
                             </div>
                         </div>
 
-                </div>
-                <br><br>
-                <button type="button" id="nextButton" class="btn btn-primary">Next Chart</button>
-                </form>
 
+                        <br>
+                        <button type="button" id="next-button" class="btn btn-primary">Next Chart</button>
+                    </form>
+
+                </div>
             </div>
         </div>
 
-    <script src="/javascripts/viz-test.js"></script>
-    <%- include ("../partials/footer.ejs") %>
-        </div>
+        <script src="/javascripts/viz-test.js"></script>
+        <%- include ("../partials/footer.ejs") %>
+    </div>
 
 </body>
 

@@ -3,7 +3,7 @@ let currentQuestion = 0;
 let questionsCompleted = 0;
 let answers = [];
 
-let totalQuestions = 3;
+let totalQuestions = 60;
 // final: 60, testing: 3
 
 for (let i = 0; i < totalQuestions; i++) {
@@ -29,11 +29,11 @@ function displayQuestion() {
 
     console.log("q length"+questions.length)
     if (questions.length == 0){
-        document.getElementById('nextButton').innerText = "Submit"
+        document.getElementById('next-button').innerText = "Submit"
     }
 }
 
-document.getElementById("startButton").addEventListener("click", function () {
+document.getElementById("start-button").addEventListener("click", function () {
     document.getElementById("intro").style.display = "none";
     document.getElementById("question").style.display = "block";
     displayQuestion();
@@ -98,18 +98,21 @@ function recordInput() {
 
         answersString = answers.flat().join(', ')
         console.log(answersString)
+        let req = {
+            data: answersString
+        };
 
-        $.post('saveResults',answersString,function(res){
-            console.log("yay?")
+        $.post('saveResults',req,function(res){
+            console.log("Responses recorded.")
           });
     } else {
         displayQuestion()
     }
 }
 
-document.getElementById("nextButton").addEventListener("click", recordInput)
+document.getElementById("next-button").addEventListener("click", recordInput)
 
-document.getElementById("nextButton").addEventListener("mouseup", function () { this.blur() })
+document.getElementById("next-button").addEventListener("mouseup", function () { this.blur() })
 
 $(document).keypress(function (e) {
     if (e.which == 13) {
