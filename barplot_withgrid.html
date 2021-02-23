@@ -185,32 +185,35 @@
 
         const actualSizeDiff = (vals[0])/(vals[1]) * 100
         console.log(actualSizeDiff)
+      
+        
+        var plots = JSON.parse(sessionStorage.getItem(links));
+        console.log(plots);
+        var i = JSON.parse(sessionStorage.getItem(i));
+        i = i + 1;
+        console.log(i)
+
+        var goToNum = plots[i];
+        if (goToNum == '1') {
+          var goTo = 'barplot_withgrid.html'
+        } else if (goToNum == '2') {
+          var goTo = 'barplot_withoutgrid.html'
+        } else if (goToNum == '3') {
+          var goTo = 'barplot_lessmarkers_withgrid.html'
+        } else if (goToNum == '4') {
+          var goTo = 'barplot_lessmarkers_withoutgrid.html'
+        } else if (goToNum == '5') {
+          var goTo = 'barplot_moremarkers_withgrid.html'
+        } else if (goToNum == '6') {
+          var goTo = 'barplot_moremarkers_withoutgrid.html'
+        }
+
+        console.log(goTo);
+        sessionStorage.setItem(i, JSON.stringify(i))
      
         
         //Supposed to grab the typed text when the user clicks the submit button
         function handleClick(event){
-            var plots = JSON.parse(sessionStorage.getItem(links));
-            console.log(plots)
-            var i = JSON.parse(sessionStorage.getItem(i));
-            i = i + 1
-
-            var goToNum = plots[i];
-            if (goToNum == '1') {
-              var goTo = 'barplot_withgrid.html'
-            } else if (goToNum == '2') {
-              var goTo = 'barplot_withoutgrid.html'
-            } else if (goToNum == '3') {
-              var goTo = 'barplot_lessmarkers_withgrid.html'
-            } else if (goToNum == '4') {
-              var goTo = 'barplot_lessmarkers_withoutgrid.html'
-            } else if (goToNum == '5') {
-              var goTo = 'barplot_moremarkers_withgrid.html'
-            } else if (goToNum == '6') {
-              var goTo = 'barplot_moremarkers_withoutgrid.html'
-            }
-          
-            console.log(goTo);
-            sessionStorage.setItem(i, JSON.stringify(i))
           
             var index = JSON.parse(sessionStorage.getItem("index"))
             if(index == "") {
