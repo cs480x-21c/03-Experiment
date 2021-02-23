@@ -208,15 +208,15 @@
             dataset.push(estVal, actualSizeDiff, barsBetween, "barplotLessMarkersWithoutGrid");
             sessionStorage.setItem("dataset", JSON.stringify(dataset));
             console.log(dataset) 
-            if(index % 5 == 0) {
+            if(index % 10 == 0) {
               var output = JSON.parse(sessionStorage.getItem("dataset"));
               console.log("output " + output)
               document.getElementById("next").disabled = false;
             } 
-            if(index >= 30) {
+            if(index >= 60) {
               downloadCSV(output.join("\n"), 'barplotdata.csv');
             }
-            if(index % 5 != 0) {
+            if(index % 10 != 0) {
               window.location.reload()
             }
             return false;
