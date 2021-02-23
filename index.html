@@ -248,6 +248,7 @@
         .style('text-anchor', 'end');
         */
       //yaxis
+	  
       var y = d3.scaleLinear()
         .domain([0, 125])
         .range([height, margin.top]);
@@ -427,6 +428,10 @@
         .range([0, width])
         .padding([0.4]);
 
+	  var xPoint = d3.scalePoint()
+        .domain(groups)
+        .range([0, width])
+		.padding([0.7]);
 
       svg.append('g')
         .attr('transform', 'translate(0,' + (height - margin.top) + ')')
@@ -470,6 +475,41 @@
 
       var selectedPiece1 = gen[2]; //index (btwn 0 and 4) of selected element in first bar
       var selectedPiece2 = gen[5]; //index (btwn 0 and 4) of selected element in second bar
+	  
+	  var dataPiece1 = gen[1][selectedPiece1];
+	  var dataPiece2 = gen[4][selectedPiece2];
+	  
+	  svg.append('g')
+        .selectAll('g')
+        //.attr('transform', 'translate(0,' + (height-margin.bottom) + ')')
+        .data(stackedData)
+        .enter().append('g')
+        .selectAll('circle')
+        //we'd have to enter() more times depending on the subgroups to add all the necessary rectangles
+        .data(function(d) {
+          return d;
+        })
+        .enter().append('circle')
+        .attr('transform', 'translate(0,' + -margin.top + ')')
+        .attr('cx', function(d) {
+		  return xPoint(d.data.bar);
+        })
+        .attr('cy', function(d) {
+          return y(d[0])-(y(d[0]) - y(d[1]))/2;
+        })
+        .attr('height', function(d) {
+          return y(d[0]) - y(d[1]);
+        })
+        .attr('r', 5)
+        .attr('fill', function(d){
+			var isPiece1 = ((d.data.bar) == 1 && d[1]-d[0] == dataPiece1);
+			var isPiece2 = ((d.data.bar) == 2 && d[1]-d[0] == dataPiece2);
+			if(isPiece1 || isPiece2){
+				return "black";
+			} else{
+				return "white";
+			}
+		});
       /* 
       var selectedBars = [];
       d3.selectAll("rect").each((d)=>{
@@ -478,8 +518,7 @@
       */
 
 
-	  var dataPiece1 = gen[1][selectedPiece1];
-	  var dataPiece2 = gen[4][selectedPiece2];
+	  
       dataCurrent.truePercent = calculateCorrectPercentage(dataPiece1, dataPiece2);
     }
 
