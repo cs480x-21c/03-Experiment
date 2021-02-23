@@ -28,24 +28,27 @@ function generatePieChart(minplots = 5, maxplots = 5) {
 	while (targets[0] == targets[1]) {
 		targets[1] = Math.floor(Math.random() * plotcount);
 	}
-	data = getRandomArray(plotcount);
+	let data = getRandomArray(plotcount);
 	// console.log(data);
-	color_map = ["#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#FFFFFF"];
-	colors = color_map.slice(0, plotcount);
-	random = getTwo(plotcount);
-	small = 0;
-	large = 0;
+	let color_map = ["#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#FFFFFF"];
+	let colors = color_map.slice(0, plotcount);
+	let random = getTwo(plotcount);
+	let small = 0;
+	let large = 0;
 
+	let smallIndex;
 	if (data[random[0]] > data[random[1]]) {
 		large = data[random[0]]
 		small = data[random[1]]	
+		smallIndex = 1;
 	} else {
 		large = data[random[1]]
 		small = data[random[0]]
+		smallIndex = 0;
 	}
 	let width = 450
-	height = 500
-	margin = 40
+	let height = 500
+	let margin = 40
 	var radius = Math.min(width, height) / 2 - margin
 
 
@@ -105,13 +108,13 @@ function generatePieChart(minplots = 5, maxplots = 5) {
   .attr('cy', 215)
   .attr('r', 15)
   .attr('stroke', 'black')
-  .attr('fill', colors[random[1]]);
+  .attr('fill', colors[random[smallIndex]]);
    	svg.append('circle')
    	 .attr('cx', 96)
   .attr('cy', 215)
   .attr('r', 15)
   .attr('stroke', 'black')
-  .attr('fill', colors[random[0]]);
+  .attr('fill', colors[random[1-smallIndex]]);
 		return {
 		max: large,
 		min: small
