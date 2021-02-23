@@ -1,4 +1,4 @@
-<script>
+
     import "https://d3js.org/d3.v6.min.js"
 
     let svg = d3.select('#workspace')
@@ -119,5 +119,3 @@
     label.appendChild(document.createElement("br"))
     label.appendChild(document.createTextNode(text))
 }
-
-</script>
