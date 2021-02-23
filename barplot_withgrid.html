@@ -239,6 +239,7 @@
             console.log(dataset) 
           
             window.location.reload()
+            document.getElementById("next").disabled = false;
 
             if(index >= 60) {
               downloadCSV(output.join("\n"), 'barplotdata.csv');
