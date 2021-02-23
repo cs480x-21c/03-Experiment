@@ -272,11 +272,41 @@
         })
         .attr('stroke', 'black')
         .attr('fill', 'white')
-        .style('stroke-width', '2px');
-      //we might have to add a dot maybe within the two random bars?
-
-      var selectedBar1 = gen[1][0]; //index (btwn 0 and 9) of first selected bar for comparison
+        .style('stroke-width', '2px')
+		.append('circle')
+		.attr('r', '10')
+		.attr('cx', function (d) {
+			return x(d.xaxisdata);
+		})
+		.attr('cy', function(d) {
+			return (y(d.yaxisdata))-15;
+		})
+		.attr('fill', 'purple')
+		;
+      
+	  var selectedBar1 = gen[1][0]; //index (btwn 0 and 9) of first selected bar for comparison
       var selectedBar2 = gen[1][1]; //index (btwn 0 and 9) of first selected bar for comparison
+	  //we might have to add a dot maybe within the two random bars?
+	  svg.selectAll('mybardots')
+        .data(data)
+        .enter()
+		.append('circle')
+		.attr('transform', 'translate(0,' + -margin.top + ')')
+		.attr('r', '5')
+		.attr('cx', function (d) {
+			return x(d.xaxisdata) + (x.bandwidth()/2);
+		})
+		.attr('cy', '485')
+		.attr('fill', function(d) {
+			if ((d.xaxisdata == selectedBar1) || (d.xaxisdata == selectedBar2)){
+				return "black";
+			} else{
+				return "white";
+			}
+		})
+		;
+
+      
       /* 
       var selectedBars = [];
       d3.selectAll("rect").each((d)=>{
