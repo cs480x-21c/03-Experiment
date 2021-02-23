@@ -49,9 +49,12 @@ d3.shuffle(links);
 const i = 0;
 console.log(links);
   
+console.log(links[0]);
+console.log(links[i]);
+  
 sessionStorage.setItem("links", JSON.stringify("links"));
 var plots = JSON.parse(sessionStorage.getItem("links"));
-const goTo = links[i]
+var goTo = plots[i]
 
 document.getElementById("link").setAttribute("href",goTo);
 
