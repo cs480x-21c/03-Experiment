@@ -32,8 +32,26 @@
      .text("Please click the agree button to begin. Thank you!")
      .attr("y", 140)
      .attr("font-size","20px")
+  
+const links = ["barplot_withgrid.html", "barplot_withgrid.html", "barplot_withgrid.html", "barplot_withgrid.html", "barplot_withgrid.html",
+               "barplot_withgrid.html", "barplot_withgrid.html", "barplot_withgrid.html", "barplot_withgrid.html", "barplot_withgrid.html",
+               "barplot_withoutgrid.html", "barplot_withoutgrid.html", "barplot_withoutgrid.html", "barplot_withoutgrid.html", "barplot_withoutgrid.html",
+               "barplot_withoutgrid.html", "barplot_withoutgrid.html", "barplot_withoutgrid.html", "barplot_withoutgrid.html", "barplot_withoutgrid.html",
+               "barplot_lessmarkers_withgrid.html", "barplot_lessmarkers_withgrid.html", "barplot_lessmarkers_withgrid.html", "barplot_lessmarkers_withgrid.html", "barplot_lessmarkers_withgrid.html",
+               "barplot_lessmarkers_withgrid.html", "barplot_lessmarkers_withgrid.html", "barplot_lessmarkers_withgrid.html", "barplot_lessmarkers_withgrid.html", "barplot_lessmarkers_withgrid.html",
+               "barplot_lessmarkers_withoutgrid.html", "barplot_lessmarkers_withoutgrid.html", "barplot_lessmarkers_withoutgrid.html", "barplot_lessmarkers_withoutgrid.html", "barplot_lessmarkers_withoutgrid.html",
+               "barplot_lessmarkers_withoutgrid.html", "barplot_lessmarkers_withoutgrid.html", "barplot_lessmarkers_withoutgrid.html", "barplot_lessmarkers_withoutgrid.html", "barplot_lessmarkers_withoutgrid.html",
+               "barplot_moremarkers_withgrid.html", "barplot_moremarkers_withgrid.html", "barplot_moremarkers_withgrid.html", "barplot_moremarkers_withgrid.html", "barplot_moremarkers_withgrid.html",
+               "barplot_moremarkers_withgrid.html", "barplot_moremarkers_withgrid.html", "barplot_moremarkers_withgrid.html", "barplot_moremarkers_withgrid.html", "barplot_moremarkers_withgrid.html",
+               "barplot_moremarkers_withoutgrid.html", "barplot_moremarkers_withoutgrid.html", "barplot_moremarkers_withoutgrid.html", "barplot_moremarkers_withoutgrid.html", "barplot_moremarkers_withoutgrid.html",
+               "barplot_moremarkers_withoutgrid.html", "barplot_moremarkers_withoutgrid.html", "barplot_moremarkers_withoutgrid.html", "barplot_moremarkers_withoutgrid.html", "barplot_moremarkers_withoutgrid.html"]
+d3.shuffle(links)
+const i = 0
+sessionStorage.setItem(links)
+const goTo = links[i]
+
 </script>
-<a href="barplot_withgrid.html">
+<a href=goTo>
    <button style="margin-top:10px;">Agree</button>
 </a>
 
