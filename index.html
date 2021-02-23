@@ -296,9 +296,9 @@
 		.attr('cx', function (d) {
 			return x(d.xaxisdata) + (x.bandwidth()/2);
 		})
-		.attr('cy', '485')
+		.attr('cy', '490')
 		.attr('fill', function(d) {
-			if ((d.xaxisdata == selectedBar1) || (d.xaxisdata == selectedBar2)){
+			if ((d.xaxisdata == selectedBar1+1) || (d.xaxisdata == selectedBar2+1)){
 				return "black";
 			} else{
 				return "white";
