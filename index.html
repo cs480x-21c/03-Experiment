@@ -50,7 +50,7 @@ const i = 0;
 console.log(links);
   
 sessionStorage.setItem("links", JSON.stringify("links"));
-const links = JSON.parse(sessionStorage.getItem("links"));
+var plots = JSON.parse(sessionStorage.getItem("links"));
 const goTo = links[i]
 
 document.getElementById("link").setAttribute("href",goTo);
