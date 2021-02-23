@@ -187,8 +187,6 @@
         console.log(actualSizeDiff)
         
         //Supposed to grab the typed text when the user clicks the submit button
-        //I don't think it works though
-        //I stole the code from the internet
         function handleClick(event){
             var index = JSON.parse(sessionStorage.getItem("index"))
             if(index == "") {
@@ -204,18 +202,21 @@
             var dataset = JSON.parse(sessionStorage.getItem("dataset"));
             console.log(dataset)
             if(dataset == null) {
-                dataset = ["Estimated Value", "Actual Value", "Distance Between Bars"];
+                dataset = ["Estimated Value", "Actual Value", "Distance Between Bars", "Visualization"];
                 sessionStorage.setItem("dataset", JSON.stringify(dataset));
             }
-            dataset.push(estVal, actualSizeDiff, barsBetween);
+            dataset.push(estVal, actualSizeDiff, barsBetween, "barplotWithGrid");
             sessionStorage.setItem("dataset", JSON.stringify(dataset));
             console.log(dataset) 
             if(index % 5 == 0) {
               var output = JSON.parse(sessionStorage.getItem("dataset"));
               console.log("output " + output)
               document.getElementById("next").disabled = false;
-//              downloadCSV(output.join("\n"), 'barplotdata.csv');
-            } else {
+            } 
+            if(index >= 35) {
+              downloadCSV(output.join("\n"), 'barplotdata.csv');
+            }
+            if(index % 5 != 0) {
               window.location.reload()
             }
             return false;
@@ -248,20 +249,8 @@
         }
 
         //TODO:
-        //fix so that "myval" that is collected from the user is saved somewhere permanent
-            //I wanted to create a csv and add it a new line with this info
-            //But idk how to do that
-        //On click, direct to the right place
-            //Right now, it essentially refreshes the page endlessly
-            //We want a limit or it to direct you to a new plot
-            //Might require another file that directs everything
-
-        
-
         //Do data analysis - I can do in R
         
-
-
 
     </script>
   </body>
