@@ -34,7 +34,8 @@
           makePieChart
   ]
 
-  //TODO: Uncomment when ready chooseAChart.sort(() => Math.random() - 0.5)
+  //TODO: Uncomment when ready 
+  chooseAChart.sort(() => Math.random() - 0.5)
 
   // Initialize Array to store the data
   let answers = []
@@ -205,7 +206,7 @@
       .selectAll('rect')
       .data(arrayData)
       .enter().append('rect')
-            .attr('height', function (d) { return d})
+            .attr('height', function (d) {return d})
             .attr('width', d3.svg.width)
             .attr('y', runningHeight - this.height)
             .attr('x', svg.width * 0.4)
@@ -217,6 +218,66 @@
     // TODO: This is a stub
     console.log('called makePieChart')
     console.log('Looking for points: ' + points)
+
+    document.getElementById('header').innerText = 'Compare section "' + String.fromCharCode(points[0] + 65) + '" versus section "' + String.fromCharCode(points[1] + 65) + '"'
+
+    // The min of width or height / 2 is the same at 250
+    var chartRadius = 250
+
+    // var svg = d3.select("#vis")
+    //   .append("svg")
+    //   .attr('id', 'pie')
+    //   .attr("width", 500)
+    //   .attr("height", 500)
+      
+    // Data already exists
+    // Add data to chart
+
+    const data = {
+      children: arrayData.map(function (element, index) {
+        return {key: String.fromCharCode(index + 65), value: element};
+      })
+    }
+
+    d3.selectAll('svg > *').remove()
+
+    var pieData = d3.pie()
+    .sort(null).value(function(d) {return d.value})
+
+    //console.log(typeof data)
+    const rawData = data.children
+    var readyData = pieData(rawData)
+    // console.log("Pie Data: " + pieData)
+    //console.log("Ready Data: " + data)
+    console.log(rawData)
+    console.log(readyData)
+
+    var arcs = d3.arc()
+      .innerRadius(0)
+      .outerRadius(chartRadius)
+
+      //console.log(arcs)
+    //console.log(data.children)
+    // Build Chart
+    svg.select('svg')
+    .selectAll('path')
+    .data(readyData)
+    .enter()
+    .append('path')
+    .attr('d', arcs)
+    .attr('fill', 'white')
+    .attr('stroke', 'black')
+    .attr('id', function(d) {return d.data.key})
+    .attr("transform", "translate(" + 250 + "," + 250 + ")")
+
+    svg.select('svg')
+    .selectAll('text')
+    .data(readyData)
+    .enter()
+    .append('text')
+    .text(function(d) {return d.data.key})
+    .attr('transform', function(d) {return "translate(" + arcs.centroid(d) + ")translate(" + 250 + "," + 250 + ")"})
+
     return 'Pie Chart'
   }
 
