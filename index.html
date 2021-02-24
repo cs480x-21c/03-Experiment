@@ -64,24 +64,27 @@
         submit.appendChild(submitText);
         div.appendChild(submit);
         submit.onclick = function () {
-            numSubmits++;
-            var text = textInput.value;
-            console.log(text);
-            //userInput = text;
+            if (textInput.value < 100) {
+                numSubmits++;
+                var text = textInput.value;
+                console.log(text);
+                //userInput = text;
 
-            // Update the csv
-            tempData.push(text);
-            csvRows.push(tempData);
-            let csvContent = "data:text/csv;charset=utf-8,";
-            csvRows.forEach(function (rowArray) {
-                let row = rowArray.join(",");
-                csvContent += row + "\r\n";
-            });
+                // Update the csv
+                tempData.push(text);
+                csvRows.push(tempData);
+                let csvContent = "data:text/csv;charset=utf-8,";
+                csvRows.forEach(function (rowArray) {
+                    let row = rowArray.join(",");
+                    csvContent += row + "\r\n";
+                });
 
-            console.log(csvRows);
-
-            if (numSubmits < maxSubmits) drawPieChart();
-            else resultsPage(csvContent);
+                console.log(csvRows);
+                if (numSubmits < maxSubmits) drawPieChart();
+                else resultsPage(csvContent);
+            }else{
+                alert("Please type a number less than 100")
+            }
 
         }
     }
@@ -138,9 +141,7 @@
         var svg = d3.select("#svgdiv")
                 .append("svg")
                 .attr("width", SVGWidth)
-                .attr("height", SVGHeight)
-
-        ;
+                .attr("height", SVGHeight);
 
         // Bar Chart
         svg.selectAll("bar")
