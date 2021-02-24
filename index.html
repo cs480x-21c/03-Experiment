@@ -253,7 +253,6 @@
       console.log("Bubble" + ratio)
     </script>
   </div>
-
   <h1> Clay Experiment</h1>
   <div id="pie">
     <script>
@@ -278,7 +277,7 @@
       // console.log( pieDataTest)
 
       var arcMaker = d3.arc()
-        .innerRadius(50)
+        .innerRadius(0)
         .outerRadius(radius)
       console.log(pieData)
       svg_pie
@@ -320,6 +319,74 @@
     <form id="pie_submit">
       <label for="pie_input">Enter ratio between the two points.</label>
       <input type="text" id="pie_input">
+    </form>
+  </div>
+  <h1> Donut</h1>
+  <div id="donut">
+    <script>
+      iterations = 0
+
+      randomTwo = randomTwoKeys()
+      console.log("pie chart randomTwo: ", randomTwo)
+      var svg_donut = d3.select("#donut")
+        .append("svg")
+        .attr("width", WIDTH)
+        .attr("height", HEIGHT)
+        .append("g")
+        .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")");
+
+      var radius = HEIGHT / 2 - 10 // add margin to prevent clipping
+
+      var donut = d3.pie()
+        .value(function (d) { return d.value; })
+      var donutData = donut(d3.entries(testData))
+
+      var donutDataTest = donut(d3.entries(testData))[1]
+      // console.log( pieDataTest)
+
+      var arcMaker = d3.arc()
+        .innerRadius(50)
+        .outerRadius(radius)
+      // console.log(pieData)
+      svg_donut
+        .selectAll('data')
+        .data(donutData)
+        .enter()
+        .append('path')
+        .attr('d', arcMaker)
+        .attr("fill", "white")
+        .attr("stroke", "black")
+        .style("stroke-width", "2px")
+
+      svg_donut
+        .selectAll('data')
+        .data(donutData)
+        .enter()
+        .append('circle')
+        .attr('r', function (d) {
+          if (randomTwo.includes(d.data.key)) {
+            return 5
+          }
+          else {
+            return 0
+          }
+        })
+        .attr("transform", function (d) { return "translate(" + arcMaker.centroid(d) + ")"; })
+      var ratio = 100
+      // find actual ratio between two points
+      // console.log( testData[randomTwo[0]] )
+      if (randomTwo[0] >= randomTwo[1]) {
+        ratio = (testData[randomTwo[0]] / testData[randomTwo[1]]) * 100
+      }
+      else {
+        ratio = (testData[randomTwo[1]] / testData[randomTwo[0]]) * 100
+      }
+      console.log("donut " + ratio)
+
+    </script>
+    <form id="donut_submit">
+      <label for="donut_input">Enter ratio between the two points.</label>
+      <input type="text" id="donut_input">
     </form>
   </div>
   <h1> Nick Experiment</h1>
