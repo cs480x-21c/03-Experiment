@@ -62,6 +62,6 @@ function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
     xAxis.tickValues([1, colsMarksNumSetsX[3], xRange])
 
     g.append("g")
-        //.attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0," + h + ")")
         .call(xAxis)
 }
