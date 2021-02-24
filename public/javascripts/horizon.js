@@ -35,6 +35,8 @@ function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
         .domain([1, xRange])
         .range([0, w]);
 
+    d3.select('#chart-container').attr('height', 100*colsMarksNumSetsX[2])
+
     let xAxis = d3.axisBottom(x)
     xAxis.tickValues([1, colsMarksNumSetsX[3], xRange])
 
