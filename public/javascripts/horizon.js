@@ -66,7 +66,6 @@ function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
             var horizonChart = d3.horizonChart()
                 .height(height / 6)
                 .step(width / xRange)
-                .extent([0, yRange])
                 .colors(['#313695', '#4575b4', '#74add1', '#abd9e9',
                     '#fee090', '#fdae61', '#f46d43', '#d73027']);
 
