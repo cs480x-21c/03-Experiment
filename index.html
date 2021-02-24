@@ -14,8 +14,8 @@
   console.log(d3); // test if d3 is loaded
   var svg = d3.select('#frame');
   setupInputBox();
-  // var chartToChoose = Math.floor(Math.random() * 3)+1;
-  var chartToChoose = 3;
+  var chartToChoose = Math.floor(Math.random() * 3)+1;
+  //var chartToChoose = 3;
   var trueVal;
   if (chartToChoose == 1) {
     trueVal = randomGradient(svg);
