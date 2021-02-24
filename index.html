@@ -1,13 +1,247 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
-
+<svg id="frame"></svg>
 
 <style>
 </style>
 
 <body>
   <h1> Experiment </h1>
+  <h3 id="description"> Enter your guess below, what percententage is the small marked value to the large marked value?</h3>
+  <h5>  E.g. enter "50"(no quotes) to guess that the small value is half as large as the big value</h5>
 </body>
 
 <script>
   console.log(d3); // test if d3 is loaded
+  var svg = d3.select('#frame');
+  setupInputBox();
+  var chartToChoose = Math.floor(Math.random() * 3)+1;
+  //var chartToChoose = 3;
+  var trueVal;
+  if (chartToChoose == 1) {
+    trueVal = randomGradient(svg);
+  }
+  else if (chartToChoose == 2) {
+    trueVal = randomBarGraph(svg);
+  }
+  else if (chartToChoose == 3){
+    trueVal = randomBubbleChart(svg);
+  }
+  else {
+    console.log("Probability does not shine on you today "+chartToChoose.toString());
+    trueVal = 0.5;
+  }
+  //var trueVal = randomGradient(svg);
+  console.log("true val: " + trueVal);
+
+  //do other logic, and store the data based on chartToChoose, their input, and trueval
+
+  function randomGradient(svg){
+    svg
+    .attr('width', '40%')
+    .attr('height', '50%')
+    .style('padding-left', '30%')
+    .style('padding-top', '5%')
+    .attr("viewBox", '0 0 100 110')
+
+    //gradient for bars
+    var gradDefs = svg.append("defs")
+
+    var grad = gradDefs.append("linearGradient")
+    .attr("id", "barGradient")
+    .attr("x1", '0%')
+    .attr("x2", '100%')
+    .attr("y1", '0%')
+    .attr("y2", '100%')
+    .attr("gradientTransform", "rotate(50)")
+
+    grad.append("stop")
+    .attr("class", "start")
+    .attr('stop-color', 'black')
+    .attr("offset", "0")
+
+    grad.append("stop")
+    .attr('stop-color', 'white')
+    .attr("offset", "100%")
+    .attr("class", "end")
+
+
+    var data = generateData();
+    var compareIndexes = generateIndexes();
+    var compareIndexA = compareIndexes[0];
+    var compareIndexB = compareIndexes[1];
+
+    var compareData = [data[compareIndexA][1]+2.5, data[compareIndexB][1]+2.5]
+
+    svg.selectAll('rect')
+    .data(data)
+    .enter().append('rect')
+    .attr('x', function(d){return d[1]})
+    .attr('y', function(d){return 100 - d[0]})
+    .attr('width', '5%')
+    .attr('height', function(d){return d[0]})
+    .attr('fill', 'url(#barGradient)')
+
+  
+    svg.selectAll("circle")
+    .data(compareData)
+    .enter().append("circle")
+    .attr('cy', '102')
+    .attr('cx', function(d){return d})
+    .attr('r', '1.5%')
+
+    return (Math.min(data[compareIndexA][0], data[compareIndexB][0]) / Math.max(data[compareIndexA][0], data[compareIndexB][0]))
+  }
+
+  //generate the data points for the assignment. This should be uniform for all charts for consistency reasons
+  function generateData() {
+    var data = []
+
+    //generate datapoints
+    for(i = 0; i< 10; i++){
+      var x = Math.floor(Math.random() * 99) +1;
+      data.push([x, i*8])
+    }
+    console.log(data);
+    console.log(data[0]);
+    return data;
+  }
+
+  //function to generate indices (not the same, and not right next to each other)
+  function generateIndexes() {
+    var compareIndexA = Math.floor(Math.random() * 10);
+    var compareIndexB = compareIndexA;
+    //make sure compared bars are not hte same or next to each other
+    while(compareIndexA == compareIndexB | Math.abs(compareIndexA - compareIndexB) == 1){
+      compareIndexB = Math.floor(Math.random() * 10);
+    }
+    console.log(compareIndexB);
+    console.log(compareIndexA);
+    return [compareIndexA, compareIndexB];
+  }
+  
+  function randomBarGraph(svg) {
+
+    svg
+    .attr('width', '40%')
+    .attr('height', '50%')
+    .style('padding-left', '30%')
+    .style('padding-top', '5%')
+    .attr("viewBox", '0 0 100 110')
+
+    var data = generateData();
+    var compareIndexes = generateIndexes();
+    var compareIndexA = compareIndexes[0];
+    var compareIndexB = compareIndexes[1];
+
+    //this is to align the center of the circle with the center of the bar
+    //IMO this method shouldn't use a hardcoded val unless r of the circle is hardcoded
+    var compareData = [data[compareIndexA][1]+2.5, data[compareIndexB][1]+2.5]
+
+    svg.selectAll('rect')
+    .data(data)
+    .enter().append('rect')
+    .attr('x', function(d){return d[1]})
+    .attr('y', function(d){return 100 - d[0]})
+    .attr('width', '5%')
+    .attr('height', function(d){return d[0]})
+    .attr('stroke', 'black')
+    .attr('stroke-width', 0.5)
+    .attr('fill', 'white');
+
+  
+    svg.selectAll("circle")
+    .data(compareData)
+    .enter().append("circle")
+    .attr('cy', '103')
+    .attr('cx', function(d){return d})
+    .attr('r', '1.5%')
+
+    return (Math.min(data[compareIndexA][0], data[compareIndexB][0]) / Math.max(data[compareIndexA][0], data[compareIndexB][0]))
+
+  }
+
+  function randomBubbleChart(svg){
+    var data = generateData();
+    var compareIndexes = generateIndexes();
+    var compareIndexA = compareIndexes[0];
+    var compareIndexB = compareIndexes[1];
+
+    d3.select("#description").text("Enter your guess below, what percententage is the smaller marked circle to the larger marked circle?");
+
+    var width = "70%";
+    var height = "50%";
+    svg
+    .attr('width', width)
+    .attr('height', height)
+    .style('padding-left', '10%')
+    .style('padding-top', '5%')
+    .attr("viewBox", '0 0 100 110')
+
+    var x = d3.scaleLinear()
+      .domain([0, 100])
+      .range([0, width]);
+    
+    var y = d3.scaleLinear()
+      .domain([0,100])
+      .range([height, 0]);
+    
+
+    var compareData = [data[compareIndexA][1]+2.5, data[compareIndexB][1]+2.5]
+
+    console.log(data);
+
+    var prevR = 4;
+    var soFar = 0;
+    // Adding bubbles
+    svg.append("g")
+      .selectAll("dot")
+      .data(data)
+      .enter()
+      .append("circle")
+        .attr('cx', function(d, i){ 
+          var val1; 
+          if (i == 0) { val1 = d[1] + d[0]/10 }
+          else { val1 = d[0]/10 + data[i-1][0]/10 + soFar + 2;} 
+          soFar = val1;
+          return val1;
+          })
+        .attr('cy', function(d){return 50})
+        .attr("r", function(d){
+          var val = (d[0]/10);
+          return val;})
+        .style("fill", "#FFFFFF")
+        .style("opacity", function(d){return 1;})
+        .attr("stroke", "black")
+        .attr("stroke-width", function(d){
+          if(d[1] == (compareData[0]-2.5)||d[1] == (compareData[1]-2.5)){
+            return "1%";
+          }
+          else{
+            return ".5";
+          }
+        })
+    
+        return (Math.min(data[compareIndexA][0], data[compareIndexB][0]) / Math.max(data[compareIndexA][0], data[compareIndexB][0]))
+  }
+
+
+  function setupInputBox() {
+    
+    var body = d3.select('body');
+    //Ref: http://bl.ocks.org/jfreels/6810705
+    body.append('input')
+    .attr('type','text')
+    .attr('name','textInput')
+    .attr('value','');
+
+    body.append('input')
+    .attr("type","button")
+    .attr("class","button")
+    .style('padding-left', '30')
+    .style('padding-top', '2')
+    .attr('value', "Submit")
+    .on('input', function(mouseEvent) { console.log("click!");});
+
+  }
+
 </script>
