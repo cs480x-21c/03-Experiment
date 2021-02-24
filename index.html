@@ -168,12 +168,12 @@
 
     d3.select("#description").text("Enter your guess below, what percententage is the thinner circle to the wider marked circle?");
 
-    var width = "40%";
+    var width = "70%";
     var height = "50%";
     svg
     .attr('width', width)
     .attr('height', height)
-    .style('padding-left', '30%')
+    .style('padding-left', '10%')
     .style('padding-top', '5%')
     .attr("viewBox", '0 0 100 110')
 
@@ -190,18 +190,31 @@
     console.log("compareData:" + compareData);
     console.log("compareData:" + compareData[0]);
 
+    console.log(data);
+
     var prevR = 4;
+    var soFar = 0;
     // Adding bubbles
     svg.append("g")
       .selectAll("dot")
       .data(data)
       .enter()
       .append("circle")
-        .attr('cx', function(d){return d[1] + (d[0]/10)+ prevR})
+        .attr('cx', function(d, i){ 
+          var val1; 
+          if (i == 0) { val1 = d[1] + d[0]/10 }
+          else { val1 = d[0]/10 + data[i-1][0]/10 + soFar + 2;} 
+          soFar = val1;
+          console.log("X:");
+          console.log(val1);
+          return val1;
+          })
         .attr('cy', function(d){return 50})
         .attr("r", function(d){
-          prevR = d[0]/10;
-          return (d[0]/10)})
+          var val = (d[0]/10);
+          console.log("R:");
+          console.log(val)
+          return val;})
         .style("fill", "#FFFFFF")
         .style("opacity", function(d){return 1;})
         .attr("stroke", "black")
