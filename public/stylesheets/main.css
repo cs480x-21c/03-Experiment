@@ -67,7 +67,7 @@ label {
   justify-content: center;
 }
 
-#hdiv {height: 50px;
+#hdiv {height: 10px;
   width: 500px;
   margin: 1em auto;
   display: flex;
