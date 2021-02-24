@@ -28,11 +28,57 @@ function main() {
         .attr("height", height)
         .style("background", "blue");
 
-    const svg2 = d3.create("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .style("background", "red");
+    // SVG 2
+    let svg2InitialData = getRandomData();
+    let svg2SelectedData = randomSelection(svg2InitialData);
 
+    // Manipulate data to work with d3.stratify()
+    let svg2Data = [{"name": "root", "parent": null, "value": null}];
+    let id = 0;
+    svg2InitialData.forEach(val => {
+        svg2Data.push({"name": id++, "parent": "root", "value": val});
+    });
+
+    // Transform data to be used in tree map
+    let root = d3.stratify()
+        .id(d => d.name)   // Name of the entity (column name is name in csv)
+        .parentId(d => d.parent)   // Name of the parent (column name is parent in csv)
+        (svg2Data);
+
+    // Sum values to determine root leaf size
+    root.sum(d => d.value)
+
+    // Calculate tree map leaves
+    d3.treemap()
+        .size([width, height])
+        .padding(4)
+        (root);
+
+    // Create tree map SVG
+    const svg2 = d3.create("svg")
+        .attr("viewBox", [-width / 2, -height / 2, width, height]);
+
+    // Add rectangles to tree map
+    svg2.selectAll("rect")
+        .data(root.leaves())
+        .enter()
+        .append("rect")
+        .attr('x', d => d.x0 - (width / 2))
+        .attr('y', d => d.y0 - (width / 2))
+        .attr('width', d => d.x1 - d.x0)
+        .attr('height', d => d.y1 - d.y0)
+        .style("stroke", "black")
+        .style("fill", "none");
+
+    // Add dot indicators to tree map
+    svg2.selectAll("circle")
+        .data(root.leaves())
+        .enter()
+        .append("circle")
+        .attr("cx", d => (d.x1 + d.x0) / 2 - 250)
+        .attr("cy", d => (d.y1 + d.y0) / 2 - 250)
+        .attr("r", 3)
+        .style("fill", d => (d.id === "" + svg2SelectedData[0] || d.id === "" + svg2SelectedData[1]) ? "black" : "none");
 
     // SVG 3
     const svg3Data = getRandomData();
@@ -53,7 +99,7 @@ function main() {
         .selectAll("path")
         .data(arcs)
         .join("path")
-        .attr("fill", d => "none")
+        .attr("fill", "none")
         .attr("d", arc);
     svg3.append("g")
         .attr("font-family", "sans-serif")
