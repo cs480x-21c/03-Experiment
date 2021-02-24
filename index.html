@@ -302,7 +302,7 @@
             return "0";
           }
         })
-		
+
 		;
 
 
@@ -501,6 +501,7 @@
         })
         .attr('width', x.bandwidth())
         .attr('stroke', 'black')
+        .style('stroke-width', '2px')
         .attr('fill', 'white');
 
       var selectedPiece1 = gen[2]; //index (btwn 0 and 4) of selected element in first bar
@@ -508,7 +509,7 @@
 
       var dataPiece1 = gen[1][selectedPiece1];
       var dataPiece2 = gen[4][selectedPiece2];
-	  
+
 	  var dot1Placed = false;
 	  var dot2Placed = false;
 
