@@ -1,10 +1,6 @@
 import React from 'react';
-
 import HeaderBar from '../components/HeaderBar'
-import MyCircle from '../components/MyCircle'
-import MyRect from '../components/MyRect'
-import MyLine from '../components/MyLine'
-import MyPoly from '../components/MyPoly'
+import DatabaseExample from '../components/DatabaseExample'
 
 class Project5PageView extends React.Component{
 
@@ -19,6 +15,8 @@ class Project5PageView extends React.Component{
                 <h5>
                     This project has not been completed yet!
                 </h5>
+                
+                <DatabaseExample></DatabaseExample>
             </div>
         );
     }
