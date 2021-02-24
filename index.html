@@ -77,7 +77,7 @@
         What do you think the percent of the smaller value to the larger value is?
       </p>
       <p> <b>
-        Example</b>: If you think the smaller value is half of the larger value, please input 50</p>
+          Example</b>: If you think the smaller value is half of the larger value, please input 50</p>
       <p style="padding: 15px 0px 10px 0px">
         <input type="text" id="txtAnswer" />
       </p>
@@ -112,15 +112,11 @@
         functionNumbers.push(i);
       }
     }
-    //console.log(functionNumbers.length);
-    //Shuffle Numbers from
-    //https://stackoverflow.com/a/12646864
-    //DO WE NEED THIS
+
     for (let i = functionNumbers.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [functionNumbers[i], functionNumbers[j]] = [functionNumbers[j], functionNumbers[i]];
     }
-    //
 
     document.getElementById("disagreeButon").innerHTML = "Disagree";
     document.getElementById("saveNextButton").innerHTML = "Agree";
@@ -136,7 +132,6 @@
     var svg = d3.select('#vis');
 
     var filename = 'data.csv';
-    //var csvData = new Array();
     var dataHeader = ["participantID", "trialNum", "vis", "truePercent", "reportedPercent"];
     var data = [];
     let header = dataHeader.join(',') + '\n';
@@ -157,8 +152,9 @@
     // Get the input field
     var input = document.getElementById("txtAnswer");
 
+
     // Execute a function when the user releases a key on the keyboard
-    input.addEventListener("keyup", function (event) {
+    input.addEventListener("keyup", function(event) {
       // Number 13 is the "Enter" key on the keyboard
       if (event.keyCode === 13) {
         // Cancel the default action, if needed
@@ -235,19 +231,14 @@
       //xaxis
       var x = d3.scaleBand()
         .range([0, width])
-        .domain(data.map(function (d) {
+        .domain(data.map(function(d) {
           return d.xaxisdata;
         }))
         .padding(0.2);
       svg.append('g')
         .attr('transform', 'translate(0,' + (height - margin.top) + ')')
         .call(d3.axisBottom(x).tickValues([]).tickSizeOuter(0));
-      /*
-      .selectAll('text')
-      .attr('transform', 'translate(-10,0)rotate(-45)')
-      .style('text-anchor', 'end');
-      */
-      //yaxis
+
 
       var y = d3.scaleLinear()
         .domain([0, 125])
@@ -261,51 +252,49 @@
         .enter()
         .append('rect')
         .attr('transform', 'translate(0,' + -margin.top + ')')
-        .attr('x', function (d) {
+        .attr('x', function(d) {
           return x(d.xaxisdata);
         })
-        .attr('y', function (d) {
+        .attr('y', function(d) {
           return y(d.yaxisdata);
         })
         .attr('width', x.bandwidth())
-        .attr('height', function (d) {
+        .attr('height', function(d) {
           return height - y(d.yaxisdata);
         })
         .attr('stroke', 'black')
         .attr('fill', 'white')
         .style('stroke-width', '2px')
-		.append('circle')
-		.attr('r', '10')
-		.attr('cx', function (d) {
-			return x(d.xaxisdata);
-		})
-		.attr('cy', function(d) {
-			return (y(d.yaxisdata))-15;
-		})
-		.attr('fill', 'purple')
-		;
+        .append('circle')
+        .attr('r', '10')
+        .attr('cx', function(d) {
+          return x(d.xaxisdata);
+        })
+        .attr('cy', function(d) {
+          return (y(d.yaxisdata)) - 15;
+        })
+        .attr('fill', 'purple');
 
-	  var selectedBar1 = gen[1][0]; //index (btwn 0 and 9) of first selected bar for comparison
+      var selectedBar1 = gen[1][0]; //index (btwn 0 and 9) of first selected bar for comparison
       var selectedBar2 = gen[1][1]; //index (btwn 0 and 9) of first selected bar for comparison
-	  //we might have to add a dot maybe within the two random bars?
-	  svg.selectAll('mybardots')
+      //we might have to add a dot maybe within the two random bars?
+      svg.selectAll('mybardots')
         .data(data)
         .enter()
-		.append('circle')
-		.attr('transform', 'translate(0,' + -margin.top + ')')
-		.attr('r', '5')
-		.attr('cx', function (d) {
-			return x(d.xaxisdata) + (x.bandwidth()/2);
-		})
-		.attr('cy', '490')
-		.attr('fill', function(d) {
-			if ((d.xaxisdata == selectedBar1+1) || (d.xaxisdata == selectedBar2+1)){
-				return "black";
-			} else{
-				return "white";
-			}
-		})
-		;
+        .append('circle')
+        .attr('transform', 'translate(0,' + -margin.top + ')')
+        .attr('r', '5')
+        .attr('cx', function(d) {
+          return x(d.xaxisdata) + (x.bandwidth() / 2);
+        })
+        .attr('cy', '490')
+        .attr('fill', function(d) {
+          if ((d.xaxisdata == selectedBar1 + 1) || (d.xaxisdata == selectedBar2 + 1)) {
+            return "black";
+          } else {
+            return "white";
+          }
+        });
 
 
       /*
@@ -353,8 +342,8 @@
         .innerRadius(0)
         .outerRadius(radius);
 
-	  var selectedSlices = [] // contains the start and end angle of the selectedSlices
-	  var selectedSlice1 = gen[1][0]; //index (btwn 0 and 9) of first selected pie slice for comparison
+      var selectedSlices = [] // contains the start and end angle of the selectedSlices
+      var selectedSlice1 = gen[1][0]; //index (btwn 0 and 9) of first selected pie slice for comparison
       var selectedSlice2 = gen[1][1]; //index (btwn 0 and 9) of second selected pie slice for comparison
 
       g.selectAll('mypie')
@@ -366,29 +355,34 @@
         .attr('stroke', 'black')
         .attr('fill', 'white')
         .style('stroke-width', '2px')
-        .each((d, i)=> { if (i === selectedSlice1 || i === selectedSlice2){
-           selectedSlices.push({startAngle: d.startAngle, endAngle: d.endAngle})
-         }});
+        .each((d, i) => {
+          if (i === selectedSlice1 || i === selectedSlice2) {
+            selectedSlices.push({
+              startAngle: d.startAngle,
+              endAngle: d.endAngle
+            })
+          }
+        });
 
-         console.log('selected slices is: ', selectedSlices);
+      console.log('selected slices is: ', selectedSlices);
 
-         var centroid1 = arcGenerator.centroid(selectedSlices[0]);
-         console.log('the first centroid is: ', centroid1);
+      var centroid1 = arcGenerator.centroid(selectedSlices[0]);
+      console.log('the first centroid is: ', centroid1);
 
-         g.append('circle')
-          .attr('cx', centroid1[0])
-          .attr('cy', centroid1[1])
-          .attr('fill', 'black')
-          .attr('r', 5);
+      g.append('circle')
+        .attr('cx', centroid1[0])
+        .attr('cy', centroid1[1])
+        .attr('fill', 'black')
+        .attr('r', 5);
 
-        var centroid2 = arcGenerator.centroid(selectedSlices[1]);
-        console.log('the second centroid is: ', centroid1);
+      var centroid2 = arcGenerator.centroid(selectedSlices[1]);
+      console.log('the second centroid is: ', centroid1);
 
-        g.append('circle')
-          .attr('cx', centroid2[0])
-          .attr('cy', centroid2[1])
-          .attr('fill', 'black')
-          .attr('r', 5);
+      g.append('circle')
+        .attr('cx', centroid2[0])
+        .attr('cy', centroid2[1])
+        .attr('fill', 'black')
+        .attr('r', 5);
 
       //we might have to add the dot?
 
@@ -445,7 +439,7 @@
       var subgroups = ['val1', 'val2', 'val3', 'val4', 'val5'];
 
       //The first column here is set to be the x axis with the subgroups being the stacked bars
-      var groups = d3.map(data, function (d) {
+      var groups = d3.map(data, function(d) {
         return d.bar;
       }).keys()
 
@@ -455,10 +449,10 @@
         .range([0, width])
         .padding([0.4]);
 
-	  var xPoint = d3.scalePoint()
+      var xPoint = d3.scalePoint()
         .domain(groups)
         .range([0, width])
-		.padding([0.7]);
+        .padding([0.7]);
 
       svg.append('g')
         .attr('transform', 'translate(0,' + (height - margin.top) + ')')
@@ -482,18 +476,18 @@
         .enter().append('g')
         .selectAll('rect')
         //we'd have to enter() more times depending on the subgroups to add all the necessary rectangles
-        .data(function (d) {
+        .data(function(d) {
           return d;
         })
         .enter().append('rect')
         .attr('transform', 'translate(0,' + -margin.top + ')')
-        .attr('x', function (d) {
+        .attr('x', function(d) {
           return x(d.data.bar)
         })
-        .attr('y', function (d) {
+        .attr('y', function(d) {
           return y(d[1]);
         })
-        .attr('height', function (d) {
+        .attr('height', function(d) {
           return y(d[0]) - y(d[1]);
         })
         .attr('width', x.bandwidth())
@@ -503,10 +497,10 @@
       var selectedPiece1 = gen[2]; //index (btwn 0 and 4) of selected element in first bar
       var selectedPiece2 = gen[5]; //index (btwn 0 and 4) of selected element in second bar
 
-	  var dataPiece1 = gen[1][selectedPiece1];
-	  var dataPiece2 = gen[4][selectedPiece2];
+      var dataPiece1 = gen[1][selectedPiece1];
+      var dataPiece2 = gen[4][selectedPiece2];
 
-	  svg.append('g')
+      svg.append('g')
         .selectAll('g')
         //.attr('transform', 'translate(0,' + (height-margin.bottom) + ')')
         .data(stackedData)
@@ -519,24 +513,24 @@
         .enter().append('circle')
         .attr('transform', 'translate(0,' + -margin.top + ')')
         .attr('cx', function(d) {
-		  return xPoint(d.data.bar);
+          return xPoint(d.data.bar);
         })
         .attr('cy', function(d) {
-          return y(d[0])-(y(d[0]) - y(d[1]))/2;
+          return y(d[0]) - (y(d[0]) - y(d[1])) / 2;
         })
         .attr('height', function(d) {
           return y(d[0]) - y(d[1]);
         })
         .attr('r', 5)
-        .attr('fill', function(d){
-			var isPiece1 = ((d.data.bar) == 1 && d[1]-d[0] == dataPiece1);
-			var isPiece2 = ((d.data.bar) == 2 && d[1]-d[0] == dataPiece2);
-			if(isPiece1 || isPiece2){
-				return "black";
-			} else{
-				return "white";
-			}
-		});
+        .attr('fill', function(d) {
+          var isPiece1 = ((d.data.bar) == 1 && d[1] - d[0] == dataPiece1);
+          var isPiece2 = ((d.data.bar) == 2 && d[1] - d[0] == dataPiece2);
+          if (isPiece1 || isPiece2) {
+            return "black";
+          } else {
+            return "white";
+          }
+        });
       /*
       var selectedBars = [];
       d3.selectAll("rect").each((d)=>{
