@@ -216,6 +216,10 @@
 
         //Supposed to grab the typed text when the user clicks the submit button
         function handleClick(event){
+            i = i + 1;
+            console.log(i)
+            sessionStorage.setItem("i", JSON.stringify(i))
+          
             var index = JSON.parse(sessionStorage.getItem("index"))
             if(index == "") {
                 index = 1;
@@ -237,6 +241,9 @@
             sessionStorage.setItem("dataset", JSON.stringify(dataset));
             console.log(dataset) 
 
+            var output = JSON.parse(sessionStorage.getItem("dataset"));
+            console.log("output " + output)
+          
             if ((i-oldi)==1) {
               document.getElementById("next").disabled = false;
             }
