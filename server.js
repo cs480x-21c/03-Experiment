@@ -30,11 +30,12 @@ const updateData = function(request, response){
     }
 
     csvData = jsonData.id + ',' + jsonData.trial +  "," +jsonData.vis + "," + jsonData.truePercent + "," + jsonData.reportedPercent + "," + jsonData.error+ "\r\n"
-    
-    fs.appendFile('trials.csv', csvData, (err)=> {
+
+    let fileName = ''+jsonData.id+'.csv'
+    console.log(fileName)
+    fs.appendFile(fileName, csvData, (err)=> {
         console.log("data was appended")
     })
-
  
   })
   request.on( 'end', function() {
