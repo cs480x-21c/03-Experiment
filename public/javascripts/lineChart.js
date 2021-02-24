@@ -32,6 +32,8 @@ function lineChart(svgID, width, height, pathToCSV, chartNum) {
             let numDataSets = colsAndMarks[2]
             let xToMark = colsAndMarks[3]
 
+            d3.select('#chart-container').attr('heght',500)
+
             // Add X axis
             let x = d3.scaleLinear()
                 .domain([0, xRange])
