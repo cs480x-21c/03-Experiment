@@ -99,9 +99,6 @@
 
         //calculate the number of bars in between the 2 marked bars
         const barsBetween = loc2-loc1-1
-        console.log(barsBetween)
-
-        console.log(data)
         
         //set variables
         const xValue = d => d.index;
@@ -163,26 +160,18 @@
                 .attr('stroke', "white")
 
         //question text
-        //TODO: add more instructions/examples
         g.append('text')
-            .text("What percentage is the smaller of the larger?")
+            .text("What percentage is the smaller of the larger? For example, if the smaller bar is half the larger bar's height, please write 50.")
             .attr('y', innerHeight+80)
             .attr('font-size', '1.5em')
-
-        //print to console the actual value
-        console.log(100-data[loc2]['value']);
-        console.log(100-data[loc1]['value']);
 
         //sorting those values in ascending order to make the percent calculation easier
         const vals = [100-data[loc2]['value'], 100-data[loc1]['value']]
         vals.sort(d3.ascending)
-        console.log(vals)
-
+        
         const actualSizeDiff = (vals[0])/(vals[1]) * 100
-        console.log(actualSizeDiff)
-      
+              
         var plots = JSON.parse(sessionStorage.getItem("links"));
-        console.log(plots);
         var i = JSON.parse(sessionStorage.getItem("i"));
         const oldi = i
 
@@ -201,12 +190,9 @@
           var goTo = 'barplot_moremarkers_withoutgrid.html'
         }
 
-        console.log(goTo);
-
         //Supposed to grab the typed text when the user clicks the submit button
         function handleClick(event){
             i = i + 1;
-            console.log(i)
             sessionStorage.setItem("i", JSON.stringify(i))
           
             var index = JSON.parse(sessionStorage.getItem("index"))
@@ -217,21 +203,16 @@
                 index = index + 1;
                 sessionStorage.setItem("index", JSON.stringify(index));
             }
-            console.log("index " + index)
-            console.log(document.getElementById("myVal").value)
             const estVal = document.getElementById("myVal").value;
             var dataset = JSON.parse(sessionStorage.getItem("dataset"));
-            console.log(dataset)
             if(dataset == null) {
                 dataset = ["Estimated Value", "Actual Value", "Distance Between Bars", "Visualization"];
                 sessionStorage.setItem("dataset", JSON.stringify(dataset));
             }
             dataset.push(estVal, actualSizeDiff, barsBetween, "barplotMoreMarkersWithGrid");
             sessionStorage.setItem("dataset", JSON.stringify(dataset));
-            console.log(dataset)
           
             var output = JSON.parse(sessionStorage.getItem("dataset"));
-            console.log("output " + output)
           
             if(index >= 60) {
               downloadCSV(output.join("\n"), 'barplotdata.csv');
@@ -245,26 +226,23 @@
         function downloadCSV(csv, filename) {
           var csvFile;
           var downloadLink;
-
-          // CSV file
+          
+          //Create a new CSV file
           csvFile = new Blob([csv], {type: "text/csv"});
 
-          // Download link
           downloadLink = document.createElement("a");
 
-          // File name
+          //Name of file
           downloadLink.download = filename;
 
-          // Create a link to the file
+          //Create a link to the file
           downloadLink.href = window.URL.createObjectURL(csvFile);
-
-          // Hide download link
           downloadLink.style.display = "none";
 
-          // Add the link to DOM
+          //Add the link to DOM
           document.body.appendChild(downloadLink);
 
-          // Click download link
+          //Click download link
           downloadLink.click();
         }
 
