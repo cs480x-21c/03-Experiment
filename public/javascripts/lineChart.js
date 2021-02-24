@@ -1,4 +1,4 @@
-   
+
 function lineChart(svgID, width, height, pathToCSV, chartNum) {
     let svg = d3.select(svgID)
     setup(svg, width, height)
@@ -56,7 +56,7 @@ function lineChart(svgID, width, height, pathToCSV, chartNum) {
                 .attr("transform", "translate(30,0)")
                 .call(yAxis);
 
-            color = ['#d95f02', '#1b9e77', '#7570b3', '#e7298a', '#66a61e', '#386cb0']
+            let color = ['#d95f02', '#1b9e77', '#7570b3', '#e7298a', '#66a61e', '#386cb0']
 
             // Add legend with appropriately-colored circles
             svg.append("circle").attr("cx",440).attr("cy",110).attr("r", 6).style("fill", color[marks[0] % numDataSets])
@@ -65,7 +65,7 @@ function lineChart(svgID, width, height, pathToCSV, chartNum) {
             svg.append("text").attr("x", 450).attr("y", 130).text("Set B").style("font-size", "15px").attr("alignment-baseline","middle")
 
             // Add lines to chart
-            for (i = 0; i < numDataSets; i++) {
+            for (let i = 0; i < numDataSets; i++) {
                 let counter = -1
                 svg.append('path')
                     .datum(data)
