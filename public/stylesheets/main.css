@@ -68,7 +68,8 @@ label {
 }
 
 #hdiv {
-  justify-content: center;
+  display: table;
+  margin: 0 auto;
 }
 
 #form-container {
