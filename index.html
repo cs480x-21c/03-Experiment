@@ -365,12 +365,32 @@
           selectedSlices.push({startAngle: d.startAngle, endAngle: d.endAngle})
         }});
 		
+	  //x=rcos(theta)
+	  //y=rsin(theta)
+	  var midAngle1 = selectedSlices[0].endAngle-selectedSlices[0].startAngle;
+	  var midAngle2 = selectedSlices[1].endAngle-selectedSlices[1].startAngle;
+		
+	  var x1 = (radius/2)*Math.cos(midAngle1);
+	  var y1 = (radius/2)*Math.sin(midAngle1);
+
+	  var x2 = (radius/2)*Math.cos(midAngle2);
+	  var y2 = (radius/2)*Math.sin(midAngle2);
 	  
+	  g.append('circle')
+		.attr('cx', x1)
+		.attr('cy', y1)
+		.attr('fill', 'black')
+		.attr('r', '5');
+		
+	  g.append('circle')
+		.attr('cx', x2)
+		.attr('cy', y2)
+		.attr('fill', 'black')
+		.attr('r', '5');
 
-
-		var dataSlice1 = gen[0][selectedSlice1];
-		var dataSlice2 = gen[0][selectedSlice2];
-		dataCurrent.truePercent = calculateCorrectPercentage(dataSlice1, dataSlice2);
+	  var dataSlice1 = gen[0][selectedSlice1];
+	  var dataSlice2 = gen[0][selectedSlice2];
+	  dataCurrent.truePercent = calculateCorrectPercentage(dataSlice1, dataSlice2);
     }
 
 
