@@ -22,6 +22,8 @@
     // SVG dimensions
     var SVGWidth = 405;
     var SVGHeight = 600;
+    //var margins = window.innerWidth/10;
+    var margins = 50;
 
     var svgdiv = document.createElement("div");
     svgdiv.classList.add("svgdiv");
@@ -34,22 +36,33 @@
 
     function startPage() {
 
+        var startbuttonDiv = document.createElement("div");
+        var pDiv = document.createElement("div");
         var startDiv = document.createElement("div");
-        startDiv.style.height = "100px";
+
+        startbuttonDiv.style.height = "200px";
+        pDiv.style.height = "100px";
+        startDiv.style.height = "200px";
         startDiv.id = "startDiv";
+        pDiv.id = "pDiv";
+        startbuttonDiv.id = "startbuttonDiv";
+        startDiv.appendChild(pDiv);
+        startDiv.appendChild(startbuttonDiv);
         document.body.appendChild(startDiv);
 
-        var intro = document.createElement("p");
-        startDiv.appendChild(intro);
+        var intro = document.createElement("P");
+        intro.innerHTML = "In this experiment,<br> you are asked to judge<br> what is the percent of a smaller value to a larger value in several charts. <br> <br> We won't record any other information from you except your answers. <br> Click the \"agree\" button to begin";
+        pDiv.appendChild(intro);
+
 
         var start = document.createElement("BUTTON");
         var startText = document.createTextNode("Start");
         start.appendChild(startText);
-        startDiv.appendChild(start);
-
+        startbuttonDiv.appendChild(start);
         start.classList.add('StartButton')
         start.classList.add('StartPage')
         start.onclick = function () {
+            startDiv.style.display = "none";
             drawBarChart()
         }
 
@@ -86,7 +99,7 @@
         submit.appendChild(submitText);
         div.appendChild(submit);
         submit.onclick = function () {
-            if (textInput.value < 100 && textInput.value > 0) {
+            if (textInput.value < 100) {
                 numSubmits++;
                 var text = textInput.value;
                 console.log(text);
@@ -230,15 +243,15 @@
 
         var color = d3.scaleOrdinal(d3.schemeCategory20b);
 
+        // svg = d3.select('#svgdiv')
+        //     .append('svg')
+        //     .attr('width', width)
+        //     .attr('height', height)
+        //     .append('g')
+        //     .attr('transform', 'translate(' + ((SVGWidth / 2)) +
+        //         ',' + (SVGHeight / 2) + ')');
 
-        svg = d3.select('#svgdiv')
-            .append('svg')
-            .attr('width', width)
-            .attr('height', height)
-            .append('g')
-            .attr('transform', 'translate(' + ((SVGWidth / 2)) +
-                ',' + (SVGHeight / 2) + ')');
-
+        //svg.attr('transform', 'translate(' + (width/2) + ',' + (height/2) + ')');
 
         var arc = d3.arc()
             .innerRadius(0)
