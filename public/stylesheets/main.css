@@ -59,7 +59,7 @@ label {
 
 #chart-container {
   /*outline: 1px solid rgb(99, 97, 102);*/
-  height: 100px;
+  height: 10px;
   width: 500px;
   margin: 1em auto;
   display: flex;
@@ -67,7 +67,7 @@ label {
   justify-content: center;
 }
 
-#hdiv {height: 10px;
+#hdiv {height: 50px;
   width: 500px;
   margin: 1em auto;
   display: flex;
