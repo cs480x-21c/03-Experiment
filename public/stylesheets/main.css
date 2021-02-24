@@ -76,10 +76,15 @@ label {
 
 #form-container {
   margin: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #next-button {
-  float: right;
+  position: fixed;
+  top: 50%;
+  left: 50%;
 }
 
 #number-wrapper {
