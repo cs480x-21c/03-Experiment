@@ -9,6 +9,13 @@ function addToLabel(text) {
     label.appendChild(document.createTextNode(text))
 }
 
+// Remove all of a node's children
+function removeChildren(node) {
+    while (node.hasChildNodes()) {
+        node.removeChild(node.childNodes[0])
+    }
+}
+
 function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
 
     // Returns an array in the format: [columnNumbers, MarkColumnNumbers, NumDatasets, xTickVal]
@@ -29,6 +36,8 @@ function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
         .attr("height", h + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    removeChildren(document.getElementById('h-axis'))
 
     // Add X axis
     let x = d3.scaleLinear()
