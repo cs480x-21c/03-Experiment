@@ -29,9 +29,6 @@
           makeTreeMap,
           makeStackedBarChart,
           makePieChart,
-          makeTreeMap,
-          makeStackedBarChart,
-          makePieChart
   ]
 
   chooseAChart.sort(() => Math.random() - 0.5)
@@ -58,7 +55,9 @@
     // Create answer field
     let input = document.createElement("INPUT")
     input.setAttribute('id', 'textEntry')
-    input.setAttribute('type', 'text')
+    input.setAttribute('type', 'number')
+    input.setAttribute('onkeypress', 'return event.charCode >= 48')
+    input.setAttribute('min', '1')
     input.setAttribute('placeholder', 'Enter guess here!')
     document.body.appendChild(input)
     document.body.appendChild(document.createElement('br'))
@@ -88,7 +87,7 @@
         answers.push({vis:currTrialType, truePercent:stats[0], reportedPercent:stats[1], error:stats[2]})
 
         // If this is the last trial change button to submit
-        if (currTrial === chooseAChart.length - 1) document.getElementById('nextButton').innerHTML = 'Submit'
+        if (currTrial === chooseAChart.length - 1) document.getElementById('nextButton').innerText = 'Submit'
 
         // As long as we're not and the end of the list set up for next trial
         if (currTrial < chooseAChart.length - 1){
@@ -97,8 +96,10 @@
           currTrialType = chooseAChart[currTrial](randomizeData(), randomizeSelectedPoints())
 
         } else {
+          d3.selectAll('svg > *').remove()
           sendData(answers);
-          label.innerText = 'Thanks for taking this thing, all done, refresh the page to restart'
+          label.innerText = 'Thank you for partaking in this experiment. Refresh the page to restart'
+          document.getElementById('header').innerText = 'Thank you!'
           textEntry.remove()
           document.getElementById('nextButton').remove()
 
@@ -124,8 +125,7 @@
   }
 
   function calculateError(reportedPercentage) {
-    // TODO: Make this clean up reportedPercentage if format is strange
-    let truePercentage = Math.abs(currData[currSelectedPoints[0]]/currData[currSelectedPoints[1]]) * 100
+    let truePercentage = (currSelectedPoints[0] < currSelectedPoints[1]) ? Math.abs(currData[currSelectedPoints[0]]/currData[currSelectedPoints[1]]) * 100 : Math.abs(currData[currSelectedPoints[1]]/currData[currSelectedPoints[0]]) * 100
     let error = Math.log2(Math.abs(reportedPercentage - truePercentage) + (1/8))
     if (error === -3) error = 0
     return [truePercentage, reportedPercentage, error]
@@ -222,9 +222,8 @@
 
     runningHeight = (Number(svg.style("height").replace(/px$/, '')))
 
-    var letters = ["NOT", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-    var item = 0;
-    var letterLocationCount = -1;
+    let letters = ["NOT", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+    let item = 0;
 
     svg.select('svg')
             .selectAll('text')
