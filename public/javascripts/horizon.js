@@ -75,10 +75,10 @@ function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
                 .enter().append('div')
                 .attr('class', 'horizon')
                 .each(function (d, i) {
-                    if (i === 0) {
+                    if (i === numSets - 1) {
                         horizonChart.title('Dataset A (above)')
                             .call(this, d);
-                    } else if (i === colsMarksNumSetsX[1][1] - colsMarksNumSetsX[1][0]) {
+                    } else if (i === colsMarksNumSetsX[1][1] - colsMarksNumSetsX[1][0] - 1) {
                         horizonChart.title('Dataset B (above)')
                             .call(this, d);
                     }
@@ -86,8 +86,6 @@ function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
                         horizonChart.title('').call(this, d);
                     }
                 });
-
-            // mark only the two of interest (the first and then colsMarksNumSetsX[1][1] )
         })
 }
 
