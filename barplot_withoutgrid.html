@@ -39,7 +39,7 @@
     <svg width="950" height="650"></svg>
     
     <form name="myform" onSubmit="return handleClick()">
-        <input name="Submit"  type="submit" value="Submit" >
+        <input name="Submit"  type="submit" value="Submit" style="float: right;">
         <input type="text" id="myVal" placeholder="Add some text&hellip;">
     </form>
 
@@ -159,10 +159,15 @@
 
         //question text
         g.append('text')
-            .text("What percentage is the smaller of the larger? For example, if the smaller bar is half the larger bar's height, please write 50.")
+            .text("What percentage is the smaller of the larger?")
             .attr('y', innerHeight+80)
             .attr('font-size', '1.5em')
-
+        
+        g.append('text')
+            .text("For example, if the smaller bar is half the larger bar's height, please write 50.")
+            .attr('y', innerHeight+80)
+            .attr('font-size', '1.5em')
+      
         //sorting those values in ascending order to make the percent calculation easier
         const vals = [100-data[loc2]['value'], 100-data[loc1]['value']]
         vals.sort(d3.ascending)
