@@ -28,15 +28,15 @@ function main() {
     const svg1SelectedData = randomSelection(svg1InitialData);
 
     // Sum of all svg 1 values
-    const svg1Sum = svg1InitialData.reduce((sum,curr) => sum += curr);
+    const svg1Sum = svg1InitialData.reduce((sum, curr) => sum += curr);
 
     // sorts the values of the array so that they are in ascending order
-    svg1InitialData.sort((a,b) => d3.ascending(a,b));
+    svg1InitialData.sort((a, b) => d3.ascending(a, b));
 
     // creates the color scale
     const colorScale = d3.scaleLinear()
         .domain([0, d3.max(svg1InitialData, d => d)])
-        .range([0,1])
+        .range([0, 1])
 
     // gets the sum of the number of pixels of all previous entries
     // using the scaled values
@@ -55,7 +55,7 @@ function main() {
         .data(svg1InitialData)
         .enter()
         .append("rect")
-        .attr("x", (d,i) => getSum(i) - (width / 2))
+        .attr("x", (d, i) => getSum(i) - (width / 2))
         .attr("y", d => 0)
         .attr("width", d => d / svg1Sum * width - 2)
         .attr("height", d => height / 20)
@@ -75,16 +75,16 @@ function main() {
     const svg2SelectedData = randomSelection(svg2InitialData);
 
     // Manipulate data to work with d3.stratify()
-    let svg2Data = [{"name": "root", "parent": null, "value": null}];
+    let svg2Data = [{ "name": "root", "parent": null, "value": null }];
     let id = 0;
     svg2InitialData.forEach(val => {
-        svg2Data.push({"name": id++, "parent": "root", "value": val});
+        svg2Data.push({ "name": id++, "parent": "root", "value": val });
     });
 
     // Transform data to be used in tree map
     let root = d3.stratify()
-        .id(d => d.name)   // Name of the entity (column name is name in csv)
-        .parentId(d => d.parent)   // Name of the parent (column name is parent in csv)
+        .id(d => d.name) // Name of the entity (column name is name in csv)
+        .parentId(d => d.parent) // Name of the parent (column name is parent in csv)
         (svg2Data);
 
     // Sum values to determine root leaf size
@@ -208,7 +208,7 @@ function main() {
     let orderCount = 1;
     let output = [];
 
-    elements.selectAll("form").on("submit", function (e) {
+    elements.selectAll("form").on("submit", function(e) {
         if (!e.target[0].value || isNaN(+e.target[0].value)) {
             e.preventDefault();
             return
@@ -231,7 +231,7 @@ function main() {
 
         if (randomsSelected.length < elements.size()) {
             elements
-                .filter(function (d, i) {
+                .filter(function(d, i) {
                     return i === previousRandom;
                 })
                 .style("transform", "translateX(-100vw)");
@@ -239,7 +239,7 @@ function main() {
             let nextr = nextRandom();
 
             let form = elements
-                .filter(function (d, i) {
+                .filter(function(d, i) {
                     return i === nextr;
                 })
                 .style("transform", "translateX(0)");
@@ -253,7 +253,7 @@ function main() {
         } else {
 
             elements
-                .filter(function (d, i) {
+                .filter(function(d, i) {
                     return i === previousRandom;
                 })
                 .style("transform", "translateX(-100vw)");
@@ -271,15 +271,19 @@ function main() {
             // Load browser fingerprinting library
             FingerprintJS.load().then(fp => {
                 fp.get().then(result => {
-                    // Create a root reference
-                    let storageRef = firebase.storage().ref();
+                    let db = firebase.firestore();
 
-                    // Create reference to JSON file in firebase
-                    let ref = storageRef.child("public/" + result.visitorId + ".json");
 
-                    ref.putString(JSON.stringify(output)).then((snapshot) => {
-                        console.log("Uploaded to firebase");
-                    });
+                    db.collection("data").doc(result.visitorId).set({ output })
+                        .then(() => {
+                            console.log("Document successfully written!");
+                        })
+                        .catch((error) => {
+                            console.error("Error writing document: ", error);
+                        });
+
+
+
                 });
             });
         }
