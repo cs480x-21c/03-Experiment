@@ -23,14 +23,56 @@ const randomSelection = (randomData) => {
 function main() {
     const elements = d3.selectAll(".viz");
 
+    // SVG 1
+    const svg1InitialData = getRandomData();
+    const svg1SelectedData = randomSelection(svg1InitialData);
+
+    // Sum of all svg 1 values
+    const svg1Sum = svg1InitialData.reduce((sum,curr) => sum += curr);
+
+    // sorts the values of the array so that they are in ascending order
+    svg1InitialData.sort((a,b) => d3.ascending(a,b));
+
+    // creates the color scale
+    const colorScale = d3.scaleLinear()
+        .domain([0, d3.max(svg1InitialData, d => d)])
+        .range([0,1])
+
+    // gets the sum of the number of pixels of all previous entries
+    // using the scaled values
+    function getSum(index) {
+        let sum = 0;
+        for (let i = 0; i < index; i++) {
+            sum += (svg1InitialData[i] / svg1Sum * width);
+        }
+        return sum;
+    }
+
     const svg1 = d3.create("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .style("background", "blue");
+        .attr("viewBox", [-width / 2, -height / 2, width, height]);
+
+    svg1.selectAll("rect")
+        .data(svg1InitialData)
+        .enter()
+        .append("rect")
+        .attr("x", (d,i) => getSum(i) - (width / 2))
+        .attr("y", d => 0)
+        .attr("width", d => d / svg1Sum * width - 2)
+        .attr("height", d => height / 20)
+        .style("fill", d => d3.color("lightgrey").darker(colorScale(d)));
+
+    svg1.selectAll("circle")
+        .data(svg1InitialData)
+        .enter()
+        .append("circle")
+        .attr("cx", (d, i) => (getSum(i) - (width / 2)) + ((d / svg1Sum * width - 2)) / 2)
+        .attr("cy", d => height / 40)
+        .attr("r", 3)
+        .style("fill", (d, i) => (i === svg1SelectedData[0] || i === svg1SelectedData[1]) ? "black" : "none");
 
     // SVG 2
     let svg2InitialData = getRandomData();
-    let svg2SelectedData = randomSelection(svg2InitialData);
+    const svg2SelectedData = randomSelection(svg2InitialData);
 
     // Manipulate data to work with d3.stratify()
     let svg2Data = [{"name": "root", "parent": null, "value": null}];
@@ -63,10 +105,10 @@ function main() {
         .data(root.leaves())
         .enter()
         .append("rect")
-        .attr('x', d => d.x0 - (width / 2))
-        .attr('y', d => d.y0 - (width / 2))
-        .attr('width', d => d.x1 - d.x0)
-        .attr('height', d => d.y1 - d.y0)
+        .attr("x", d => d.x0 - (width / 2))
+        .attr("y", d => d.y0 - (width / 2))
+        .attr("width", d => d.x1 - d.x0)
+        .attr("height", d => d.y1 - d.y0)
         .style("stroke", "black")
         .style("fill", "none");
 
