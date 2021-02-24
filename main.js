@@ -274,7 +274,7 @@ function main() {
                     let db = firebase.firestore();
 
 
-                    db.collection("data").doc(result.visitorId).set({ output })
+                    db.collection(result.visitorId).doc(Date.UTC.toString()).set({ output })
                         .then(() => {
                             console.log("Document successfully written!");
                         })
