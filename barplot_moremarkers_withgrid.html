@@ -42,16 +42,10 @@
         <input name="Submit"  type="submit" value="Submit" >
         <input type="text" id="myVal" placeholder="Add some text&hellip;">
     </form>
-    
-    <a id="link">
-       <button id="next" style="margin-top:10px;" disabled>Next</button>
-    </a>
 
     <div id="vis-container"></div>
 
     <script>
-
-
         const svg = d3.select('svg');
 
         //set svg size
@@ -191,7 +185,6 @@
         console.log(plots);
         var i = JSON.parse(sessionStorage.getItem("i"));
         const oldi = i
-        
 
         var goToNum = plots[i];
         if (goToNum == '1') {
@@ -209,13 +202,9 @@
         }
 
         console.log(goTo);
-        
-      
-        document.getElementById("link").setAttribute("href",goTo);
 
         //Supposed to grab the typed text when the user clicks the submit button
         function handleClick(event){
-          
             i = i + 1;
             console.log(i)
             sessionStorage.setItem("i", JSON.stringify(i))
@@ -239,10 +228,11 @@
             }
             dataset.push(estVal, actualSizeDiff, barsBetween, "barplotMoreMarkersWithGrid");
             sessionStorage.setItem("dataset", JSON.stringify(dataset));
-            console.log(dataset) 
-            if ((i-oldi)==1) {
-              document.getElementById("next").disabled = false;
-            }
+            console.log(dataset)
+          
+            var output = JSON.parse(sessionStorage.getItem("dataset"));
+            console.log("output " + output)
+          
             if(index >= 60) {
               downloadCSV(output.join("\n"), 'barplotdata.csv');
             }
