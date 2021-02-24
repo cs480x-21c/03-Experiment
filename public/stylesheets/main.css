@@ -67,7 +67,9 @@ label {
   justify-content: center;
 }
 
-#hdiv {
+#hdiv {height: 50px;
+  width: 500px;
+  margin: 1em auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
