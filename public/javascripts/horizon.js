@@ -74,6 +74,9 @@ function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
                         horizonChart.title('Dataset B')
                             .call(this, d);
                     }
+                    else {
+                        horizonChart.call(this, d);
+                    }
                 });
 
             // mark only the two of interest (the first and then colsMarksNumSetsX[1][1] )
