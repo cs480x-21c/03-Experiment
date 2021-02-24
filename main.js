@@ -214,11 +214,46 @@ function main() {
             return
         }
 
+        let truePerc = (v1, v2) => {
+            return ((v1 > v2 ? v2 / v1 : v1 / v2) * 100) | 0;
+        }
+
+
+        switch (e.target[0].id) {
+            case "viz1":
+                console.log(svg1InitialData[svg1SelectedData[0]]);
+                console.log(svg1InitialData[svg1SelectedData[1]]);
+                truePerc = truePerc(
+                    svg1InitialData[svg1SelectedData[0]],
+                    svg1InitialData[svg1SelectedData[1]]
+                );
+                break;
+            case "viz2":
+                console.log(svg2InitialData[svg2SelectedData[0]])
+                console.log(svg2InitialData[svg2SelectedData[1]])
+                truePerc = truePerc(
+                    svg2InitialData[svg2SelectedData[0]],
+                    svg2InitialData[svg2SelectedData[1]]
+                );
+                break;
+            case "viz3":
+                console.log(svg3Data[svg3SelectedData[0]])
+                console.log(svg3Data[svg3SelectedData[1]])
+                truePerc = truePerc(
+                    svg3Data[svg3SelectedData[0]],
+                    svg3Data[svg3SelectedData[1]]
+                );
+                break;
+            default:
+                truePerc = 1
+                break;
+        }
+        console.log(truePerc);
         output.push({
             trialNumber: orderCount,
             reportedPercent: e.target[0].value,
             vis: e.target[0].id,
-            expected: 75
+            expected: truePerc
         });
         console.log(e);
         console.log(output);
