@@ -76,10 +76,10 @@ function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
                 .attr('class', 'horizon')
                 .each(function (d, i) {
                     if (i === 0) {
-                        horizonChart.title('Dataset A')
+                        horizonChart.title('Dataset A (above)')
                             .call(this, d);
                     } else if (i === colsMarksNumSetsX[1][1] - colsMarksNumSetsX[1][0]) {
-                        horizonChart.title('Dataset B')
+                        horizonChart.title('Dataset B (above)')
                             .call(this, d);
                     }
                     else {
