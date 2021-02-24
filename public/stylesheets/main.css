@@ -68,8 +68,9 @@ label {
 }
 
 #hdiv {
-  display: table;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #form-container {
