@@ -5,7 +5,7 @@ class RadarChart extends Chart
     constructor(svg, width, height)
     {
         super(svg, width, height);
-        this.name = "RadarChart";
+        this.type = "RadarChart";
     }
 
     newRandom()
@@ -15,6 +15,8 @@ class RadarChart extends Chart
 
     make()
     {
+
+
 
     }
 

@@ -7,13 +7,14 @@ class Chart
         this.svg = svg;
         this.width = width;
         this.height = height;
+
+        this.answer = 0;
     }
 
     remove()
     {
+        // removes everything
         this.svg.selectAll('*').remove();
-
-        //d3.select(gSVGId).select(typeString + '#' + id).remove();
     }
 
 }
