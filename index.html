@@ -187,8 +187,6 @@
     
 
     var compareData = [data[compareIndexA][1]+2.5, data[compareIndexB][1]+2.5]
-    console.log("compareData:" + compareData);
-    console.log("compareData:" + compareData[0]);
 
     console.log(data);
 
@@ -205,15 +203,11 @@
           if (i == 0) { val1 = d[1] + d[0]/10 }
           else { val1 = d[0]/10 + data[i-1][0]/10 + soFar + 2;} 
           soFar = val1;
-          console.log("X:");
-          console.log(val1);
           return val1;
           })
         .attr('cy', function(d){return 50})
         .attr("r", function(d){
           var val = (d[0]/10);
-          console.log("R:");
-          console.log(val)
           return val;})
         .style("fill", "#FFFFFF")
         .style("opacity", function(d){return 1;})
