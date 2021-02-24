@@ -294,7 +294,16 @@
           } else {
             return "white";
           }
-        });
+        })
+		.attr('fill-opacity', function(d) {
+          if ((d.xaxisdata == selectedBar1 + 1) || (d.xaxisdata == selectedBar2 + 1)) {
+            return "1";
+          } else {
+            return "0";
+          }
+        })
+		
+		;
 
 
       /*
@@ -499,6 +508,9 @@
 
       var dataPiece1 = gen[1][selectedPiece1];
       var dataPiece2 = gen[4][selectedPiece2];
+	  
+	  var dot1Placed = false;
+	  var dot2Placed = false;
 
       svg.append('g')
         .selectAll('g')
@@ -523,8 +535,14 @@
         })
         .attr('r', 5)
         .attr('fill', function(d) {
-          var isPiece1 = ((d.data.bar) == 1 && d[1] - d[0] == dataPiece1);
-          var isPiece2 = ((d.data.bar) == 2 && d[1] - d[0] == dataPiece2);
+          var isPiece1 = ((d.data.bar) == 1 && d[1] - d[0] == dataPiece1 && !dot1Placed);
+		  if(isPiece1){
+			dot1Placed = true;
+		  }
+          var isPiece2 = ((d.data.bar) == 2 && d[1] - d[0] == dataPiece2 && !dot2Placed);
+		  if(isPiece2){
+			dot2Placed = true;
+		  }
           if (isPiece1 || isPiece2) {
             return "black";
           } else {
