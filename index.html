@@ -28,16 +28,22 @@
 <script>
   console.log(d3); // test if d3 is loaded
 
+  var sizeMax = 15
+  var sizeMin = 2
+
+  // var locationMax = 100
+  // var locationMin = 25
+
   function randomData(){
     return Math.floor(Math.random() * 100)
   }
 
-  function bubbleScaleMod(){
-    return randomData()*2
+  function bubbleScaleMod(locationMin, locationMax){
+    return Math.floor(Math.random() * (locationMax - locationMin) + locationMin)
   }
 
   function bubbleWeight(){
-    return Math.floor(Math.random() * 40)
+    return Math.floor(Math.random() * (sizeMax - sizeMin) + sizeMin)
   }
   var testData = {
     a: randomData(),
@@ -48,11 +54,11 @@
   }
 
   var testBubbleData = {
-    a: [bubbleScaleMod(),bubbleScaleMod(),bubbleWeight()],
-    b: [bubbleScaleMod(),bubbleScaleMod(),bubbleWeight()],
-    c: [bubbleScaleMod(),bubbleScaleMod(),bubbleWeight()],
-    d: [bubbleScaleMod(),bubbleScaleMod(),bubbleWeight()],
-    e: [bubbleScaleMod(),bubbleScaleMod(),bubbleWeight()]
+    a: [bubbleScaleMod(25,50),bubbleScaleMod(200,250),bubbleWeight()],
+    b: [bubbleScaleMod(50,100),bubbleScaleMod(150,200),bubbleWeight()],
+    c: [bubbleScaleMod(100,150),bubbleScaleMod(100,150),bubbleWeight()],
+    d: [bubbleScaleMod(150,200),bubbleScaleMod(50,100),bubbleWeight()],
+    e: [bubbleScaleMod(200,250),bubbleScaleMod(25,50),bubbleWeight()]
   }
   var size = 5
 
