@@ -67,6 +67,10 @@ label {
   justify-content: center;
 }
 
+#h-axis {
+  justify-content: center;
+}
+
 #form-container {
   margin: 1em;
 }
