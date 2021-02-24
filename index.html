@@ -62,7 +62,8 @@
     <div class="page">
       <h1>Experiment</h1>
       <p>Thank you for agreeing to participate in our experiment!</p>
-      <p>Through a series of questions we will be testing which of the following graphs are the best for size percpetion. The graphs are a Bar Chart, Stacked Bar Chart, and a Pie Chart.</p>
+      <p>Through a series of questions we will be testing which of the following graphs are the best for size
+        percpetion. The graphs are a Bar Chart, Stacked Bar Chart, and a Pie Chart.</p>
       <p>Next pages will display different graphs. You will be asked to determine how different values compare
         percentage wise in size</p>
       <p style="padding: 0px 0px 10px 0px">Click "Agree" button to start!</p>
@@ -107,8 +108,8 @@
     var maxPage = 2;
 
     var functionNumbers = [];
-    for (let i=1; i<=3; i++){
-      for (let j=1; j<=numDisplay/3; j++){
+    for (let i = 1; i <= 3; i++) {
+      for (let j = 1; j <= numDisplay / 3; j++) {
         functionNumbers.push(i);
       }
     }
@@ -154,19 +155,19 @@
 
     display();
 
-	// Get the input field
-	var input = document.getElementById("txtAnswer");
+    // Get the input field
+    var input = document.getElementById("txtAnswer");
 
-	// Execute a function when the user releases a key on the keyboard
-	input.addEventListener("keyup", function(event) {
-	// Number 13 is the "Enter" key on the keyboard
-		if (event.keyCode === 13) {
-			// Cancel the default action, if needed
-			event.preventDefault();
-			// Trigger the button element with a click
-			document.getElementById("saveNextButton").click();
-		}
-	});
+    // Execute a function when the user releases a key on the keyboard
+    input.addEventListener("keyup", function (event) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("saveNextButton").click();
+      }
+    });
 
     //END SETUP
 
@@ -178,7 +179,7 @@
     }
 
 
-    function addToCSV(){
+    function addToCSV() {
       data.forEach(obj => {
         let row = [];
         for (key in obj) {
@@ -188,7 +189,7 @@
         }
         csv += row.join(',') + "\n";
       });
-    data =[];
+      data = [];
     }
 
     function end() {
@@ -235,23 +236,23 @@
       //xaxis
       var x = d3.scaleBand()
         .range([0, width])
-        .domain(data.map(function(d) {
+        .domain(data.map(function (d) {
           return d.xaxisdata;
         }))
         .padding(0.2);
       svg.append('g')
         .attr('transform', 'translate(0,' + (height - margin.top) + ')')
         .call(d3.axisBottom(x).tickValues([]).tickSizeOuter(0));
-        /*
-        .selectAll('text')
-        .attr('transform', 'translate(-10,0)rotate(-45)')
-        .style('text-anchor', 'end');
-        */
+      /*
+      .selectAll('text')
+      .attr('transform', 'translate(-10,0)rotate(-45)')
+      .style('text-anchor', 'end');
+      */
       //yaxis
       var y = d3.scaleLinear()
         .domain([0, 125])
         .range([height, margin.top]);
-      svg.append('g').attr("transform", "translate(0," + (-margin.bottom)+ ")")
+      svg.append('g').attr("transform", "translate(0," + (-margin.bottom) + ")")
         .call(d3.axisLeft(y));
 
       //barchart plotting data
@@ -260,14 +261,14 @@
         .enter()
         .append('rect')
         .attr('transform', 'translate(0,' + -margin.top + ')')
-        .attr('x', function(d) {
+        .attr('x', function (d) {
           return x(d.xaxisdata);
         })
-        .attr('y', function(d) {
+        .attr('y', function (d) {
           return y(d.yaxisdata);
         })
         .attr('width', x.bandwidth())
-        .attr('height', function(d) {
+        .attr('height', function (d) {
           return height - y(d.yaxisdata);
         })
         .attr('stroke', 'black')
@@ -309,12 +310,18 @@
       //Radius of pie chart is half the length of the width or height
       var radius = width / 2 - margin;
 
+      var selectedSlice1 = gen[1][0]; //index (btwn 0 and 9) of first selected pie slice for comparison
+      var selectedSlice2 = gen[1][1]; //index (btwn 0 and 9) of second selected pie slice for comparison
+      console.log(selectedSlice1);
+      console.log(selectedSlice2)
+      var selectedSlices = [] // contains the start and end angle of the selectedSlices
+
 
       var pie = d3.pie().sort(null);
 
       var arcGenerator = d3.arc()
-          .innerRadius(0)
-          .outerRadius(radius);
+        .innerRadius(0)
+        .outerRadius(radius);
 
       g.selectAll('mypie')
         .data(pie(data))
@@ -324,20 +331,37 @@
         .attr('d', arcGenerator)
         .attr('stroke', 'black')
         .attr('fill', 'white')
-        .style('stroke-width', '2px');
-     //   .each((d)=> { if (d.index === selectedSlice1 || d.index===selectedSlice2){
-     //     selectedSlices.push({startAngle: d.startAngle, endAngle: d.endAngle})
-     //   }});
+        .style('stroke-width', '2px')
+        .each((d, i)=> { if (i === selectedSlice1 || i === selectedSlice2){
+           selectedSlices.push({startAngle: d.startAngle, endAngle: d.endAngle})
+         }});
+
+         console.log('selected slices is: ', selectedSlices);
+         
+         var centroid1 = arcGenerator.centroid(selectedSlices[0]);
+         console.log('the first centroid is: ', centroid1);
+
+         g.append('circle')
+          .attr('cx', centroid1[0])
+          .attr('cy', centroid1[1])
+          .attr('fill', 'black')
+          .attr('r', 5);
+
+        var centroid2 = arcGenerator.centroid(selectedSlices[1]);
+        console.log('the second centroid is: ', centroid1);
+
+        g.append('circle')
+          .attr('cx', centroid2[0])
+          .attr('cy', centroid2[1])
+          .attr('fill', 'black')
+          .attr('r', 5);
+
       //we might have to add the dot?
-
-      var selectedSlice1 = gen[1][0]; //index (btwn 0 and 9) of first selected pie slice for comparison
-      var selectedSlice2 = gen[1][1]; //index (btwn 0 and 9) of second selected pie slice for comparison
-      //var selectedSlices = [] // contains the start and end angle of the selectedSlices
-
+          
 
       var dataSlice1 = gen[0][selectedSlice1];
-  var dataSlice2 = gen[0][selectedSlice2];
-    dataCurrent.truePercent = calculateCorrectPercentage(dataSlice1, dataSlice2);
+      var dataSlice2 = gen[0][selectedSlice2];
+      dataCurrent.truePercent = calculateCorrectPercentage(dataSlice1, dataSlice2);
     }
 
 
@@ -387,7 +411,7 @@
       var subgroups = ['val1', 'val2', 'val3', 'val4', 'val5'];
 
       //The first column here is set to be the x axis with the subgroups being the stacked bars
-      var groups = d3.map(data, function(d) {
+      var groups = d3.map(data, function (d) {
         return d.bar;
       }).keys()
 
@@ -407,7 +431,7 @@
         .domain([0, 100])
         .range([height, margin.top]);
 
-      svg.append('g').attr("transform", "translate(0," + (-margin.top)+ ")").call(d3.axisLeft(y));
+      svg.append('g').attr("transform", "translate(0," + (-margin.top) + ")").call(d3.axisLeft(y));
 
 
       var stackedData = d3.stack()
@@ -420,18 +444,18 @@
         .enter().append('g')
         .selectAll('rect')
         //we'd have to enter() more times depending on the subgroups to add all the necessary rectangles
-        .data(function(d) {
+        .data(function (d) {
           return d;
         })
         .enter().append('rect')
         .attr('transform', 'translate(0,' + -margin.top + ')')
-        .attr('x', function(d) {
+        .attr('x', function (d) {
           return x(d.data.bar)
         })
-        .attr('y', function(d) {
+        .attr('y', function (d) {
           return y(d[1]);
         })
-        .attr('height', function(d) {
+        .attr('height', function (d) {
           return y(d[0]) - y(d[1]);
         })
         .attr('width', x.bandwidth())
@@ -448,8 +472,8 @@
       */
 
 
-	  var dataPiece1 = gen[1][selectedPiece1];
-	  var dataPiece2 = gen[4][selectedPiece2];
+      var dataPiece1 = gen[1][selectedPiece1];
+      var dataPiece2 = gen[4][selectedPiece2];
       dataCurrent.truePercent = calculateCorrectPercentage(dataPiece1, dataPiece2);
     }
 
