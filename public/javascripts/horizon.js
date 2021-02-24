@@ -1,22 +1,46 @@
 // import "https://unpkg.com/d3-horizon-chart"
 // http://kmandov.github.io/d3-horizon-chart/
+
+
+// Add the text to the label at the top of the page - debugging function
+function addToLabel(text) {
+    let label = document.getElementById("label")
+    label.appendChild(document.createElement("br"))
+    label.appendChild(document.createTextNode(text))
+}
+
 function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
+
+    // Returns an array in the format: [columnNumbers, MarkColumnNumbers, NumDatasets, xTickVal]
+    colsMarksNumSetsX = getColsMarksNumSets(chartNum)
+    colNums = colsMarksNumSetsX[0];
+    numSets = colsMarksNumSetsX[2];
 
     const margin = { top: 20, right: 10, bottom: 0, left: 10 };
     const w = width - margin.left - margin.right,
         h = 50 - margin.top - margin.bottom;
 
     const g = d3.select(svgID)
+        .attr("width", 0)
+        .attr("height", 0)
+
+    const a = d3.select('#h-axis')
         .attr("width", w + margin.left + margin.right)
         .attr("height", h + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    //
-    // Returns an array in the format: [columnNumbers, MarkColumnNumbers, NumDatasets, xTickVal]
-    colsMarksNumSetsX = getColsMarksNumSets(chartNum)
-    colNums = colsMarksNumSetsX[0];
-    numSets = colsMarksNumSetsX[2];
+    // Add X axis
+    let x = d3.scaleLinear()
+        .domain([1, xRange])
+        .range([0, w]);
+
+    let xAxis = d3.axisBottom(x)
+    xAxis.tickValues([1, colsMarksNumSetsX[3], xRange])
+
+    a.append("g")
+        .attr("transform", "translate(0," + 0 + ")")
+        .call(xAxis);
 
     d3.csv(fileName).then(
         function (data) {
@@ -51,17 +75,7 @@ function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
                 });
 
             // mark only the two of interest (the first and then colsMarksNumSetsX[1][1] )
-        });
-    
-    // Add X axis
-    let x = d3.scaleLinear()
-        .domain([1, xRange])
-        .range([0, w]);
-
-    let xAxis = d3.axisBottom(x)
-    xAxis.tickValues([1, colsMarksNumSetsX[3], xRange])
-
-    g.append("g")
-        .attr("transform", "translate(0," + h + ")")
-        .call(xAxis)
+        })
 }
+
+
