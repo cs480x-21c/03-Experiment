@@ -62,9 +62,8 @@
     <div class="page">
       <h1>Experiment</h1>
       <p>Thank you for agreeing to participate in our experiment!</p>
-      <p>Through a series of questions we will be testing which of the following graphs are the best for size percpetion. The graphs are a Bar Chart, Stacked Bar Chart, and a Pie Chart.</p>
-      <p>Next pages will display different graphs. You will be asked to determine how different values compare
-        percentage wise in size</p>
+      <p>We will be testing which of the following graphs are the best for size perception through a series of questions. The graphs are a Bar Chart, Stacked Bar Chart, and a Pie Chart.</p>
+      <p>Next pages will display different graphs. You will be asked to determine how different values compare percentage-wise in size.</p>
       <p style="padding: 0px 0px 10px 0px">Click "Agree" button to start!</p>
     </div>
 
@@ -77,7 +76,8 @@
       <p>
         What do you think the percent of the smaller value to the larger value is?
       </p>
-      <p>Example: If you think the smaller value is half of the larger value, please input 50</p>
+      <p> <b>
+          Example</b>: If you think the smaller value is half of the larger value, please input 50</p>
       <p style="padding: 15px 0px 10px 0px">
         <input type="text" id="txtAnswer" />
       </p>
@@ -107,20 +107,16 @@
     var maxPage = 2;
 
     var functionNumbers = [];
-    for (let i=1; i<=3; i++){
-      for (let j=1; j<=numDisplay/3; j++){
+    for (let i = 1; i <= 3; i++) {
+      for (let j = 1; j <= numDisplay / 3; j++) {
         functionNumbers.push(i);
       }
     }
-    //console.log(functionNumbers.length);
-    //Shuffle Numbers from
-    //https://stackoverflow.com/a/12646864
-    //DO WE NEED THIS
+
     for (let i = functionNumbers.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [functionNumbers[i], functionNumbers[j]] = [functionNumbers[j], functionNumbers[i]];
     }
-    //
 
     document.getElementById("disagreeButon").innerHTML = "Disagree";
     document.getElementById("saveNextButton").innerHTML = "Agree";
@@ -136,7 +132,6 @@
     var svg = d3.select('#vis');
 
     var filename = 'data.csv';
-    //var csvData = new Array();
     var dataHeader = ["participantID", "trialNum", "vis", "truePercent", "reportedPercent"];
     var data = [];
     let header = dataHeader.join(',') + '\n';
@@ -154,19 +149,20 @@
 
     display();
 
-	// Get the input field
-	var input = document.getElementById("txtAnswer");
+    // Get the input field
+    var input = document.getElementById("txtAnswer");
 
-	// Execute a function when the user releases a key on the keyboard
-	input.addEventListener("keyup", function(event) {
-	// Number 13 is the "Enter" key on the keyboard
-		if (event.keyCode === 13) {
-			// Cancel the default action, if needed
-			event.preventDefault();
-			// Trigger the button element with a click
-			document.getElementById("saveNextButton").click();
-		}
-	});
+
+    // Execute a function when the user releases a key on the keyboard
+    input.addEventListener("keyup", function(event) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("saveNextButton").click();
+      }
+    });
 
     //END SETUP
 
@@ -178,7 +174,7 @@
     }
 
 
-    function addToCSV(){
+    function addToCSV() {
       data.forEach(obj => {
         let row = [];
         for (key in obj) {
@@ -188,7 +184,7 @@
         }
         csv += row.join(',') + "\n";
       });
-    data =[];
+      data = [];
     }
 
     function end() {
@@ -242,16 +238,12 @@
       svg.append('g')
         .attr('transform', 'translate(0,' + (height - margin.top) + ')')
         .call(d3.axisBottom(x).tickValues([]).tickSizeOuter(0));
-        /*
-        .selectAll('text')
-        .attr('transform', 'translate(-10,0)rotate(-45)')
-        .style('text-anchor', 'end');
-        */
-      //yaxis
+
+
       var y = d3.scaleLinear()
         .domain([0, 125])
         .range([height, margin.top]);
-      svg.append('g').attr("transform", "translate(0," + (-margin.bottom)+ ")")
+      svg.append('g').attr("transform", "translate(0," + (-margin.bottom) + ")")
         .call(d3.axisLeft(y));
 
       //barchart plotting data
@@ -272,12 +264,49 @@
         })
         .attr('stroke', 'black')
         .attr('fill', 'white')
-        .style('stroke-width', '2px');
-      //we might have to add a dot maybe within the two random bars?
+        .style('stroke-width', '2px')
+        .append('circle')
+        .attr('r', '10')
+        .attr('cx', function(d) {
+          return x(d.xaxisdata);
+        })
+        .attr('cy', function(d) {
+          return (y(d.yaxisdata)) - 15;
+        })
+        .attr('fill', 'purple');
 
       var selectedBar1 = gen[1][0]; //index (btwn 0 and 9) of first selected bar for comparison
       var selectedBar2 = gen[1][1]; //index (btwn 0 and 9) of first selected bar for comparison
-      /* 
+      //we might have to add a dot maybe within the two random bars?
+      svg.selectAll('mybardots')
+        .data(data)
+        .enter()
+        .append('circle')
+        .attr('transform', 'translate(0,' + -margin.top + ')')
+        .attr('r', '5')
+        .attr('cx', function(d) {
+          return x(d.xaxisdata) + (x.bandwidth() / 2);
+        })
+        .attr('cy', '490')
+        .attr('fill', function(d) {
+          if ((d.xaxisdata == selectedBar1 + 1) || (d.xaxisdata == selectedBar2 + 1)) {
+            return "black";
+          } else {
+            return "white";
+          }
+        })
+		.attr('fill-opacity', function(d) {
+          if ((d.xaxisdata == selectedBar1 + 1) || (d.xaxisdata == selectedBar2 + 1)) {
+            return "1";
+          } else {
+            return "0";
+          }
+        })
+		
+		;
+
+
+      /*
       var selectedBars = [];
       d3.selectAll("rect").each((d)=>{
         //filter through all the bars to find the selected piece
@@ -309,12 +338,22 @@
       //Radius of pie chart is half the length of the width or height
       var radius = width / 2 - margin;
 
+      var selectedSlice1 = gen[1][0]; //index (btwn 0 and 9) of first selected pie slice for comparison
+      var selectedSlice2 = gen[1][1]; //index (btwn 0 and 9) of second selected pie slice for comparison
+      console.log(selectedSlice1);
+      console.log(selectedSlice2)
+      var selectedSlices = [] // contains the start and end angle of the selectedSlices
+
 
       var pie = d3.pie().sort(null);
 
       var arcGenerator = d3.arc()
-          .innerRadius(0)
-          .outerRadius(radius);
+        .innerRadius(0)
+        .outerRadius(radius);
+
+      var selectedSlices = [] // contains the start and end angle of the selectedSlices
+      var selectedSlice1 = gen[1][0]; //index (btwn 0 and 9) of first selected pie slice for comparison
+      var selectedSlice2 = gen[1][1]; //index (btwn 0 and 9) of second selected pie slice for comparison
 
       g.selectAll('mypie')
         .data(pie(data))
@@ -324,20 +363,42 @@
         .attr('d', arcGenerator)
         .attr('stroke', 'black')
         .attr('fill', 'white')
-        .style('stroke-width', '2px');
-     //   .each((d)=> { if (d.index === selectedSlice1 || d.index===selectedSlice2){
-     //     selectedSlices.push({startAngle: d.startAngle, endAngle: d.endAngle})
-     //   }});
-      //we might have to add the dot?
+        .style('stroke-width', '2px')
+        .each((d, i) => {
+          if (i === selectedSlice1 || i === selectedSlice2) {
+            selectedSlices.push({
+              startAngle: d.startAngle,
+              endAngle: d.endAngle
+            })
+          }
+        });
 
-      var selectedSlice1 = gen[1][0]; //index (btwn 0 and 9) of first selected pie slice for comparison
-      var selectedSlice2 = gen[1][1]; //index (btwn 0 and 9) of second selected pie slice for comparison
-      //var selectedSlices = [] // contains the start and end angle of the selectedSlices
+      console.log('selected slices is: ', selectedSlices);
+
+      var centroid1 = arcGenerator.centroid(selectedSlices[0]);
+      console.log('the first centroid is: ', centroid1);
+
+      g.append('circle')
+        .attr('cx', centroid1[0])
+        .attr('cy', centroid1[1])
+        .attr('fill', 'black')
+        .attr('r', 5);
+
+      var centroid2 = arcGenerator.centroid(selectedSlices[1]);
+      console.log('the second centroid is: ', centroid1);
+
+      g.append('circle')
+        .attr('cx', centroid2[0])
+        .attr('cy', centroid2[1])
+        .attr('fill', 'black')
+        .attr('r', 5);
+
+      //we might have to add the dot?
 
 
       var dataSlice1 = gen[0][selectedSlice1];
-  var dataSlice2 = gen[0][selectedSlice2];
-    dataCurrent.truePercent = calculateCorrectPercentage(dataSlice1, dataSlice2);
+      var dataSlice2 = gen[0][selectedSlice2];
+      dataCurrent.truePercent = calculateCorrectPercentage(dataSlice1, dataSlice2);
     }
 
 
@@ -397,6 +458,10 @@
         .range([0, width])
         .padding([0.4]);
 
+      var xPoint = d3.scalePoint()
+        .domain(groups)
+        .range([0, width])
+        .padding([0.7]);
 
       svg.append('g')
         .attr('transform', 'translate(0,' + (height - margin.top) + ')')
@@ -407,7 +472,7 @@
         .domain([0, 100])
         .range([height, margin.top]);
 
-      svg.append('g').attr("transform", "translate(0," + (-margin.top)+ ")").call(d3.axisLeft(y));
+      svg.append('g').attr("transform", "translate(0," + (-margin.top) + ")").call(d3.axisLeft(y));
 
 
       var stackedData = d3.stack()
@@ -440,7 +505,51 @@
 
       var selectedPiece1 = gen[2]; //index (btwn 0 and 4) of selected element in first bar
       var selectedPiece2 = gen[5]; //index (btwn 0 and 4) of selected element in second bar
-      /* 
+
+      var dataPiece1 = gen[1][selectedPiece1];
+      var dataPiece2 = gen[4][selectedPiece2];
+	  
+	  var dot1Placed = false;
+	  var dot2Placed = false;
+
+      svg.append('g')
+        .selectAll('g')
+        //.attr('transform', 'translate(0,' + (height-margin.bottom) + ')')
+        .data(stackedData)
+        .enter().append('g')
+        .selectAll('circle')
+        //we'd have to enter() more times depending on the subgroups to add all the necessary rectangles
+        .data(function(d) {
+          return d;
+        })
+        .enter().append('circle')
+        .attr('transform', 'translate(0,' + -margin.top + ')')
+        .attr('cx', function(d) {
+          return xPoint(d.data.bar);
+        })
+        .attr('cy', function(d) {
+          return y(d[0]) - (y(d[0]) - y(d[1])) / 2;
+        })
+        .attr('height', function(d) {
+          return y(d[0]) - y(d[1]);
+        })
+        .attr('r', 5)
+        .attr('fill', function(d) {
+          var isPiece1 = ((d.data.bar) == 1 && d[1] - d[0] == dataPiece1 && !dot1Placed);
+		  if(isPiece1){
+			dot1Placed = true;
+		  }
+          var isPiece2 = ((d.data.bar) == 2 && d[1] - d[0] == dataPiece2 && !dot2Placed);
+		  if(isPiece2){
+			dot2Placed = true;
+		  }
+          if (isPiece1 || isPiece2) {
+            return "black";
+          } else {
+            return "white";
+          }
+        });
+      /*
       var selectedBars = [];
       d3.selectAll("rect").each((d)=>{
         //filter through all the bars to find the selected piece
@@ -448,8 +557,8 @@
       */
 
 
-	  var dataPiece1 = gen[1][selectedPiece1];
-	  var dataPiece2 = gen[4][selectedPiece2];
+      var dataPiece1 = gen[1][selectedPiece1];
+      var dataPiece2 = gen[4][selectedPiece2];
       dataCurrent.truePercent = calculateCorrectPercentage(dataPiece1, dataPiece2);
     }
 
