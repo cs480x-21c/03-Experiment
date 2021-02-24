@@ -272,9 +272,9 @@ function main() {
             FingerprintJS.load().then(fp => {
                 fp.get().then(result => {
                     let db = firebase.firestore();
+                    var time = Date.now().toString();
 
-
-                    db.collection(result.visitorId).doc(Date.UTC.toString()).set({ output })
+                    db.collection(result.visitorId).doc(time).set({ output })
                         .then(() => {
                             console.log("Document successfully written!");
                         })
