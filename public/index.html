@@ -204,7 +204,7 @@
     let runningHeight = (Number(svg.style("height").replace(/px$/, '')))
     let runningWidth = Number(svg.style("width").replace(/px$/, ''))
 
-    console.log(cleanData)
+    // console.log(cleanData)
 
     //The rectangles stacked on each other and associated text
     svg
@@ -264,21 +264,14 @@
   }
 
   function makePieChart(arrayData, points) {
-    // TODO: This is a stub
-    console.log('called makePieChart')
-    console.log('Looking for points: ' + points)
+    // console.log('called makePieChart')
+    // console.log('Looking for points: ' + points)
 
     document.getElementById('header').innerText = 'Compare section "' + String.fromCharCode(points[0] + 65) + '" versus section "' + String.fromCharCode(points[1] + 65) + '"'
 
     // The min of width or height / 2 is the same at 250
     var chartRadius = 250
 
-    // var svg = d3.select("#vis")
-    //   .append("svg")
-    //   .attr('id', 'pie')
-    //   .attr("width", 500)
-    //   .attr("height", 500)
-      
     // Data already exists
     // Add data to chart
 
@@ -293,20 +286,13 @@
     var pieData = d3.pie()
     .sort(null).value(function(d) {return d.value})
 
-    //console.log(typeof data)
     const rawData = data.children
     var readyData = pieData(rawData)
-    // console.log("Pie Data: " + pieData)
-    //console.log("Ready Data: " + data)
-    console.log(rawData)
-    console.log(readyData)
 
     var arcs = d3.arc()
       .innerRadius(0)
       .outerRadius(chartRadius)
 
-      //console.log(arcs)
-    //console.log(data.children)
     // Build Chart
     svg.select('svg')
     .selectAll('path')
@@ -330,9 +316,11 @@
     return 'Pie Chart'
   }
 
-  //Randomize data
+  //Randomize data between 10 and 100
   function randomizeData() {
-    currData = [...Array(10)].map(() => Math.floor(Math.random() * 101))
+    const min = 10
+    const max = 100
+    currData = [...Array(10)].map(() => Math.floor(Math.random() * (max - min + 1)) + min)
     return currData
   }
 
