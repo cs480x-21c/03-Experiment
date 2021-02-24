@@ -21,7 +21,14 @@ const updateData = function(request, response){
   request.on('data', function(data){
     jsonData = JSON.parse(data)
     console.log(jsonData)
-    jsonData.error = Math.log(Math.abs(jsonData.reportedPercent-jsonData.truePercent))+(1/8)
+
+    jsonData.truePercent= Math.round(jsonData.truePercent)
+    //jsonData.error = Math.log(Math.abs(jsonData.reportedPercent-jsonData.truePercent))+(1/8)
+    jsonData.error = Math.log2(Math.abs(jsonData.reportedPercent-jsonData.truePercent)+(1/8))
+    if (jsonData.error <= 0){
+      jsonData.error = 0;
+    }
+
     csvData = jsonData.id + ',' + jsonData.trial +  "," +jsonData.vis + "," + jsonData.truePercent + "," + jsonData.reportedPercent + "," + jsonData.error+ "\r\n"
     
     fs.appendFile('trials.csv', csvData, (err)=> {
