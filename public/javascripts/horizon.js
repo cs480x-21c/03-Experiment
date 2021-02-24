@@ -67,8 +67,10 @@ function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
                 .height(height / 6)
                 .step(width / xRange)
                 .extent([0,100])
-                .colors(['#313695', '#4575b4', '#74add1', '#abd9e9',
-                    '#fee090', '#fdae61', '#f46d43', '#d73027']);
+                // .colors(['#313695', '#4575b4', '#74add1', '#abd9e9',
+                //     '#fee090', '#fdae61', '#f46d43', '#d73027']);
+                .colors(['#313695', '#4575b4', '#fee090', '#fdae61',]);
+
 
             var horizons = d3.select('#chart-container').selectAll('.horizon')
                 .data(series)
@@ -76,10 +78,10 @@ function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
                 .attr('class', 'horizon')
                 .each(function (d, i) {
                     if (i === numSets - 1) {
-                        horizonChart.title('Dataset A (above)')
+                        horizonChart.title('Dataset B (above)')
                             .call(this, d);
                     } else if (i === colsMarksNumSetsX[1][1] - colsMarksNumSetsX[1][0] - 1) {
-                        horizonChart.title('Dataset B (above)')
+                        horizonChart.title('Dataset A (above)')
                             .call(this, d);
                     }
                     else {
