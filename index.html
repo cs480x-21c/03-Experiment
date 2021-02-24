@@ -33,8 +33,13 @@
      .text("Please click the agree button to begin. Thank you!")
      .attr("y", 140)
      .attr("font-size","20px")
+  </script>
 
-const links = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+<a id="link">
+   <button style="margin-top:10px;">Agree</button>
+</a>
+  <script>
+    const links = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
                3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
                4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
@@ -72,7 +77,4 @@ sessionStorage.setItem("i", JSON.stringify(i))
 document.getElementById("link").setAttribute("href",goTo);
 
 </script>
-<a id="link">
-   <button style="margin-top:10px;">Agree</button>
-</a>
 </body>
