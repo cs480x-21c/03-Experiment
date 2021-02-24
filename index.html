@@ -14,7 +14,8 @@
   console.log(d3); // test if d3 is loaded
   var svg = d3.select('#frame');
   setupInputBox();
-  var chartToChoose = Math.floor(Math.random() * 3)+1;
+  // var chartToChoose = Math.floor(Math.random() * 3)+1;
+  var chartToChoose = 3;
   var trueVal;
   if (chartToChoose == 1) {
     trueVal = randomGradient(svg);
@@ -189,31 +190,27 @@
     console.log("compareData:" + compareData);
     console.log("compareData:" + compareData[0]);
 
-    
+    var prevR = 4;
     // Adding bubbles
     svg.append("g")
       .selectAll("dot")
       .data(data)
       .enter()
       .append("circle")
-        .attr('cx', function(d){return d[1]})
-        .attr('cy', function(d){return Math.floor(Math.random() * (80 -20)) + 20})
-        .attr("r", function(d){return (d[0]/10)})
+        .attr('cx', function(d){return d[1] + (d[0]/10)+ prevR})
+        .attr('cy', function(d){return 50})
+        .attr("r", function(d){
+          prevR = d[0]/10;
+          return (d[0]/10)})
         .style("fill", "#FFFFFF")
-        .style("opacity", function(d){
-            if(d[1] == (compareData[0]-2.5) || d[1] == (compareData[1]-2.5)){
-              return 1;
-            } else{
-              return 0;
-            }
-        })
+        .style("opacity", function(d){return 1;})
         .attr("stroke", "black")
         .attr("stroke-width", function(d){
-          if(d[1] == (compareData[0]-2.5)){
-            return ".5%"
+          if(d[1] == (compareData[0]-2.5)||d[1] == (compareData[1]-2.5)){
+            return "1%";
           }
-          else if(d[1] == (compareData[1]-2.5)){
-            return "1%"
+          else{
+            return ".5";
           }
         })
     
