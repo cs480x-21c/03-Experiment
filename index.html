@@ -68,6 +68,10 @@ if (goToNum == '1') {
 }
 console.log(goTo);
 
+i = i + 1;
+console.log(i)
+sessionStorage.setItem("i", JSON.stringify(i))
+  
 document.getElementById("link").setAttribute("href",goTo);
 
 </script>
