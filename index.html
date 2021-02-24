@@ -21,10 +21,19 @@
 
     function startPage() {
 
+        var startDiv = document.createElement("div");
+        startDiv.style.height = "100px";
+        startDiv.id = "startDiv";
+        document.body.appendChild(startDiv);
+
+        var intro = document.createElement("p");
+        startDiv.appendChild(intro);
+
         var start = document.createElement("BUTTON");
         var startText = document.createTextNode("Start");
         start.appendChild(startText);
-        document.body.appendChild(start);
+        startDiv.appendChild(start);
+
         start.classList.add('StartButton')
         start.classList.add('StartPage')
         start.onclick = function () {
@@ -64,7 +73,7 @@
         submit.appendChild(submitText);
         div.appendChild(submit);
         submit.onclick = function () {
-            if (textInput.value < 100) {
+            if (textInput.value < 100 && textInput.value > 0) {
                 numSubmits++;
                 var text = textInput.value;
                 console.log(text);
@@ -220,7 +229,7 @@
 
         var color = d3.scaleOrdinal(d3.schemeCategory20b);
 
-        var svg = d3.select('#svgdiv')
+        svg = d3.select('#svgdiv')
             .append('svg')
             .attr('width', width)
             .attr('height', height)
