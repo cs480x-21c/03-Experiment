@@ -65,7 +65,6 @@ label {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  overflow:auto;
 }
 
 #hdiv {height: 50px;
