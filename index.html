@@ -197,23 +197,25 @@
     <script>
           var svg = d3.select("#bubble")
       .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("width", WIDTH)
+        .attr("height", HEIGHT)
+        // .attr("width", WIDTH + margin.left + margin.right)
+        // .attr("height", HEIGHT + margin.top + margin.bottom)
       .append("g")
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
           var x = d3.scaleLinear()
         .domain([0, 100])
-        .range([ 0, width ]);
+        .range([ 0, WIDTH ]);
       svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0," + HEIGHT + ")")
         .call(d3.axisBottom(x)
             .ticks(5));         // set ticks for proper scaling
     
       // Add Y axis
       var y = d3.scaleLinear()
         .domain([0, 100])
-        .range([ height, 0]);
+        .range([ HEIGHT, 0]);
       svg.append("g")
         .call(d3.axisLeft(y)
             .ticks(5));         // set ticks for proper scaling
