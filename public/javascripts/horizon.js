@@ -17,6 +17,7 @@ function removeChildren(node) {
 }
 
 function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
+    removeChildren(document.getElementById('h-axis'))
 
     // Returns an array in the format: [columnNumbers, MarkColumnNumbers, NumDatasets, xTickVal]
     colsMarksNumSetsX = getColsMarksNumSets(chartNum)
@@ -36,8 +37,6 @@ function makeChart(svgID, width, height, xRange, yRange, fileName, chartNum) {
         .attr("height", h + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    removeChildren(document.getElementById('h-axis'))
 
     // Add X axis
     let x = d3.scaleLinear()
