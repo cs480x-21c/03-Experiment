@@ -74,6 +74,10 @@ label {
   justify-content: center;
 }
 
+#intro {
+  margin: 1em auto;
+}
+
 #form-container {
   width: 1000px;
   margin: 1em auto;
