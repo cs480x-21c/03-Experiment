@@ -31,28 +31,26 @@ const listener = app.listen(process.env.PORT, () =>
 // Saves a result in a specified file
 app.post('/result', jsonParser, (request, response) =>
 {
+    // Convert the results to csv format
     let result = request.body.children;
-    console.log(result);
-
     let resultArray = result.map(function(d, i)
     {
         return [d.resultIndex, d.trialIndex, d.chartType, d.correctAnswer, d.participantAnswer];
     });
 
-    console.log(resultArray);
+    let resultCSV = d3.csvFormatRows(resultArray) + "\n";
 
-
-    // fs.appendFile("results/r.csv", resultCSV, function (err)
-    // {
-    //     if (err)
-    //     {
-    //         return console.log(err);
-    //     }
-    //     else
-    //     {
-    //         console.log("result recorded");
-    //     }
-    // });
+    fs.appendFile("results/r.csv", resultCSV, function (err)
+    {
+        if (err)
+        {
+            return console.log(err);
+        }
+        else
+        {
+            console.log("result recorded");
+        }
+    });
 
     response.json("result recorded");
 });
@@ -62,34 +60,27 @@ app.post('/resultIndex', async (request, response) =>
 {
     let resultIndex = 0;
 
-    fs.readdir("results/", (err, files) =>
+    fs.readFile("results/r.csv", "utf8", (err, file) =>
     {
         // If the directory cannot be scanned
         if (err)
         {
-            return console.log('Unable to scan directory: ' + err);
+            return console.log("Unable to read file: " + err);
         }
 
-        files.forEach((file) =>
-        {
-            // Do whatever you want to do with the file
-            try
-            {
-                // Takes the file and isolates the result number
-                let currentResultIndex = parseInt(file.substring(6).replace(".json", ""), 10);
-                console.log(currentResultIndex);
-                if (currentResultIndex > resultIndex)
-                {
-                    resultIndex = currentResultIndex;
-                }
-            }
-            catch
-            {
-                // not a proper results file, ignore it
-            }
-        });
+        let data = d3.csvParse(file);
+        let resultIndex = 0;
 
-        // Add 1 to the result index, the scanner is done
-        response.json(resultIndex + 1);
+        try
+        {
+            resultIndex = parseInt(data[data.length - 1].Result) + 1;
+        }
+        catch (e)
+        {
+            // If there are no entries, just leave result index at 0
+        }
+
+        // give the file the new result index
+        response.json(resultIndex);
     });
 });

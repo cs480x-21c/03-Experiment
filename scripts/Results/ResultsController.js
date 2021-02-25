@@ -4,47 +4,45 @@ class ResultsController
 {
     makeNewResult()
     {
-        // Default
-
+        // Default result entries
         this.result = {children: []};
         this.entry = {resultIndex: 0, trialIndex: 0, chartType: "",
             correctAnswer: 0, participantAnswer:0};
 
         this.trialIndex = 0;
 
-//         try
-//         {
-//             // Gets the next possible result index, used to name the result file
-//             let options =
-//                 {
-//                     method: 'POST',
-//                     headers: {"Content-type": "application/json; charset=UTF-8"},
-//                 };
+        try
+        {
+            // Gets the next possible result index from the server csv
+            //  it is used to number the result
+            let options =
+                {
+                    method: 'POST',
+                    headers: {"Content-type": "application/json; charset=UTF-8"},
+                };
 
-//             const promise = fetch('/resultIndex', options);
-//             promise.then(response =>
-//             {
-//                 if(!response.ok)
-//                 {
-//                     console.error(response)
-//                 }
-//                 else
-//                 {
-//                     return response.json();
-//                 }
-//             }).then(result =>
-//             {
-//                 // Changes the file name to match the new result
-//                 this.resultIndex = result;
-//                 this.result.fileName = "result" + this.resultIndex + ".json";
-//             })
-//         }
-//         catch (e)
-//         {
-//             console.log(e);
-//         }
+            const promise = fetch('/resultIndex', options);
+            promise.then(response =>
+            {
+                if(!response.ok)
+                {
+                    console.error(response)
+                }
+                else
+                {
+                    return response.json();
+                }
+            }).then(result =>
+            {
+                // New result number
+                this.entry.resultIndex = result;
+            })
+        }
+        catch (e)
+        {
+            console.log(e);
+        }
     }
-
 
     enterResult(chartType, correctAnswer, participantAnswer)
     {
@@ -56,6 +54,8 @@ class ResultsController
 
         // Add the entry to the results
         this.result.children.push(Object.assign({},this.entry));
+
+        console.log(this.entry);
 
         this.trialIndex++;
     }

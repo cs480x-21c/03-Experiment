@@ -5,24 +5,24 @@ let gTrialIndex = 0;
 // const TRIALS = 20;
 const TRIALS = 2;
 
-let firstTrial = true;
+let notFirstTrial = false;
 
 let gResults;
 
 function main()
 {
     const margin = {top: 10, right: 10, bottom: 10, left: 10};
-    const width = 600 - margin.left - margin.right;
-    const height = 600 - margin.top - margin.bottom;
+    const width = 400 - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
 
     // Svg is used to make all the chart types
     let svg = d3.select("#vis")
         .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
         .append("g")
-            .attr("transform",
-                "translate(" + margin.left + "," + margin.top + ")");
+        .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
 
     // idk if we need these
     var xScale = d3.scaleLinear()
@@ -71,14 +71,16 @@ function makeNewChart()
         let vis = gVisArray[gVisIndex];
 
         // first trial will not have an input
-        if (firstTrial)
+        if (notFirstTrial)
         {
             // Fetch answer and enter the result
             let answer = document.getElementById("answer").valueAsNumber;
             gResults.enterResult(vis.type, vis.answer, answer);
 
-            firstTrial = false;
+
         }
+
+        notFirstTrial = true;
 
         // remove current vis
         vis.remove();
