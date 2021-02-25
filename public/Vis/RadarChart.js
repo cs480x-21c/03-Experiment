@@ -29,7 +29,7 @@ class RadarChart extends Chart
         //
         let radScale = d3.scaleLinear()
             .domain([0,100])
-            .range([0,width/2 -50]);
+            .range([0, this.width/2 - 50]);
 
         // util
         function angleToCoordinate(angle, value, width, height)
