@@ -184,9 +184,9 @@
   have entered your estimate, click the "submit" button to continue the
   experiment.
 </p>
-<strong>
+<!-- <strong>
   IMPORTANT: Do NOT hit the "ENTER" key, or the experiment will be reset.
-</strong>
+</strong> -->
   </div>
   <div id="vis_holder"></div>
   <script>
@@ -409,7 +409,7 @@ function draw_treemap(){
       }
   </script>
 </body>
-<form id="graph_ratio_form">
+<form id="graph_ratio_form" onsubmit="button_press();return false">
   <label for="number_input">The smaller marked data is approximately </label>
   <input id="number_input" type="number" min="0" max="100">
   <label for="number_input"> % of the larger marked data </label>
