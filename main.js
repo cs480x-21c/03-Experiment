@@ -7,8 +7,8 @@ const TRIALS = 20;
 function main()
 {
     const margin = {top: 10, right: 10, bottom: 10, left: 10};
-    const width = 400 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
+    const width = 600 - margin.left - margin.right;
+    const height = 600 - margin.top - margin.bottom;
 
     // Svg is used to make all the chart types
     let svg = d3.select("#vis")
