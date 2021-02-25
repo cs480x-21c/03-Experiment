@@ -86,10 +86,10 @@ class RadarChart extends Chart
                     .attr("r", radScale(3));
             }
         }
-    }
 
-    check(answer)
-    {
-
+        let radarArray = Object.keys(this.data).map(i => this.data[i]);
+        let v1 = radarArray[this.pointsOfInterest[0]];
+        let v2 = radarArray[this.pointsOfInterest[1]];
+        this.calculateAnswer(v1, v2);
     }
 }

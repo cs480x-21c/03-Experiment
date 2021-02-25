@@ -68,11 +68,8 @@ class BarChart extends Chart
             }
         }
 
-        this.answer = 0;
-    }
-
-    check(answer)
-    {
-
+        let v1 = this.data[this.pointsOfInterest[0]];
+        let v2 = this.data[this.pointsOfInterest[1]];
+        this.calculateAnswer(v1, v2);
     }
 }

@@ -61,13 +61,8 @@ class TreeMap extends Chart
             .attr('r', 10)
             .style("fill", "black");
 
-        // TODO: how to make the chart work?
-
-        this.answer = 0;
-    }
-
-    check(answer)
-    {
-
+        let v1 = this.data.children[this.pointsOfInterest[0]].value;
+        let v2 = this.data.children[this.pointsOfInterest[1]].value;
+        this.calculateAnswer(v1, v2);
     }
 }
