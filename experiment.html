@@ -24,8 +24,14 @@
 <script>
   console.log(d3); // test if d3 is loaded
 
-  // count for each type of plot
+  // {chart_number: [chart_type, true_percent, predicted_percent]}
   var result = {}
+  // evaluation
+  var differencesBlack = []
+  var differencesGrayscale = []
+  var differencesColor = []
+
+  // count for each type of plot
   var type0_count = 0
   var type1_count = 0
   var type2_count = 0
@@ -45,9 +51,25 @@
     // save their percentage value
     if (isValue == 1) {
       var input = document.getElementById("inputValue").value
-      // document.getElementById("inputValue")
-      result[total].push(input)
       console.log("input: ", input)
+
+      // add predicted value to list
+      result[total].push(input)
+
+      console.log(result)
+      // append error difference
+      if (Math.abs(result[total][0] == "black")) {
+        differencesBlack.push(Math.abs(result[total][1] - result[total][2]))
+      }
+
+      if (Math.abs(result[total][0] == "grayscale")) {
+        differencesGrayscale.push(Math.abs(result[total][1] - result[total][2]))
+      }
+
+      if (Math.abs(result[total][0] == "color")) {
+        differencesColor.push(Math.abs(result[total][1] - result[total][2]))
+      }    
+
     }
     
     // remove prior chart
@@ -121,25 +143,48 @@
     }
     else {
 
-      // Exit
-      
+      // Calculate Metrics
+      // calculate black charts mean error
+      var temp = 0
+      for(var i = 0; i < differencesBlack.length; i++) {
+        temp += differencesBlack[i];
+      }
+      var avgBlack = temp / differencesBlack.length;
+      var avgBlack = Math.round((avgBlack + Number.EPSILON) * 100) / 100
+      // calculate grayscale charts mean error
+      var temp = 0
+      for(var i = 0; i < differencesGrayscale.length; i++) {
+        temp += differencesGrayscale[i];
+      }
+      var avgGrayscale = temp / differencesGrayscale.length;
+      var avgGrayscale = Math.round((avgGrayscale + Number.EPSILON) * 100) / 100
+
+      // calculate colored charts mean error
+      var temp = 0
+      for(var i = 0; i < differencesColor.length; i++) {
+        temp += differencesColor[i];
+      }
+      var avgColor = temp / differencesColor.length;
+      var avgColor = Math.round((avgColor + Number.EPSILON) * 100) / 100
 
       console.log(result)
       var dictresult = JSON.stringify(result)
       console.log(dictresult)
-      // var file = new File(dictresult, "result_csv");
       var blobresult = new Blob([dictresult])
       console.log(blobresult)
       var objectURL = window.webkitURL.createObjectURL(blobresult)
       console.log(objectURL)
-      // var encodedUri = encodeURI(dictresult);
-      // window.open(encodedUri);
 
+      document.getElementById("userInput").setAttribute("style","visibility: hidden")
+      document.getElementById("finishedButton").setAttribute("style","visibility: visible")
+      document.getElementById("finishedButton").setAttribute("onclick", "window.open('" + objectURL + "'), _blank")
+
+      document.getElementById("vis").setAttribute("style","display: none")
+      document.getElementById("finishedText").setAttribute("style","display: unset")
       
-      // document.getElementById("finished").click()
-
-      // var fs = require('fs')
-      // fs.writeFile("result.json", dictresult)
+      document.getElementById("errorValueBlack").textContent=avgBlack+"%";
+      document.getElementById("errorValueGrayscale").textContent=avgGrayscale+"%";
+      document.getElementById("errorValueColor").textContent=avgColor+"%";
 
       return
     }
@@ -217,9 +262,9 @@
       var percentage = 1
     }
 
-    percentage = Math.round(percentage * 100)
+    true_percentage = Math.round(percentage * 100)
+    result[total] = [type_name, true_percentage]
 
-    result[total] = [type_name, percentage]
   } 
 
 </script>
@@ -227,7 +272,8 @@
 <body>
 
   <div class="p-5">
-    <div class="row g-3 align-items-center">
+
+    <div class="row g-3 align-items-center" id="userInput">
 
       <div class="col-auto">
         <input type="text" id="inputValue" class="form-control" aria-describedby="ValueHelpInline">
@@ -241,8 +287,36 @@
         Input Percentage
       </span>
 
-      <a id="finished" href="finished.html"></a>
-
     </div>
+    
+    <span id="finishedText" style="display: none" class="form-text">
+      <h4>Thank you for completing the experiment!</h4>
+
+      <h4> Following is the mean error of each chart type<h4>
+
+      <h6> Black Chart:
+      <span id="errorValueBlack", style="color:blue"></span>
+      </h6>
+      <h6> Grayscale Chart:
+      <span id="errorValueGrayscale", style="color:blue"></span>
+      </h6>
+      <h6> Colored Chart:
+      <span id="errorValueColor", style="color:blue"></span>
+      </h6>
+
+      <h4>I need you to send me your results.</h4>
+      <h6>
+      <ol>
+        <li>Click the button below</li>
+        <li>Copy the results (ctrl-a, ctrl-c)</li>
+        <li>Paste into an email</li>
+        <li>Send to: jlovering@wpi.edu</li>
+      </ol>  
+    </h6>
+
+    </span>
+    
+    <button onclick="NULL" id="finishedButton" class="btn btn-primary" style="display: none">click here for results</button>
+
   </div>
 </body>
