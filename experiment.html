@@ -22,7 +22,7 @@
   // {chart_number: [chart_type, true_percent, predicted_percent]}
   var result = {}
   // evaluation
-  var errorsBlack = []
+  var errorsPlain = []
   var errorsGrayscale = []
   var errorsColor = []
 
@@ -62,7 +62,7 @@
 
       // append error difference
 
-      error = Math.log2(Math.abs(result[total][2] - result[total][1]) + (1/8))
+      error = Math.log2(Math.abs( result[total][2] - result[total][1] + (1/8) ))
       if (error == -3) {
         error = 0
       }
@@ -70,7 +70,7 @@
       result[total].push(error)
 
       if (Math.abs(result[total][0] == 0)) {
-        errorsBlack.push(error)
+        errorsPlain.push(error)
       }
 
       if (Math.abs(result[total][0] == 1)) {
@@ -117,11 +117,11 @@
       var rand_point_2 = Math.floor(Math.random() * 5)
     }
 
-    grayscale_pallete = ['#999999', '	#777777', '#555555','#333333', '#111111']
+    grayscale_pallete = ['#303030', '#696969', '#A8A8A8', '#D3D3D3', '#FFFFFF']
     colorblind_pallete = ['#44AA99', '#88CCEE', '#DDCC77', '#CC6677', '#AA4499']
 
     // pick chart type
-    if (type0_count < 20 || type1_count < 20 || type2_count < 20) {
+    if (type0_count < 1 || type1_count < 1 || type2_count < 1) {
       options = []
       if (type0_count < 20) {options.push("type0")}
       if (type1_count < 20) {options.push("type1")}
@@ -150,13 +150,13 @@
     else {
 
       // Calculate Metrics
-      // calculate black charts mean error
+      // calculate Plain charts mean error
       var temp = 0
-      for(var i = 0; i < errorsBlack.length; i++) {
-        temp += errorsBlack[i];
+      for(var i = 0; i < errorsPlain.length; i++) {
+        temp += errorsPlain[i];
       }
-      var avgBlack = temp / errorsBlack.length;
-      var avgBlack = Math.round((avgBlack + Number.EPSILON) * 100) / 100
+      var avgPlain = temp / errorsPlain.length;
+      var avgPlain = Math.round((avgPlain + Number.EPSILON) * 100) / 100
       // calculate grayscale charts mean error
       var temp = 0
       for(var i = 0; i < errorsGrayscale.length; i++) {
@@ -187,7 +187,7 @@
       document.getElementById("vis").setAttribute("style","display: none")
       document.getElementById("finishedText").setAttribute("style","display: unset")
       
-      document.getElementById("errorValueBlack").textContent=avgBlack+"%";
+      document.getElementById("errorValuePlain").textContent=avgPlain+"%";
       document.getElementById("errorValueGrayscale").textContent=avgGrayscale+"%";
       document.getElementById("errorValueColor").textContent=avgColor+"%";
 
@@ -321,8 +321,8 @@
 
       <h4> Following is the mean log error of each chart type.<h4>
 
-      <h6> Black Chart:
-      <span id="errorValueBlack", style="color:blue"></span>
+      <h6> Plain Chart:
+      <span id="errorValuePlain", style="color:blue"></span>
       </h6>
       <h6> Grayscale Chart:
       <span id="errorValueGrayscale", style="color:blue"></span>
