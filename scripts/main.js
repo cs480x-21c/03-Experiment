@@ -40,7 +40,6 @@ function main()
 
     // Create a new results instance for this trial
     gResults = new ResultsController();
-    gResults.makeNewResult();
 
     // First test (the form leads to new tests)
     makeNewChart();
@@ -76,20 +75,12 @@ function makeNewChart()
             // Fetch answer and enter the result
             let answer = document.getElementById("answer").valueAsNumber;
             gResults.enterResult(vis.type, vis.answer, answer);
-
-
         }
 
         notFirstTrial = true;
 
         // remove current vis
         vis.remove();
-
-        // TODO:
-
-        // TODO: prevent accidental navigation
-
-        // TODO: clear answer box
 
         // make the new vis with random values and make
         vis.newRandom();

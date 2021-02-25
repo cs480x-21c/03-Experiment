@@ -1,8 +1,17 @@
-
+/**
+ * ResultsController.js
+ * date created: 2/21/2021
+ * Author: Benjamin M'Sadoques
+ *
+ * Provides the results controller, used to control entering new results
+ */
 
 class ResultsController
 {
-    makeNewResult()
+    /**
+     * Makes a new result, gets the result index from the server
+     */
+    constructor()
     {
         // Default result entries
         this.result = {children: []};
@@ -21,6 +30,7 @@ class ResultsController
                     headers: {"Content-type": "application/json; charset=UTF-8"},
                 };
 
+            // Sends a request to result index, to get a new index
             const promise = fetch('/resultIndex', options);
             promise.then(response =>
             {
@@ -44,6 +54,12 @@ class ResultsController
         }
     }
 
+    /**
+     * Enters a new result
+     * @param chartType
+     * @param correctAnswer
+     * @param participantAnswer
+     */
     enterResult(chartType, correctAnswer, participantAnswer)
     {
         // Set the entry
@@ -55,24 +71,26 @@ class ResultsController
         // Add the entry to the results
         this.result.children.push(Object.assign({},this.entry));
 
-        console.log(this.entry);
-
         this.trialIndex++;
     }
 
+    /**
+     * Sends the information to the Node.js running on the server
+     * so it is saved as a new set of entries on the master csv
+     */
     saveResult()
     {
-        // We cannot save files on the server file system from pure js
-        // Sends the information to the Node.js running on the server
-
-        try {
+        try
+        {
+            // Result is passed as a JSON, but converted to csv on the server
             let options =
                 {
                     method: 'POST',
                     headers: { "Content-type": "application/json; charset=UTF-8"},
                     body: JSON.stringify(this.result)
-                }
+                };
 
+            // sends a request to /result, to send the result
             const promise = fetch('/result', options);
             promise.then(response =>
             {
@@ -94,5 +112,4 @@ class ResultsController
             console.log(e);
         }
     }
-
 }

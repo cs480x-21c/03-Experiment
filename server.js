@@ -58,8 +58,7 @@ app.post('/result', jsonParser, (request, response) =>
 // Gets a new index for the result file, the new one is the latest index + 1
 app.post('/resultIndex', async (request, response) =>
 {
-    let resultIndex = 0;
-
+    // Read the master csv to get a new result index
     fs.readFile("results/r.csv", "utf8", (err, file) =>
     {
         // If the directory cannot be scanned
@@ -67,20 +66,24 @@ app.post('/resultIndex', async (request, response) =>
         {
             return console.log("Unable to read file: " + err);
         }
-
-        let data = d3.csvParse(file);
-        let resultIndex = 0;
-
-        try
+        else
         {
-            resultIndex = parseInt(data[data.length - 1].Result) + 1;
-        }
-        catch (e)
-        {
-            // If there are no entries, just leave result index at 0
-        }
+            let data = d3.csvParse(file);
+            let resultIndex = 0;
 
-        // give the file the new result index
-        response.json(resultIndex);
+            try
+            {
+                // Gets the last row's result index and adds 1, this will make
+                //  the next result index, since they are in order
+                resultIndex = parseInt(data[data.length - 1].Result) + 1;
+            }
+            catch (e)
+            {
+                // If there are no entries, just leave result index at 0
+            }
+
+            // give the file the new result index
+            response.json(resultIndex);
+        }
     });
 });
