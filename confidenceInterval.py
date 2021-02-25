@@ -19,11 +19,11 @@ bootstrappedErrorBar = createBootStraps(errorBar,100)
 bootstrappedErrorCircle = createBootStraps(errorCircle,100)
 bootstrappedErrorPie = createBootStraps(errorPie,100)
 
-intervals = [np.percentile(bootstrappedErrorBar,[2.5,97.5]),
+intervals = [np.percentile(bootstrappedErrorCircle,[2.5,97.5]),
              np.percentile(bootstrappedErrorPie,[2.5,97.5]),                                              
-             np.percentile(bootstrappedErrorCircle,[2.5,97.5])] 
-means = [np.mean(bootstrappedErrorBar),np.mean(bootstrappedErrorPie),np.mean(bootstrappedErrorCircle)]
-vis = ['bar','pie','circle']
+             np.percentile(bootstrappedErrorBar,[2.5,97.5])] 
+means = [np.mean(bootstrappedErrorCircle),np.mean(bootstrappedErrorPie),np.mean(bootstrappedErrorBar)]
+vis = ['circle','pie','bar']
 
 for i in range(len(vis)):
     plt.plot(tuple(intervals[i]),(i+1,i+1),'r|-') # Plotting the 95% Bootstrap Confidence Interval
