@@ -48,7 +48,7 @@ class TreeMap extends Chart
                 .style("stroke-width", 1)
                 .style("fill", "white");
 
-        
+
 
 
 

@@ -75,7 +75,7 @@ class RadarChart extends Chart
                 .attr("y2", featureLine.y)
                 .attr("stroke","black");
 
-            if((i === this.pointsOfIntrest[0]) || (i === this.pointsOfIntrest[1]))
+            if((i === this.pointsOfInterest[0]) || (i === this.pointsOfInterest[1]))
             {
                 let value = this.data[this.features[i]];
                 let point = angleToCoordinate(angle, value, this.width, this.height);

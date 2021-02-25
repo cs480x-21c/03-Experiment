@@ -55,8 +55,6 @@ function makeNewChart()
         if (gTrialIndex === TRIALS)
         {
             // TODO: end test somehow
-            console.log("SUCC");
-
             // Saves the result
             gResults.saveResult();
         }
