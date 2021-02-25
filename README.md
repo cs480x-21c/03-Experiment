@@ -46,4 +46,9 @@ This visualization helps show why one visualziation did better than the other as
 
 ### Design
 
-- The pie chart is using a color-blind friendly color pallete in order to remove that variable from the data.
+- We added some formatting and css to make the webpage more user friendly. Some of these features included centering text and images on the webpage, adjusting font and text size, and adding some color to text
+- To mark the pie charts, we colored every slice of the pie chart so that no slices in particular stood out. This eliminated the need to mark the slices with dots or other markers which presented issues such as possibly giving the users another item to aid their comparison of the two slices
+- The pie chart uses a color-blind friendly color pallete so color blind users aren't affected when taking our survey
+- Additionally, we added color circles for each of our pie charts so that it was easy for users to tell which of the pie slices we wanted them to look at. This eliminated to need to describe colors in writing, which would end up being complicated with colors such as blue and cyan
+- The pie charts also had a minimum slice value, since as slice values approached zero, it became impossible to tell what color a slice was due to the strokes covering the entire slice
+- For the bar charts and box plots, we added dots at the bottom of the objects we wanted the users to compare. This followed the Cleveland and McGill example and provided an easy way to mark the objects without affecting the users' graphical perception of the objects
