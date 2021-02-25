@@ -15,20 +15,29 @@ Visualizations
 ===
 Each of the visualizations were generated randomly.
 
+Bar Chart
+---
+
 ![Bar Chart](img/bar.png)
 
 Our bar chart was our best performing chart by a wide margin. This is similar to Cleveland & McGill's results, as it is easiest to compare two bars height as oppose to other visualizations.
 
+Pie Chart
+---
 
 ![Pie Chart](img/pie.png)
 
 Our pie chart was significantly worse in performance compared to the bar chart, but beat out box plots by a small margin. While the majority of pie chart data had only a small amount of error, it had significantly more drastic outliers compared to the bar chart. 
 
+Box Plots
+---
 
 ![Box Plots](img/box.png)
 
 Box plots were the worst performing chart out of the three. This could be for a couple reasons, our first theory is the lack of knowledge about how to read a box plot. Some people may have factored in the tail into their calculations while others did not. Secondly, box plots could overall be harder to compare sizes due to the lack of allignment between each box. This caused for a wide variability in answers, creating more outliers compared to the other two charts. 
 
+Flourish
+---
 
 ![Flourish](img/Size_Comparisons.png)
 
