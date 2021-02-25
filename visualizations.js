@@ -105,9 +105,8 @@ function generateCircleChart() {
         outerRadius = Math.min(width, height) / 2;   // the outerRadius goes from the middle of the SVG area to the border
     
         var svg = d3.select("#svg")
-        .append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
+          .style("width", width + margin.left + margin.right)
+          .style("height", height + margin.top + margin.bottom)
         .append("g")
           .attr("transform", "translate(" + width / 2 + "," + ( height/2)+ ")"); // Add 100 on Y translation, cause upper bars are longer
   
