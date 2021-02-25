@@ -154,67 +154,73 @@
 
   <h1> Tree Map </h1>
   <div id="tree">
-    <script>
-      //points to mark
-      iterations = 0
-      randomTwo_tree = randomTwoKeys_tree()
-      console.log("Marked Treeplot Points: ", randomTwo_tree)
-      //add svg to tree div
-      var svg_tree = d3.select('#tree')
-        .append("svg")
-        .attr("width", WIDTH)
-        .attr("height", HEIGHT)
-        .append("g");
+  <script>
+    //points to mark
+    iterations = 0
+    randomTwo_tree = randomTwoKeys_tree()
+    // console.log("Marked Treeplot Points: ",randomTwo_tree[0],randomTwo_tree[1])
+
+    //add svg to tree div
+    var svg_tree = d3.select('#tree')
+      .append("svg")
+      .attr("width",WIDTH)
+      .attr("height",HEIGHT)
+      .append("g");
       // .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")");
 
-      var root = d3.hierarchy(treeMapData).sum(function (d) { return d.value });
+    var root = d3.hierarchy(treeMapData).sum(function(d){ return d.value});
 
-      console.log("ROOT:")
-      console.log(root)
+    var tree_w1, tree_w2, tree_h1, tree_h2
 
-      var tree = d3.treemap()
-        .size([WIDTH, HEIGHT])
-        .padding(2)
-        (root)
 
-      svg_tree.selectAll("rect")
-        .data(root.leaves())
-        .enter()
-        .append("rect")
-        .attr("id", function (d) { return d.data.name })
-        .attr('x', function (d) { console.log(d.data.name, ": x: ", d.x0, " y: ", d.y0); return d.x0; })
-        .attr('y', function (d) { return d.y0; })
-        .attr('width', function (d) { return d.x1 - d.x0; })
-        .attr('height', function (d) { return d.y1 - d.y0; })
-        .style("stroke", "black")
-        .style("fill", "slateblue")
+    var tree = d3.treemap()
+      .size([WIDTH,HEIGHT])
+      .padding(2)
+      (root)
+    
+    svg_tree.selectAll("rect")
+      .data(root.leaves())
+      .enter()
+      .append("rect")
+      .attr("id", function(d){ return d.data.name })
+      .attr('x', function (d) {  return d.x0; })
+      .attr('y', function (d) { return d.y0; })
+      .attr('width', function (d) { 
+        if(randomTwo_tree[0] == d.data.name){ tree_w1 = d.x1 - d.x0; }
+        if(randomTwo_tree[1] == d.data.name){ tree_w2 = d.x1 - d.x0; }
+        return d.x1 - d.x0; 
+      })
+      .attr('height', function (d) { 
+        if(randomTwo_tree[0] == d.data.name){ tree_h1 = d.y1 - d.y0; }
+        if(randomTwo_tree[1] == d.data.name){ tree_h2 = d.y1 - d.y0; }
+        return d.y1 - d.y0;
+      })
+      .style("stroke", "black")
+      .style("fill", "white")
 
-      var point1 = svg_tree.select("#" + randomTwo_tree[0])
-      var point2 = svg_tree.select("#" + randomTwo_tree[1])
+    var tree_area1 = tree_h1 * tree_w1;
+    var tree_area2 = tree_h2 * tree_w2;
+    console.log(tree_area1,tree_area2)
+    var tree_ratio = Math.min(tree_area1, tree_area2) / Math.max(tree_area1, tree_area2)
+    console.log("treemap ratio: ",tree_ratio)
 
-      // point1.style("fill", "pink")
-      // point2.style("fill", "green")
+    svg_tree.selectAll('data')
+      .data(root.leaves())
+      .enter()
+      .append('circle')
+      .attr('r',function(d){
+        if(randomTwo_tree.includes(d.data.name)){
+          console.log("in randomTwo_tree",d.data.name)
+          return 5;
+        }else{return 0;}
+      })
+      .attr("transform", function(d){
+        x_mid = d.x0 + ((d.x1-d.x0)/2)
+        y_mid = d.y0 + ((d.y1-d.y0)/2)
+        return "translate("+x_mid+" "+y_mid+")";
+      })
 
-      svg_tree.selectAll('data')
-        .data(root.leaves())
-        .enter()
-        .append('circle')
-        .attr('r', function (d) {
-          if (randomTwo_tree.includes(d.data.name)) {
-            return 5;
-          } else { return 0; }
-        })
-        .attr("transform", function (d) {
-          x_mid = d.x0 + ((d.x1 - d.x0) / 2)
-          y_mid = d.y0 + ((d.y1 - d.y0) / 2)
-          return "translate(" + x_mid + " " + y_mid + ")";
-        })
-
-    </script>
-    <form id="tree_submit">
-      <label for="tree_input">Enter ratio between the two points.</label>
-      <input type="text" id="tree_input">
-    </form>
+  </script>
   </div>
   <h1>Bubble</h1>
   <div id="bubble">
