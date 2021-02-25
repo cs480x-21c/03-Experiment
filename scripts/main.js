@@ -86,5 +86,15 @@ function makeNewChart()
     vis.newRandom();
     vis.make();
 
+    // Clear answer field
+    document.getElementById("answer").value = '';
+
     gVisIndex++;
 }
+
+// new chart on enter
+window.onkeypress = function(event) {
+    if (event.keyCode == 13) {
+        makeNewChart();
+    }
+ }

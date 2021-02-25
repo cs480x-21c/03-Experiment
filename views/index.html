@@ -25,6 +25,31 @@
 
 
   <style>
+    .block {
+      margin: 0 auto;
+      width: 600px;
+      padding: 20px;
+    }
+
+    .form {
+      text-align: center;
+      margin: 0 auto;
+      width: 500px;
+      padding: 20px;
+    }
+
+    .Instructions p {
+      text-align: left;
+      line-height: 0.5;
+    }
+
+    .button {
+      text-align: center;
+      background-color: #4c6baf;
+      padding: 6px 50px;
+      color: white;
+      font-size: 20px;
+    }
   </style>
 
   <head>
@@ -32,14 +57,18 @@
   </head>
 
   <body onload="main()">
-    <div id="vis" tabindex="1"></div>
-    <form>
+    <div class=block id="vis" tabindex="1"></div>
+    <form class=form onSubmit="return false;">
+      <div class=Instructions>
+        <p>Two values are marked with dots.</p>
+        <p>What is the percent of the smaller value to the larger value?</p>
+        <p>Input your answer below.</p>
+        <p>e.g. If you think the smaller is exactly half of the bigger, input “50”.</p>
+      </div>
       <label for="answer"></label>
         <!-- TODO: make input not allow people to enter and navigate somehow-->
-        <!-- TODO: make button look... better-->
-		<!-- TODO: make button look... better-->
-        <input type="number" name="input" id="answer" step="1">
-      <button type="button" name="submit" value="trialButton" id="nextChart" onclick="makeNewChart()"></button>
+      <input type="number" onSubmit="preventDefault()" autofocus style="font-size:24px;" maxlength="5" name="input" id="answer" step="1">
+      <button class=button type="button" name="submit" value="trialButton" id="nextChart" onclick="makeNewChart()">Submit</button>
     </form>
   </body>
 </html>
