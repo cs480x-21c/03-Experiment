@@ -1,11 +1,3 @@
-function getRandomArray(n) {
-	let arr = {};
-	for (let i = 0; i < n; i++) {
-		arr["" + i + ""] = Math.max(Math.random(), 0.05);
-	}
-	return arr;
-}
-
 function getRandomInt(max) {
 	return Math.floor(Math.random() * Math.floor(max));
 }
@@ -29,7 +21,6 @@ function generatePieChart(minplots = 5, maxplots = 5) {
 		targets[1] = Math.floor(Math.random() * plotcount);
 	}
 	let data = getRandomArray(plotcount);
-	// console.log(data);
 	let color_map = ["#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#FFFFFF"];
 	let colors = color_map.slice(0, plotcount);
 	let random = getTwo(plotcount);

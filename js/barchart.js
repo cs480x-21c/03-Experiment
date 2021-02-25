@@ -25,7 +25,7 @@ function generateBarChart(minplots = 5, maxplots = 10) {
 
 	let y = d3.scaleLinear()
 	  .domain([-0.05,1])
-	  .range([height, 0]);
+	  .range([0, height]);
 
 	svg.call(d3.axisLeft(y).tickFormat("").tickSize(0)); 
 
@@ -46,17 +46,17 @@ function generateBarChart(minplots = 5, maxplots = 10) {
 		.enter()
 		.append("rect")
 			.attr("x", d => x(sumstat.indexOf(d))-boxWidth/2 )
-			.attr("y", d => height-y(d) )
+			.attr("y", d => height-y(d) ) 
 			.attr("height", d => y(d) )
 			.attr("width", boxWidth )
 			.attr("stroke", "black")
 			.style("fill", 'white' );
 		
 	svg.selectAll('selectionDots')
-		.data([sumstat[targets[0]], sumstat[targets[1]]])
+		.data(targets)
 		.enter()
 		.append("circle")
-			.attr("cx", d => x(sumstat.indexOf(d)) )
+			.attr("cx", d => x(d) )
 			.attr("cy", height-15 )
 			.attr("r", 5 )
 			.style("fill", 'black' );
