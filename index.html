@@ -171,7 +171,6 @@
 
 </script>
 
-
 <body>
 <h1>The Grand Experiment</h1>
 <h2>Brought to you by Clay, Nick, and Hunter</h2>
@@ -179,51 +178,7 @@
   On each screen, you will see a visualization with two pieces of data marked. In the provided text box, please enter the your estimated ratio between the smaller of 
 two pieces of data and the larger one. For example, if you think that .
 </p>
-  <!-- <h1> Tree Map </h1>
-  <div id="tree">
-  <script>
-
-
-  </script>
-  <form id="tree_submit">
-    <label for="tree_input">The smaller dotted box is </label>
-    <input type="text" id="tree_input">
-    <label for="tree_input"> % of the larger dotted box</label>
-  </form>
   </div>
-  <h1>Bubble</h1>
-  <div id="bubble">
-    <script>
-
-    
-    </script>
-    <form id="bubble_submit">
-      <label for="bubble_input">The smaller black bubble is </label>
-      <input type="text" id="bubble_input">
-      <label for="bubble_input"> % of the larger black bubble</label>
-    </form>
-  </div>
-  <h1> Pie</h1>
-  <div id="pie">
-    <script>
-
-
-    </script>
-    <form id="pie_submit">
-      <label for="pie_input">The smaller dotted slice is </label>
-      <input type="text" id="pie_input">
-      <label for="pie_input"> % of the larger dotted slice</label>
-    </form>
-  </div>
-  <h1> Donut</h1>
-  <div id="donut">
- 
-    <!-- <form id="donut_submit">
-      <label for="donut_input">The smaller dotted slice is </label>
-      <input type="text" id="donut_input">
-      <label for="donut_input"> % of the larger dotted slice</label>
-    </form> -->
-  </div> -->
   <div id="vis_holder"></div>
 
   <script>
@@ -274,9 +229,9 @@ function draw_treemap(){
 
       var tree_area1 = tree_h1 * tree_w1;
       var tree_area2 = tree_h2 * tree_w2;
-      console.log(tree_area1,tree_area2)
-      var tree_ratio = Math.min(tree_area1, tree_area2) / Math.max(tree_area1, tree_area2)
-      console.log("treemap ratio: ",tree_ratio)
+      // console.log(tree_area1,tree_area2)
+      final_ratio = Math.min(tree_area1, tree_area2) / Math.max(tree_area1, tree_area2)
+      console.log("treemap ratio: ",final_ratio)
 
       svg_tree.selectAll('data')
         .data(root.leaves())
@@ -284,7 +239,7 @@ function draw_treemap(){
         .append('circle')
         .attr('r',function(d){
           if(randomTwo_tree.includes(d.data.name)){
-            console.log("in randomTwo_tree",d.data.name)
+            // console.log("in randomTwo_tree",d.data.name)
             return 5;
           }else{return 0;}
         })
@@ -298,7 +253,7 @@ function draw_treemap(){
       iterations = 0
 
       randomTwo = randomTwoKeys()
-      console.log("pie chart randomTwo: ", randomTwo)
+      // console.log("pie chart randomTwo: ", randomTwo)
       var svg_donut = d3.select("#vis_holder")
         .append("svg")
         .attr("width", WIDTH)
@@ -346,8 +301,8 @@ function draw_treemap(){
       var ratio = 100
       // find actual ratio between two points
       // console.log( testData[randomTwo[0]] )
-      donutRatio = ratioCalculator(testData[randomTwo[0]], testData[randomTwo[1]])
-      console.log("donut " + donutRatio)
+      final_ratio = ratioCalculator(testData[randomTwo[0]], testData[randomTwo[1]])
+      console.log("donut " + final_ratio)
     }
     function draw_bubbleplot(){
         randomTwo = randomTwoKeys()
@@ -370,7 +325,7 @@ function draw_treemap(){
           .attr("cy", function (d) { return d.value[1] })
           .attr("r", function (d) { return d.value[2] })
           .style("fill", function (d) {
-            console.log(d)
+            // console.log(d)
             if (randomTwo.includes(d.key)) {
               return "black"
             }
@@ -379,11 +334,11 @@ function draw_treemap(){
             }
           })
           .style("stroke", "black")
-          console.log("Point 1: " + testBubbleData[randomTwo[0]][2])
-          console.log("Point 2: " + testBubbleData[randomTwo[1]][2])
-          bubbleRatio = ratioCalculator(testBubbleData[randomTwo[0]][2], testBubbleData[randomTwo[1]][2]);
+          // console.log("Point 1: " + testBubbleData[randomTwo[0]][2])
+          // console.log("Point 2: " + testBubbleData[randomTwo[1]][2])
+          final_ratio = ratioCalculator(testBubbleData[randomTwo[0]][2], testBubbleData[randomTwo[1]][2]);
 
-        console.log("Bubble " + bubbleRatio)
+        console.log("Bubble " + final_ratio)
       }
     function draw_piechart(){
         iterations = 0
@@ -437,14 +392,16 @@ function draw_treemap(){
         var ratio = 100
         // find actual ratio between two points
         // console.log( testData[randomTwo[0]] )
-        console.log("Point 1: " + testData[randomTwo[0]])
-        console.log("Point 2: " + testData[randomTwo[1]])
-        pieRatio = ratioCalculator(testData[randomTwo[0]], testData[randomTwo[1]])
-        console.log("Pie " + pieRatio)
+        // console.log("Point 1: " + testData[randomTwo[0]])
+        // console.log("Point 2: " + testData[randomTwo[1]])
+        final_ratio = ratioCalculator(testData[randomTwo[0]], testData[randomTwo[1]])
+        console.log("Pie " + final_ratio)
       }
   </script>
 </body>
-<form id="form_submit">
+<form id="graph_ratio_form">
+  <input id="number_input" type="number" >
+  <label for="number_input">Enter Ratio (just number)</label>
   <input type="button" value="submit" onclick=button_press()>
 </form>
 
@@ -452,20 +409,40 @@ function draw_treemap(){
 
 <script>
 function button_press(){
+    console.log("Pressing matters")
+    
+
     // we need to track the following information per each visualization:
       // - visualization type
       // - true answer
       // - user answer
-    console.log("Pressing matters")
-
+    
+    //grab number_input value
+    userRatio = document.getElementById("number_input").value
+    console.log(userRatio)
+    record.guesses.push(userRatio)
+    
+    //get true ratio value (var final_ratio)
+    console.log("The correct ratio was: ",final_ratio)
+    record.true_ratios.push(final_ratio)
+    
+    
     //clear the canvas
     d3.select("#vis_holder").selectAll('svg').remove()
     //random new plot type
     var choice = Math.floor(Math.random()*100) % graphs.length
     //decrement the array of graph types
     var new_plot = graphs.splice(choice,1)[0]
+    if( graphs.length === 0){
+     console.log("You've reached the end!") 
+     window.alert("You have reached the end. Thank you for your time!")
+    //  console.log("poggers")
+     return 0;
+    }
+    //log new graph type
+    // console.log("New Plot: " + new_plot)
+    record.graphs_guessed.push(new_plot)
     //redraw new random graph
-    console.log("New Plot: " + new_plot)
     switch(new_plot){
       case "tree": console.log("treemap:"); draw_treemap(); break;
       case "scatter": console.log("bubble plot:"); draw_bubbleplot();break;
@@ -474,14 +451,24 @@ function button_press(){
       default: console.log("I big dumb "+ new_plot);
 
     }
+    
   }
 
 
   //control flow
-    
   draw_donutchart()
 
-  var graphs=["tree","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter"]
+  var final_ratio;
+  
+  record = {
+    graphs_guessed:["donut"],
+    guesses:[],
+    true_ratios:[]
+  }
+
+  var graphs=["tree","pie", "scatter"]
+
+  // var graphs=["tree","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter"]
 
 
 </script>

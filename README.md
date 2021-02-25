@@ -95,3 +95,9 @@ GitHub Details
 a3-FirstLastnameMember1-FirstLastnameMember2-FirstLastnameMember3-...
 ```
 Our testable hypothesis is that the donut chart will have the most accurate results - two frames of reference.
+
+Design Points
+- Some CSS
+- 4 charts
+Tech Points
+- 
