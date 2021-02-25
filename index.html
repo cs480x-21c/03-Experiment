@@ -335,9 +335,11 @@ function draw_treemap(){
             }
           })
           .style("stroke", "black")
-          // console.log("Point 1: " + testBubbleData[randomTwo[0]][2])
-          // console.log("Point 2: " + testBubbleData[randomTwo[1]][2])
-          final_ratio = ratioCalculator(testBubbleData[randomTwo[0]][2], testBubbleData[randomTwo[1]][2]);
+          console.log("Point 1: " + testBubbleData[randomTwo[0]][2])
+          console.log("Point 2: " + testBubbleData[randomTwo[1]][2])
+          point1Size =testBubbleData[randomTwo[0]][2] * testBubbleData[randomTwo[0]][2]
+          point2Size = testBubbleData[randomTwo[1]][2] * testBubbleData[randomTwo[1]][2]
+          final_ratio = ratioCalculator(point1Size, point2Size);
 
         console.log("Bubble " + final_ratio)
       }
