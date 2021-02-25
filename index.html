@@ -1,5 +1,6 @@
 <HTML>
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://smtpjs.com/v3/smtp.js"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com"> 
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 
@@ -180,7 +181,7 @@ two pieces of data and the larger one. For example, if you think that .
 </p>
   </div>
   <div id="vis_holder"></div>
-
+<script src="env.js"></script>
   <script>
 
 function draw_treemap(){
@@ -434,8 +435,9 @@ function button_press(){
     //decrement the array of graph types
     var new_plot = graphs.splice(choice,1)[0]
     if( graphs.length === 0){
-     console.log("You've reached the end!") 
-     window.alert("You have reached the end. Thank you for your time!")
+      sendEmail()
+      console.log("You've reached the end!") 
+      window.alert("You have reached the end. Thank you for your time!")
     //  console.log("poggers")
      return 0;
     }
@@ -468,6 +470,20 @@ function button_press(){
 
   var graphs=["tree","pie", "scatter"]
 
+  function sendEmail() { 
+      Email.send({ 
+        Host: "smtp.gmail.com", 
+        Username: env.EMAILLOGIN, 
+        Password: env.EMAILPASS, 
+        To: env.CLAYEMAIL +env.HUNTEREMAIL + env.NICKEMAIL,
+        From: env.EMAILLOGIN, 
+        Subject: "Results for CS480X Assignment 3", 
+        Body: record, 
+      }) 
+        .then(function (message) { 
+          alert("mail sent successfully") 
+        }); 
+    }
   // var graphs=["tree","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter"]
 
 

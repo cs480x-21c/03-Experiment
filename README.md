@@ -100,4 +100,4 @@ Design Points
 - Some CSS
 - 4 charts
 Tech Points
-- 
+- we email ourselves our results
