@@ -5,45 +5,44 @@ class ResultsController
     makeNewResult()
     {
         // Default
-        this.resultIndex = 0;
 
-        this.result = {children:[], fileName:"result" + this.resultIndex + ".json"};
-        this.entry = {trialIndex: 0, chartType: "",
+        this.result = {children: []};
+        this.entry = {resultIndex: 0, trialIndex: 0, chartType: "",
             correctAnswer: 0, participantAnswer:0};
 
         this.trialIndex = 0;
 
-        try
-        {
-            // Gets the next possible result index, used to name the result file
-            let options =
-                {
-                    method: 'POST',
-                    headers: {"Content-type": "application/json; charset=UTF-8"},
-                };
+//         try
+//         {
+//             // Gets the next possible result index, used to name the result file
+//             let options =
+//                 {
+//                     method: 'POST',
+//                     headers: {"Content-type": "application/json; charset=UTF-8"},
+//                 };
 
-            const promise = fetch('/resultIndex', options);
-            promise.then(response =>
-            {
-                if(!response.ok)
-                {
-                    console.error(response)
-                }
-                else
-                {
-                    return response.json();
-                }
-            }).then(result =>
-            {
-                // Changes the file name to match the new result
-                this.resultIndex = result;
-                this.result.fileName = "result" + this.resultIndex + ".json";
-            })
-        }
-        catch (e)
-        {
-            console.log(e);
-        }
+//             const promise = fetch('/resultIndex', options);
+//             promise.then(response =>
+//             {
+//                 if(!response.ok)
+//                 {
+//                     console.error(response)
+//                 }
+//                 else
+//                 {
+//                     return response.json();
+//                 }
+//             }).then(result =>
+//             {
+//                 // Changes the file name to match the new result
+//                 this.resultIndex = result;
+//                 this.result.fileName = "result" + this.resultIndex + ".json";
+//             })
+//         }
+//         catch (e)
+//         {
+//             console.log(e);
+//         }
     }
 
 

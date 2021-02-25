@@ -6,13 +6,14 @@
 const express = require("express");
 let bodyParser = require("body-parser");
 let fs = require("fs");
+let d3 = require("d3");
 const app = express();
 let jsonParser = bodyParser.json();
 
 // https://expressjs.com/en/starter/basic-routing.html
 app.get("/", (request, response) =>
 {
-  response.sendFile(__dirname + "/views/index.html");
+    response.sendFile(__dirname + "/views/index.html");
 });
 
 
@@ -23,32 +24,37 @@ app.use(express.static("scripts"));
 // listen for requests :)
 const listener = app.listen(process.env.PORT, () =>
 {
-  console.log("Your app is listening on port " + listener.address().port);
+    console.log("Your app is listening on port " + listener.address().port);
 });
 
 
 // Saves a result in a specified file
 app.post('/result', jsonParser, (request, response) =>
 {
-    let result = request.body;
+    let result = request.body.children;
+    console.log(result);
 
-    // Gets the file name, it is part of the data but should not be saved with the data
-    let fileName = result.fileName;
-    delete result.fileName;
-
-    fs.writeFile("results/"+fileName, JSON.stringify(result), function (err)
+    let resultArray = result.map(function(d, i)
     {
-        if (err)
-        {
-            return console.log(err);
-        }
-        else
-        {
-            console.log(fileName + " was saved");
-        }
+        return [d.resultIndex, d.trialIndex, d.chartType, d.correctAnswer, d.participantAnswer];
     });
 
-    response.json(fileName + " was saved");
+    console.log(resultArray);
+
+
+    // fs.appendFile("results/r.csv", resultCSV, function (err)
+    // {
+    //     if (err)
+    //     {
+    //         return console.log(err);
+    //     }
+    //     else
+    //     {
+    //         console.log("result recorded");
+    //     }
+    // });
+
+    response.json("result recorded");
 });
 
 // Gets a new index for the result file, the new one is the latest index + 1
@@ -61,7 +67,7 @@ app.post('/resultIndex', async (request, response) =>
         // If the directory cannot be scanned
         if (err)
         {
-          return console.log('Unable to scan directory: ' + err);
+            return console.log('Unable to scan directory: ' + err);
         }
 
         files.forEach((file) =>
@@ -79,11 +85,11 @@ app.post('/resultIndex', async (request, response) =>
             }
             catch
             {
-              // not a proper results file, ignore it
+                // not a proper results file, ignore it
             }
         });
 
         // Add 1 to the result index, the scanner is done
         response.json(resultIndex + 1);
-      });
+    });
 });
