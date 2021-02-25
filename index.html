@@ -169,6 +169,14 @@
     keyName2 = keyMap[key2];
     return [keyName1, keyName2]
   }
+  function totalPieSize(testData){
+    var totalSize = 0
+    for( key in testData ){
+          console.log(key)
+          totalSize = totalSize + testData[key]
+        }
+        return totalSize
+  }
 
 </script>
 
@@ -299,9 +307,16 @@ function draw_treemap(){
         })
         .attr("transform", function (d) { return "translate(" + arcMaker.centroid(d) + ")"; })
       var ratio = 100
+      totalSize = totalPieSize(testData)
+
+    point1Size = testData[randomTwo[0]]/totalSize
+    point2Size = testData[randomTwo[1]]/totalSize
+    // console.log(totalSize)
+// find actual ratio between two points
+
+  final_ratio = ratioCalculator(point1Size, point2Size)
       // find actual ratio between two points
-      // console.log( testData[randomTwo[0]] )
-      final_ratio = ratioCalculator(testData[randomTwo[0]], testData[randomTwo[1]])
+
       console.log("donut " + final_ratio)
     }
     function draw_bubbleplot(){
@@ -360,8 +375,6 @@ function draw_treemap(){
           .value(function (d) { return d.value; })
         var pieData = pie(d3.entries(testData))
 
-        var pieDataTest = pie(d3.entries(testData))[1]
-        // console.log( pieDataTest)
 
         var arcMaker = d3.arc()
           .innerRadius(0)
@@ -392,11 +405,15 @@ function draw_treemap(){
           })
           .attr("transform", function (d) { return "translate(" + arcMaker.centroid(d) + ")"; })
         var ratio = 100
+        
+        // console.log( testData)
+        totalSize = totalPieSize(testData)
+
+        point1Size = testData[randomTwo[0]]/totalSize
+        point2Size = testData[randomTwo[1]]/totalSize
+        console.log(totalSize)
         // find actual ratio between two points
-        // console.log( testData[randomTwo[0]] )
-        // console.log("Point 1: " + testData[randomTwo[0]])
-        // console.log("Point 2: " + testData[randomTwo[1]])
-        final_ratio = ratioCalculator(testData[randomTwo[0]], testData[randomTwo[1]])
+        final_ratio = ratioCalculator(point1Size, point2Size)
         console.log("Pie " + final_ratio)
       }
   </script>
