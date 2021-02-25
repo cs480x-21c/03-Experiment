@@ -19,7 +19,7 @@ app.get("/", (request, response) =>
 
 // make all the files in 'results' available
 // https://expressjs.com/en/starter/static-files.html
-app.use(express.static("scripts"));
+app.use(express.static("public"));
 
 // listen for requests :)
 const listener = app.listen(process.env.PORT, () =>
