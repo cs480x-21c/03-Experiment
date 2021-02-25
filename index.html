@@ -65,6 +65,7 @@
         start.onclick = function () {
             startDiv.style.display = "none";
             //drawBarChart();
+            textBoxSubmit();
             drawStackedChart();
         }
 
@@ -104,6 +105,8 @@
             if (textInput.value < 100) {
                 numSubmits++;
                 var text = textInput.value;
+                textInput.value = '';
+                text = text / 100;
                 console.log(text);
                 //userInput = text;
 
@@ -117,7 +120,7 @@
                 });
 
                 console.log(csvRows);
-                if (numSubmits < maxSubmits) drawPieChart();
+                if (numSubmits < maxSubmits) drawBarChart();
                 else resultsPage(csvContent);
             }else{
                 alert("Please type a number less than 100")
@@ -131,11 +134,7 @@
     function drawBarChart() {
 
         // Clear svg
-
-        // Draw the text box for the user to submit data
-        textBoxSubmit();
-
-
+        d3.selectAll("svg > *").remove();
 
         var barWidth = 50;
         var barPadding = 5;
@@ -165,8 +164,6 @@
         console.log("Two dots: " + twoDots);
 
         console.log(data2);
-
-
 
         // Bar Chart
         svg.selectAll("bar")
@@ -242,41 +239,6 @@
         var width = 360;
         var height = 360;
         var radius = Math.min(width, height) / 3;
-
-        var color = d3.scaleOrdinal(d3.schemeCategory20b);
-
-        // svg = d3.select('#svgdiv')
-        //     .append('svg')
-        //     .attr('width', width)
-        //     .attr('height', height)
-        //     .append('g')
-        //     .attr('transform', 'translate(' + ((SVGWidth / 2)) +
-        //         ',' + (SVGHeight / 2) + ')');
-
-        //svg.attr('transform', 'translate(' + (width/2) + ',' + (height/2) + ')');
-
-        //Working
-        // var arc = d3.arc()
-        //     .innerRadius(0)
-        //     .outerRadius(radius);
-        //
-        // var labels = d3.arc()
-        //     .outerRadius(radius)
-        //     .innerRadius(radius - 20);
-        //
-        // var pie = d3.pie()
-        //     .value(function(d) { return d; })
-        //     .sort(null);
-        //
-        // var path = svg.selectAll('path')
-        //     .data(pie(data))
-        //     .enter()
-        //     .append('path')
-        //     .attr('d', arc)
-        //     .attr("transform", "translate(" + SVGWidth / 2 + "," + SVGHeight / 2 + ")")
-        //     .attr('fill', "white")
-        //     .style("stroke","black")
-        //     .style("stroke-width",3);
 
         var pie = d3.pie()
             .value(function(d) {return d.value; })
@@ -354,10 +316,18 @@
             .style("stroke-width", "2px");
 
 
-        // var smallerWedge = Math.min(data[twoDots[0]], data[twoDots[1]]);
-        // var largerWedge = Math.max(data[twoDots[0]], data[twoDots[1]]);
-        //
-        // var data_ready = pie(d3.entries(arc));
+        var dot0angle = dot0endAngle - dot0startAngle;
+        var dot1angle = dot1endAngle - dot1startAngle;
+
+        var dot0area = Math.pow(radius,2) * (dot0angle / 2);
+        var dot1area = Math.pow(radius,2) * (dot1angle / 2);
+
+        var smallArea = Math.min(dot0area, dot1area);
+        var largeArea = Math.max(dot0area, dot1area);
+
+        var ratio = Math.round((smallArea / largeArea) * 100000) / 100000;
+
+        tempData = ["Pie", smallArea, largeArea, ratio];
 
 
     }
@@ -400,10 +370,31 @@
             .style('stroke','black')
             .style('stroke-width',3)
             .attr('y',function(d, i){
-                return prev_width[i] * 100 + padding; })
+                return prev_width[i] * 75 + padding; })
             .attr('height', function(d){
-                return d*100;
+                return d*75;
         });
+
+        var twoDots = [];
+        while (twoDots.length < 2) {
+            var dotIndex = Math.floor(Math.random() * maxDataPoints);
+            if (twoDots.length == 1 && twoDots[0] != dotIndex) {
+                twoDots[1] = dotIndex;
+            } else if (twoDots.length == 0) {
+                twoDots[0] = dotIndex;
+            }
+        }
+
+        var smallerStack = Math.min(data2[twoDots[0]], data2[twoDots[1]]);
+
+        var largerStack = Math.max(data2[twoDots[0]], data2[twoDots[1]]);
+
+        smallerStack = Math.round(smallerStack * 100000) / 100000;
+        largerStack = Math.round(largerStack * 100000) / 100000;
+
+        var ratio = Math.round((smallerStack / largerStack) * 100000) / 100000;
+
+        tempData = ["Stacked", smallerStack, largerStack, ratio];
 
     }
 
