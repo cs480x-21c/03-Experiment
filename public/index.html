@@ -26,11 +26,13 @@
   currTrialType = ''
 
   // Initialize Array for selecting next chart
-  // TODO: Up this to 60 total trials
   let chooseAChart = [
-          makeTreeMap,
-          makeStackedBarChart,
-          makePieChart,
+    makeTreeMap, makeTreeMap, makeTreeMap, makeTreeMap, makeTreeMap, makeTreeMap, makeTreeMap, makeTreeMap, makeTreeMap, makeTreeMap,
+    makeTreeMap, makeTreeMap, makeTreeMap, makeTreeMap, makeTreeMap, makeTreeMap, makeTreeMap, makeTreeMap, makeTreeMap, makeTreeMap,
+    makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,
+    makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,
+    makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,
+    makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,makePieChart
   ]
 
   chooseAChart.sort(() => Math.random() - 0.5)
@@ -121,7 +123,6 @@
       } else {
         alert("Please enter a value :3")
         console.log('Ya gotta enter a value')
-        //TODO: Make this a cool lil warning
       }
   }
 

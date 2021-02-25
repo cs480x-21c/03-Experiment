@@ -37,7 +37,7 @@ app.post('/submitToMongo', bodyParser.json(), (req, res) => {
 
 //lets you know that we are online
 // TODO: change 3000 to process.env.PORT when uploading to glitch
-let listener = app.listen(3000, () => {
+let listener = app.listen(process.env.PORT, () => {
     console.log("we are connected and running!");
 })
 
