@@ -1,6 +1,14 @@
 Assignment 3 - Replicating a Classic Experiment  
 ===
 
+
+
+
+Site: https://a3-a-classic-experiment-2.glitch.me
+Code edit: https://glitch.com/edit/#!/a3-a-classic-experiment-2
+
+
+
 For the scope of this project, assume the role of a scientist who runs experiments for a living.
 
 Q: How do we know that bar charts are "better" than pie charts?  
