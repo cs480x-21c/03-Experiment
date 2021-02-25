@@ -1,12 +1,8 @@
-#install.packages("ggplot2", repos = "http://cran.us.r-project.org") # if not already installed
-#install.packages("ggrepel", repos = "http://cran.us.r-project.org") # if not already installed
 #install.packages("tidyverse", repos = "http://cran.us.r-project.org") # if not already installed
 #install.packages("Hmisc", repos = "http://cran.us.r-project.org") # if not already installed
-#install.packages("boot", repos = "http://cran.us.r-project.org") # if not already installed
 
 library(Hmisc)
 library(tidyverse)
-library(boot)
 
 pdf(NULL)
 
