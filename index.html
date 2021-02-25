@@ -434,8 +434,7 @@ function button_press(){
     d3.select("#vis_holder").selectAll('svg').remove()
     //random new plot type
     var choice = Math.floor(Math.random()*100) % graphs.length
-    //decrement the array of graph types
-    var new_plot = graphs.splice(choice,1)[0]
+
     if( graphs.length === 0){
       sendEmail()
       console.log("You've reached the end!") 
@@ -443,6 +442,9 @@ function button_press(){
     //  console.log("poggers")
      return 0;
     }
+    //decrement the array of graph types
+    var new_plot = graphs.splice(choice,1)[0]
+
     //log new graph type
     // console.log("New Plot: " + new_plot)
     record.graphs_guessed.push(new_plot)
@@ -482,6 +484,7 @@ function button_press(){
         Subject: "Results for CS480X Assignment 3", 
         Body: record, 
       }) 
+
         .then(function (message) { 
           alert("mail sent successfully") 
         }); 
