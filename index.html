@@ -189,7 +189,7 @@ two pieces of data and the larger one. For example, if you think that .
       // console.log("Marked Treeplot Points: ",randomTwo_tree[0],randomTwo_tree[1])
 
       //add svg to tree div
-      var svg_tree = d3.select('#tree')
+      var svg_tree = d3.select('#vis_holder')
         .append("svg")
         .attr("width",WIDTH)
         .attr("height",HEIGHT)
@@ -261,7 +261,7 @@ two pieces of data and the larger one. For example, if you think that .
     <script>
       function draw_bubbleplot(){
         randomTwo = randomTwoKeys()
-        var svg = d3.select("#bubble")
+        var svg = d3.select("#vis_holder")
           .append("svg")
           .attr("width", WIDTH)
           .attr("height", HEIGHT)
@@ -311,7 +311,7 @@ two pieces of data and the larger one. For example, if you think that .
 
         randomTwo = randomTwoKeys()
         console.log("pie chart randomTwo: ", randomTwo)
-        var svg_pie = d3.select("#pie")
+        var svg_pie = d3.select("#vis_holder")
           .append("svg")
           .attr("width", WIDTH)
           .attr("height", HEIGHT)
@@ -379,7 +379,7 @@ two pieces of data and the larger one. For example, if you think that .
 
         randomTwo = randomTwoKeys()
         console.log("pie chart randomTwo: ", randomTwo)
-        var svg_donut = d3.select("#donut")
+        var svg_donut = d3.select("#vis_holder")
           .append("svg")
           .attr("width", WIDTH)
           .attr("height", HEIGHT)
@@ -437,12 +437,14 @@ two pieces of data and the larger one. For example, if you think that .
       <label for="donut_input"> % of the larger dotted slice</label>
     </form>
   </div>
+  <div id="vis_holder"></div>
 </body>
 <form id="form_submit">
   <input type="submit" value="submit">
 </form>
 
 <script>
+  //control flow
   var choice = Math.floor(Math.random()*100) % 4
   console.log("choice: ",choice)
   switch(choice){
