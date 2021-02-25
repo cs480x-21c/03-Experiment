@@ -94,3 +94,7 @@ GitHub Details
 ```
 a3-FirstLastnameMember1-FirstLastnameMember2-FirstLastnameMember3-...
 ```
+
+![Pie Chart](img/pie.png)
+![Box Plots](img/box.png)
+![Bar Chart](img/bar.png)
