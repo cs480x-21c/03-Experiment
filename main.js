@@ -125,7 +125,7 @@ function main() {
     // SVG 3
     const svg3Data = getRandomData();
     const svg3SelectedData = randomSelection(svg3Data);
-    const arcs = d3.pie()(getRandomData());
+    const arcs = d3.pie()(svg3Data);
     const arc = d3.arc()
         .innerRadius(0)
         .outerRadius(Math.min(width, height) / 2 - 1);
@@ -251,9 +251,10 @@ function main() {
         console.log(truePerc);
         output.push({
             trialNumber: orderCount,
-            reportedPercent: e.target[0].value,
+            reportedPercent: +e.target[0].value,
             vis: e.target[0].id,
-            expected: truePerc
+            expected: truePerc,
+            error: Math.log2(Math.abs((+e.target[0].value) - truePerc) + (1 / 8))
         });
         console.log(e);
         console.log(output);
