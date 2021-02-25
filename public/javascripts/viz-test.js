@@ -2,6 +2,7 @@ let questions = []
 let currentQuestion = 0;
 let questionsCompleted = 0;
 let answers = [];
+let participantIndex = null;
 
 let totalQuestions = 60;
 // final: 60, testing: 3
@@ -94,37 +95,46 @@ function recordInput() {
         return;
     } else {
         [greater, percent] = validateInput();
-        currentAnswers = [currentQuestion, greater, percent];
+        currentAnswers = [questionsCompleted, greater, percent];
         answers.push(currentAnswers);
     }
 
     // TODO record to database
 
-    questionsCompleted++;
+    
     //console.log(questionsCompleted)
-    currentAnsStr = currentAnswers.join(', ')
+    let currentAnsStr = currentAnswers.join(', ')
+    if (questionsCompleted ==0){
+        //currentAnsStr = '\n' + currentAnsStr +', '
+        participantIndex = null;
+    }
 
-    if (questionsCompleted ==1){
-        currentAnsStr = '\n' + currentAnsStr +', '
-        displayQuestion()
-    } else if (questionsCompleted == totalQuestions) {
+    let req = {
+        participant: participantIndex,
+        data: currentAnsStr,
+        question: currentQuestion,
+        greater: greater,
+        percent: percent,
+        order: questionsCompleted
+    };
+    //console.log(currentAnsStr)
+    $.post('saveResults',req,function(res){
+        //console.log(res)
+        participantIndex = res;
+    });
+
+    questionsCompleted++;
+
+    if (questionsCompleted == totalQuestions) {
         // stop, congrats, you're done!
         // answersString = answers.flat().join(', ')
         currentAnsStr += '\n'
         document.getElementById("question").style.display = "none";
         document.getElementById("content-wrap").innerText="Thank you for your time!"
-        
     } else {
-        currentAnsStr += ', ';
+        //currentAnsStr += ', ';
         displayQuestion()
     }
-    let req = {
-        data: currentAnsStr
-    };
-    //console.log(currentAnsStr)
-    $.post('saveResults',req,function(res){
-        //console.log("Response recorded.")
-    });
 }
 
 document.getElementById("next-button").addEventListener("click", recordInput)
@@ -149,8 +159,9 @@ $(document).keypress(function (e) {
 /*
 let tableText = ""
 for (let i=0; i<60; i++){
-    tableText += "chart" + i + " integer, greater" + i + " text, percent" + i + " integer, ";
-    console.log("um")
+    tableText += "order" + i + " integer, greater" + i + " text, percent" + i + " integer, ";
 }
 console.log(tableText);
+
+Generated code to make table in PSQL.
 */
