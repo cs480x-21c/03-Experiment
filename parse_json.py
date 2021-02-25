@@ -4,7 +4,7 @@ import os
 import pandas as pd
 
 records = pd.DataFrame(columns=['graphs_guessed','guesses','true_ratios'])
-times = ["r_1123","r_1136","r_1142","r_1156","r_1223","r_1226","r_1227","r_1233"]#expand this
+times = ["r_1123","r_1136","r_1142","r_1156","r_1223","r_1226","r_1227","r_1233","r_1258","r_1310"]#expand this (10 responses)
 for t in times:
     p = t+".json"
     path = os.path.join('json',p)
