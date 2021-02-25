@@ -57,7 +57,7 @@ function main() {
         .append("rect")
         .attr("x", (d, i) => getSum(i) - (width / 2))
         .attr("y", d => 0)
-        .attr("width", d => d / svg1Sum * width - 2)
+        .attr("width", d => Math.max(d / svg1Sum * width - 2, 0.0))
         .attr("height", d => height / 20)
         .style("fill", d => d3.color("lightgrey").darker(colorScale(d)));
 
