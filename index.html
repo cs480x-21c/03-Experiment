@@ -9,19 +9,6 @@
     min-width: 400px;
     min-height: 300px;
   }
-
-  .tree {
-    border: 1px solid green;
-  }
-
-  .pie {
-    border: 1px solid purple;
-  }
-
-  .bar {
-    border: 1px solid brown;
-  }
-
   svg {
     border: 3px solid hotpink;
   }
@@ -192,6 +179,7 @@
   have entered your estimate, click the "submit" button to continue the
   experiment.
 </p>
+<h2 id="viz_counter">0/80</h2>
 <!-- <strong>
   IMPORTANT: Do NOT hit the "ENTER" key, or the experiment will be reset.
 </strong> -->
@@ -438,8 +426,6 @@ function draw_treemap(){
 <script>
 function button_press(){
     console.log("Pressing matters")
-    
-
     // we need to track the following information per each visualization:
       // - visualization type
       // - true answer
@@ -457,22 +443,25 @@ function button_press(){
     
     //clear the canvas
     d3.select("#vis_holder").selectAll('svg').remove()
-    //random new plot type
-    var choice = Math.floor(Math.random()*100) % graphs.length
 
+    //check if all graphs have been surveyed
     if( graphs.length === 0){
       sendEmail()
       console.log("You've reached the end!") 
       window.alert("You have reached the end. Thank you for your time!")
-    //  console.log("poggers")
      return 0;
     }
+
+    //random new plot type
+    var choice = Math.floor(Math.random()*100) % graphs.length
+
     //decrement the array of graph types
     var new_plot = graphs.splice(choice,1)[0]
 
     //log new graph type
     // console.log("New Plot: " + new_plot)
     record.graphs_guessed.push(new_plot)
+
     //redraw new random graph
     switch(new_plot){
       case "tree": console.log("treemap:"); draw_treemap(); break;
@@ -481,8 +470,8 @@ function button_press(){
       case "donut": console.log("donut chart:"); draw_donutchart();break;
       default: console.log("I big dumb "+ new_plot);
 
+    //increment the graphs counter
     }
-    
   }
 
 
