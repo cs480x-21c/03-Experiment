@@ -17,7 +17,7 @@
     var tempData;
 
     var numSubmits = 0;
-    var maxSubmits = 60;
+    var maxSubmits = 6;
 
     // SVG dimensions
     var SVGWidth = 500;
@@ -91,7 +91,7 @@
         document.body.appendChild(startDiv);
 
         var intro = document.createElement("P");
-        intro.innerHTML = "In this experiment,<br> you are asked to judge<br> what is the percent of a smaller value to a larger value in several charts. <br> <br> We won't record any other information from you except your answers. <br> Click the \"agree\" button to begin";
+        intro.innerHTML = "In this experiment,<br> you are asked to judge<br> what is the percent of a smaller value to a larger value in several charts. <br> <br> We won't record any other information from you except your answers. <br> Click the \"Start\" button to begin";
         pDiv.appendChild(intro);
 
 
@@ -281,8 +281,8 @@
         var largerBarHeight = Math.max(data2[twoDots[0]], data2[twoDots[1]]);
 
         // Shrink bar heights to 4 decimal places
-        smallerBarHeight = Math.round(smallerBarHeight * 100000) / 100000;
-        largerBarHeight = Math.round(largerBarHeight * 100000) / 100000;
+        smallerBarHeight = smallerBarHeight.toFixed(4);
+        largerBarHeight = largerBarHeight.toFixed(4);
 
         var ratio = Math.round((smallerBarHeight / largerBarHeight) * 100000) / 100000;
 
@@ -402,6 +402,10 @@
         var smallArea = Math.min(dot0area, dot1area);
         var largeArea = Math.max(dot0area, dot1area);
 
+        smallArea = smallArea.toFixed(4);
+        largeArea = largeArea.toFixed(4)
+
+
         var ratio = Math.round((smallArea / largeArea) * 100000) / 100000;
 
         tempData = ["Pie", smallArea, largeArea, ratio];
@@ -508,8 +512,8 @@
 
         var largerStack = Math.max(data[twoDots[0]], data[twoDots[1]]);
 
-        smallerStack = Math.round(smallerStack * 100000) / 100000;
-        largerStack = Math.round(largerStack * 100000) / 100000;
+        smallerStack = smallerStack.toFixed(4);
+        largerStack = largerStack.toFixed(4);
 
         var ratio = Math.round((smallerStack / largerStack) * 100000) / 100000;
 
