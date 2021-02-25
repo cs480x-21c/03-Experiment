@@ -215,32 +215,27 @@ function main() {
         }
 
         let truePerc = (v1, v2) => {
-            return v1 === v2 ?
-                0 :
-                Math.round((v1 > v2 ? v2 / v1 : v1 / v2) * 100) | 0;
+            return Math.round((v1 > v2 ? v2 / v1 : v1 / v2) * 100) | 0;
         }
 
 
         switch (e.target[0].id) {
             case "viz1":
-                console.log(svg1InitialData[svg1SelectedData[0]]);
-                console.log(svg1InitialData[svg1SelectedData[1]]);
+
                 truePerc = truePerc(
                     svg1InitialData[svg1SelectedData[0]],
                     svg1InitialData[svg1SelectedData[1]]
                 );
                 break;
             case "viz2":
-                console.log(svg2InitialData[svg2SelectedData[0]])
-                console.log(svg2InitialData[svg2SelectedData[1]])
+
                 truePerc = truePerc(
                     svg2InitialData[svg2SelectedData[0]],
                     svg2InitialData[svg2SelectedData[1]]
                 );
                 break;
             case "viz3":
-                console.log(svg3Data[svg3SelectedData[0]])
-                console.log(svg3Data[svg3SelectedData[1]])
+
                 truePerc = truePerc(
                     svg3Data[svg3SelectedData[0]],
                     svg3Data[svg3SelectedData[1]]
@@ -250,16 +245,19 @@ function main() {
                 truePerc = 1
                 break;
         }
-        console.log(truePerc);
+
+        let reported = +e.target[0].value;
+        let err = reported === truePerc ?
+            0 : Math.log2(Math.abs((+e.target[0].value) - truePerc) + (1 / 8));
+
         output.push({
             trialNumber: orderCount,
-            reportedPercent: +e.target[0].value,
+            reportedPercent: reported,
             vis: e.target[0].id,
             expected: truePerc,
-            error: Math.log2(Math.abs((+e.target[0].value) - truePerc) + (1 / 8))
+            error: err
         });
-        console.log(e);
-        console.log(output);
+
         orderCount++;
 
         e.target[0].blur();
