@@ -55,6 +55,10 @@ Nicholas Alescio
 
 Project Page: https://clay-ol.github.io/03-Experiment/
 
+
+Hypotheses:
+
+
 Our testable hypothesis is that the donut chart will have the most accurate results - two frames of reference.
 
 - Working link to the experiment hosted on gh-pages or some other site.
@@ -74,19 +78,34 @@ MEANS
 
 ![pie chart](img/a3-pie.png)
 
-The Pie Chart visualization in our experiment ended up producing the lowest average error.
+The Pie Chart visualization in our experiment produced the lowest average error of 2.67.
+
+
 
 2: Donut Chart
 ---
 
 ![donut chart](img/a3-donut.png)
 
+The Donut Chart visualization in our experiment produced an average error of 2.77.
+
+
+
 3: Tree Map
 ---
 
 ![tree map](img/a3-treemap.png)
 
+The Tree Map visualization in our experiment produced an average error of 2.96.
 
+
+
+4 (Worst Performance): Bubble Chart
+---
+
+![bubble chart](img/a3-bubbles.png)
+
+The Bubble Chart visualization in our experiment produced the highest average error of 3.03.
 
 Design Points
 ---
