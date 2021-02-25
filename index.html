@@ -441,8 +441,9 @@ function button_press(){
     record.true_ratios.push(final_ratio)
     
     
-    //clear the canvas
+    //clear the canvas & textbox
     d3.select("#vis_holder").selectAll('svg').remove()
+    document.getElementById("number_input").value = null
 
     //check if all graphs have been surveyed
     if( graphs.length === 0){
@@ -469,9 +470,14 @@ function button_press(){
       case "pie": console.log("pie chart:"); draw_piechart();break;
       case "donut": console.log("donut chart:"); draw_donutchart();break;
       default: console.log("I big dumb "+ new_plot);
+    }
 
     //increment the graphs counter
-    }
+    graph_counter++
+    d3.select("#viz_counter").text( ()=> {
+      return graph_counter+"/80"
+    })
+    
   }
 
 
@@ -479,6 +485,7 @@ function button_press(){
   draw_donutchart()
 
   var final_ratio;
+  var graph_counter = 0;
   
   record = {
     graphs_guessed:["donut"],
@@ -487,6 +494,7 @@ function button_press(){
   }
 
   var graphs=["tree","pie", "scatter"]
+  // var graphs=["tree","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter"]
 
   function sendEmail() { 
       Email.send({ 
@@ -503,8 +511,7 @@ function button_press(){
           alert("mail sent successfully") 
         }); 
     }
-  // var graphs=["tree","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter"]
-
+  
 
 </script>
 
