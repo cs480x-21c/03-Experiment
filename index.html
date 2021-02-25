@@ -464,6 +464,13 @@
                 twoDots[0] = dotIndex;
             }
         }
+        
+        var temp1 = twoDots[0];
+        var temp2 = twoDots[1];
+        
+        // Make sure twoDots[0] is always the smaller value of the two
+        twoDots[0] = Math.min(temp1, temp2);
+        twoDots[1] = Math.max(temp1, temp2);
 
 
         bar0cell = prev_width[twoDots[0]] * 75 + padding;
