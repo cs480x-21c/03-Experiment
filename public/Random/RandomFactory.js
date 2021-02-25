@@ -2,8 +2,19 @@
 
 function pushRandomValues(array, quantity, min, max)
 {
-    for (let i = 0; i < quantity; i++)
+
+}
+
+function makePointsOfInterest(min, max)
+{
+    let random = d3.randomInt(min, max);
+    let point1 = random();
+    let point2 = random();
+
+    while (point2 === point1)
     {
-        array.push({value: d3.randomInt(min, max)()});
+        point2 = random();
     }
+
+    return [point1, point2];
 }

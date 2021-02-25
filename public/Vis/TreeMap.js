@@ -6,14 +6,22 @@ class TreeMap extends Chart
     constructor(svg, width, height)
     {
         super(svg, width, height);
+        this.data = {children: []};
         this.type = "TreeMap";
     }
 
     newRandom()
     {
+        super.newRandom();
+
         this.data = {children: []};
 
-        pushRandomValues(this.data.children, 10, 1, 100);
+        // random integers 10-90
+        let random = d3.randomInt(10, 91);
+        for (let i = 0; i < this.features.length; i++)
+        {
+            this.data.children.push({value: random()});
+        }
     }
 
     make()
@@ -32,13 +40,26 @@ class TreeMap extends Chart
             .data(root.leaves())
             .enter()
             .append("rect")
-                .attr('x', function (d) { return d.x0; })
-                .attr('y', function (d) { return d.y0; })
-                .attr('width', function (d) { return d.x1 - d.x0; })
-                .attr('height', function (d) { return d.y1 - d.y0; })
-                .style("stroke", "black")
-                .style("stroke-width", 1)
-                .style("fill", "white");
+            .attr('x', function (d) { return d.x0; })
+            .attr('y', function (d) { return d.y0; })
+            .attr('width', function (d) { return d.x1 - d.x0; })
+            .attr('height', function (d) { return d.y1 - d.y0; })
+            .style("stroke", "black")
+            .style("stroke-width", 1)
+            .style("fill", "white");
+
+        // Get the leaves that are our points of interest
+        let circles = [root.leaves()[this.pointsOfInterest[0]], root.leaves()[this.pointsOfInterest[1]]];
+
+        // Mark those leaves with our standard circles
+        this.svg.selectAll("circle")
+            .data(circles)
+            .enter()
+            .append("circle")
+            .attr('cx', function (d) { return d.x0 + 0.5*(d.x1 - d.x0); })
+            .attr('cy', function (d) { return d.y0 + 0.5*(d.y1 - d.y0);; })
+            .attr('r', 10)
+            .style("fill", "black");
 
         // TODO: how to make the chart work?
 
