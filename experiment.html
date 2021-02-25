@@ -218,6 +218,9 @@
         .style("opacity", 0)
 
     // Bars
+    // this process mimics having an 'outer' stroke
+    // done in order to place stroke on axis instead of above
+    // generate bar with thick stroke
     svg.selectAll("mybar")
       .data(data)
       .enter()
@@ -228,13 +231,32 @@
         .attr("height", function(d) { return height - y(d[1]) })
         .attr("fill", function(d) { 
           if (type == 0)
-            return 'black'
+            return 'white'
           else if (type == 1)
             return grayscale_pallete[d[0]]
           else if (type == 2)
             return colorblind_pallete[d[0]]
           })
-    
+        .attr("stroke", "black")
+        .attr("stroke-width", "2")
+    // overlay bar with no stroke
+    svg.selectAll("mybar")
+      .data(data)
+      .enter()
+      .append("rect")
+        .attr("x", function(d) { return x(d[0])})
+        .attr("y", function(d) { return y(d[1])})
+        .attr("width", 35)
+        .attr("height", function(d) { return height - y(d[1]) })
+        .attr("fill", function(d) { 
+          if (type == 0)
+            return 'white'
+          else if (type == 1)
+            return grayscale_pallete[d[0]]
+          else if (type == 2)
+            return colorblind_pallete[d[0]]
+          })
+
     // label the two randomly picked bars
     svg.append('circle')
       .attr('cx', function(d) { return x(data[rand_point_1][0]) + 18})
