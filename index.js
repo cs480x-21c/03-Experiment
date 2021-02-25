@@ -5,11 +5,12 @@ const path = require('path')
 const PORT = process.env.PORT || 5000
 
 const { Pool } = require('pg');
-console.log(process.env.DATABASE_URL)
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.DATABASE_URL ? true : false
+  ssl: { rejectUnauthorized: false }
 });
+
+let participantIndex = null;
 
 express()
   .use(express.static(path.join(__dirname, 'public')))
@@ -21,21 +22,48 @@ express()
   .get('/test', (req, res) => res.render('pages/test'))
   .post('/saveResults', async function (req, res) {
     fs.appendFileSync("results.csv", req.body.data, 'utf8')
-    //console.log("le file?? "+fs.readFileSync("results.csv", "utf8"));
-    res.send("Results recorded.")
-    /*
-    try {
+    let i = req.body.question;
+    //console.log("participant: "+req.body.participant)
 
-      dbInsert = 'INSERT INTO results VALUES('+req.body.data+')'
-      console.log(dbInsert)
-      const client = await pool.connect();
-      const result = await client.query(dbInsert);
-      client.release();
-    } catch (err) {
-      console.error(err);
-      res.send("Error " + err);
+    if (req.body.participant == null || req.body.participant == "") {
+      try {
+        const client = await pool.connect();
+        let participants = await client.query('SELECT participant FROM results');
+
+        participantIndex = participants.rowCount + 1;
+
+        if (isNaN(participantIndex)){
+          participantIndex = 0;
+        }
+
+        dbInsert = 'INSERT INTO "results"(participant, order' + i + ', greater' + i + ', percent' + i + ') VALUES(' + participantIndex + ', ' + req.body.data + ');'
+        //console.log(dbInsert)
+
+        const result = await client.query(dbInsert);
+        client.release();
+        res.send(""+participantIndex)
+      } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+      }
+    } else {
+      try {
+        dbInsert = 'UPDATE "results" SET "order' + i + '" = ' + req.body.order + ', "greater' + i + '" = ' + req.body.greater + ', "percent' + i + '" = ' + req.body.percent + ' WHERE participant = '+participantIndex+';';
+
+        //'UPDATE "results" SET chart'+i+'='+i+', greater'+i+'='+req.body.greater+', percent'+i+'='+req.body.percent+')'
+        // tried to use column list format but it didn't work so now I'm here
+        // 'UPDATE "results" SET (order'+i+', greater'+i+', percent'+i+') = ('+req.body.data+') WHERE participant = '+participantIndex+';'
+        //console.log(dbInsert)
+        const client = await pool.connect();
+        const result = await client.query(dbInsert);
+        client.release();
+        res.send(""+participantIndex)
+      } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+      }
     }
-    */
+
   })
   .get('/db', async (req, res) => {
     try {
