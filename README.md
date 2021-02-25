@@ -21,7 +21,7 @@ Above is an screenshot what the user sees when going through the experiment. The
 
 |   Black and White Graphs    |        Color Graphs        |
 | :-------------------------: | :------------------------: |
-|   ![BARBW](img/BarBW.PNG)   | ![BARC](img/Capture13.PNG) |
+|   ![BARBW](img/BarBW.PNG)   | ![BARC](img/Capture13.png) |
 |   ![PIEBW](img/PieBW.PNG)   |   ![PIEC](img/PieC.PNG)    |
 | ![DONUTBW](img/DonutBW.PNG) | ![DONUTC](img/DonutC.PNG)  |
 
