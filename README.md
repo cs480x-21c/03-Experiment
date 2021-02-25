@@ -10,7 +10,7 @@ For our experiment we showed each participant 20 instances of each visualization
 
 ## Visualizations
 
-Each of the visualizations were generated randomly.
+Each of the visualizations were generated randomly. This was done by generating an array with a random length within a range and then filling that array up with random values.
 
 ### Bar Chart
 
