@@ -183,10 +183,18 @@
 <body>
 <h1>The Grand Experiment</h1>
 <h2>Brought to you by Clay, Nick, and Hunter</h2>
-<p>Thank you for participating in our experiment.
-  On each screen, you will see a visualization with two pieces of data marked. In the provided text box, please enter the your estimated ratio between the smaller of 
-two pieces of data and the larger one. For example, if you think that .
+<p>
+  Thank you for participating in our experiment. 
+  On each screen, you will see a visualization with two pieces of data
+  marked. In the provided input box, please enter your estimate of the
+  ratio between the smaller of the two pieces of data and the larger one.
+  (In other words, what percent of the larger is the smaller?) Once you
+  have entered your estimate, click the "submit" button to continue the
+  experiment.
 </p>
+<!-- <strong>
+  IMPORTANT: Do NOT hit the "ENTER" key, or the experiment will be reset.
+</strong> -->
   </div>
   <div id="vis_holder"></div>
   <script>
@@ -418,9 +426,10 @@ function draw_treemap(){
       }
   </script>
 </body>
-<form id="graph_ratio_form">
-  <input id="number_input" type="number" >
-  <label for="number_input">Enter Ratio (just number)</label>
+<form id="graph_ratio_form" onsubmit="button_press();return false">
+  <label for="number_input">The smaller marked data is approximately </label>
+  <input id="number_input" type="number" min="0" max="100">
+  <label for="number_input"> % of the larger marked data </label>
   <input type="button" value="submit" onclick=button_press()>
 </form>
 
