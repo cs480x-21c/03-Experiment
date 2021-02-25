@@ -11,6 +11,14 @@ for t in times:
     with open(path, encoding="utf8") as f:
         records = records.append(pd.DataFrame(data=json.load(f)))
 
+records['guesses'] = records.guesses.astype(float) #convert guesses from str to float
+records = records.round(decimals=0) #round all floats
+records['true_ratios'] = records.true_ratios.astype(int) #convert true_ratios to int
+records['guesses'] = records.guesses.astype(int) #convert guesses to int
+
+# records.drop(axis='columns',columns="",inplace=True)
+
 records.to_csv(os.path.join("survey_records.csv"))
 # print(len(records))
-# print(records.head())
+print(records.head())
+print(records.info())
