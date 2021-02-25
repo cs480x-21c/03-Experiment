@@ -40,13 +40,15 @@ This visualization helps show why one visualziation did better than the other as
 
 ### Technical
 
-- We implement box plots as one of our visualizations, a much harder to implement chart compared to others.
-
-- Instead of locally storing the data, we used the online service "Formspree" to gather and compile all of our data allowing us to easily export it as a csv to do analysis on.
+- We implement box plots as one of our visualizations, a much harder to implement chart compared to others
+- Instead of locally storing the data, we used the online service "Formspree" to gather and compile all of our data allowing us to easily export it as a csv to do analysis on
+- All of our data is completely randomly generated with both the amount of slices/bars/boxes and their values being random
+- We have a lot of JavaScript in our project which enabled our entire survey to be taken from one webpage without our users ever having to load or navigate to another page
 
 ### Design
 
 - We added some formatting and css to make the webpage more user friendly. Some of these features included centering text and images on the webpage, adjusting font and text size, and adding some color to text
+- We also added a question counter so that users could see how many questions they had completed and how many were remaining
 - To mark the pie charts, we colored every slice of the pie chart so that no slices in particular stood out. This eliminated the need to mark the slices with dots or other markers which presented issues such as possibly giving the users another item to aid their comparison of the two slices
 - The pie chart uses a color-blind friendly color pallete so color blind users aren't affected when taking our survey
 - Additionally, we added color circles for each of our pie charts so that it was easy for users to tell which of the pie slices we wanted them to look at. This eliminated to need to describe colors in writing, which would end up being complicated with colors such as blue and cyan
