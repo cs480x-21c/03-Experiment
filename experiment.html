@@ -50,23 +50,27 @@
 
     // save their percentage value
     if (isValue == 1) {
+      
+      // save input percentage value
       var input = document.getElementById("inputValue").value
       console.log("input: ", input)
+      // clear text field for usability
+      document.getElementById("inputValue").value = ""
 
       // add predicted value to list
       result[total].push(input)
 
       console.log(result)
       // append error difference
-      if (Math.abs(result[total][0] == "black")) {
+      if (Math.abs(result[total][0] == 0)) {
         differencesBlack.push(Math.abs(result[total][1] - result[total][2]))
       }
 
-      if (Math.abs(result[total][0] == "grayscale")) {
+      if (Math.abs(result[total][0] == 1)) {
         differencesGrayscale.push(Math.abs(result[total][1] - result[total][2]))
       }
 
-      if (Math.abs(result[total][0] == "color")) {
+      if (Math.abs(result[total][0] == 2)) {
         differencesColor.push(Math.abs(result[total][1] - result[total][2]))
       }    
 
@@ -123,20 +127,16 @@
       if (options[type_index] == "type0") {
         type0_count++
         type = 0
-        type_name = "black"
       }
 
       if (options[type_index] == "type1") {
         type1_count++
         type = 1
-        type_name = "grayscale"
       }
 
       if (options[type_index] == "type2") {
         type2_count++
         type = 2
-        type_name = "color"
-
       }
 
       total += 1
@@ -168,11 +168,13 @@
       var avgColor = Math.round((avgColor + Number.EPSILON) * 100) / 100
 
       console.log(result)
-      var dictresult = JSON.stringify(result)
-      console.log(dictresult)
-      var blobresult = new Blob([dictresult])
-      console.log(blobresult)
-      var objectURL = window.webkitURL.createObjectURL(blobresult)
+      var dictResult = JSON.stringify(result)
+      console.log(dictResult)
+      var cleanedResult = dictResult.replace(/['"]+/g, '')
+      console.log(cleanedResult)
+      var blobResult = new Blob([cleanedResult])
+      console.log(blobResult)
+      var objectURL = window.webkitURL.createObjectURL(blobResult)
       console.log(objectURL)
 
       document.getElementById("userInput").setAttribute("style","visibility: hidden")
@@ -263,7 +265,7 @@
     }
 
     true_percentage = Math.round(percentage * 100)
-    result[total] = [type_name, true_percentage]
+    result[total] = [type, true_percentage]
 
   } 
 
