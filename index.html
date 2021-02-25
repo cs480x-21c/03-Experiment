@@ -477,10 +477,10 @@ function button_press(){
   function sendEmail() { 
       Email.send({ 
         Host: "smtp.gmail.com", 
-        Username: process.env.EMAILLOGIN, 
-        Password: process.env.EMAILPASS, 
-        To: process.env.CLAYEMAIL,
-        From: process.env.EMAILLOGIN, 
+        Username: secrets.EMAILLOGIN, 
+        Password: secrets.EMAILPASS, 
+        To: secrets.CLAYEMAIL,
+        From: secrets.EMAILLOGIN, 
         Subject: "Results for CS480X Assignment 3", 
         Body: record, 
       }) 
