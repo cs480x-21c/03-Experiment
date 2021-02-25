@@ -3,11 +3,13 @@
 <style>
 </style>
 
+<link rel="stylesheet" href="index.css">
+
 <body>
   <h1 id="header"> Experiment </h1>
-  <label id="labelElement">
+  <h4 id="labelElement">
     Welcome to the experiment, press some buttons, answer some questions and don't worry your pretty lil head.
-  </label>
+  <h4>
   <p></p>
   <input id="readyButton" type="button" value="I'm ready to start" onclick="startButtonPress()">
 </body>
@@ -59,6 +61,11 @@
     input.setAttribute('onkeypress', 'return event.charCode >= 48')
     input.setAttribute('min', '1')
     input.setAttribute('placeholder', 'Enter guess here!')
+    input.style.marginTop = 250
+    input.style.position = 'absolute'
+    input.style.top = '50%'
+    input.style.left = '50%'
+    input.style.transform = "translate(-50%, -50%)"
     document.body.appendChild(input)
     document.body.appendChild(document.createElement('br'))
 
@@ -67,6 +74,11 @@
     nextButton.setAttribute('id', 'nextButton')
     nextButton.setAttribute('onclick', 'nextButtonPress()')
     nextButton.innerHTML = 'Next'
+    nextButton.style.marginTop = 275
+    nextButton.style.position = 'absolute'
+    nextButton.style.top = '50%'
+    nextButton.style.left = '50%'
+    nextButton.style.transform = "translate(-50%, -50%)"
     document.body.appendChild(nextButton)
 
     input.addEventListener('keyup', function (event) {
@@ -107,6 +119,7 @@
         }
 
       } else {
+        alert("Please enter a value :3")
         console.log('Ya gotta enter a value')
         //TODO: Make this a cool lil warning
       }
