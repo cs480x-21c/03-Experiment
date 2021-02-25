@@ -31,7 +31,6 @@
     makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,makeStackedBarChart,
     makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,makePieChart,
   ]
-
   chooseAChart.sort(() => Math.random() - 0.5)
 
   // Initialize Array to store the data
@@ -107,14 +106,31 @@
           currTrialType = chooseAChart[currTrial](randomizeData(), randomizeSelectedPoints())
 
         } else {
+          let scoreForTreeMap = 0
+          let scoreForStackedBarChart = 0
+          let scoreForPieChart = 0
+          let totalScore = 0
+          for (var i = 0; i < answers.length; i++) {
+            if (answers[i].vis === 'Pie Chart') scoreForPieChart += answers[i].error
+            if (answers[i].vis === 'Stacked Bar Chart') scoreForStackedBarChart += answers[i].error
+            if (answers[i].vis === 'Tree Map') scoreForTreeMap += answers[i].error
+            totalScore += answers[i].error
+          }
+          scoreForTreeMap = scoreForPieChart/(answers.length / 3)
+          scoreForPieChart = scoreForPieChart/(answers.length / 3)
+          scoreForStackedBarChart = scoreForStackedBarChart/(answers.length / 3)
+          totalScore = totalScore/(answers.length)
+
           d3.selectAll('svg > *').remove()
           sendData(answers);
-          label.innerText = 'Thank you for partaking in this experiment. Refresh the page to restart'
+          label.innerText = 'Thank you for partaking in this experiment. Refresh the page to restart \n Compare your scores below with your friends! (closer to 0 is better) \n' +
+                  ' Your total error is ' + totalScore.toPrecision(5) + ' \n ' +
+                  ' Your average error for Pie Charts is ' + scoreForPieChart.toPrecision(5) + ' \n ' +
+                  ' Your average error for Stacked Bar Charts is ' + scoreForStackedBarChart.toPrecision(5) + ' \n ' +
+                  ' Your average error for Tree Maps is ' + scoreForTreeMap.toPrecision(5)
           document.getElementById('header').innerText = 'Thank you!'
           textEntry.remove()
           document.getElementById('nextButton').remove()
-
-          console.log(answers)
         }
 
       } else {
@@ -145,7 +161,7 @@
   // https://www.d3-graph-gallery.com/graph/treemap_json.html
   function makeTreeMap(arrayData, points) {
     // Update header with squares to compare as letters
-    document.getElementById('header').innerText = 'Compare square "' + String.fromCharCode(points[0] + 65) + '" versus square "' + String.fromCharCode(points[1] + 65) + '"'
+    document.getElementById('header').innerText = '(Q' + (currTrial + 1) + '/' + chooseAChart.length + ') ' + 'Compare square "' + String.fromCharCode(points[0] + 65) + '" versus square "' + String.fromCharCode(points[1] + 65) + '"'
 
     // Convert data array into JSON format
     const data = {
@@ -196,7 +212,7 @@
   // https://www.d3-graph-gallery.com/graph/barplot_stacked_basicWide.html
   function makeStackedBarChart(arrayData, points) {
     // Update header with sections to compare as letters
-    document.getElementById('header').innerText = 'Compare section "' + String.fromCharCode(points[0] + 65) + '" versus section "' + String.fromCharCode(points[1] + 65) + '"'
+    document.getElementById('header').innerText = '(Q' + (currTrial + 1) + '/' + chooseAChart.length + ') ' + 'Compare section "' + String.fromCharCode(points[0] + 65) + '" versus section "' + String.fromCharCode(points[1] + 65) + '"'
 
     // Convert data array into JSON format
     const data = {
@@ -277,7 +293,7 @@
     // console.log('called makePieChart')
     // console.log('Looking for points: ' + points)
 
-    document.getElementById('header').innerText = 'Compare section "' + String.fromCharCode(points[0] + 65) + '" versus section "' + String.fromCharCode(points[1] + 65) + '"'
+    document.getElementById('header').innerText = '(Q' + (currTrial + 1) + '/' + chooseAChart.length + ') ' + 'Compare section "' + String.fromCharCode(points[0] + 65) + '" versus section "' + String.fromCharCode(points[1] + 65) + '"'
 
     // The min of width or height / 2 is the same at 250
     var chartRadius = 250
