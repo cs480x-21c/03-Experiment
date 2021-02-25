@@ -215,7 +215,7 @@ function main() {
         }
 
         let truePerc = (v1, v2) => {
-            return ((v1 > v2 ? v2 / v1 : v1 / v2) * 100) | 0;
+            return Math.round((v1 > v2 ? v2 / v1 : v1 / v2) * 100) | 0;
         }
 
 
