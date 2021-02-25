@@ -47,6 +47,17 @@ function main()
 
 function makeNewChart()
 {
+    if(notFirstTrial === true)
+    {
+        let answer = document.getElementById("answer").value;
+        console.log(answer);
+        if(answer === '')
+        {
+            document.getElementById("answer").style.backgroundColor = "red";
+            return;
+        }
+    }
+
     // Check if the vis index needs to be reset
     if (gVisIndex === gVisArray.length)
     {
@@ -91,8 +102,15 @@ function makeNewChart()
 }
 
 // new chart on enter
-window.onkeypress = function(event) {
-    if (event.keyCode == 13) {
+window.onkeypress = function(event) 
+{
+    if(event.key)
+    {
+        document.getElementById("answer").style.backgroundColor = "";
+    }
+
+    if (event.key === 'Enter') 
+    {
         makeNewChart();
     }
  }
