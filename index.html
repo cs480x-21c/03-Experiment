@@ -113,6 +113,15 @@
     ]
   }
 
+  function ratioCalculator( point1, point2){
+    if ( point1 >= point2) {
+        ratio = (point2 / point1) * 100
+      }
+      else {
+        ratio = (point1 / point2) * 100
+      }
+    return ratio
+  }
   // iterations = 0
   function randomTwoKeys() {
 
@@ -258,13 +267,11 @@
           }
         })
         .style("stroke", "black")
-      if (randomTwo[0] >= randomTwo[1]) {
-        ratio = (testData[randomTwo[0]] / testData[randomTwo[1]]) * 100
-      }
-      else {
-        ratio = (testData[randomTwo[1]] / testData[randomTwo[0]]) * 100
-      }
-      console.log("Bubble" + ratio)
+        console.log("Point 1: " + testBubbleData[randomTwo[0]][2])
+        console.log("Point 2: " + testBubbleData[randomTwo[1]][2])
+        bubbleRatio = ratioCalculator(testBubbleData[randomTwo[0]][2], testBubbleData[randomTwo[1]][2]);
+
+      console.log("Bubble " + bubbleRatio)
     </script>
     <form id="bubble_submit">
       <label for="bubble_input">Enter ratio between the two points.</label>
@@ -325,13 +332,10 @@
       var ratio = 100
       // find actual ratio between two points
       // console.log( testData[randomTwo[0]] )
-      if (randomTwo[0] >= randomTwo[1]) {
-        ratio = (testData[randomTwo[0]] / testData[randomTwo[1]]) * 100
-      }
-      else {
-        ratio = (testData[randomTwo[1]] / testData[randomTwo[0]]) * 100
-      }
-      console.log("Pie " + ratio)
+      console.log("Point 1: " + testData[randomTwo[0]])
+      console.log("Point 2: " + testData[randomTwo[1]])
+      pieRatio = ratioCalculator(testData[randomTwo[0]], testData[randomTwo[1]])
+      console.log("Pie " + pieRatio)
 
     </script>
     <form id="pie_submit">
@@ -365,7 +369,7 @@
       var arcMaker = d3.arc()
         .innerRadius(50)
         .outerRadius(radius)
-      // console.log(pieData)
+
       svg_donut
         .selectAll('data')
         .data(donutData)
@@ -393,13 +397,8 @@
       var ratio = 100
       // find actual ratio between two points
       // console.log( testData[randomTwo[0]] )
-      if (randomTwo[0] >= randomTwo[1]) {
-        ratio = (testData[randomTwo[0]] / testData[randomTwo[1]]) * 100
-      }
-      else {
-        ratio = (testData[randomTwo[1]] / testData[randomTwo[0]]) * 100
-      }
-      console.log("donut " + ratio)
+      donutRatio = ratioCalculator(testData[randomTwo[0]], testData[randomTwo[1]])
+      console.log("donut " + donutRatio)
 
     </script>
     <form id="donut_submit">
