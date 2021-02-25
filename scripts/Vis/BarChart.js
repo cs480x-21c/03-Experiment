@@ -5,14 +5,11 @@ class BarChart extends Chart
     constructor(svg, width, height)
     {
         super(svg, width, height);
-<<<<<<< HEAD:Vis/BarChart.js
         this.name = "BarChart";
         this.features = ["A","B","C","D","E","F","G"];
         this.data = [];
         this.pointsOfIntrest = [];
-=======
         this.type = "BarChart";
->>>>>>> e8a59fffd22468a8534583c7154efe159eaa5e3d:scripts/Vis/BarChart.js
     }
 
     newRandom()
@@ -23,22 +20,15 @@ class BarChart extends Chart
             this.data[i] = Math.floor(10 + Math.random() * 80);
         }
 
-<<<<<<< HEAD:Vis/BarChart.js
         // select points of intrest
         let point1 = Math.floor(Math.random() * (this.features.length - 1))
         let point2 = point1 + Math.floor(1 + Math.random() * (this.features.length - 2))
         if(point2 > this.features.length - 1) point2 -= this.features.length;
         this.pointsOfIntrest = [point1, point2]
-=======
-
-
->>>>>>> e8a59fffd22468a8534583c7154efe159eaa5e3d:scripts/Vis/BarChart.js
     }
 
     make()
     {
-
-<<<<<<< HEAD:Vis/BarChart.js
         this.svg.attr("transform", "translate(" + 25 + ", " + 5 + ")")
 
         // x axis
@@ -81,10 +71,8 @@ class BarChart extends Chart
                     .attr("fill", "black");
             }
         }
-=======
 
         this.answer = 0;
->>>>>>> e8a59fffd22468a8534583c7154efe159eaa5e3d:scripts/Vis/BarChart.js
     }
 
     check(answer)

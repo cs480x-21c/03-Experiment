@@ -5,14 +5,11 @@ class RadarChart extends Chart
     constructor(svg, width, height)
     {
         super(svg, width, height);
-<<<<<<< HEAD:Vis/RadarChart.js
         this.name = "RadarChart";
         this.features = ["A","B","C","D","E","F","G"];
         this.data = {};
         this.pointsOfIntrest = [];
-=======
         this.type = "RadarChart";
->>>>>>> e8a59fffd22468a8534583c7154efe159eaa5e3d:scripts/Vis/RadarChart.js
     }
 
     newRandom()
@@ -34,7 +31,6 @@ class RadarChart extends Chart
             .domain([0,100])
             .range([0,250]);
 
-<<<<<<< HEAD:Vis/RadarChart.js
         // util
         function angleToCoordinate(angle, value, width, height)
         {
@@ -95,10 +91,6 @@ class RadarChart extends Chart
                     .attr("r", radScale(3));
             }
         }
-=======
-
-
->>>>>>> e8a59fffd22468a8534583c7154efe159eaa5e3d:scripts/Vis/RadarChart.js
     }
 
     check(answer)
