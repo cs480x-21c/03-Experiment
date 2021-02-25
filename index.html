@@ -234,7 +234,7 @@ function draw_treemap(){
       var tree_area1 = tree_h1 * tree_w1;
       var tree_area2 = tree_h2 * tree_w2;
       // console.log(tree_area1,tree_area2)
-      final_ratio = Math.min(tree_area1, tree_area2) / Math.max(tree_area1, tree_area2)
+      final_ratio = (Math.min(tree_area1, tree_area2) / Math.max(tree_area1, tree_area2))*100
       console.log("treemap ratio: ",final_ratio)
 
       svg_tree.selectAll('data')
