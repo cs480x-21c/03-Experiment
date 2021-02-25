@@ -22,21 +22,21 @@
 
 <body>
   <h1> Experiment </h1>
-  
+
   <div id="colorPrompt">
-    Two values are marked with an orange color. 
-    <br />What do you think is the percent of the smaller value to the larger value? 
-    <br />Please mark your answer by using the slider below, then press "Submit Answer" to proceed to the next chart.     
+    Two values are marked with an orange color.
+    <br />What do you think is the percent of the smaller value to the larger value?
+    <br />Please mark your answer by using the slider below, then press "Submit Answer" to proceed to the next chart.
     <br />e.g. If you think the smaller one is exactly half of the bigger one, please place the slider at "50%".
   </div>
 
   <div id="dotPrompt" hidden>
-    Two values are marked with dots. 
-    <br />What do you think is the percent of the smaller value to the larger value? 
-    <br />Please mark your answer by using the slider below, then press "Submit Answer" to proceed to the next chart. 
+    Two values are marked with dots.
+    <br />What do you think is the percent of the smaller value to the larger value?
+    <br />Please mark your answer by using the slider below, then press "Submit Answer" to proceed to the next chart.
     <br />e.g. If you think the smaller one is exactly half of the bigger one, please place the slider at "50%".
   </div>
-    
+
   <div id="mainDiv">
     <svg id="vis"> </svg>
     <div id="slideDiv"> </div>
@@ -383,11 +383,11 @@
 
     jsonObjArr.push(jsonObj);
     //console.log(jsonObjArr);
-      
+
     // Assign the prompts, x = color... y = dot
     var x = document.getElementById("colorPrompt");
     var y = document.getElementById("dotPrompt");
-      
+
     trialsSubmitted ++;
     data = createDataPoints();
     selectTwoPoints(data);
