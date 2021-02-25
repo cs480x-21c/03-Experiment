@@ -1,0 +1,157 @@
+Delivered-To: huntercaouette@gmail.com
+Received: by 2002:aed:3c4c:0:0:0:0:0 with SMTP id u12csp453659qte;
+        Thu, 25 Feb 2021 07:10:00 -0800 (PST)
+X-Received: by 2002:a05:6402:50c8:: with SMTP id h8mr3283749edb.360.1614265800727;
+        Thu, 25 Feb 2021 07:10:00 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1614265800; cv=none;
+        d=google.com; s=arc-20160816;
+        b=LFRFdKSkctbQSFF2mqa6rXagkaVNwEGPBdGoy9r2WDoHCPIRvIVrTbMkCpoMvA3zPy
+         HiuI4gJXao7kCBucMxA0xHNtQjn9ZVcafQL7TCMyjwAWUittV1I9zPBqcwrcu+tvdeyD
+         gbO8Sp+QLz9D3i9qbS2VbZkEVBC3zcbtfgyS16HXIVwZE1bsEtz6QF7sOjHh0z663vcu
+         3Gv82Pcvjksxmh+8yRb0Xp0Hr+x4vKF9d9dzOfNoYlHZD6a0nkSVPd2xtKhFm1kG4zTE
+         wmv7mt4matfZe14g6H+EAZfhV88qO73+n3SGAQdKxrEbx/XkVwehvrAZtbaPjBueQejz
+         8O0w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=content-transfer-encoding:subject:reply-to:to:mime-version:from
+         :date:message-id:dkim-signature;
+        bh=+IqH5CMqCZakX6kFlqXOg26O9V0pjb27PA8qKTDBUDo=;
+        b=l8IMQoCPsPqoWnymJugBmq63haEf+aj/pFqZl5Vm6g1vBv8Ws7CNMNsEOQB9WD2Alt
+         7cT7KOdvMPy+AiTJelcIGcExbbU0Jg9ebHf4ICfsKJ7c19J3HSyr+ctmjlf3elyUeDyA
+         5jdPUR66qb0yE5CHjDaQn1i6/vyc6wywm9BqQkzuYieH0PbhJgiaScsBDAQTaS6v10JX
+         4wqHQzghINz0N+glVFNwx+VpktB1NWpVlh/0bMCotfeg+Qp6vPUlR6nd5RUcP9MIy0I4
+         Dftr9eyHVF7RDHQJwzAjdkqmSfQ0DQU2X5YY7BWhko2MqkHD6aAcRagEZfnNpfo0qRww
+         3Nfw==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20161025 header.b=UDjNvDUz;
+       spf=pass (google.com: domain of cs480xa3.chn@gmail.com designates 209.85.220.65 as permitted sender) smtp.mailfrom=cs480xa3.chn@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com
+Return-Path: <cs480xa3.chn@gmail.com>
+Received: from mail-sor-f65.google.com (mail-sor-f65.google.com. [209.85.220.65])
+        by mx.google.com with SMTPS id x9sor1269025ejc.77.2021.02.25.07.10.00
+        (Google Transport Security);
+        Thu, 25 Feb 2021 07:10:00 -0800 (PST)
+Received-SPF: pass (google.com: domain of cs480xa3.chn@gmail.com designates 209.85.220.65 as permitted sender) client-ip=209.85.220.65;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20161025 header.b=UDjNvDUz;
+       spf=pass (google.com: domain of cs480xa3.chn@gmail.com designates 209.85.220.65 as permitted sender) smtp.mailfrom=cs480xa3.chn@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:date:from:mime-version:to:reply-to:subject
+         :content-transfer-encoding;
+        bh=+IqH5CMqCZakX6kFlqXOg26O9V0pjb27PA8qKTDBUDo=;
+        b=UDjNvDUzfDAhcYlI3O9z1Rs58Yvxs5tmcY5SdJ4sW0iEtGnD526jc6zH/uTaF47hiT
+         j3geYB8X4c/7jcbg8osftlqkZz5sGDFCrDAzZBTk7rGg/gfp7O762ivQr4dG/yxLm5n6
+         z6n2MtvVyNo5ZebmrFw7fWs/zLO0JAl2ncHp+6a9TahjnFxYTmVB1oAFmI4sFAs5Yqxc
+         9k+zCmw2wWfycwAh5VZ93mV4qDPFn8iaPUNHpeyxqD/bGmadXFBZW2UcabDroSqkWlhS
+         pq74UjPnwy9GvBFWwIB4uFYy5BuCznLm9Za6noD91N5+rsRYqTK5zYgLtiO4rdg68cdp
+         wc2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:date:from:mime-version:to:reply-to
+         :subject:content-transfer-encoding;
+        bh=+IqH5CMqCZakX6kFlqXOg26O9V0pjb27PA8qKTDBUDo=;
+        b=J6Hdg9GjVhvb9tFlIysYhTEdkoMv4D2n9jojDnFc9otxyAp8WegQQAc3HL1o5KCEA7
+         1TaMppa0Ap7u4Al5XWGAg7RiqhxCgnTix7+6mAV5oxAEegqFtqHXIuClUG/Xpvv3Yfpd
+         qylR8LOxeo1aM/ifYO8TH/kZA1qjAHmETRusUqUhEPwyZr22B+OFHW1RjZ5/q1qnjbU8
+         1YpdjJpNlCSu6jMdKZyjT5bPWdqUNTlSMP15GgGHLu4lCXLhfNrwvT13/0T64Lcgh3BW
+         U4/SoeNE1StQdtXJhLC7u3G9wzmRVgaNWh31UopPmPc0nVsMRozpWDgvdTGjw1gihBWR
+         GRXw==
+X-Gm-Message-State: AOAM533gFoYVjDGVgdyvb2SfVt7ozkTlnbCRknRV8VFoul1asUEkxn3P
+	Z/vOlM6Qf5EtvOP0FklFRBYJ/ScZVi6E4L6s
+X-Google-Smtp-Source: ABdhPJx9/aO/JB8NAZO+4uOV2ZHIwfKbGhZfdori1MDyodAKKUFa4+pwFrDD6lhqJAJIjk9V3WASNQ==
+X-Received: by 2002:a17:906:3c1:: with SMTP id c1mr2992648eja.428.1614265800202;
+        Thu, 25 Feb 2021 07:10:00 -0800 (PST)
+Return-Path: <cs480xa3.chn@gmail.com>
+Received: from www.smtpjs.com ([78.129.237.3])
+        by smtp.gmail.com with ESMTPSA id a7sm3579883edr.29.2021.02.25.07.09.59
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 25 Feb 2021 07:09:59 -0800 (PST)
+Message-ID: <6037bdc7.1c69fb81.8fbbe.1ebf@mx.google.com>
+Date: Thu, 25 Feb 2021 07:09:59 -0800 (PST)
+X-Google-Original-Date: 25 Feb 2021 15:09:59 +0000
+From: "CS480XA3.CHN@gmail.com" <cs480xa3.chn@gmail.com>
+X-Google-Original-From: "CS480XA3.CHN@gmail.com" <CS480XA3.CHN@gmail.com>
+X-PLEASE-REPORT-ANY-SPAM: Is this spam?, please report to
+ http://www.smtpjs.com/#spam
+MIME-Version: 1.0
+To: clay.oshiroleavitt@gmail.com, huntercaouette@gmail.com, nralescio@wpi.edu
+Reply-To: CS480XA3.CHN@gmail.com
+Subject: Results for CS480X Assignment 3
+Content-Type: text/html; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+
+{=0D=0A  "graphs_guessed": [=0D=0A    "donut",=0D=0A    "tree",=0D=0A=
+    "scatter",=0D=0A    "tree",=0D=0A    "donut",=0D=0A    "tree"=
+,=0D=0A    "scatter",=0D=0A    "pie",=0D=0A    "donut",=0D=0A    =
+"tree",=0D=0A    "donut",=0D=0A    "donut",=0D=0A    "pie",=0D=0A=
+    "donut",=0D=0A    "scatter",=0D=0A    "scatter",=0D=0A    "pi=
+e",=0D=0A    "tree",=0D=0A    "tree",=0D=0A    "pie",=0D=0A    "s=
+catter",=0D=0A    "pie",=0D=0A    "donut",=0D=0A    "pie",=0D=0A =
+   "scatter",=0D=0A    "scatter",=0D=0A    "tree",=0D=0A    "scat=
+ter",=0D=0A    "tree",=0D=0A    "pie",=0D=0A    "donut",=0D=0A   =
+ "pie",=0D=0A    "scatter",=0D=0A    "tree",=0D=0A    "pie",=0D=0A=
+    "donut",=0D=0A    "tree",=0D=0A    "donut",=0D=0A    "scatter=
+",=0D=0A    "donut",=0D=0A    "donut",=0D=0A    "scatter",=0D=0A =
+   "pie",=0D=0A    "tree",=0D=0A    "donut",=0D=0A    "donut",=0D=0A=
+    "tree",=0D=0A    "tree",=0D=0A    "pie",=0D=0A    "pie",=0D=0A=
+    "scatter",=0D=0A    "tree",=0D=0A    "scatter",=0D=0A    "don=
+ut",=0D=0A    "tree",=0D=0A    "donut",=0D=0A    "scatter",=0D=0A=
+    "pie",=0D=0A    "donut",=0D=0A    "scatter",=0D=0A    "pie",=0D=0A=
+    "pie",=0D=0A    "donut",=0D=0A    "scatter",=0D=0A    "donut"=
+,=0D=0A    "tree",=0D=0A    "scatter",=0D=0A    "scatter",=0D=0A =
+   "pie",=0D=0A    "tree",=0D=0A    "tree",=0D=0A    "pie",=0D=0A=
+    "pie",=0D=0A    "donut",=0D=0A    "tree",=0D=0A    "pie",=0D=0A=
+    "scatter",=0D=0A    "tree",=0D=0A    "pie",=0D=0A    "scatter=
+"=0D=0A  ],=0D=0A  "guesses": [=0D=0A    "20",=0D=0A    "20",=0D=0A=
+    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "=
+20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A=
+    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "=
+20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A=
+    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "=
+20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A=
+    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "=
+20",=0D=0A    "20",=0D=0A    "",=0D=0A    "20",=0D=0A    "20",=0D=0A=
+    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "=
+20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A=
+    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "=
+",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A=
+    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "=
+20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A=
+    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "=
+20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A=
+    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "20",=0D=0A    "=
+20",=0D=0A    "20"=0D=0A  ],=0D=0A  "true_ratios": [=0D=0A    95,=
+=0D=0A    0.11846540749152937,=0D=0A    56.25,=0D=0A    0.7161466=
+8069639043,=0D=0A    81.632653061224474,=0D=0A    0.6145045586764=
+5637,=0D=0A    9,=0D=0A    95,=0D=0A    75.510204081632651,=0D=0A=
+    0.50887503405262824,=0D=0A    92.5,=0D=0A    92.5,=0D=0A    7=
+5.510204081632651,=0D=0A    70.270270270270274,=0D=0A    11.11111=
+1111111111,=0D=0A    13.223140495867769,=0D=0A    65.000000000000=
+014,=0D=0A    0.60467398119561711,=0D=0A    0.1900928684073738,=0D=0A=
+    77.551020408163268,=0D=0A    56.25,=0D=0A    77.5510204081632=
+68,=0D=0A    70.270270270270274,=0D=0A    53.061224489795919,=0D=0A=
+    56.25,=0D=0A    13.223140495867769,=0D=0A    0.16427284078252=
+713,=0D=0A    16,=0D=0A    0.17165487706407212,=0D=0A    81.63265=
+3061224474,=0D=0A    77.551020408163268,=0D=0A    70.270270270270=
+274,=0D=0A    9,=0D=0A    0.17165487706407212,=0D=0A    53.061224=
+489795919,=0D=0A    81.632653061224474,=0D=0A    0.98384195229782=
+234,=0D=0A    81.632653061224474,=0D=0A    7.43801652892562,=0D=0A=
+    77.551020408163268,=0D=0A    53.061224489795919,=0D=0A    56.=
+25,=0D=0A    65.000000000000014,=0D=0A    0.70074922152261387,=0D=0A=
+    81.632653061224474,=0D=0A    70.270270270270274,=0D=0A    0.3=
+5442895456710433,=0D=0A    0.1900928684073738,=0D=0A    75.510204=
+081632651,=0D=0A    81.632653061224474,=0D=0A    82.6446280991735=
+59,=0D=0A    0.53174268488434451,=0D=0A    84.027777777777786,=0D=0A=
+    53.061224489795919,=0D=0A    0.13320742955346787,=0D=0A    92=
+.5,=0D=0A    7.43801652892562,=0D=0A    92.5,=0D=0A    95,=0D=0A =
+   56.25,=0D=0A    81.632653061224474,=0D=0A    70.27027027027027=
+4,=0D=0A    53.061224489795919,=0D=0A    69.444444444444443,=0D=0A=
+    77.551020408163268,=0D=0A    0.26543845490217871,=0D=0A    13=
+.223140495867769,=0D=0A    11.111111111111111,=0D=0A    77.551020=
+408163268,=0D=0A    0.70074922152261387,=0D=0A    0.7542433064917=
+8828,=0D=0A    95,=0D=0A    77.551020408163268,=0D=0A    70.27027=
+0270270274,=0D=0A    0.84434376014648871,=0D=0A    95,=0D=0A    1=
+6,=0D=0A    0.54392278252250248,=0D=0A    65.000000000000014,=0D=0A=
+    82.644628099173559=0D=0A  ]=0D=0A}
+
