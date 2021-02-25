@@ -179,10 +179,56 @@
   On each screen, you will see a visualization with two pieces of data marked. In the provided text box, please enter the your estimated ratio between the smaller of 
 two pieces of data and the larger one. For example, if you think that .
 </p>
-  <h1> Tree Map </h1>
+  <!-- <h1> Tree Map </h1>
   <div id="tree">
   <script>
-    function draw_treemap(){
+
+
+  </script>
+  <form id="tree_submit">
+    <label for="tree_input">The smaller dotted box is </label>
+    <input type="text" id="tree_input">
+    <label for="tree_input"> % of the larger dotted box</label>
+  </form>
+  </div>
+  <h1>Bubble</h1>
+  <div id="bubble">
+    <script>
+
+    
+    </script>
+    <form id="bubble_submit">
+      <label for="bubble_input">The smaller black bubble is </label>
+      <input type="text" id="bubble_input">
+      <label for="bubble_input"> % of the larger black bubble</label>
+    </form>
+  </div>
+  <h1> Pie</h1>
+  <div id="pie">
+    <script>
+
+
+    </script>
+    <form id="pie_submit">
+      <label for="pie_input">The smaller dotted slice is </label>
+      <input type="text" id="pie_input">
+      <label for="pie_input"> % of the larger dotted slice</label>
+    </form>
+  </div>
+  <h1> Donut</h1>
+  <div id="donut">
+ 
+    <!-- <form id="donut_submit">
+      <label for="donut_input">The smaller dotted slice is </label>
+      <input type="text" id="donut_input">
+      <label for="donut_input"> % of the larger dotted slice</label>
+    </form> -->
+  </div> -->
+  <div id="vis_holder"></div>
+
+  <script>
+
+function draw_treemap(){
       //points to mark
       iterations = 0
       randomTwo_tree = randomTwoKeys_tree()
@@ -248,18 +294,62 @@ two pieces of data and the larger one. For example, if you think that .
           return "translate("+x_mid+" "+y_mid+")";
         })
     }
+    function draw_donutchart(){
+      iterations = 0
 
-  </script>
-  <form id="tree_submit">
-    <label for="tree_input">The smaller dotted box is </label>
-    <input type="text" id="tree_input">
-    <label for="tree_input"> % of the larger dotted box</label>
-  </form>
-  </div>
-  <h1>Bubble</h1>
-  <div id="bubble">
-    <script>
-      function draw_bubbleplot(){
+      randomTwo = randomTwoKeys()
+      console.log("pie chart randomTwo: ", randomTwo)
+      var svg_donut = d3.select("#vis_holder")
+        .append("svg")
+        .attr("width", WIDTH)
+        .attr("height", HEIGHT)
+        .append("g")
+        .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")");
+
+      var radius = HEIGHT / 2 - 10 // add margin to prevent clipping
+
+      var donut = d3.pie()
+        .value(function (d) { return d.value; })
+      var donutData = donut(d3.entries(testData))
+
+      var donutDataTest = donut(d3.entries(testData))[1]
+      // console.log( pieDataTest)
+
+      var arcMaker = d3.arc()
+        .innerRadius(50)
+        .outerRadius(radius)
+
+      svg_donut
+        .selectAll('data')
+        .data(donutData)
+        .enter()
+        .append('path')
+        .attr('d', arcMaker)
+        .attr("fill", "white")
+        .attr("stroke", "black")
+        .style("stroke-width", "2px")
+
+      svg_donut
+        .selectAll('data')
+        .data(donutData)
+        .enter()
+        .append('circle')
+        .attr('r', function (d) {
+          if (randomTwo.includes(d.data.key)) {
+            return 5
+          }
+          else {
+            return 0
+          }
+        })
+        .attr("transform", function (d) { return "translate(" + arcMaker.centroid(d) + ")"; })
+      var ratio = 100
+      // find actual ratio between two points
+      // console.log( testData[randomTwo[0]] )
+      donutRatio = ratioCalculator(testData[randomTwo[0]], testData[randomTwo[1]])
+      console.log("donut " + donutRatio)
+    }
+    function draw_bubbleplot(){
         randomTwo = randomTwoKeys()
         var svg = d3.select("#vis_holder")
           .append("svg")
@@ -295,18 +385,7 @@ two pieces of data and the larger one. For example, if you think that .
 
         console.log("Bubble " + bubbleRatio)
       }
-    
-    </script>
-    <form id="bubble_submit">
-      <label for="bubble_input">The smaller black bubble is </label>
-      <input type="text" id="bubble_input">
-      <label for="bubble_input"> % of the larger black bubble</label>
-    </form>
-  </div>
-  <h1> Pie</h1>
-  <div id="pie">
-    <script>
-      function draw_piechart(){
+    function draw_piechart(){
         iterations = 0
 
         randomTwo = randomTwoKeys()
@@ -363,98 +442,48 @@ two pieces of data and the larger one. For example, if you think that .
         pieRatio = ratioCalculator(testData[randomTwo[0]], testData[randomTwo[1]])
         console.log("Pie " + pieRatio)
       }
-
-    </script>
-    <form id="pie_submit">
-      <label for="pie_input">The smaller dotted slice is </label>
-      <input type="text" id="pie_input">
-      <label for="pie_input"> % of the larger dotted slice</label>
-    </form>
-  </div>
-  <h1> Donut</h1>
-  <div id="donut">
-    <script>
-      function draw_donutchart(){
-        iterations = 0
-
-        randomTwo = randomTwoKeys()
-        console.log("pie chart randomTwo: ", randomTwo)
-        var svg_donut = d3.select("#vis_holder")
-          .append("svg")
-          .attr("width", WIDTH)
-          .attr("height", HEIGHT)
-          .append("g")
-          .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")");
-
-        var radius = HEIGHT / 2 - 10 // add margin to prevent clipping
-
-        var donut = d3.pie()
-          .value(function (d) { return d.value; })
-        var donutData = donut(d3.entries(testData))
-
-        var donutDataTest = donut(d3.entries(testData))[1]
-        // console.log( pieDataTest)
-
-        var arcMaker = d3.arc()
-          .innerRadius(50)
-          .outerRadius(radius)
-
-        svg_donut
-          .selectAll('data')
-          .data(donutData)
-          .enter()
-          .append('path')
-          .attr('d', arcMaker)
-          .attr("fill", "white")
-          .attr("stroke", "black")
-          .style("stroke-width", "2px")
-
-        svg_donut
-          .selectAll('data')
-          .data(donutData)
-          .enter()
-          .append('circle')
-          .attr('r', function (d) {
-            if (randomTwo.includes(d.data.key)) {
-              return 5
-            }
-            else {
-              return 0
-            }
-          })
-          .attr("transform", function (d) { return "translate(" + arcMaker.centroid(d) + ")"; })
-        var ratio = 100
-        // find actual ratio between two points
-        // console.log( testData[randomTwo[0]] )
-        donutRatio = ratioCalculator(testData[randomTwo[0]], testData[randomTwo[1]])
-        console.log("donut " + donutRatio)
-      }
-    
-    </script>
-    <form id="donut_submit">
-      <label for="donut_input">The smaller dotted slice is </label>
-      <input type="text" id="donut_input">
-      <label for="donut_input"> % of the larger dotted slice</label>
-    </form>
-  </div>
-  <div id="vis_holder"></div>
+  </script>
 </body>
 <form id="form_submit">
-  <input type="submit" value="submit">
+  <input type="button" value="submit" onclick=button_press()>
 </form>
 
+
+
 <script>
-  //control flow
-  var choice = Math.floor(Math.random()*100) % 4
-  console.log("choice: ",choice)
-  switch(choice){
-    case 0: console.log("treemap:"); draw_treemap(); break;
-    case 1: console.log("bubble plot:"); draw_bubbleplot();break;
-    case 2: console.log("pie chart:"); draw_piechart();break;
-    case 3: console.log("donut chart:"); draw_donutchart();break;
-    default:
-      console.log("how did you fuck up modulo arithmetic?")
+function button_press(){
+    // we need to track the following information per each visualization:
+      // - visualization type
+      // - true answer
+      // - user answer
+    console.log("Pressing matters")
+
+    //clear the canvas
+    d3.select("#vis_holder").selectAll('svg').remove()
+    //random new plot type
+    var choice = Math.floor(Math.random()*100) % graphs.length
+    //decrement the array of graph types
+    var new_plot = graphs.splice(choice,1)[0]
+    //redraw new random graph
+    console.log("New Plot: " + new_plot)
+    switch(new_plot){
+      case "tree": console.log("treemap:"); draw_treemap(); break;
+      case "scatter": console.log("bubble plot:"); draw_bubbleplot();break;
+      case "pie": console.log("pie chart:"); draw_piechart();break;
+      case "donut": console.log("donut chart:"); draw_donutchart();break;
+      default: console.log("I big dumb "+ new_plot);
+
+    }
   }
+
+
+  //control flow
+    
+  draw_donutchart()
+
+  var graphs=["tree","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter","tree","donut","pie","scatter"]
+
+
 </script>
 
 </HTML>
