@@ -1,0 +1,335 @@
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<style>
+</style>
+
+<body>
+  <h1 id="header"> Experiment </h1>
+  <label id="labelElement">
+    Welcome to the experiment, press some buttons, answer some questions and don't worry your pretty lil head.
+  </label>
+  <p></p>
+  <input id="readyButton" type="button" value="I'm ready to start" onclick="startButtonPress()">
+</body>
+
+<div id="vis"></div>
+
+<script>
+  // Initialize random data for testing
+  let currData = [...Array(10)]
+  let currSelectedPoints = [...Array(2)]
+
+  // Keep track of which page/trial we're on
+  currTrial = 0
+  currTrialType = ''
+
+  // Initialize Array for selecting next chart
+  // TODO: Up this to 60 total trials
+  let chooseAChart = [
+          makeTreeMap,
+          makeStackedBarChart,
+          makePieChart,
+          makeTreeMap,
+          makeStackedBarChart,
+          makePieChart
+  ]
+
+  //TODO: Uncomment when ready chooseAChart.sort(() => Math.random() - 0.5)
+
+  // Initialize Array to store the data
+  let answers = []
+
+  // Create svg for charts to be placed
+  let svg = d3.select('#vis')
+
+  // Create constant text for in experiment instructions
+  const instructions = "Write in the text box below what you think the smaller is to the larger? (I.e. if you think the smaller area is exactly half of the larger area, then enter 50)"
+  let label = document.getElementById('labelElement')
+
+  // Create experiment in progress page
+  function startButtonPress() {
+    svg.append('svg')
+            .attr('height', 500)
+            .attr('width', 500)
+    label.innerText = instructions
+    document.getElementById('readyButton')
+      .remove()
+
+    // Create answer field
+    let input = document.createElement("INPUT")
+    input.setAttribute('id', 'textEntry')
+    input.setAttribute('type', 'text')
+    input.setAttribute('placeholder', 'Enter guess here!')
+    document.body.appendChild(input)
+    document.body.appendChild(document.createElement('br'))
+    // TODO: Make the enter key press next button
+
+    // Create next button
+    let nextButton = document.createElement('button')
+    nextButton.setAttribute('id', 'nextButton')
+    nextButton.setAttribute('onclick', 'nextButtonPress()')
+    nextButton.innerHTML = 'Next'
+    document.body.appendChild(nextButton)
+
+    input.addEventListener('keyup', function (event) {
+      if (event.key === 'Enter') nextButton.click()
+    })
+
+    currTrialType = chooseAChart[currTrial](randomizeData(), randomizeSelectedPoints())
+  }
+
+  // What to do when next button is pressed
+  function nextButtonPress() {
+    let textEntry = document.getElementById('textEntry')
+    // Check that the entry space isn't blank
+      if (textEntry.value !== '') {
+        // Store the recorded data
+
+        let stats = calculateError(textEntry.value)
+        answers.push({vis:currTrialType, truePercent:stats[0], reportedPercent:stats[1], error:stats[2]})
+
+        // If this is the last trial change button to submit
+        if (currTrial === chooseAChart.length - 1) document.getElementById('nextButton').innerHTML = 'Submit'
+
+        // As long as we're not and the end of the list set up for next trial
+        if (currTrial < chooseAChart.length - 1){
+          currTrial++
+          textEntry.value = ''
+          currTrialType = chooseAChart[currTrial](randomizeData(), randomizeSelectedPoints())
+
+        } else {
+          label.innerText = 'Thanks for taking this thing, all done, refresh the page to restart'
+          textEntry.remove()
+          document.getElementById('nextButton').remove()
+
+          console.log(answers)
+          // TODO: Store the answers somewhere
+        }
+
+      } else {
+        console.log('Ya gotta enter a value')
+        //TODO: Make this a cool lil warning
+      }
+  }
+
+  function calculateError(reportedPercentage) 
+  {
+    // TODO: Make this clean up reportedPercentage if format is strange
+    //UPDATED
+    let truePercentage = Math.abs(currData[currSelectedPoints[0]]/currData[currSelectedPoints[1]]) * 100 //Math.abs(currData[currSelectedPoints[0]] - currData[currSelectedPoints[1]])
+    let error = Math.log2(Math.abs(reportedPercentage - truePercentage) + (1/8))
+    if (error === -3) error = 0
+    return [truePercentage, reportedPercentage, error]
+  }
+
+  // https://www.d3-graph-gallery.com/graph/treemap_json.html
+  function makeTreeMap(arrayData, points) {
+    // Update header with squares to compare as letters
+    document.getElementById('header').innerText = 'Compare square "' + String.fromCharCode(points[0] + 65) + '" versus square "' + String.fromCharCode(points[1] + 65) + '"'
+
+    // Convert data array into JSON format
+    const data = {
+      children: arrayData.map(function (element, index) {
+        return {key: String.fromCharCode(index + 65), value: element};
+      })
+    }
+
+    // Clear SVG before drawing
+    d3.selectAll('svg > *').remove()
+
+    // Tree map stuff is below here
+    const root = d3.hierarchy(data).sum(function (d) {
+      return d.value
+    })
+
+    d3.treemap()
+      .size([498, 498])
+      .paddingOuter(1)
+      (root)
+
+    svg.select('svg')
+      .selectAll('rect')
+      .data(root.leaves())
+      .enter()
+      .append('rect')
+            .attr('x', function (d) { return d.x0; })
+            .attr('y', function (d) { return d.y0; })
+            .attr('width', function (d) { return d.x1 - d.x0; })
+            .attr('height', function (d) { return d.y1 - d.y0; })
+            .style('stroke', 'black')
+            .style("fill", "white")
+
+
+    svg.select('svg')
+      .selectAll('text')
+      .data(root.leaves())
+      .enter()
+      .append('text')
+            .attr("x", function(d){ return d.x0+5})
+            .attr("y", function(d){ return d.y0+20})
+            .text(function(d){ return d.data.key })
+            .attr("fill", "black")
+            .attr('font-size', '12px')
+
+    return 'Tree Map'
+  }
+
+  // https://www.d3-graph-gallery.com/graph/barplot_stacked_basicWide.html
+  function makeStackedBarChart(arrayData, points) 
+  {
+    // TODO: This is a stub
+    // Update header with sections to compare as letters
+    document.getElementById('header').innerText = 'Compare section "' + String.fromCharCode(points[0] + 65) + '" versus section "' + String.fromCharCode(points[1] + 65) + '"'
+
+    // Convert data array into JSON format
+    const data = {
+      children: arrayData.map(function (element, index) {
+        return {key: String.fromCharCode(index + 65), value: element};
+      })
+    }
+
+    // Clear SVG before drawing
+    d3.selectAll('svg > *').remove()
+    //console.log(arrayData)
+    // Stacked chart stuff is below here
+    // let row
+    // for (row in data) {
+    //  svg.selectAll('rect')
+    //   .data()
+    // }
+
+    let cleanData = arrayData.map(function (element) {
+      return (element / d3.sum(arrayData) * Number(svg.style("height").replace(/px$/, ''))) //* svg.style("height")
+    })
+
+    let runningHeight = (Number(svg.style("height").replace(/px$/, '')))
+    let runningWidth = Number(svg.style("width").replace(/px$/, ''))
+
+    console.log(cleanData)
+
+    //The rectangles stacked on eachother and associated text
+     svg
+      .select('svg')
+      .selectAll('rect')
+      .data(cleanData)
+      .enter()
+      .append('rect')
+            .attr('height', function (d) {return d})
+            .attr('width', Number(svg.style("width").replace(/px$/, '') / 5))
+            .attr('y', function(d) {runningHeight = runningHeight - d; return runningHeight})
+            .attr('x', (runningWidth * 0.1))
+            .attr('fill', 'none')
+            .style('stroke', 'black')
+    
+    runningHeight = (Number(svg.style("height").replace(/px$/, '')))
+
+    var letters = ["NOT", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+    var item = 0;
+    var letterLocationCount = -1;
+
+    svg.select('svg')
+      .selectAll('text')
+      .data(cleanData)
+      .enter()
+      .append('text')
+            .attr("y", function(d){runningHeight = runningHeight - d; return (runningHeight + 6)})
+            .attr("x", function(){return ((runningWidth * 0.1) - 10)})
+            .text(function(d){item++; return letters[item]}) //console.log(cleanData.key);  return data.key })
+            .attr("fill", "black")
+            .style("font-size", "12px")
+
+    //Make some makeshift axes
+    //y axis
+    svg
+     .select('svg')
+     .append('line')
+     .style("stroke", "black")
+     .style("stroke-width", 2)
+     .attr("x1", 0)
+     .attr("y1", 0)
+     .attr("x2", 0)
+     .attr("y2", 500); 
+
+    //x axis
+    svg
+     .select('svg')
+     .append('line')
+     .style("stroke", "black")
+     .style("stroke-width", 2)
+     .attr("x1", 0)
+     .attr("y1", 500)
+     .attr("x2", 500)
+     .attr("y2", 500);     
+
+    return 'Stacked Bar Chart'
+  }
+
+  function makePieChart(arrayData, points) {
+    // console.log('called makePieChart')
+    // console.log('Looking for points: ' + points)
+
+    document.getElementById('header').innerText = 'Compare section "' + String.fromCharCode(points[0] + 65) + '" versus section "' + String.fromCharCode(points[1] + 65) + '"'
+
+    // The min of width or height / 2 is the same at 250
+    var chartRadius = 250
+
+    // Data already exists
+    // Add data to chart
+
+    const data = {
+      children: arrayData.map(function (element, index) {
+        return {key: String.fromCharCode(index + 65), value: element};
+      })
+    }
+
+    d3.selectAll('svg > *').remove()
+
+    var pieData = d3.pie()
+    .sort(null).value(function(d) {return d.value})
+
+    const rawData = data.children
+    var readyData = pieData(rawData)
+
+    var arcs = d3.arc()
+      .innerRadius(0)
+      .outerRadius(chartRadius)
+
+    // Build Chart
+    svg.select('svg')
+    .selectAll('path')
+    .data(readyData)
+    .enter()
+    .append('path')
+    .attr('d', arcs)
+    .attr('fill', 'white')
+    .attr('stroke', 'black')
+    .attr('id', function(d) {return d.data.key})
+    .attr("transform", "translate(" + 250 + "," + 250 + ")")
+
+    svg.select('svg')
+    .selectAll('text')
+    .data(readyData)
+    .enter()
+    .append('text')
+    .text(function(d) {return d.data.key})
+    .attr('transform', function(d) {return "translate(" + arcs.centroid(d) + ")translate(" + 250 + "," + 250 + ")"})
+
+    return 'Pie Chart'
+  }
+
+  //Randomize data
+  function randomizeData() {
+    currData = [...Array(10)].map(() => Math.floor(Math.random() * 101))
+    return currData
+  }
+
+  // select two data points
+  function randomizeSelectedPoints() {
+    currSelectedPoints = [...Array(2)].map(() => Math.floor(Math.random() * 10))
+    while (currSelectedPoints[0] === currSelectedPoints[1]) {
+      currSelectedPoints[1] = Math.floor(Math.random() * 10)
+    }
+    return currSelectedPoints
+  }
+
+</script>
