@@ -6,7 +6,7 @@ class TreeMap extends Chart
     constructor(svg, width, height)
     {
         super(svg, width, height);
-        this.name = "TreeMap";
+        this.type = "TreeMap";
     }
 
     newRandom()
@@ -39,6 +39,10 @@ class TreeMap extends Chart
                 .style("stroke", "black")
                 .style("stroke-width", 1)
                 .style("fill", "white");
+
+        // TODO: how to make the chart work?
+
+        this.answer = 0;
     }
 
     check(answer)

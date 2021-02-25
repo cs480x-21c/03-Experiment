@@ -2,7 +2,12 @@
 let gVisArray = [];
 let gVisIndex = 0;
 let gTrialIndex = 0;
-const TRIALS = 20;
+// const TRIALS = 20;
+const TRIALS = 2;
+
+let firstTrial = true;
+
+let gResults;
 
 function main()
 {
@@ -33,7 +38,9 @@ function main()
     gVisArray.push(new RadarChart(svg, width, height));
     gVisArray.push(new TreeMap(svg, width, height));
 
-    // Create new results file for this trial
+    // Create a new results instance for this trial
+    gResults = new ResultsController();
+    gResults.makeNewResult();
 
     // First test (the form leads to new tests)
     makeNewChart();
@@ -48,6 +55,11 @@ function makeNewChart()
         if (gTrialIndex === TRIALS)
         {
             // TODO: end test somehow
+
+            console.log("SUCC");
+
+            // Saves the result
+            gResults.saveResult();
         }
         else
         {
@@ -56,13 +68,26 @@ function makeNewChart()
     }
     else
     {
-        console.log("S");
-
-        // TODO: gets the answer and submits it
-        //  vis is made, unless this is the first time
         let vis = gVisArray[gVisIndex];
 
+        // first trial will not have an input
+        if (firstTrial)
+        {
+            // Fetch answer and enter the result
+            let answer = document.getElementById("answer").valueAsNumber;
+            gResults.enterResult(vis.type, vis.answer, answer);
+
+            firstTrial = false;
+        }
+
+        // remove current vis
         vis.remove();
+
+        // TODO:
+
+        // TODO: prevent accidental navigation
+
+        // TODO: clear answer box
 
         // make the new vis with random values and make
         vis.newRandom();
