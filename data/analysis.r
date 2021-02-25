@@ -12,4 +12,4 @@ data <- read.csv('./data/data_final.csv')
 ggplot(data, aes(x = Type, y = cm.error)) + stat_summary(fun.data = 'mean_cl_boot', colour = 'red', size = 0.5)
 #stat_summary(mapping = NULL, data = NULL, geom = "pointrange", position = "identity")
 
-ggsave('./data/plot.png')
+ggsave('./img/plot.png')
