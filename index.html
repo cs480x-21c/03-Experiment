@@ -20,19 +20,58 @@
     var maxSubmits = 3;
 
     // SVG dimensions
-    var SVGWidth = 405;
+    var SVGWidth = 500;
     var SVGHeight = 600;
     //var margins = window.innerWidth/10;
-    var margins = 50;
 
     var svgdiv = document.createElement("div");
     svgdiv.classList.add("svgdiv");
+    // Hide the svg div initially so that it doesn't make the start screen take up twice the view height
+    svgdiv.style.display = 'none';
     document.body.appendChild(svgdiv);
     svgdiv.id = "svgdiv";
     var svg = d3.select("#svgdiv")
         .append("svg")
         .attr("width", SVGWidth)
         .attr("height", SVGHeight);
+
+
+    const randArray = [];
+    var randArrayLength = maxSubmits;
+
+    console.log("rand array length: " + randArrayLength);
+
+    for (var i = 0; i < randArrayLength; i++) {
+        if (i < randArrayLength / 3) {
+            randArray[i] = 0;
+        } else if (i < ((randArrayLength / 3) * 2)) {
+            randArray[i] = 1;
+        } else {
+            randArray[i] = 2;
+        }
+    }
+
+
+    console.log("rand array: " + randArray);
+
+    function shuffleArray(array) {
+        let curId = array.length;
+        // There remain elements to shuffle
+        while (0 !== curId) {
+            // Pick a remaining element
+            let randId = Math.floor(Math.random() * curId);
+            curId -= 1;
+            // Swap it with the current element.
+            let tmp = array[curId];
+            array[curId] = array[randId];
+            array[randId] = tmp;
+        }
+        return array;
+    }
+
+    shuffleArray(randArray);
+
+    console.log("Suffled array: " + randArray);
 
     function startPage() {
 
@@ -64,16 +103,47 @@
         start.classList.add('StartPage')
         start.onclick = function () {
             startDiv.style.display = "none";
-            //drawBarChart();
+            // Un-hide the svg div
+            svgdiv.style.display = 'block';
             textBoxSubmit();
-            drawStackedChart();
+            drawNextChart(randArray[numSubmits]);
         }
 
     }
 
-    function resultsPage(csvContent) {
-        var encodedUri = encodeURI(csvContent);
-        window.open(encodedUri);
+    function downloadCSV() {
+        // Building the CSV from the Data two-dimensional array
+        // Each column is separated by ";" and new line "\n" for next row
+        var csvContent = '';
+        csvRows.forEach(function (infoArray, index) {
+            dataString = infoArray.join(';');
+            csvContent += index < csvRows.length ? dataString + '\n' : dataString;
+        });
+
+        // The download function takes a CSV string, the filename and mimeType as parameters
+        // Scroll/look down at the bottom of this snippet to see how download is called
+        var download = function (content, fileName, mimeType) {
+            var a = document.createElement('a');
+            mimeType = mimeType || 'application/octet-stream';
+
+            if (navigator.msSaveBlob) { // IE10
+                navigator.msSaveBlob(new Blob([content], {
+                    type: mimeType
+                }), fileName);
+            } else if (URL && 'download' in a) { //html5 A[download]
+                a.href = URL.createObjectURL(new Blob([content], {
+                    type: mimeType
+                }));
+                a.setAttribute('download', fileName);
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } else {
+                location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
+            }
+        }
+
+        download(csvContent, 'dowload.csv', 'text/csv;encoding:utf-8');
     }
 
     function textBoxSubmit() {
@@ -102,7 +172,7 @@
         submit.appendChild(submitText);
         div.appendChild(submit);
         submit.onclick = function () {
-            if (textInput.value < 100) {
+            if (textInput.value <= 100 && textInput.value > 0 && textInput.value != '') {
                 numSubmits++;
                 var text = textInput.value;
                 textInput.value = '';
@@ -113,23 +183,30 @@
                 // Update the csv
                 tempData.push(text);
                 csvRows.push(tempData);
-                let csvContent = "data:text/csv;charset=utf-8,";
-                csvRows.forEach(function (rowArray) {
-                    let row = rowArray.join(",");
-                    csvContent += row + "\r\n";
-                });
+
 
                 console.log(csvRows);
-                if (numSubmits < maxSubmits) drawBarChart();
-                else resultsPage(csvContent);
-            }else{
-                alert("Please type a number less than 100")
+                if (numSubmits < maxSubmits) {
+                    drawNextChart(randArray[numSubmits]);
+                } else downloadCSV();
+
+            } else {
+                alert("Please type a number between 0 and 100 (Inclusive for 100)");
             }
 
         }
     }
 
-    //  function resultsPage
+    function drawNextChart(num) {
+        if (num == 0) {
+            drawBarChart();
+        } else if (num == 1) {
+            drawPieChart();
+        } else if (num == 2) {
+            drawStackedChart();
+        }
+    }
+
 
     function drawBarChart() {
 
@@ -219,7 +296,7 @@
 
     }
 
-    function drawPieChart(){
+    function drawPieChart() {
 
         d3.selectAll("svg > *").remove();
 
@@ -241,7 +318,9 @@
         var radius = Math.min(width, height) / 3;
 
         var pie = d3.pie()
-            .value(function(d) {return d.value; })
+            .value(function (d) {
+                return d.value;
+            })
             .sort(null);
         var data_ready = pie(d3.entries(data));
 
@@ -265,8 +344,6 @@
             .style("opacity", 0.7)
 
 
-
-
         var twoDots = [];
         while (twoDots.length < 2) {
             var dotIndex = Math.floor(Math.random() * maxDataPoints);
@@ -283,15 +360,15 @@
         */
 
         // Add pi/2 to the angles since a unit circle starts at East while the pie chart start drawing at North
-        var dot0startAngle = data_ready[twoDots[0]].startAngle + Math.PI/2;
-        var dot0endAngle = data_ready[twoDots[0]].endAngle + Math.PI/2;
-        var dot1startAngle = data_ready[twoDots[1]].startAngle + Math.PI/2;
-        var dot1endAngle = data_ready[twoDots[1]].endAngle + Math.PI/2;
+        var dot0startAngle = data_ready[twoDots[0]].startAngle + Math.PI / 2;
+        var dot0endAngle = data_ready[twoDots[0]].endAngle + Math.PI / 2;
+        var dot1startAngle = data_ready[twoDots[1]].startAngle + Math.PI / 2;
+        var dot1endAngle = data_ready[twoDots[1]].endAngle + Math.PI / 2;
 
-        var dot0x = -((radius + 20) * (Math.cos(dot0endAngle - (dot0endAngle - dot0startAngle)/2)));
-        var dot0y = -((radius + 20) * (Math.sin(dot0endAngle - (dot0endAngle - dot0startAngle)/2)));
-        var dot1x = -((radius + 20) * (Math.cos(dot1endAngle - (dot1endAngle - dot1startAngle)/2)));
-        var dot1y = -((radius + 20) * (Math.sin(dot1endAngle - (dot1endAngle - dot1startAngle)/2)));
+        var dot0x = -((radius + 20) * (Math.cos(dot0endAngle - (dot0endAngle - dot0startAngle) / 2)));
+        var dot0y = -((radius + 20) * (Math.sin(dot0endAngle - (dot0endAngle - dot0startAngle) / 2)));
+        var dot1x = -((radius + 20) * (Math.cos(dot1endAngle - (dot1endAngle - dot1startAngle) / 2)));
+        var dot1y = -((radius + 20) * (Math.sin(dot1endAngle - (dot1endAngle - dot1startAngle) / 2)));
 
         console.log("cos: " + Math.cos(dot0endAngle));
         console.log("sin: " + Math.sin(dot0endAngle));
@@ -319,8 +396,8 @@
         var dot0angle = dot0endAngle - dot0startAngle;
         var dot1angle = dot1endAngle - dot1startAngle;
 
-        var dot0area = Math.pow(radius,2) * (dot0angle / 2);
-        var dot1area = Math.pow(radius,2) * (dot1angle / 2);
+        var dot0area = Math.pow(radius, 2) * (dot0angle / 2);
+        var dot1area = Math.pow(radius, 2) * (dot1angle / 2);
 
         var smallArea = Math.min(dot0area, dot1area);
         var largeArea = Math.max(dot0area, dot1area);
@@ -332,48 +409,51 @@
 
     }
 
-    function drawStackedChart(){
+    function drawStackedChart() {
         d3.selectAll("svg > *").remove();
 
-        var data2 = [];
+        var data = [];
         var numDataPoints = 0;
         var maxDataPoints = 9;
         while (numDataPoints < maxDataPoints) {
             var newNumber = Math.random();
             if (newNumber > 0.1) {
-                data2.push(newNumber);
+                data.push(newNumber);
                 numDataPoints++;
             }
         }
 
         var prev_width = [0,
-            data2[0],
-            data2[0] +  data2[1],
-            data2[0] +  data2[1] +  data2[2],
-            data2[0] +  data2[1] +  data2[2] + data2[3],
-            data2[0] +  data2[1] +  data2[2] + data2[3] + data2[4],
-            data2[0] +  data2[1] +  data2[2] + data2[3] + data2[4] + data2[5],
-            data2[0] +  data2[1] +  data2[2] + data2[3] + data2[4] + data2[5] + data2[6],
-            data2[0] +  data2[1] +  data2[2] + data2[3] + data2[4] + data2[5] + data2[6] + data2[7]
+            data[0],
+            data[0] + data[1],
+            data[0] + data[1] + data[2],
+            data[0] + data[1] + data[2] + data[3],
+            data[0] + data[1] + data[2] + data[3] + data[4],
+            data[0] + data[1] + data[2] + data[3] + data[4] + data[5],
+            data[0] + data[1] + data[2] + data[3] + data[4] + data[5] + data[6],
+            data[0] + data[1] + data[2] + data[3] + data[4] + data[5] + data[6] + data[7]
         ];
 
         var barWidth = 60;
         var padding = 5;
+        var barx = SVGWidth / 2 - barWidth / 2
 
         svg.selectAll('rect')
-            .data(data2)
+            .data(data)
             .enter()
             .append('rect')
             .attr('width', barWidth)
-            .attr('x',SVGWidth/2 - barWidth/2)
-            .attr('fill','white')
-            .style('stroke','black')
-            .style('stroke-width',3)
-            .attr('y',function(d, i){
-                return prev_width[i] * 75 + padding; })
-            .attr('height', function(d){
-                return d*75;
-        });
+            .attr('x', barx)
+            .attr('fill', 'white')
+            .style('stroke', 'black')
+            .style('stroke-width', 3)
+            .attr('y', function (d, i) {
+                return prev_width[i] * 75 + padding;
+            })
+            .attr('height', function (d) {
+                return d * 75;
+            });
+
 
         var twoDots = [];
         while (twoDots.length < 2) {
@@ -385,9 +465,41 @@
             }
         }
 
-        var smallerStack = Math.min(data2[twoDots[0]], data2[twoDots[1]]);
 
-        var largerStack = Math.max(data2[twoDots[0]], data2[twoDots[1]]);
+        bar0cell = prev_width[twoDots[0]] * 75 + padding;
+        bar0nextCell = prev_width[twoDots[0] + 1] * 75 + padding;
+        bar0y = bar0nextCell - (bar0nextCell - bar0cell) / 2;
+
+        bar1cell = prev_width[twoDots[1]] * 75 + padding;
+        var bar1nextCell;
+
+
+        if (twoDots[1] == 8) {
+            bar1nextCell = bar1cell + data[8] * 75;
+        } else {
+            bar1nextCell = prev_width[twoDots[1] + 1] * 75 + padding;
+        }
+
+        bar1y = bar1nextCell - (bar1nextCell - bar1cell) / 2;
+
+        // Draw dots
+        svg.append('circle')
+            .attr("cx", barx - 10)
+            .attr("cy", bar0y)
+            .attr("r", 5)
+            .style("fill", "black");
+        svg.append('circle')
+            .attr("cx", barx - 10)
+            .attr("cy", bar1y)
+            .attr("r", 5)
+            .style("fill", "black");
+
+        console.log("Dot 0 index: " + twoDots[0]);
+
+
+        var smallerStack = Math.min(data[twoDots[0]], data[twoDots[1]]);
+
+        var largerStack = Math.max(data[twoDots[0]], data[twoDots[1]]);
 
         smallerStack = Math.round(smallerStack * 100000) / 100000;
         largerStack = Math.round(largerStack * 100000) / 100000;
