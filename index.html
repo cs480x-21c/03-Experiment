@@ -13,7 +13,15 @@
   }
   #finish {
     display: none;
+    text-align: center;
   }
+
+  table {
+    width: 100%;
+    text-align: center;
+    table-layout: fixed;
+  }
+
   .errorMsg {
     color: red;
     font-size: 12px;
@@ -47,6 +55,20 @@
 
     <div id="finish">
       <p>You have completed the experiment. Thanks for participating!</p>
+      <br><br>
+      <p>Your Results:</p>
+      <div v-for="result in results">
+        <table>
+          <tr>
+            <td>
+              <p>Reported Percent: <span v-bind:style="calculateColor(result.predictedValue, result.truePercent)">{{ result.predictedValue }}</span></p>
+            </td>
+            <td>
+              <p>True Percent: {{ result.truePercent.toFixed(3) }}</p>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
 
   </div>
@@ -95,7 +117,8 @@ console.log(visOrder)
       predictedValue: '',
       currentCount: 0,
       truePercent: null,
-      nextVis: null
+      nextVis: null,
+      results: []
     },
     computed: {
       totalVisCount: function() {
@@ -144,6 +167,10 @@ console.log(visOrder)
           document.getElementById('finish').style.display = 'block';
           document.getElementById('counter').style.display = 'none';
           
+          d3.select('#svg')
+          .style('width', '0')
+          .style('height', '0');
+          
         } else {
 
           this.nextVis = visIterator.next();
@@ -189,6 +216,25 @@ console.log(visOrder)
           .then(json=>{
               console.log(json)
           })
+        
+          this.results.push({
+            truePercent: truePercent,
+            predictedValue: predictedValue
+          });
+      },
+
+      calculateColor(predicted, truePercent) {
+
+        if(Math.abs(predicted - truePercent) >= 10) {
+
+          return "color:red; font-weight:bold;";
+
+        } else if(Math.abs(predicted - truePercent) < 5) {
+
+          return "color:green; font-weight:bold;";
+
+        } else return "";
+
       }
 
     }
