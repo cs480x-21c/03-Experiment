@@ -47,6 +47,7 @@ function main()
 
 function makeNewChart()
 {
+    // Check if the vis index needs to be reset
     if (gVisIndex === gVisArray.length)
     {
         gVisIndex = 0;
@@ -54,7 +55,6 @@ function makeNewChart()
         if (gTrialIndex === TRIALS)
         {
             // TODO: end test somehow
-
             console.log("SUCC");
 
             // Saves the result
@@ -65,27 +65,26 @@ function makeNewChart()
             gTrialIndex++;
         }
     }
-    else
+
+    // make the new vis with the current index
+    let vis = gVisArray[gVisIndex];
+
+    // first trial will not have an input
+    if (notFirstTrial)
     {
-        let vis = gVisArray[gVisIndex];
-
-        // first trial will not have an input
-        if (notFirstTrial)
-        {
-            // Fetch answer and enter the result
-            let answer = document.getElementById("answer").valueAsNumber;
-            gResults.enterResult(vis.type, vis.answer, answer);
-        }
-
-        notFirstTrial = true;
-
-        // remove current vis
-        vis.remove();
-
-        // make the new vis with random values and make
-        vis.newRandom();
-        vis.make();
-
-        gVisIndex++;
+        // Fetch answer and enter the result
+        let answer = document.getElementById("answer").valueAsNumber;
+        gResults.enterResult(vis.type, vis.answer, answer);
     }
+
+    notFirstTrial = true;
+
+    // remove current vis
+    vis.remove();
+
+    // make the new vis with random values and make
+    vis.newRandom();
+    vis.make();
+
+    gVisIndex++;
 }
