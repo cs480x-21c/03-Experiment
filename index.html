@@ -64,7 +64,8 @@
         start.classList.add('StartPage')
         start.onclick = function () {
             startDiv.style.display = "none";
-            drawBarChart()
+            //drawBarChart();
+            drawStackedChart();
         }
 
     }
@@ -227,13 +228,13 @@
 
 
         // Random Dataset Method 2 (JavaScript Random Number Generation)
-        var data2 = [];
+        var data = [];
         var numDataPoints = 0;
         var maxDataPoints = 9;
         while (numDataPoints < maxDataPoints) {
             var newNumber = Math.random();
             if (newNumber > 0.1) {
-                data2.push(newNumber);
+                data.push(newNumber);
                 numDataPoints++;
             }
         }
@@ -254,23 +255,55 @@
 
         //svg.attr('transform', 'translate(' + (width/2) + ',' + (height/2) + ')');
 
-        var arc = d3.arc()
-            .innerRadius(0)
-            .outerRadius(radius);
+        //Working
+        // var arc = d3.arc()
+        //     .innerRadius(0)
+        //     .outerRadius(radius);
+        //
+        // var labels = d3.arc()
+        //     .outerRadius(radius)
+        //     .innerRadius(radius - 20);
+        //
+        // var pie = d3.pie()
+        //     .value(function(d) { return d; })
+        //     .sort(null);
+        //
+        // var path = svg.selectAll('path')
+        //     .data(pie(data))
+        //     .enter()
+        //     .append('path')
+        //     .attr('d', arc)
+        //     .attr("transform", "translate(" + SVGWidth / 2 + "," + SVGHeight / 2 + ")")
+        //     .attr('fill', "white")
+        //     .style("stroke","black")
+        //     .style("stroke-width",3);
 
         var pie = d3.pie()
-            .value(function(d) { return d; })
+            .value(function(d) {return d.value; })
             .sort(null);
+        var data_ready = pie(d3.entries(data));
 
-        var path = svg.selectAll('path')
-            .data(pie(data2))
+        console.log(data_ready);
+
+        var arcGenerator = d3.arc()
+            .innerRadius(0)
+            .outerRadius(radius)
+
+        svg
+            .selectAll('pie')
+            .data(data_ready)
             .enter()
             .append('path')
-            .attr('d', arc)
+            .attr('d', arcGenerator
+            )
             .attr("transform", "translate(" + SVGWidth / 2 + "," + SVGHeight / 2 + ")")
-            .attr('fill', "white")
-            .style("stroke","black")
-            .style("stroke-width",3);
+            .attr('fill', 'white')
+            .attr("stroke", "black")
+            .style("stroke-width", "2px")
+            .style("opacity", 0.7)
+
+
+
 
         var twoDots = [];
         while (twoDots.length < 2) {
@@ -282,12 +315,99 @@
             }
         }
 
-        var smallerWedge = Math.min(data2[twoDots[0]], data2[twoDots[1]]);
+        /*
+        x = cx + r * cos(a)
+        y = cy + r * sin(a)
+        */
 
-        var largerWedge = Math.max(data2[twoDots[0]], data2[twoDots[1]]);
+        // Add pi/2 to the angles since a unit circle starts at East while the pie chart start drawing at North
+        var dot0startAngle = data_ready[twoDots[0]].startAngle + Math.PI/2;
+        var dot0endAngle = data_ready[twoDots[0]].endAngle + Math.PI/2;
+        var dot1startAngle = data_ready[twoDots[1]].startAngle + Math.PI/2;
+        var dot1endAngle = data_ready[twoDots[1]].endAngle + Math.PI/2;
+
+        var dot0x = -((radius + 20) * (Math.cos(dot0endAngle - (dot0endAngle - dot0startAngle)/2)));
+        var dot0y = -((radius + 20) * (Math.sin(dot0endAngle - (dot0endAngle - dot0startAngle)/2)));
+        var dot1x = -((radius + 20) * (Math.cos(dot1endAngle - (dot1endAngle - dot1startAngle)/2)));
+        var dot1y = -((radius + 20) * (Math.sin(dot1endAngle - (dot1endAngle - dot1startAngle)/2)));
+
+        console.log("cos: " + Math.cos(dot0endAngle));
+        console.log("sin: " + Math.sin(dot0endAngle));
+
+        // ADD circles to pie slices
+        svg.append("circle")
+            .attr("r", 5)
+            .attr("cx", dot0x)
+            .attr("cy", dot0y)
+            .attr("transform", "translate(" + SVGWidth / 2 + "," + SVGHeight / 2 + ")")
+            .attr('fill', 'black')
+            .attr("stroke", "black")
+            .style("stroke-width", "2px");
+
+        svg.append("circle")
+            .attr("r", 5)
+            .attr("cx", dot1x)
+            .attr("cy", dot1y)
+            .attr("transform", "translate(" + SVGWidth / 2 + "," + SVGHeight / 2 + ")")
+            .attr('fill', 'black')
+            .attr("stroke", "black")
+            .style("stroke-width", "2px");
+
+
+        // var smallerWedge = Math.min(data[twoDots[0]], data[twoDots[1]]);
+        // var largerWedge = Math.max(data[twoDots[0]], data[twoDots[1]]);
+        //
+        // var data_ready = pie(d3.entries(arc));
 
 
     }
+
+    function drawStackedChart(){
+        d3.selectAll("svg > *").remove();
+
+        var data2 = [];
+        var numDataPoints = 0;
+        var maxDataPoints = 9;
+        while (numDataPoints < maxDataPoints) {
+            var newNumber = Math.random();
+            if (newNumber > 0.1) {
+                data2.push(newNumber);
+                numDataPoints++;
+            }
+        }
+
+        var prev_width = [0,
+            data2[0],
+            data2[0] +  data2[1],
+            data2[0] +  data2[1] +  data2[2],
+            data2[0] +  data2[1] +  data2[2] + data2[3],
+            data2[0] +  data2[1] +  data2[2] + data2[3] + data2[4],
+            data2[0] +  data2[1] +  data2[2] + data2[3] + data2[4] + data2[5],
+            data2[0] +  data2[1] +  data2[2] + data2[3] + data2[4] + data2[5] + data2[6],
+            data2[0] +  data2[1] +  data2[2] + data2[3] + data2[4] + data2[5] + data2[6] + data2[7]
+        ];
+
+        var barWidth = 60;
+        var padding = 5;
+
+        svg.selectAll('rect')
+            .data(data2)
+            .enter()
+            .append('rect')
+            .attr('width', barWidth)
+            .attr('x',SVGWidth/2 - barWidth/2)
+            .attr('fill','white')
+            .style('stroke','black')
+            .style('stroke-width',3)
+            .attr('y',function(d, i){
+                return prev_width[i] * 100 + padding; })
+            .attr('height', function(d){
+                return d*100;
+        });
+
+    }
+
+
 </script>
 </body>
 </html>
