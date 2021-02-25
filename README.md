@@ -50,6 +50,7 @@ Technical
 ---
 
 -We implement box plots as one of our visualizations, a much harder to implement chart compared to others
+
 -Instead of locally storing the data, we used the online service "formspree" to gather and compile all of our data allowing us to easily export it as a csv to do analysis on
 
 Design
