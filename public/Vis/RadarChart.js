@@ -5,23 +5,18 @@ class RadarChart extends Chart
     constructor(svg, width, height)
     {
         super(svg, width, height);
-        this.name = "RadarChart";
-        this.features = ["A","B","C","D","E","F","G"];
         this.data = {};
-        this.pointsOfIntrest = [];
         this.type = "RadarChart";
     }
 
     newRandom()
     {
-        // random integers 10-90
-        this.features.forEach(p => this.data[p] = Math.floor(10 + Math.random() * 80));
+        super.newRandom();
 
-        // select points of intrest
-        let point1 = Math.floor(Math.random() * (this.features.length - 1))
-        let point2 = point1 + Math.floor(1 + Math.random() * (this.features.length - 2))
-        if(point2 > this.features.length - 1) point2 -= this.features.length;
-        this.pointsOfIntrest = [point1, point2]
+        this.data = {};
+
+        // random integers 10-90
+        this.features.forEach(p => this.data[p] = d3.randomInt(10, 91)());
     }
 
     make()
@@ -29,7 +24,7 @@ class RadarChart extends Chart
         //
         let radScale = d3.scaleLinear()
             .domain([0,100])
-            .range([0, this.width/2 - 50]);
+            .range([0,this.width/2 -50]);
 
         // util
         function angleToCoordinate(angle, value, width, height)
@@ -69,7 +64,7 @@ class RadarChart extends Chart
             .attr("fill", "grey")
 
         //draw feature lines
-        for (var i = 0; i < this.features.length; i++) 
+        for (var i = 0; i < this.features.length; i++)
         {
             let angle = (Math.PI / 2) + (2 * Math.PI * i / this.features.length);
             let featureLine = angleToCoordinate(angle, 100, this.width, this.height);
@@ -79,8 +74,8 @@ class RadarChart extends Chart
                 .attr("x2", featureLine.x)
                 .attr("y2", featureLine.y)
                 .attr("stroke","black");
-            
-            if(i === this.pointsOfIntrest[0] || i === this.pointsOfIntrest[1])
+
+            if((i === this.pointsOfIntrest[0]) || (i === this.pointsOfIntrest[1]))
             {
                 let value = this.data[this.features[i]];
                 let point = angleToCoordinate(angle, value, this.width, this.height);

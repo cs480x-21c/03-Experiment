@@ -5,26 +5,22 @@ class BarChart extends Chart
     constructor(svg, width, height)
     {
         super(svg, width, height);
-        this.name = "BarChart";
-        this.features = ["A","B","C","D","E","F","G"];
         this.data = [];
-        this.pointsOfIntrest = [];
         this.type = "BarChart";
     }
 
     newRandom()
     {
+        super.newRandom();
+
+        this.data = [];
+
         // random integers 10-90
+        let random = d3.randomInt(10, 91);
         for(var i = 0; i < this.features.length; i++)
         {
-            this.data[i] = Math.floor(10 + Math.random() * 80);
+            this.data[i] = random();
         }
-
-        // select points of intrest
-        let point1 = Math.floor(Math.random() * (this.features.length - 1))
-        let point2 = point1 + Math.floor(1 + Math.random() * (this.features.length - 2))
-        if(point2 > this.features.length - 1) point2 -= this.features.length;
-        this.pointsOfIntrest = [point1, point2]
     }
 
     make()
@@ -39,7 +35,7 @@ class BarChart extends Chart
         this.svg.append("g")
             .attr("transform", "translate(0," + this.height + ")")
             .call(d3.axisBottom(x)
-            .tickValues([]))
+                .tickValues([]))
 
         // y axis
         var y = d3.scaleLinear()
@@ -47,7 +43,7 @@ class BarChart extends Chart
             .range([this.height, 0]);
         this.svg.append("g")
             .call(d3.axisLeft(y)
-            .tickValues([100]));
+                .tickValues([100]));
 
         // Bars
         for(var i = 0; i < this.features.length; i++)
@@ -61,8 +57,8 @@ class BarChart extends Chart
                 .attr("stroke", "black")
                 .attr("stroke-width", 2.5)
                 .attr("opacity", 0.8);
-            
-            if(i === this.pointsOfIntrest[0] || i === this.pointsOfIntrest[1])
+
+            if((i === this.pointsOfInterest[0]) || (i === this.pointsOfInterest[1]))
             {
                 this.svg.append("circle")
                     .attr("cx", x(this.features[i]) + x.bandwidth() / 2)

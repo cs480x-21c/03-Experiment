@@ -6,14 +6,22 @@ class TreeMap extends Chart
     constructor(svg, width, height)
     {
         super(svg, width, height);
+        this.data = {children: []};
         this.type = "TreeMap";
     }
 
     newRandom()
     {
+        super.newRandom();
+
         this.data = {children: []};
 
-        pushRandomValues(this.data.children, 10, 1, 100);
+        // random integers 10-90
+        let random = d3.randomInt(10, 91);
+        for (let i = 0; i < this.features.length; i++)
+        {
+            this.data.children.push({value: random()});
+        }
     }
 
     make()
@@ -39,6 +47,10 @@ class TreeMap extends Chart
                 .style("stroke", "black")
                 .style("stroke-width", 1)
                 .style("fill", "white");
+
+        
+
+
 
         // TODO: how to make the chart work?
 
