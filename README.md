@@ -42,7 +42,17 @@ Above is an screenshot what the user sees when going through the experiment. The
 -  Implemented [d3-simple-slider](https://github.com/johnwalley/d3-simple-slider) for the users to input the percentages instead of having them input the numbers manually 
 - The instruction prompt above the graph changes depending on if the current chart is in color or is black and white
 
+# References
 
+For creating the graphs in our experiment, the following sites articles were referenced:
+
+- [Bar Graph](https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4)
+- [Vertical Bar Graph](https://stackoverflow.com/questions/44817414/rotate-svg-in-place-using-d3-js)
+- [Pie Chart](https://medium.com/codecakes/bts-d3-js-basic-pie-chart-d794f17b79bb)
+- [Donut Chart](https://www.d3-graph-gallery.com/graph/donut_label.html)
+- [Tree Map (Unused in experiment)](https://www.d3-graph-gallery.com/graph/treemap_basic.html)
+
+For creating CSVs, this article was referenced
 
 Requirements
 ---

@@ -45,16 +45,6 @@
 </body>
 
 <script>
-  // A list of websites used for reference
-  // https://chancejs.com
-  // https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4
-  // https://stackoverflow.com/questions/44817414/rotate-svg-in-place-using-d3-js
-  // https://medium.com/codecakes/bts-d3-js-basic-pie-chart-d794f17b79bb
-  // https://www.d3-graph-gallery.com/graph/donut_label.html
-  // https://www.d3-graph-gallery.com/graph/treemap_basic.html
-</script>
-
-<script>
 
   //empty array to be filled with the JSON format of a user's answers
   var jsonObjArr = []
@@ -147,7 +137,6 @@
 
   //Returns the color to use for rendering the dot
   function getDotColor(isVisable, renderDot){
-    //console.log(isVisable)
     if(isVisable.dot && renderDot)
       return dotColor
     return noColor
@@ -325,7 +314,6 @@
       return a - b;
     });
 
-    //console.log(points)
     return 1 - (Math.abs(points[0] - points[1]) / points[1])
   }
 
@@ -374,15 +362,11 @@
       UID: userID
     });
 
-    //Haley - Convert to CSV and store someplace
-
-    console.log(json);
+    //Convert to CSV and store someplace
 
     jsonObj = JSON.parse(json);
-    //console.log(jsonObj);
 
     jsonObjArr.push(jsonObj);
-    //console.log(jsonObjArr);
 
     // Assign the prompts, x = color... y = dot
     var x = document.getElementById("colorPrompt");
@@ -456,7 +440,6 @@
 
       str += line + '\r\n';
     }
-    console.log(str)
     return str;
   }
 
