@@ -55,7 +55,13 @@ vis and logError columns were used to create a visualization in R.
 
 Looking at the logError and analyzing the results, we can see that our hypothesis above holds true. The true percent is the actual percentage of the smaller to the larger graphical element in each chart, while the reported percent is what participants reported in the trials. Utilizing the Cleveland and McGill method, `abs(ReportedPercent – TruePercent) +1/8`, as their score for error and having this be on a logarithmic scale with base 2 to propagate error, we can see in the graphical analysis above that participants most likely were able to perceive data more accurately when presented using a bar chart. The pie chart clearly resulted in a more inaccurate reading of data, whereas the stacked bar chart came in as the second most effective graphical display. It is important to note that the error calculated for the stacked bar chart, however, was evidently closer to the error in accuracy when reading a pie chart.
 
-# Design/Technical Achievements
+# Technical Achievements
+  - We utilized d3, html/javascript, R, and Excel to complete this assignment
+  - We eliminated data outliers in our final dataset
+  - We converted -3 log error values to 0
+# Design Achievements
+  - Our experiment resembles the example given
+  - The final results graph produced in R has the chart types ordered by the value of errors
 
 Some stuff here....
 
