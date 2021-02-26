@@ -19,8 +19,19 @@ const randomSelection = (randomData) => {
     return [i1, i2];
 }
 
+// initMaterialComponents() sets up the material components
+function initMaterialComponents() {
+    //mdc.ripple.MDCRipple.attachTo(document.querySelector(".mdc-button"));
+    document.querySelectorAll(".mdc-button").forEach(element =>
+    mdc.ripple.MDCRipple.attachTo(element))
+    document.querySelectorAll(".mdc-text-field").forEach(element =>
+        mdc.textField.MDCTextField.attachTo(element))
+}
+
 /*  PUT CODE HERE */
 function main() {
+    initMaterialComponents();
+
     const elements = d3.selectAll(".viz");
 
     // SVG 1
@@ -261,9 +272,7 @@ function main() {
         orderCount++;
 
         e.target[0].blur();
-        e.target[1].blur();
         e.target[0].tabIndex = -1;
-        e.target[1].tabIndex = -1;
 
         if (randomsSelected.length < elements.size()) {
             elements
