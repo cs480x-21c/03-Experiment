@@ -7,6 +7,8 @@
  * Provides the Radar chart
  */
 
+ //example: https://yangdanny97.github.io/blog/2019/03/01/D3-Spider-Chart
+
 class RadarChart extends Chart
 {
     /**

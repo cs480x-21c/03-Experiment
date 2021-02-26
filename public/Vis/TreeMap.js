@@ -78,8 +78,8 @@ class TreeMap extends Chart
             .data(circles)
             .enter()
             .append("circle")
-            .attr('cx', function (d) { return d.x0 + 0.5*(d.x1 - d.x0); })
-            .attr('cy', function (d) { return d.y0 + 0.5*(d.y1 - d.y0);; })
+            .attr('cx', function (d) { return d.x0 + (d.x1 - d.x0) - 15; })
+            .attr('cy', function (d) { return d.y0 + (d.y1 - d.y0) - 15; })
             .attr('r', 10)
             .style("fill", "black");
 

@@ -1,14 +1,35 @@
 Assignment 3 - Replicating a Classic Experiment  
 ===
 
-
-
-
 Site: https://a3-a-classic-experiment-2.glitch.me
+
 Code edit: https://glitch.com/edit/#!/a3-a-classic-experiment-2
 
+Description
+---
+This project was inspired by Cleveland and McGill's 1984 paper. Where they researched people's perception on different types.
+In this experiment we tested people’s perception on three types of charts: Bar, Radar, and Tree map.
 
+![Bar chart](img/BarChart.png)
 
+The Bar chart was our baseline, and we expect this chart to be perceived most accurately as the bars are aligned. It is also the most common of the three charts that testers may be more familiar with.
+
+![Radar chart](img/RadarChart.png)
+
+Those that have not seen this chart before may have difficulty reading the Radar chat and may largely impact the error. We expect this chart to preform the worst, even though it is a type of circular bar chart the tester may have difficulty comparing two bars as they are not aligned.
+
+![Tree map](img/TreeMap.png)
+
+The Tree map we expect in comparison to out preform the Radar chart and under preform the Bar chart. We placed the indicator circles in the bottom right of the areas rather than the center as we believe this will interfere less with perception as it does not give the tester a center point of reference.
+
+Description of the technical achievements you attempted with this project.
+ADD
+
+Description of the design achievements you attempted with this project.
+Our design achievement took the form of styling. With the creation of a start and end page and all the test charts neatly aligned. We even added our every own Icon. The input field also turns red if the tester tries to submit without a response.
+
+Assignment
+---
 For the scope of this project, assume the role of a scientist who runs experiments for a living.
 
 Q: How do we know that bar charts are "better" than pie charts?  
