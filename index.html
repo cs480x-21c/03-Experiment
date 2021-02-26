@@ -18,13 +18,13 @@
   //var chartToChoose = 3;
   var trueVal;
   if (chartToChoose == 1) {
-    trueVal = randomGradient(svg);
+  //  trueVal = randomGradient(svg);
   }
   else if (chartToChoose == 2) {
-    trueVal = randomBarGraph(svg);
+   // trueVal = randomBarGraph(svg);
   }
   else if (chartToChoose == 3){
-    trueVal = randomBubbleChart(svg);
+   // trueVal = randomBubbleChart(svg);
   }
   else {
     console.log("Probability does not shine on you today "+chartToChoose.toString());
@@ -320,12 +320,50 @@
       for (var i = 0; i < 3; i++) {
         toRet.push([listOfErrors[i], listOfBootstrapErrors[i][0], listOfBootstrapErrors[i][1]]);
       }
-      
-      console.log(toRet);
+
+      var lineVar = d3.line()
+      var pointsA = [
+        [50, toRet[0][1]*50],
+        [50, toRet[0][2]*50]
+      ]
+
+      var pointsB = [
+        [100, toRet[1][1]*50],
+        [100, toRet[1][2]*50]
+      ]
+
+      var pointsC = [
+        [150, toRet[2][1]*50],
+        [150, toRet[2][2]*50]
+      ]
+       
+      svg.append('path')
+      .attr('d', lineVar(pointsA))
+      .attr("stroke", "#000000");
+
+      svg.append('path')
+      .attr('d', lineVar(pointsB))
+      .attr("stroke", "#000000");
+
+      svg.append('path')
+      .attr('d', lineVar(pointsC))
+      .attr("stroke", "#000000");
+     
+
+      svg.selectAll("circle")
+      .data(toRet)
+      .enter().append("circle")
+      .attr('cy', function(d){return d[0]*50})
+      .attr('cx', function(d, i){return (i+1)*50})
+      .attr('r', '1.5%')
+
       return toRet;
 
     });
 
   }
+  
+
+
 
 </script>
