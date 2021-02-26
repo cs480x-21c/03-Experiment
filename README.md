@@ -14,25 +14,25 @@ Each of the visualizations were generated randomly. This was done by generating 
 
 ### Bar Chart
 
-![Bar Chart](img/bar.png)
+![Bar Chart](./img/bar.png)
 
 Our bar chart was our best performing chart by a wide margin. This is similar to Cleveland & McGill's results, as it is easiest to compare two bars height as oppose to other visualizations.
 
 ### Pie Chart
 
-![Pie Chart](img/pie.png)
+![Pie Chart](./img/pie.png)
 
 Our pie chart was significantly worse in performance compared to the bar chart, but beat out box plots by a small margin. While the majority of pie chart data had only a small amount of error, it had significantly more drastic outliers compared to the bar chart.
 
 ### Box Plots
 
-![Box Plots](img/box.png)
+![Box Plots](./img/box.png)
 
 Box plots were the worst performing chart out of the three. This could be for a couple reasons, our first theory is the lack of knowledge about how to read a box plot. Some people may have factored in the tail into their calculations while others did not. Secondly, box plots could overall be harder to compare sizes due to the lack of allignment between each box. This caused for a wide variability in answers, creating more outliers compared to the other two charts.
 
 ## Results
 
-![Plot Plots](img/plot.png)
+![Error CI Plot](./img/conf-int.png)
 
 As you can see here, our bar chart results are quite similar to the Cleveland and McGill results. However, our pie chart results were slightly worse than Cleveland and McGill with a larger spread as well. Looking at their methodology, it looks like they labeled their slices with letters at each slice's midpoint and their slices were all pretty large. These factors could have led to improved graphical perception compared to our study where we only limited the size of our pie chart slices when they became close to imperceptible.
 
@@ -46,7 +46,7 @@ Bootstrapped 95% confidence intervals are as follows:
 
 ### Flourish Visualization
 
-![Flourish](img/Size_Comparisons.png)
+![Flourish](./img/Size_Comparisons.png)
 
 This visualization helps show how certain visualizations performed better than the other as it plots each individual data point on a graph. Barcharts appear to follow the trendline no matter the differentiation in height. Pie charts seem to be harder to read the smaller the actual difference between the slices are, while box plots seem to struggle on the other end of the graph, where the actual difference is greater. An interactive version of this visualization is accessible [here](https://public.flourish.studio/visualisation/5397388/).
 
