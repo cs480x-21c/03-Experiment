@@ -1,0 +1,182 @@
+<html>
+  <head>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+    
+  </head>
+
+  <body class="experimentBody">
+    <div id="vis"></div>
+    <div class="qTxt">
+      <p>This test is to see how the human brain perceives data with horizontal vs. stacked bar charts.<br>
+          How many times can the smaller barchart fit in the larger one?
+      </p>
+    </div>
+  </body>
+
+  <script>
+    //10 vertical
+    //10 Horizontal
+
+    // Set up grid dimensions
+    var margin = {top: 20, right: 20, bottom: 20, left: 20}
+    var width = 490 - margin.right - margin.left
+    var height = 490 - margin.top - margin.bottom
+
+    // Create SVG
+    var svg = d3.select("#vis")
+    .append('svg')
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+    let isVertical = sessionStorage.getItem("vertical")
+
+    if (isVertical == "true") {
+      verticalBarChart()
+    } else {
+      horizontalBarChart()
+    }
+
+    function verticalBarChart () {
+      let data = []
+      let selectors = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+      let SelectedData = ['a', 'd']
+     
+
+      for(let i = 0; i < 6; i++){
+        let value = Math.round(Math.random() * (50 - 5) + 5)
+        data.push([selectors[i], value])
+      }
+
+      let a1 = data[0][1]
+      let d1 = data[3][1]
+
+      let biggerChart = (Math.max(a1, d1))
+      let smallerChart = (Math.min(a1, d1))
+      
+      //console.log(biggerChart, smallerChart)
+      let ratio = biggerChart / smallerChart
+      //console.log(ratio)
+      
+
+      sessionStorage.setItem("actualAnswerBar", ratio)
+
+      // Create grid
+      svg.append("rect")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("fill", "none")
+      
+      // x axis
+      var x = d3.scaleBand()
+      .domain(data.map(function(d) {return d[0]}))
+      .range([0, width])
+      .padding(0.2)
+      svg.append("g")
+      .attr("transform", "translate(0, "+ height + ")")
+      .call(d3.axisBottom(x).tickFormat("").tickSize(0))
+      .style("stroke-width", "1.5px")
+
+      // y axis
+      var y = d3.scaleLinear().domain([0, 50]).range([height, 0])
+      svg.append("g")
+      .call(d3.axisLeft(y).tickFormat("").tickSize(0))
+      .style("stroke-width", "1.5px")
+
+      // Create bars
+      svg.selectAll("bar")
+      .data(data)
+      .enter()
+      .append("g")
+      .attr("id", function(d) { return d[0] })
+      .append('rect')
+      .style("fill", "none")
+      .style("stroke", "black")
+      .attr("x", function(d) { return x(d[0]) })
+      .attr("y", function(d) { return y(d[1]) })
+      .attr("width", x.bandwidth())
+      .attr("height", function(d) { return height - y(d[1]) })
+
+      // Add dots to selected bars
+      SelectedData.forEach(id => {
+        var selectedBar = d3.select('#' + id)
+        selectedBar.append("circle")
+        .attr("cx", function(d) { return x(d[0]) + x.bandwidth()/2 })
+        .attr("cy", width + margin.bottom/2)
+        .attr("r", 5)
+      })
+    }
+
+    function horizontalBarChart() {
+      // Dummy data (to be randomly generated on backend)
+      // dummyData = [ ['a', 10], ['b', 20], ['c', 25], ['d', 16], ['e', 37], ['f', 43] ] // assume: y axis ranges 1- 50 
+      // dummySelectedData = ['a', 'd'] 
+
+      let data = []
+      let selectors = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+      let SelectedData = ['a', 'd']
+
+      for(let i = 0; i < 6; i++){
+        let value = Math.round(Math.random() * (50 - 5) + 5)
+        data.push([selectors[i], value])
+      }
+      let a1 = data[0][1]
+      let d1 = data[3][1]
+
+      let biggerChart = (Math.max(a1, d1))
+      let smallerChart = (Math.min(a1, d1))
+      let ratio = biggerChart / smallerChart
+     // console.log(biggerChart, smallerChart)
+      
+
+      sessionStorage.setItem("actualAnswerBar", ratio)
+
+      // Create grid
+      svg.append("rect")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("fill", "none")
+
+      // x axis
+      var x = d3.scaleLinear().domain([0, 50]).range([0, width])
+      svg.append("g")
+      .attr("transform", "translate(0, "+ height + ")")
+      .call(d3.axisBottom(x).tickFormat("").tickSize(0))
+      .style("stroke-width", "1.5px")
+      
+      // y axis
+      var y = d3.scaleBand()
+      .domain(data.map(function(d) {return d[0]}))
+      .range([0, height])
+      .padding(0.2)
+      svg.append("g")
+      .call(d3.axisLeft(y).tickFormat("").tickSize(0))
+      .style("stroke-width", "1.5px")
+
+      // Create bars
+      svg.selectAll("bar")
+      .data(data)
+      .enter()
+      .append("g")
+      .attr("id", function(d) { return d[0] })
+      .append("rect")
+      .style("fill", "none")
+      .style("stroke", "black")
+      .attr("x", x(0))
+      .attr("y", function(d) { return y(d[0]) })
+      .attr("width", function(d) { return x(d[1]) })
+      .attr("height", y.bandwidth())
+
+      // Add dots to selected bars 
+      SelectedData.forEach(id => {
+        var selectedBar = d3.select('#' + id)
+        selectedBar.append("circle")
+        .attr("cx", -(margin.right/2))
+        .attr("cy", function(d) { return y(d[0]) + y.bandwidth()/2 })
+        .attr("r", 5)
+      })
+    }
+  </script>
+</html>

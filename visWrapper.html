@@ -1,0 +1,339 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="stylesheet.css">
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <script src="https://smtpjs.com/v3/smtp.js"></script>
+    </head>
+
+    <body>
+        <div style="display: flex; justify-content: center;">
+            <div id="trialCounter">
+                <label></label>
+            </div>
+
+            <!-- Hold visualizations -->
+            <div id="visDiv" style="height: 700px; overflow: hidden;"></div>
+        </div>
+
+        <!-- Input form -->
+        <div id="input-submit">
+            <form class="input-form">
+                <label for="input-text" class="answerTxt"> Answer: </label>
+                <input type="text" id="input-text" oninput="enableBtn()">
+                <!-- UNCOMMENT AFTER TESTING IS DONE -->
+                <input type="button" id="submit-button" value="Next" disabled />
+            </form>
+           
+        </div>
+    </body>
+
+    <script>
+        var svg = d3.select("#trialCounter")
+        .append('svg')
+        .attr("width", 120)
+        .attr("height", 500)
+        // .attr("")
+
+        svg.append("circle")
+        .attr("cx", "75%")
+        .attr("cy", "10%")
+        .attr("r", 20)
+        .attr("id", "barProgress")
+        .attr("fill", "none")
+        .style("stroke-width", 1.5)
+        .style("stroke", "black")
+        .text
+        
+        svg.append("circle")
+        .attr("cx", "75%")
+        .attr("cy", "50%")
+        .attr("r", 20)
+        .attr("id", "angleProgress")
+        .attr("fill", "none")
+        .style("stroke-width", 1.5)
+        .style("stroke", "black")
+        
+        svg.append("circle")
+        .attr("cx", "75%")
+        .attr("cy", "90%")
+        .attr("r", 20)
+        .attr("id", "volProgress")
+        .attr("fill", "none")
+        .style("stroke-width", 1.5)
+        .style("stroke", "black")
+
+        svg.append("line")           
+        .style("stroke", "black")  
+        .style("stroke-width", 1.5) 
+        .attr("x1", "75%")        
+        .attr("y1", "14%")     
+        .attr("x2", "75%")        
+        .attr("y2", "46%")     
+        
+        svg.append("line")           
+        .style("stroke", "black")  
+        .style("stroke-width", 1.5) 
+        .attr("x1", "74%")        
+        .attr("y1", "54%")     
+        .attr("x2", "75%")        
+        .attr("y2", "86%")
+
+        svg.append("text")
+        .text("Bar")
+        // .attr("dy", "2em")
+        .attr("x", "13%")
+        .attr("y", 55)
+        .attr("font-family", '"Roboto", sans-serif')
+
+        svg.append("text")
+        .text("Angle")
+        // .attr("dy", "1em")
+        .attr("x", 1)
+        .attr("y", 256)
+
+        svg.append("text")
+        .text("Volume")
+        //.attr("dy", "1em")
+        .attr("x", 0)
+        .attr("y", 455)
+
+        function updateProgress(progressId) {
+            var id = "#" + progressId
+            if (progressId === "volProgress") {
+                d3.select(id).attr("fill", "#4CAF50")
+                d3.select("#barProgress").attr("fill", "#4CAF50")
+                d3.select("#angleProgress").attr("fill", "#4CAF50")
+            }
+            else { 
+                d3.select(id).attr("fill", "#6495ed")
+            }
+        }
+
+        var next = null;
+        var counter = 0;
+        var testCounter = 0;
+        var isFinished = false;
+        let userAnswers = []
+        let actualAnswersBar = []
+        let actualAnswersAngle = []
+        let actualAnswersVolume = []
+        let firstStart = true;
+        let storeDataCounter = 0
+        let currentChart = 'barchart.html'
+
+        if(firstStart){
+            sessionStorage.clear()
+            firstStart = false;
+        }
+
+        sessionStorage.setItem("vertical", "true")
+
+        if(testCounter == 0){
+            switchChart();
+        }
+
+         function enableBtn() {
+               if (document.getElementById("input-text").value != "") {
+                   document.getElementById("submit-button").disabled = false
+              } else {
+                   document.getElementById("submit-button").disabled = true
+               }
+         }
+
+        function storeData () {
+            if (currentChart == 'barchart.html') {
+                console.log("Stored bar " +  sessionStorage.getItem("actualAnswerBar"))
+                actualAnswersBar.push(sessionStorage.getItem("actualAnswerBar"))
+            }
+            if (currentChart == 'tilt-angle.html'){
+                console.log("Stored angle " + sessionStorage.getItem("actualAnswerAngle"))
+                actualAnswersAngle.push(sessionStorage.getItem("actualAnswerAngle"))
+            }
+            if (currentChart == 'volume.html') {
+                console.log("Stored vol " + sessionStorage.getItem("actualAnswerVolume"))
+                actualAnswersVolume.push(sessionStorage.getItem("actualAnswerVolume")) 
+            //console.log(sessionStorage.getItem("actualAnswerVolume"))
+            }
+        }
+
+        function nextButton(){
+            testCounter+=1;
+            storeDataCounter = counter - 1
+            // Get + clear input
+            let input = document.getElementById("input-text").value;
+        
+            userAnswers.push(input)
+            console.log(input)
+            let resetText = document.getElementById("input-text");
+            resetText.value = ""
+
+            // Decide vert vs hor barchart
+            if (next = "barchart.html") {
+                if (testCounter === 10) {
+                    sessionStorage.setItem("vertical", "false")
+                }
+            }
+            // UNCOMMENT AFTER TESTING IS DONE
+            document.getElementById("submit-button").disabled = true
+
+            //console.log(sessionStorage.getItem("actualAnswerBar"))
+            //console.log(counter)
+            storeData()
+
+            switchChart()
+            //console.log("Counter: " + counter)
+            //console.log("Test Counter: " + testCounter)
+
+            //console.log("actual answers from html: " + actualAnswers)
+            //console.log("Test " + actualAnswersBar)
+            //console.log(actualAnswersAngle)
+            //console.log(actualAnswersVolume)
+            
+        }
+
+        function switchChart() {
+                //console.log(testCounter);
+                switch (counter) {
+                    case 0:
+                        next = "barchart.html";
+                        if(testCounter == 20){
+                            isFinished = true;
+                            testCounter = 0;
+                            counter += 1;
+                        }  
+                        break;
+                    case 1:
+                        updateProgress("barProgress")
+                        next = "tilt-angle.html";
+                        if(testCounter == 20){
+                            isFinished = true;
+                            testCounter = 0;
+                            counter += 1;
+                        }  
+
+                        break;
+                    case 2:
+                        updateProgress("angleProgress")
+                        next = "volume.html";
+                        if(testCounter == 20){
+                            isFinished = true;
+                            testCounter = 0;
+                            counter += 1;
+                        }
+                        break;
+                    case 3:
+                        updateProgress("volProgress")
+                        next = "finished.html";
+                        document.getElementById("submit-button").disabled = true;
+                        var div = document.getElementById("input-submit");
+                        div.style.visibility = "hidden"
+                        div.style.display = "none";
+                        isFinished = true;
+                        parseData()
+                        break;
+                    default:
+                        break;
+                }
+                document.getElementById("visDiv").innerHTML = "<object type='text/html' id='object-design' data ='" + next + "'></object>";
+                currentChart = next
+                isFinished = false;
+        }
+
+        function parseData() {
+            let barchartData = [];
+            let angleData = [];
+            let volumeData = [];
+
+            for (let i = 0 ; i < 20 ; i++) {
+                barchartData.push([actualAnswersBar[i], userAnswers[i]]);
+            }
+            let j = 21;
+            for  (let i = 0; i < 20; i++) {
+                angleData.push([actualAnswersAngle[i], userAnswers[j]]);
+                j++
+            
+            }
+            let k = 41;
+            for (let i = 0 ; i < 20 ; i++ ) {
+                volumeData.push([actualAnswersVolume[i], userAnswers[k]]);
+                k++
+            }
+
+            // console.log(volumeData)
+            //console.log("barchart" + barchartData)
+            //console.log(angleData)
+            //console.log("volume" + volumeData)
+
+            let rows = []
+
+            //generate paticipantID
+            //generate trialnum
+            //get vis
+            let randomID = "Test" + Math.floor(Math.random() * 100)
+            //fill barchart vert
+
+            for(let i = 0; i < 10; i++){
+
+                rows.push({"ParticipantID": randomID, "TrialNum": i, "Vis": "barchart_vert", "TruePercent": barchartData[i][0], "ReportedPercent": barchartData[i][1]})
+            }
+            //fill barchart hor
+            for(let i = 10; i < 20; i++){
+
+                rows.push({"ParticipantID": randomID, "TrialNum": i, "Vis": "barchart_hor",  "TruePercent": barchartData[i][0], "ReportedPercent": barchartData[i][1]})
+            }
+            //fill angle
+            for(let i = 0; i < 20; i++){
+
+                rows.push({"ParticipantID": randomID, "TrialNum":  i, "Vis": "angles",  "TruePercent": angleData[i][0], "ReportedPercent": angleData[i][1]})
+            }
+            //fill volume
+            for(let i = 0; i < 20; i++){
+
+                rows.push({"ParticipantID": randomID, "TrialNum": i, "Vis":  "volume", "TruePercent": volumeData[i][0], "ReportedPercent": volumeData[i][1]})
+            }
+
+
+
+            var lineArray = [];
+
+            // rows.forEach(function(rowArray, index) {
+            //     var line = rowArray.join(",");
+            //      lineArray.push(index == 0 ? "data:text/csv;charset=utf-8," + line : line);
+            // });
+
+            // var csvContent = lineArray.join("\n");
+
+            // var d = new Date();
+            // var n = d.getTime();
+            // var nString = n.toString();
+
+            // var encodedUri = encodeURI(rows);
+            sendEmail()
+
+
+
+            //saves csv
+            function sendEmail() { 
+              Email.send({ 
+                Host: "smtp.gmail.com", 
+                Username: "biovisproject3@gmail.com", 
+                Password: "RomanDanyaMolly", 
+                To: 'biovisproject3@gmail.com', 
+                From: "biovisproject3@gmail.com", 
+                Subject: "CSV DATA", 
+                Body: rows, 
+              }) 
+            }  
+
+        }
+
+
+
+
+
+        document.getElementById("submit-button").addEventListener("click", nextButton);
+    
+    </script>
+</html>
+
+

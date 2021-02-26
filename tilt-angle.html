@@ -1,0 +1,130 @@
+
+<html>
+  <head>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+    
+  </head>
+ 
+  <body>
+    <div id="vis"></div>
+    <div class="qTxt">
+      <p>The human perceptive system can accurately guess vertical, horizontal, and diagonal lines, but struggles to accurately guess angles that are not.</p>
+      <p>What is the degree of this tilt?</p>
+    </div>
+  </body>
+  <!-- <script type="module"> import {data} from "./barchart.html" </script> -->
+  <script>
+    // Set up grid dimensions
+    var margin = {top: 20, right: 20, bottom: 20, left: 20}
+    var width = 490 - margin.right - margin.left
+    var height = 490 - margin.top - margin.bottom
+
+    // Create SVG
+    var svg = d3.select("#vis")
+    .append('svg')
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+    // Dummy data (to be randomly generated on backend)
+    dummyData = [{label: 'a', angle: randomAngles()}] 
+
+    sessionStorage.setItem("actualAnswerAngle", dummyData[0].angle)
+    console.log("Random Angle: " + dummyData[0].angle)
+
+    // Static data to generate and position lines
+    dummyLine = [[225, 225], [400, 225]]
+  
+
+    // Create grid
+    var x = d3.scaleLinear()
+    .domain([-50, 50])
+    .range([0, width])
+
+    var y = d3.scaleLinear()
+    .domain([-50, 50])
+    .range([height, 0])
+
+    svg.append("g")
+    .attr("transform", "translate(0, "+ ((height/2)) + ")")
+    .call(d3.axisBottom(x).tickFormat("").tickSize(0))
+    .style("stroke-width", "1.5px")
+
+    svg.append("g")
+    .attr("transform", "translate(" + ((width/2)) + ",0)")
+    .call(d3.axisLeft(y).tickFormat("").tickSize(0))
+    .style("stroke-width", "1.5px")
+
+
+    svg.append("text")
+      .text("90")
+        // .attr("dy", "2em")
+      .attr("x", 225)
+      .attr("y", 5)
+      .attr("font-family", '"Roboto", sans-serif')
+
+    svg.append("text")
+      .text("180")
+        // .attr("dy", "2em")
+      .attr("x", 5)
+      .attr("y", 225)
+      .attr("font-family", '"Roboto", sans-serif')
+
+    svg.append("text")
+      .text("270")
+        // .attr("dy", "2em")
+      .attr("x", 225)
+      .attr("y", 450)
+      .attr("font-family", '"Roboto", sans-serif')
+
+      svg.append("text")
+      .text("0")
+        // .attr("dy", "2em")
+      .attr("x", 442)
+      .attr("y", 225)
+      .attr("font-family", '"Roboto", sans-serif')
+    
+    
+      let counter = 0;
+    
+    dummyData.forEach(data => {
+      // Create G elt to contain line + text
+      var g = svg.append("g")
+        .attr("id", data.label)
+
+      // Create line
+      g.append("path")
+        .datum(dummyLine)
+        .attr("stroke", "black")
+        .attr("stroke-width", 2)
+        .attr("d", d3.line()
+          .x(function(d) { return d[0] })
+          .y(function(d) { return d[1] })
+        )
+        .attr("transform", function(d) {
+
+          let test = dummyData[0].angle
+          //rotates in the clockwise direction, add a - to make rotate in the other direction
+          return "rotate(" + -test + " 225 225)" 
+        })
+        
+
+      counter++
+    })
+    
+    // Generate random angles 0 - 360 degrees
+    function randomAngles() {
+
+      let badAngles = [0, 45, 90, 135, 180, 225, 270, 315, 360]
+      let randomAngle = Math.floor(Math.random() * (360 - 0 + 1))
+      if(badAngles.includes(randomAngle)){
+        randomAngle += 5
+        return randomAngle
+      }else{
+        return randomAngle
+      }
+    }
+  </script>
+</html>

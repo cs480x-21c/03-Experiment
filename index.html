@@ -1,13 +1,43 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<html>
+  <head>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="<link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Roboto:wght@400;900&display=swap" rel="stylesheet"> 
+  </head>
+ 
+  <body>
+    <div class="headerDiv">
+      <h1 class="header">Replicating a <b>Classic</b></h1>
+      <!-- <h3 class="subHeader">Data Visualization</h3> -->
+      <h1 class="header"><b>Data Visualization</b> Experiment</h1>
+    </div>
 
+    <!-- Entry page -->
+    <div id="expDiv">
+      <p>
+        In this experiment, we will be testing how the human brain views different types of data visualizations. 
+        You will be asked to view various types of visualizations and answer the given questions for each. 
+        We won't record any other 
+        information from you except your answers. 
+      </p>
+      <p>Thank you for your participation!</p>
 
-<style>
-</style>
+      <input type="button" id="start-button" value="Start"/>
+    </div>
 
-<body>
-  <h1> Experiment </h1>
-</body>
-
-<script>
-  console.log(d3); // test if d3 is loaded
-</script>
+    <div id="visWrapper"></div> 
+  </body>
+  
+  <script>
+    // Move to visualizations
+    document.getElementById("start-button").addEventListener("click", onClick => {
+      document.getElementById("expDiv").className = "hidden"
+      document.getElementById("visWrapper").innerHTML = "<object type='text/html' id='object-design' data ='visWrapper.html'></object>"
+    });
+  </script>
+</html>
