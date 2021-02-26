@@ -1,17 +1,24 @@
-// server.js
-// where your node app starts
+/**
+ * Server.js
+ * Author: Benjamin M'Sadoques
+ *
+ * The starting point for the Node JS app
+ * Provides the handels
+ *
+ * Some of the starting code was taken from the glitch.com starter project
+ * I cannot provide a link to that
+ */
 
-// we've started you off with Express (https://expressjs.com/)
-// but feel free to use whatever libraries or frameworks you'd like through `package.json`.
+// Libraries used
 const express = require("express");
-let bodyParser = require("body-parser");
-let fs = require("fs");
-let d3 = require("d3");
+const bodyParser = require("body-parser");
+const fs = require("fs");
+const d3 = require("d3");
 const path = require('path');
-
 const app = express();
-let jsonParser = bodyParser.json();
+const jsonParser = bodyParser.json();
 
+// starting actions
 // https://expressjs.com/en/starter/basic-routing.html
 app.get("/", (request, response) =>
 {
@@ -22,11 +29,12 @@ app.get("/", (request, response) =>
 // https://expressjs.com/en/starter/static-files.html
 app.use(express.static("public"));
 
-// listen for requests :)
+// listen for requests
 const listener = app.listen(process.env.PORT, () =>
 {
     console.log("Your app is listening on port " + listener.address().port);
 });
+
 
 // URL for starting the experiment, user clicks the start button
 app.get('/startExperiment', (request, response) =>
@@ -35,12 +43,14 @@ app.get('/startExperiment', (request, response) =>
     response.sendFile(path.join(__dirname + '/views/index.html'));
 });
 
+
 // URL for ending the experiment, user finnishes the survey
 app.get('/endExperiment', (request, response) =>
 {
     console.log("End Experiment");
     response.sendFile(path.join(__dirname + '/views/end.html'));
 });
+
 
 // Saves a result in a specified file
 app.post('/result', jsonParser, (request, response) =>
@@ -92,4 +102,12 @@ function getResultIndex()
     {
         // If there are no entries, just leave result index at 0
     }
+
+    // Check if nan
+    if (resultIndex !== resultIndex)
+    {
+        resultIndex = 0;
+    }
+
+    return resultIndex;
 }
