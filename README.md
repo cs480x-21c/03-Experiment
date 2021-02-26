@@ -30,6 +30,12 @@ Our pie chart was significantly worse in performance compared to the bar chart, 
 
 Box plots were the worst performing chart out of the three. This could be for a couple reasons, our first theory is the lack of knowledge about how to read a box plot. Some people may have factored in the tail into their calculations while others did not. Secondly, box plots could overall be harder to compare sizes due to the lack of allignment between each box. This caused for a wide variability in answers, creating more outliers compared to the other two charts.
 
+### Visualization Results
+
+![Plot Plots](img/plot.png)
+
+As you can see here, our bar chart results are quite similar to the Cleveland and McGill results. However, our pie chart results were slightly worse than Cleveland and McGill with a larger spread as well. Looking at their methodology, it looks like they labeled their slices with letters at each slice's midpoint and their slices were all pretty large. These factors could have led to improved graphical perception compared to our study where we only limited the size of our pie chart slices when they became close to imperceptible.
+
 ### Flourish
 
 ![Flourish](img/Size_Comparisons.png)
