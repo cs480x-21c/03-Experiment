@@ -13,7 +13,7 @@ Our hypotheses for each visualization were:
 * The circular bar chart would preform in between the bar chart and the pie chart. 
 * The bar chart would perform the best out of all three visualizations.
 
-To test the visualizations, participants were asked to complete a form showing 60 of them in a random order. Each visualization contained two marked elements, and participants were asked to input the percentage the smaller element was of the larger element. The visualizations were black and white in order to remove color as a variable for their effectiveness. 
+To test the visualizations, participants were asked to complete a form showing 60 of them in a random order. Each visualization contained two marked elements, and participants were asked to input the percentage the smaller element was of the larger element.
 
 To determine how effective each visualization was, we calculated the error of participants' responses and ranked the visualizations according to their error. Below is the 95% confidence interval of the error:
 

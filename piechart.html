@@ -1,0 +1,108 @@
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+
+<style>
+</style>
+
+<body>
+  <svg id='svg'></svg>
+  <button onclick="generatePieChart()">Generate pie chart</button>
+</body>
+
+<script>
+  console.log(d3); // test if d3 is loaded
+  let width = 640;
+  let height = 480;
+
+  let size = (480 / 2) - 30;
+
+  let svg = d3.select('#svg')
+    .style('width', width)
+    .style('height', height)
+
+  function randomDatum() {
+    return Math.floor(Math.random() * 101);
+  }
+
+  function generatePieChart() {
+
+    svg.selectAll('*').remove();
+
+    let data = {
+      a:  {
+        num: randomDatum(),
+        marked: false
+      },
+      b:  {
+        num: randomDatum(),
+        marked: false
+      },
+      c:  {
+        num: randomDatum(),
+        marked: false
+      },
+      d:  {
+        num: randomDatum(),
+        marked: false
+      },
+      e:  {
+        num: randomDatum(),
+        marked: false
+      }
+    };
+
+    let attrs = ['a','b','c','d','e']
+
+    let firstMarked = Math.floor(Math.random() * attrs.length);
+    let secondMarked = Math.floor(Math.random() * attrs.length);
+
+    while(secondMarked == firstMarked) {
+      secondMarked = Math.floor(Math.random() * attrs.length);
+    }
+
+    firstMarked = attrs[firstMarked];
+    secondMarked = attrs[secondMarked];
+
+    data[firstMarked].marked = true;
+    data[secondMarked].marked = true;
+
+    let colorScale = d3.scaleOrdinal()
+    .domain(data)
+    .range(['red', 'blue', 'yellow', 'green', 'violet']);
+
+    let pie = d3.pie()
+    .value(function(d) { return d.value.num; })
+    let processedData = pie(d3.entries(data))
+
+    let group = svg.append('g')
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    let arcCreator = d3.arc()
+      .innerRadius(0)
+      .outerRadius(size)
+
+    group.selectAll('slices')
+    .data(processedData)
+    .enter()
+    .append('path')
+    .attr('d', arcCreator)
+    
+    .attr('fill', 'white')
+    .attr('stroke', 'black')
+    .attr('stroke-width', '2px');
+
+    group.selectAll('slices')
+    .data(processedData)
+    .enter()
+    .filter(function (d) {
+      return d.data.value.marked;
+    })
+    .append('circle')
+    .attr('r', '5px')
+    .attr('fill', 'black')
+    .attr('transform', function(d) { return `translate(${arcCreator.centroid(d)})`})
+
+
+  }
+
+</script>
