@@ -7,15 +7,16 @@ const express = require("express");
 let bodyParser = require("body-parser");
 let fs = require("fs");
 let d3 = require("d3");
+const path = require('path');
+
 const app = express();
 let jsonParser = bodyParser.json();
 
 // https://expressjs.com/en/starter/basic-routing.html
 app.get("/", (request, response) =>
 {
-    response.sendFile(__dirname + "/views/index.html");
+    response.sendFile(__dirname + "/views/home.html");
 });
-
 
 // make all the files in 'results' available
 // https://expressjs.com/en/starter/static-files.html
@@ -27,6 +28,17 @@ const listener = app.listen(process.env.PORT, () =>
     console.log("Your app is listening on port " + listener.address().port);
 });
 
+app.get('/startExperiment', (request, response) =>
+{
+    console.log("Start Experiment");
+    response.sendFile(path.join(__dirname + '/views/index.html'));
+});
+
+app.get('/endExperiment', (request, response) =>
+{
+    console.log("End Experiment");
+    response.sendFile(path.join(__dirname + '/views/end.html'));
+});
 
 // Saves a result in a specified file
 app.post('/result', jsonParser, (request, response) =>

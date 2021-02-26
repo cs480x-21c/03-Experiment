@@ -9,8 +9,16 @@ let notFirstTrial = false;
 
 let gResults;
 
+function start()
+{
+    window.location.replace(window.location.href + "startExperiment");
+}
+
 function main()
 {
+    // new chart on enter
+    window.addEventListener("keydown", enter, {passive: true});
+
     const margin = {top: 10, right: 10, bottom: 10, left: 10};
     const width = 600 - margin.left - margin.right;
     const height = 600 - margin.top - margin.bottom;
@@ -65,9 +73,14 @@ function makeNewChart()
 
         if (gTrialIndex === TRIALS)
         {
-            // TODO: end test somehow
             // Saves the result
             gResults.saveResult();
+
+            // should not be active on the end page
+            window.removeEventListener("keydown", enter, {passive: true});
+
+            // Ends the test, redirects users
+            window.location.replace("endExperiment");
         }
         else
         {
@@ -101,16 +114,16 @@ function makeNewChart()
     gVisIndex++;
 }
 
-// new chart on enter
-window.onkeypress = function(event) 
+
+function enter(event)
 {
     if(event.key)
     {
         document.getElementById("answer").style.backgroundColor = "";
     }
 
-    if (event.key === 'Enter') 
+    if (event.key === 'Enter')
     {
         makeNewChart();
     }
- }
+}
