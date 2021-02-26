@@ -8,8 +8,8 @@ pdf(NULL)
 
 data <- read.csv('./data/data_final.csv')
 
-ggplot(data, aes(x = Type, y = cm.error)) + stat_summary(fun.data = 'mean_cl_boot', colour = 'red', size = 0.5)
-ggsave('./img/plot.png')
+ggplot(data, aes(x = Type, y = cm.error)) + stat_summary(fun.data = 'mean_cl_boot', colour = 'red', size = 0.5) + coord_flip()
+ggsave(filename = './img/plot.png', width = 7, height = 5)
 
 
 piecharts <- filter(data, Type == 'Piechart')
