@@ -19,18 +19,17 @@
   </head>
 
   <body onload="main()">
-    <div class=block id="vis" tabindex="1"></div>
-    <form class=form onSubmit="return false;">
-      <div class=Instructions>
+    <div class="block" id="vis" tabindex="1"></div>
+    <form class="form" onsubmit="return false;">
+      <div class="Instructions">
         <p>Two values are marked with dots.</p>
         <p>What is the percent of the smaller value to the larger value?</p>
         <p>Input your answer below.</p>
         <p>e.g. If you think the smaller is exactly half of the bigger, input “50”.</p>
       </div>
       <label for="answer"></label>
-        <!-- TODO: make input not allow people to enter and navigate somehow-->
-      <input type="number" onSubmit="preventDefault()" autofocus style="font-size:24px;" maxlength="5" name="input" id="answer" step="1">
-      <button class=button type="button" name="submit" value="trialButton" id="nextChart" onclick="makeNewChart()">Submit</button>
-    </form>
+      <input type="number" onsubmit="preventDefault()" autofocus style="font-size:24px;" maxlength="5" name="input" id="answer" step="1">
+      <button class="button" type="button" name="submit" value="trialButton" id="nextChart" onclick="makeNewChart()">Submit</button>
+   </form>
   </body>
 </html>
