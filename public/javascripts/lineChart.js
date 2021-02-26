@@ -98,21 +98,21 @@ function lineChart(svgID, width, height, pathToCSV, chartNum) {
     // NumDatasets = the number of datasets in this chart
     // xTickVal = the x value to mark on the chart
     function getColsMarksNumSets(chartNum) {
-    let numSets = (Math.floor(chartNum / 10) + 1) * 2
-    let cols = [], mark = []
-    if (chartNum < 10) {
-    cols = [2 * chartNum, 2 * chartNum + 1]
-    mark = [...cols]
-}
-    else if (chartNum < 20) {
-    let i = chartNum - 10
-    cols = [20 + 4 * i, 21 + 4 * i, 22 + 4 * i, 23 + 4 * i]
-    mark = [20 + 4 * i + chartNum % 3, 23 + 4 * i]
-}
-    else {
-    let i = chartNum - 20
-    cols = [60 + 6 * i, 61 + 6 * i, 62 + 6 * i, 63 + 6 * i, 64 + 6 * i, 65 + 6 * i]
-    mark = [60 + 6 * i + chartNum % 5, 65 + 6 * i]
+        let numSets = (Math.floor(chartNum / 10) + 1) * 2
+        let cols = [], mark = []
+        if (chartNum < 10) {
+        cols = [2 * chartNum, 2 * chartNum + 1]
+        mark = [...cols]
+    }
+        else if (chartNum < 20) {
+        let i = chartNum - 10
+        cols = [20 + 4 * i, 21 + 4 * i, 22 + 4 * i, 23 + 4 * i]
+        mark = [20 + 4 * i + chartNum % 3, 23 + 4 * i]
+    }
+        else {
+        let i = chartNum - 20
+        cols = [60 + 6 * i, 61 + 6 * i, 62 + 6 * i, 63 + 6 * i, 64 + 6 * i, 65 + 6 * i]
+        mark = [60 + 6 * i + chartNum % 5, 65 + 6 * i]
 }
     return [cols,mark, numSets, chartNum % 8 + 2]    // Choose a tick value not at the very edge of the graph
 }
