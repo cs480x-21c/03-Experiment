@@ -1,0 +1,43 @@
+body {
+    font-family: sans-serif;
+    overflow-x: hidden;
+}
+
+#mainContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#complete {
+    transform: translateX(100vw);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    height: 500px;
+}
+
+.viz {
+    transform: translateX(100vw);
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.fieldOuter {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.mdc-text-field {
+    margin-right: 10px;
+}
