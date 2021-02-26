@@ -56,58 +56,72 @@ app.get('/endExperiment', (request, response) =>
 app.post('/result', jsonParser, (request, response) =>
 {
     // Get the next result index
-    let resultIndex = getResultIndex();
+    let promise = new Promise((resolve, reject) => getResultIndex(resolve, reject));
 
-    // Convert the results to csv format
-    let result = request.body.children;
-    let resultArray = result.map(function(d, i)
-    {
-        return [resultIndex, d.trialIndex, d.chartType, d.correctAnswer, d.participantAnswer];
-    });
-
-    let resultCSV = d3.csvFormatRows(resultArray) + "\n";
-
-    fs.appendFile("results/r.csv", resultCSV, function (err)
-    {
-        if (err)
+    promise.then(
+        function(resolve)
         {
-            return console.log(err);
-        }
-        else
-        {
-            console.log("result recorded");
-        }
-    });
+            // Convert the results to csv format
+            let result = request.body.children;
+            let resultArray = result.map(function(d, i)
+            {
+                return [resolve, d.trialIndex, d.chartType, d.correctAnswer, d.participantAnswer];
+            });
 
-    response.json("result recorded");
+            let resultCSV = d3.csvFormatRows(resultArray) + "\n";
+
+            fs.appendFile("results/r.csv", resultCSV, function (err)
+            {
+                if (err)
+                {
+                    return console.log(err);
+                }
+                else
+                {
+                    console.log("result recorded");
+                }
+            });
+
+            response.json("result recorded");
+        });
 });
 
 /**
  * Gets a new result index from the master csv after the test
  */
-function getResultIndex()
+function getResultIndex(resolve, reject)
 {
     // Read the master csv to get a new result index
-    let data = d3.csvParse(fs.readFileSync("results/r.csv", "utf8"));
-
-    let resultIndex = 0;
-
-    try
+    fs.readFile("results/r.csv", "utf8", (err, file) =>
     {
-        // Gets the last row's result index and adds 1, this will make
-        //  the next result index, since they are in order
-        resultIndex = parseInt(data[data.length - 1].Result) + 1;
-    }
-    catch (e)
-    {
-        // If there are no entries, just leave result index at 0
-    }
+        // If the directory cannot be scanned
+        if (err)
+        {
+            reject("Unable to read file: " + err);
+        }
+        else
+        {
+            let data = d3.csvParse(file);
+            let resultIndex = 0;
 
-    // Check if nan
-    if (resultIndex !== resultIndex)
-    {
-        resultIndex = 0;
-    }
+            try
+            {
+                // Gets the last row's result index and adds 1, this will make
+                //  the next result index, since they are in order
+                resultIndex = parseInt(data[data.length - 1].Result) + 1;
+            }
+            catch (e)
+            {
+                // If there are no entries, just leave result index at 0
+            }
 
-    return resultIndex;
+            // Checking for NAN
+            if (resultIndex !== resultIndex)
+            {
+                resultIndex = 0;
+            }
+
+            resolve(resultIndex);
+        }
+    });
 }

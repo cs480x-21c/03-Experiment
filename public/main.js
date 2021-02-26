@@ -33,8 +33,6 @@ function main()
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
-    console.log("vid " +gVisIndex);
-
     // Create vis to test
     gVisArray.push(new BarChart(svg, width, height));
     gVisArray.push(new RadarChart(svg, width, height));

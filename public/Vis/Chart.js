@@ -66,11 +66,7 @@ class Chart
         let high = Math.max(v1, v2);
         let low = Math.min(v1, v2);
 
-        this.answer = Math.floor(100 - ((100/high) * low));
-
-        // TODO: remove later once we know answers are right
-        console.log(v1);
-        console.log(v2);
-        console.log(this.answer);
+        // low / high to get the percent
+        this.answer = Math.floor((low/high) * 100);
     }
 }

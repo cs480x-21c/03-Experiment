@@ -38,7 +38,6 @@ class ResultsController
         // Add the entry to the results
         this.result.children.push(Object.assign({},this.entry));
 
-
         this.trialIndex++;
     }
 
