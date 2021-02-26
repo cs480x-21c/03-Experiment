@@ -7,7 +7,7 @@ Code edit: https://glitch.com/edit/#!/a3-a-classic-experiment-2
 
 Description
 ---
-This project was inspired by Cleveland and McGill's 1984 paper. Where they researched people's perception on different types.
+This project was inspired by Cleveland and McGill's 1984 paper, where they researched people's perception on different types.
 In this experiment we tested people’s perception on three types of charts: Bar, Radar, and Tree map.
 
 ![Bar chart](img/BarChart.png)

@@ -45,11 +45,14 @@ app.get('/endExperiment', (request, response) =>
 // Saves a result in a specified file
 app.post('/result', jsonParser, (request, response) =>
 {
+    // Get the next result index
+    let resultIndex = getResultIndex();
+
     // Convert the results to csv format
     let result = request.body.children;
     let resultArray = result.map(function(d, i)
     {
-        return [d.resultIndex, d.trialIndex, d.chartType, d.correctAnswer, d.participantAnswer];
+        return [resultIndex, d.trialIndex, d.chartType, d.correctAnswer, d.participantAnswer];
     });
 
     let resultCSV = d3.csvFormatRows(resultArray) + "\n";
@@ -69,35 +72,24 @@ app.post('/result', jsonParser, (request, response) =>
     response.json("result recorded");
 });
 
-// Gets a new index for the result file, the new one is the latest index + 1
-app.post('/resultIndex', async (request, response) =>
+/**
+ * Gets a new result index from the master csv after the test
+ */
+function getResultIndex()
 {
     // Read the master csv to get a new result index
-    fs.readFile("results/r.csv", "utf8", (err, file) =>
+    let data = d3.csvParse(fs.readFileSync("results/r.csv", "utf8"));
+
+    let resultIndex = 0;
+
+    try
     {
-        // If the directory cannot be scanned
-        if (err)
-        {
-            return console.log("Unable to read file: " + err);
-        }
-        else
-        {
-            let data = d3.csvParse(file);
-            let resultIndex = 0;
-
-            try
-            {
-                // Gets the last row's result index and adds 1, this will make
-                //  the next result index, since they are in order
-                resultIndex = parseInt(data[data.length - 1].Result) + 1;
-            }
-            catch (e)
-            {
-                // If there are no entries, just leave result index at 0
-            }
-
-            // give the file the new result index
-            response.json(resultIndex);
-        }
-    });
-});
+        // Gets the last row's result index and adds 1, this will make
+        //  the next result index, since they are in order
+        resultIndex = parseInt(data[data.length - 1].Result) + 1;
+    }
+    catch (e)
+    {
+        // If there are no entries, just leave result index at 0
+    }
+}
