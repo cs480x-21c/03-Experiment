@@ -21,7 +21,7 @@ Donut Chart:
 Our testable hypothesis is that the donut chart will have the most accurate results - the two frames of reference provided by both the inner and outer radiai should help allow for accurate decerning between the sizes of elements.
 
 Pie Chart:
-Our testable hypothesis is sthat the pie chart will perform poorer than the donut chart. Pie charts have long been considered 'poor' charts for data visualization and representing relative sizes between elements. 
+Our testable hypothesis is that the pie chart will perform poorer than the donut chart. Pie charts have long been considered 'poor' charts for data visualization and representing relative sizes between elements. 
 
 Tree Chart:
 Our testable hypothesis is that the tree chart will perform poorer than the two radially designed charts. As elements in the tree chart are not necessarily oriented in the same way, we believe that this will prevent users from easily reading the chart and forming accurate comparisons.
@@ -29,16 +29,12 @@ Our testable hypothesis is that the tree chart will perform poorer than the two 
 Bubble/Scatter Plot:
 Our testable hypothesis is that the Bubble Plot will perform the worst of all of the plots. Due to the spacial positioning and lack of clear references between data points, we believe that this will make it difficult to accurately perceive the ratios of size between data points.
 
-- Working link to the experiment hosted on gh-pages or some other site.
-- Concise description and screenshot of your experiment.
-- Description of the technical achievements you attempted with this project.
-- Description of the design achievements you attempted with this project.
 
-ERROR MEANS
-1   donut 2.774251
-2     pie 2.671841
-3 scatter 3.030364
-4    tree 2.964546
+ERROR MEANS  
+1   donut 2.774251  
+2     pie 2.671841  
+3 scatter 3.030364  
+4    tree 2.964546  
 
 
 1 (Best Performance): Pie Chart
