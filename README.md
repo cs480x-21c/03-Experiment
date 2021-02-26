@@ -73,6 +73,7 @@ Looking at the logError and analyzing the results, we can see that our hypothesi
 Resources used:
 
 -   csv download https://seegatesite.com/tutorial-read-and-write-csv-file-with-javascript/
--  https://www.learnhowtoprogram.com/user-interfaces/building-layouts-preprocessors/multi-page-html-sites
+-   https://www.learnhowtoprogram.com/user-interfaces/building-layouts-preprocessors/multi-page-html-sites
 -   <https://www.d3-graph-gallery.com/index.html>
+-   Centroid d3 function for Pie Charts: https://bl.ocks.org/d3indepth/c9fd848b9410cc543a437b34c266ac64
 -   shuffle algorithm for experiment trials ordering and pie chart slice ordering https://stackoverflow.com/a/12646864
