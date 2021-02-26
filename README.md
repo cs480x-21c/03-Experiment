@@ -1,87 +1,76 @@
 Assignment 3 - Replicating a Classic Experiment  
 ===
 
-For the scope of this project, assume the role of a scientist who runs experiments for a living.
-
-Q: How do we know that bar charts are "better" than pie charts?  
-A: Controlled experiments!
-
-In this assignment you'll implement a simple controlled experiment using some of the visualizations you’ve been building in this class. 
-You'll need to develop support code for the experiment sequence, results file output, and other experiment components. 
-(These are all simple with Javascript buttons and forms.)
-The main goals for you are to a) test three competing visualizations, b) implement data generation and error calculation functions inspired by Cleveland and McGill's 1984 paper, c) run the experiment with 10 participants (or a trial equivalent), and d) do some basic analysis and reporting of the results.
-
-For this assignment you should aim to write everything from scratch. For experimentation it is often necessary to control all elements of the chart.
-You should definitely *reference* demo programs from books or the web, and if you do please provide a References section with links at the end of your Readme.
-
-Requirements
+Project Description Summary
 ---
+Our project set to perfrom an experiment similar to Cleveland and McGill's original experiment. In this experiment, a number of participants were asked to determine how much the smaller is to the larger between two noted areas. Our experiment asked participants, essentially, the same objective. The survey would generate a random set of data points for a tree map, pie chart, or stacked bar chart. Each chart was generated with 10 random values that were labeled A - J. The program would randomly select two of these labeled points (A-J), and the user would then enter the ratio they believed the smaller was to the larger of two of the labeled points. This repeated for 30 trials. The survey was run on an external server using Glitch. Once concluded, the data would be recorded on a server. The data was downloaded as a csv file format for use in statisitcal analysis of the error using 95% bootstrap confidence intervals. This analysis was performed with R + ggplot.
 
-- Look it over Cleveland and McGill's original experiment (see the section below) and [watch this video](experiment-example.mp4) to get a sense of the experiment structure and where your visualizations will go.
-- When viewing the example experiment video, note the following:
-    - Trials are in random order.  
-    - Each trial has a randomly generated set of 5-10 data points.  
-    - Two of these data points are marked.  
-    - (Note: the experiment UI and User Experience could be better. Plenty of design achievements here).
-- Implement the data generation code **as described in the Cleveland & McGill paper**. 
-    - The goal is to generate a set of random datapoints (usually 5 or 10, with values be between 0 and 100) and to mark two of them for comparison in the trial. 
-- Add 3 visualizations (i.e. conditions) to your experiment. When you are adding these visualizations, think about *why* these visualizations are interesting to test. In other words, keep in mind a *testable hypothesis* for each of the added visualization. Some good options include bar charts, pie charts, stacked-bar charts, and treemaps. You can also rotate your bar chart to be horizontal or upside-down as one of your conditions. You are encouraged to test unorthodox charts -- radar charts come to mind, but there are MANY possibilities here-- feel free to be creative!
-    - Follow the style from Cleveland and McGill closely (e.g. no color, simple lines) unless you are specifically testing a hypothesis (e.g. color versus no color). Pay attention to spacing between elements like bars. Do not mark bars for comparison using color-- this makes the perceptual task too easy.
-- After each trial, implement code that grades and stores participant’s responses.
-- At the end of the experiment, to get the data, one easy option use Javascript to show the data from the current experiment\* (i.e. a comma separated list in a text box) and copy it into your master datafile. See the Background section below for an example of what this file should look like. (\*Alternately implement a server, if you're experienced with that sort of thing.)
+The link to the survey can be found on the link [here](https://peppered-automatic-apparel.glitch.me/). 
+Here is the acutal URL if the hyperlink does not work: https://peppered-automatic-apparel.glitch.me/
 
-- Figure out how to calculate "Error", the difference between the true percentage and the reported percentage.
-- Scale this error using Cleveland and McGill’s log-base-2 error equation. For details, see the background section (there’s a figure with the equation). This becomes your “Error” column in the output. Make sure you use whole percentages (not decimal) in the log-base-2 equation. Make sure you handle the case of when a person gets the exact percentage correct (log-base-2 of 1/8 is -3, it is better to set this to 0). 
-- Run your experiment with 10 or more participants, or-- make sure you get at least 200 trials **per visualization type** in total.  
-    - Grab friends or people in the class.   
-    - Run at least 20 trials per visualization type, per participant. This is to ensure that you cover the range of possible answers (e.g. 5%, 10%, ..., 95%)
-- Make sure to save the resulting CSV after each participant. Compile the results into a master csv file (all participants, all trials).
-- Produce a README with figures that shows the visualizations you tested and results, ordered by best performance to worst performance. Follow the modern Cleveland-McGill figure below -- though note that using names instead of icons is fine.
-- To obtain the ranking, calculate and report the average log2Error for each visualization across all trials and participants. This should be straightforward to do in a spreadsheet.
-- Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. Include these in your figures. Bootstrapped confidence intervals are easily implemented in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. Bootstrapped 95% CIs are **very** useful in modern experiment practice.
-- Include example images of each visualization as they appeared in your experiment (i.e. if you used a pie chart show the actual pie chart you used in the experiment along with the markings, not an example from Google Images).
-
-## General Requirements
-
-0. Your code should be forked from the GitHub repo and linked using GitHub pages.
-2. Your project should use d3 to build visualizations. 
-3. Your writeup (readme.md in the repo) should contain the following:
-
-- Working link to the experiment hosted on gh-pages or some other site.
-- Concise description and screenshot of your experiment.
-- Description of the technical achievements you attempted with this project.
-- Description of the design achievements you attempted with this project.
-
-Background
+Project Details (An expansion of the previous summary)
 ---
+In the acutal code, we had 10 random values generated before a visualization was projected and drawn onto the screen. Each of these data points were associated with a letter from A - J, with the first being associated with A and so on. Using these points, a visualization was created (either tree map, stacked bar chart, or pie chart) with each section associated with a random value also being labeled by its particular letter. From those ten random data points, two were selected for a particular visualization. Alongside the visualization, text displaying the instructions to the user (to compare the smaller to the larger) and the survey question number are displayed. There is a text box that can take in information from the user and a next button that accepts the information, stores it, and then displays the next data visualization. If the user fails to enter in a value for a particular visualization, an error message appears to inform the user of such. The program is coded to run 30 visualization questions. At the end, the user's overall error and the error for each type of visualization. After testing, the visualization's stored data was downloaded as a csv file. 
 
-In 1984, William Cleveland and Robert McGill published the results of several controlled experiments that pitted bar charts against pies and stacked-bar variants. 
-Their paper (http://www.cs.ubc.ca/~tmm/courses/cpsc533c-04-spr/readings/cleveland.pdf) (http://info.slis.indiana.edu/~katy/S637-S11/cleveland84.pdf) is considered a seminal paper in data visualization.
-In particular, they ran a psychology-style experiment where users were shown a series of randomly-generated charts with two graphical elements marked like this:
+The server was hosted externally using Glitch. The link to the survey is written in twice above. This allowed for the storage of information in an external server as well. The data was then able to be downloaded as a csv file for easy integration into R + ggplot code that was written.
 
-![cleveland bar chart](img/cleveland-bar.png)
+In R, the methods within the ggplot library were used to plot the log2 error data vs the visualization types (tree map, stacked bar chart, and pie chart). 95% bootstrap confidence intervals with error bars for the upper and lower bounds are drawn in red. A coordiante flip method is used to orient the graph properly. 
 
-Participants were then asked, "What percentage is the smaller of the larger?". 
-This was repeated hundreds of time with varying data and charts. 
-By the end of the study, Cleveland and McGill had amassed a large dataset that looked like this:
+There are two intersting points about the data that we just want to list out. 
+- Firstly, the error is higher in our resulting data than the crowdsourced data. 
+- Secondly, the most variance in the mean is seen with the stacked bar chart, indicating a greater variability in participants being able to determine the smaller of the larger area of two selected areas. 
 
-![cleveland table](img/cleveland-table.png)
+We had two hypotheses when creating this experiment: all visualization types would have high error in properly evaluating which is smaller to the larger and the tree map would do significantly worse than the other data visualizations. The first hypothesis was correct. There is a lot of error for each data visualization supported by the high mean value of each visualization. The second hypothesis was not correct. When examining the data, there is no statistical significance between the error of the visualization types. All three visulaization types are not statistically better or worse than the others.  In conclusion, we can say that the tree map, stacked bar chart, and pie chart visualizations are not effective for conveying differences in area between sections, and each do neither better or worse than the others. 
 
-__Log-base-2 or "cm-error"__: The true percent is the actual percentage of the smaller to the larger, while the reported percent is what participants reported. 
-Cleveland and McGill recognized that their analyses would be biased if they took `abs(ReportedPercent – TruePercent)` as their score for error. 
-To compensate, they came up with a logarithmic scale for error with this equation:
+Pictures/Images
+---
+![Immersive Image](img/SampleStartSurveyScreen.png)
+Above is an image of the survey front page.
 
-![cleveland equation](img/cleveland-equation.png)
+![Immersive Image](img/SampleTreeMap.png)
+Above is an image of the tree map from the survey that was generated.
 
-You’ll be implementing this error score as part of the lab. 
-(Hint: it’s not a trick question, this is just to familiarize you with the experiment protocol). 
-With this Cleveland-McGill error score you can better compare the performance of the charts you test to figure out which one performs the best.
+![Immersive Image](img/SampleStackedBarChart.png)
+Above is an image of the stacked bar chart from the survey that was generated.
 
-As a baseline, compare your average Error scores to the following chart, which include both Cleveland and McGill’s results as well as more recent extensions of this experiment (lower error indicates better performance, and error bars are bootstrapped 95% confidence intervals (`http://en.wikipedia.org/wiki/Confidence_interval#Meaning_and_interpretation`)):
+![Immersive Image](img/SamplePieChart.png)
+Above is an image of the pie chart from the survey that was generated.The text box in this one is filled in with a value that a user would be entering.
 
-![cleveland results](img/cleveland-results.png)
+![Immersive Image](img/UnenteredValueAlert.png)
+Above is an image of an alert message that appears if a user does not enter in a value for a particular visualization. In other words, hitting next without entering in a value.
 
-GitHub Details
+![Immersive Image](img/SampleEndSurveyScreen.png)
+Above is an image of the final page of the survey, showing overall error and error for each specific data visualization to the user. Permission was obtained to show this image.
+
+![Immersive Image](img/BootstrapConfidenceIntervalGraph.png)
+Above is an image of the graph of visualization vs log 2 error from R + ggplot.
+
+Design Achievement
+---
+There are multiple design achievements that we would like to acknowledge. It is listed below:
+- We were able to move and center the survey components on the screen. This makes the survey more visualizing appealing and organized for the participant.
+- We were able to implement button functionality that worked with the text box for ease in entering data for users. This makes the experience easier for the participant when reocridng the data, and ensures to the participant that the information entered was indeed recorded.
+- We were able to display the final overall error and the error for each visualization type to the user once the survey was completed. This was done in good fun for the participant. Provides results that is nice to see after completing 30 questions.
+- An alert message appears if a user fails to enter in a value for the shown visualization to inform the user to enter in a value. Besides the nice emoticon, it is good to ensure all the information is entered and the results for a particular participant are complete.
+- Numbering of which visualization number out of 30 is being shown. It makes the test not seem endless for the participant.
+- In R, the confidence interval upper and lower bounds were shown on the graph as error bars when creating the 95% bootstrap confidence interval. Useful in indentifying statistical significance.
+
+Technical Achievement
+---
+There is one technical achievement that we would like to acknowledge. It is listed below:
+- We were able to record and store the survey results using glitch on an external server. The information was retireved as a csv file for statistical analysis. This made collecting the data easier, and with less hassle.
+
+References/Citations
+---
+1. [This source was useful for generating a background on stacked bar charts in d3](https://www.d3-graph-gallery.com/graph/barplot_stacked_basicWide.html)
+2. [This source helped address the problem of svg.width being used for the stacked bar chart](https://css-tricks.com/using-svg/)
+3. [This source provided a background for generating the tree map in d3](https://www.d3-graph-gallery.com/graph/treemap_json.html)
+4. [This source provided a background for generating the pie chart in d3](https://www.d3-graph-gallery.com/graph/pie_annotation.html)
+5. [This source also provided a background for generating the pie chart in d3](https://www.d3-graph-gallery.com/graph/pie_basic.html)
+6. [This source provided a background to making bootstrap confidence intervals in R + ggplot](http://rstudio-pubs-static.s3.amazonaws.com/28101_41a7995107d94c8dbb07bbf7cd7e8291.html)
+7. [This source helped with figuring out labeling with R + ggplot](http://environmentalcomputing.net/plotting-with-ggplot-adding-titles-and-axis-names/#:~:text=To%20alter%20the%20labels%20on,line%20of%20basic%20ggplot%20code.&text=Note%3A%20You%20can%20also%20use,which%20is%20equivalent%20to%20ggtitle%20.)
+
+GitHub Assignment 3 Details (from A3 original README)
 ---
 
 - Fork the GitHub Repository. You now have a copy associated with your username.
