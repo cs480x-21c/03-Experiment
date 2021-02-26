@@ -1,4 +1,4 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3.v6.min.js"></script>
 <svg id="frame"></svg>
 
 <style>
@@ -32,6 +32,7 @@
   }
   //var trueVal = randomGradient(svg);
   console.log("true val: " + trueVal);
+  loadDataAndCalcStatistics();
 
   //do other logic, and store the data based on chartToChoose, their input, and trueval
 
@@ -241,6 +242,54 @@
     .style('padding-top', '2')
     .attr('value', "Submit")
     .on('input', function(mouseEvent) { console.log("click!");});
+
+  }
+
+  function loadDataAndCalcStatistics() {
+
+    const prom = d3.csv("/participant-results.csv").then(function(data) {
+
+      //console.log(data);
+      var bubbleData = [];
+      var gradientData = [];
+      var barData = [];
+      for (var i = 0; i < data.length; i++) {
+        switch(data[i]["Viztype:"]) {
+          case "GradientGraph":
+            gradientData.push(data[i]);
+            break;
+          case "BarGraph":
+            barData.push(data[i]);
+            break;
+          case "BubbleChart":
+            bubbleData.push(data[i]);
+            break;
+          default:
+            console.log(data[i]);
+            break;
+        }
+      }
+      var bubbleErrorUnscaled;
+      var gradientErrorUnscaled;
+      var barErrorUnscaled;
+
+
+      var listOfErrors = [bubbleErrorUnscaled, gradientErrorUnscaled, barErrorUnscaled];
+      var listOfLists = [bubbleData, gradientData, barData];
+
+      for(var i = 0; i < listOfLists.length; i++) {
+        var currList = listOfLists[i];
+        var runningErrorTotal = 0;
+        for (var j = 0; j < currList.length; j++) {
+          runningErrorTotal += Math.log2(Math.abs(currList[j]["Reported Percentage"] - currList[j]["True Percentage"])+(1/8));
+        }
+        listOfErrors[i]  = runningErrorTotal / currList.length;
+      }
+
+      console.log(listOfErrors);
+
+
+    });
 
   }
 
