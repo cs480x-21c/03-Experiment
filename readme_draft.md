@@ -1,5 +1,9 @@
 # Assignment 3
 
+By Jean-Philippe Pierre, Isabel Alvarado and Suryansh Goyal
+
+Link for the experiment: https://cleaveland-mcgill-experiment.glitch.me/index.html
+
 ![screenshot](img/screenshot.png)
 
 This experiment tested three different types of visualizations to determine their effectiveness. These visualizations were a bar chart, a pie chart, and a circular bar chart.
@@ -36,6 +40,7 @@ To determine how effective each visualization was, we calculated the error of pa
 * Used a Node.js server and HTTP requests to create csv files for each trial.
 * Used Vue.js to handle form responses and conditionally display content.
 * Implemented a feature to allow users to view their responses after the experiment has been completed.
+* Implement a method to create bootstrap samples of data to generate 95% Confidence Intervals for each visualization
 
 ## References
 * https://www.d3-graph-gallery.com/graph/pie_annotation.html
