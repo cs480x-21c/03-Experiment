@@ -1,13 +1,15 @@
 library(tidyverse)
 library(readxl)
+library(Hmisc)
+library(forcats)
 
+data <- read_excel("fullData.xlsx")
 
-dd <- read_excel("fullData.xlsx")
-
-head(dd)
-
-d <- ggplot(dd, aes(x=logMod, y=vis)) + geom_point()
-d + stat_summary(fun.data = "logMod", colour = "red", size = 2)
+data %>%
+  mutate(vis = fct_reorder(vis,desc(LogError))) %>%
+    ggplot(aes(LogError,vis)) + 
+     #geom_point() +
+    stat_summary(fun.data = "mean_cl_boot", colour = "red", size =1.5)
                  
 #ggplot(dd, aes(x = Weight, y = MPG, color= Manufacturer, size=Weight)) + geom_point(alpha = 0.5)
 

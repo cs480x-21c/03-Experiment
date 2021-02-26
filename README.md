@@ -1,49 +1,65 @@
-Assignment 3 - Replicating a Classic Experiment  
-===
+# The Visualization/Experiment
+
+authors: Kavtaradze Elene, McKeen Joshua, Truong Shannon
 
 
+Our experiment is hosted live and can be found at: <https://ekavtaradze.github.io/03-Experiment/>
 
-Requirements
----
 
-## General Requirements
+# Our hypothesis:
 
-0. Your code should be forked from the GitHub repo and linked using GitHub pages.
-2. Your project should use d3 to build visualizations. 
-3. Your writeup (readme.md in the repo) should contain the following:
+We predict that the ranking of effectiveness in human perception of data will be the most effective in the bar chart, followed by the stacked bar chart and pie chart, respectively. Users will be able to more accurately compare two given data structures in the bar chart because it has been shown that the magnitude channels on ordered attributes rank positioning on a common scale (bar chart) to be the most effective, followed by the position on an unaligned scale (stack bar chart) and the angle (pie chart) to be the least effective.
 
-- Working link to the experiment hosted on gh-pages or some other site. - Yes
-- Concise description and screenshot of your experiment.
-- Description of the technical achievements you attempted with this project.
-- Description of the design achievements you attempted with this project.
+# Working on the d3 Visualizations and the Experiment Design
 
-Background
----
+The experiment uses the following graphs:
 
-__Log-base-2 or "cm-error"__: The true percent is the actual percentage of the smaller to the larger, while the reported percent is what participants reported. 
-Cleveland and McGill recognized that their analyses would be biased if they took `abs(ReportedPercent – TruePercent)` as their score for error. 
-To compensate, they came up with a logarithmic scale for error with this equation:
+-   Bar chart
+-   Pie chart
+-   Stacked bar chart
 
-![cleveland equation](img/cleveland-equation.png)
+The graphs utilized in this experiment were generated with reference to examples listed on the d3 graph gallery. The experiment itself includes 60 pages with 20 examples of each graph. The order of the graphs is randomly generated. Additionally, the data we display in our charts are also generated randomly using a randomly generated number script. The experiment itself is taken and a reference to the Cleveland and McGill Graphical Perception experiment. Similar to the Cleveland and McGill Experiment, the participants are asked to compare the two marked graphical elements and to provide their closest guess in the text box before moving forward.
 
-You’ll be implementing this error score as part of the lab. 
-(Hint: it’s not a trick question, this is just to familiarize you with the experiment protocol). 
-With this Cleveland-McGill error score you can better compare the performance of the charts you test to figure out which one performs the best.
+**Note: Our visualization and error reports require a csv file to be downloaded from the experiment site upon submission. These reports were submitted to us via email.**
 
-As a baseline, compare your average Error scores to the following chart, which include both Cleveland and McGill’s results as well as more recent extensions of this experiment (lower error indicates better performance, and error bars are bootstrapped 95% confidence intervals (`http://en.wikipedia.org/wiki/Confidence_interval#Meaning_and_interpretation`)):
+We received datasets from 12 participants totaling 240 trials per chart to analyze by the end of the experimentation phase.
 
-![cleveland results](img/cleveland-results.png)
+## Bar Charts
 
-GitHub Details
----
+![bar chart example](img/BarChartEx.png)
 
-- Fork the GitHub Repository. You now have a copy associated with your username.
-- Make changes to index.html to fulfill the project requirements. 
-- Make sure your "master" branch matches your "gh-pages" branch. See the GitHub Guides referenced above if you need help.
-- Edit this README.md with a link to your gh-pages site: e.g. http://YourUsernameGoesHere.github.io/Experiment/index.html
-- Replace this file (README.md) with your writeup and Design/Technical achievements.
-- To submit, make a [Pull Request](https://help.github.com/articles/using-pull-requests/) on the original repository.
-- Name your submission using the following scheme: 
-```
-a3-FirstLastnameMember1-FirstLastnameMember2-FirstLastnameMember3-...
-```
+The above image is an example of a possible bar chart that is displayed in our experiment given during our trials. The two selected graphical elements participants were asked to compare were generated randomly for every generated bar chart.
+
+## Stacked Bar Charts
+
+![stacked bar chart example](img/StackedEx.png)
+
+The above image is an example of a possible stacked bar chart that is displayed in our experiment given during our trials. The two selected graphical elements participants were asked to compare were again generated randomly and decided upon randomly for every visualization of a stacked bar chart.
+
+## Pie Chart
+
+
+![pie chart example](img/PieChartEx.png)
+
+The above image is an example of a possible pie chart that is displayed in our experiment given during our trials. The two selected graphical elements or 'slices' presented to the participants were again generated randomly for every pie chart generation. In order to place the dots and mark which slices to compare, the built in d3 centroid() function was used to calculate the location at the middle of the slice we would like the participant to reference when comparing.
+
+# Results/Error Analysis
+
+![excel example](img/Excel.png)
+
+This is a small subset of our collected data. All our user submissions are collected in the userSubmissions directory. We merged all of the user datasets into one
+Excel file called fullData.xlsx. The error calculation was done in Excel. First, we applied the error formula given in Cleveland and McGill(log with base 2 of (abs(ReportedPercent – TruePercent) +1/8)) in column called logr. Then in column logError, we checked for -3 values and converted them to 0. -3 value is for cases when the reportedPercent matches truePercent(the guess was 100% correct) and in this case the error should be 0. We only eliminated one outlier in the data. The truePercent was 80, and the reportedPercent was 1000 which created an outlier. We believe that this is due to a input/human error, inputing 1000 instead of 100. We decided to exclude that row from calculations.
+vis and logError columns were used to create a visualization in R.
+
+![results](img/Results.png)
+
+Looking at the logError and analyzing the results, we can see that our hypothesis above holds true. The true percent is the actual percentage of the smaller to the larger graphical element in each chart, while the reported percent is what participants reported in the trials. Utilizing the Cleveland and McGill method, `abs(ReportedPercent – TruePercent) +1/8`, as their score for error and having this be on a logarithmic scale with base 2 to propagate error, we can see in the graphical analysis above that participants most likely were able to perceive data more accurately when presented using a bar chart. The pie chart clearly resulted in a more inaccurate reading of data whereas the stacked bar chart came in as the second most effective graphical display. It is important to note that the error calculated for the stacked bar chart, however, was evidently closer to the error in accuracy when reading a pie chart.
+
+# Design/Technical Achievements
+
+Some stuff here....
+
+Resources used:
+
+-   csv download <https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side>
+-   <https://www.d3-graph-gallery.com/index.html>
