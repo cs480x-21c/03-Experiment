@@ -1,5 +1,7 @@
 /**
  * Server.js
+ *
+ * date created: 2/24/2021
  * Author: Benjamin M'Sadoques
  *
  * The starting point for the Node JS app
