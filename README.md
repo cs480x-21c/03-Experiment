@@ -70,4 +70,5 @@ Looking at the logError and analyzing the results, we can see that our hypothesi
 Resources used:
 
 -   csv download https://seegatesite.com/tutorial-read-and-write-csv-file-with-javascript/
+-  https://www.learnhowtoprogram.com/user-interfaces/building-layouts-preprocessors/multi-page-html-sites
 -   <https://www.d3-graph-gallery.com/index.html>
