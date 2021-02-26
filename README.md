@@ -32,11 +32,11 @@ This visualization, designed by Alan, is a standard pie chart.
 # Results
 
 # Achievements
-## Design
+### Design
 - Size-dependent coloring on Visualization 1
 - Utilized Google's material design components for the web for input & cards
 
-## Technical
+### Technical
 - Smooth transitions between visualizations
 - Data is automatically sent to a Firebase database
 
