@@ -2,6 +2,7 @@
 let gVisArray = [];
 let gVisIndex = 0;
 let gTrialIndex = 0;
+let gVis;
 // const TRIALS = 20;
 const TRIALS = 2;
 
@@ -32,14 +33,7 @@ function main()
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
-    // idk if we need these
-    var xScale = d3.scaleLinear()
-        .domain([0, 100])
-        .range([margin.left, width]);
-
-    var yScale = d3.scaleLinear()
-        .domain([0, 100])
-        .range([margin.bottom, height]);
+    console.log("vid " +gVisIndex);
 
     // Create vis to test
     gVisArray.push(new BarChart(svg, width, height));
@@ -73,6 +67,10 @@ function makeNewChart()
 
         if (gTrialIndex === TRIALS)
         {
+            // Fetch answer and enter the result
+            let answer = document.getElementById("answer").valueAsNumber;
+            gResults.enterResult(gVis.type, gVis.answer, answer);
+
             // Saves the result
             gResults.saveResult();
 
@@ -80,33 +78,39 @@ function makeNewChart()
             window.removeEventListener("keydown", enter, {passive: true});
 
             // Ends the test, redirects users
-            window.location.replace("endExperiment");
+            //window.location.replace("endExperiment");
         }
         else
         {
             gTrialIndex++;
         }
     }
-
     // make the new vis with the current index
-    let vis = gVisArray[gVisIndex];
 
     // first trial will not have an input
     if (notFirstTrial)
     {
         // Fetch answer and enter the result
         let answer = document.getElementById("answer").valueAsNumber;
-        gResults.enterResult(vis.type, vis.answer, answer);
+        gResults.enterResult(gVis.type, gVis.answer, answer);
+        console.log(gVis);
+
+        // Update needs to happen after previous answer is recorded
+        gVis = gVisArray[gVisIndex];
+    }
+    else
+    {
+        gVis = gVisArray[gVisIndex];
     }
 
     notFirstTrial = true;
 
     // remove current vis
-    vis.remove();
+    gVis.remove();
 
     // make the new vis with random values and make
-    vis.newRandom();
-    vis.make();
+    gVis.newRandom();
+    gVis.make();
 
     // Clear answer field
     document.getElementById("answer").value = '';
