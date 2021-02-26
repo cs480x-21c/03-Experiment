@@ -40,4 +40,4 @@ To determine how effective each visualization was, we calculated the error of pa
 ## References
 * https://www.d3-graph-gallery.com/graph/pie_annotation.html
 * https://www.d3-graph-gallery.com/graph/circular_barplot_basic.html
-* TODO: put in other references
+* https://towardsdatascience.com/calculating-confidence-interval-with-bootstrapping-872c657c058d
