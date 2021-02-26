@@ -58,7 +58,6 @@
 
   <form id="form" onSubmit="return false;">
 
-    <!-- One "tab" for each step in the form: -->
     <div class="page">
       <h1>Experiment</h1>
       <p>Thank you for agreeing to participate in our experiment!</p>
@@ -98,7 +97,7 @@
   </form>
 
   <script>
-    //Initial SETUP
+    <!--INITIAL SETUP-->
     console.log(d3);
     var tracker = 0;
     var numDisplay = 60; //Number of Display we want to have
@@ -164,16 +163,16 @@
       }
     });
 
-    //END SETUP
+    <!--END INITIAL SETUP-->
 
 
-
+    <!--set up svg-->
     function setUpSVG() {
       svg.selectAll("*").remove();
       svg.attr('width', width).attr('height', height)
     }
 
-
+    <!--Add data to csv variable-->
     function addToCSV() {
       data.forEach(obj => {
         let row = [];
@@ -187,6 +186,7 @@
       data = [];
     }
 
+    <!--End the experiment, prompt download of csv-->
     function end() {
       console.log("end");
       //exportCSV from
@@ -204,6 +204,7 @@
 
     }
 
+    <!--Generates a Bar Graph-->
     function generateBarGraph() {
       dataCurrent.vis = "Bar Graph";
       setUpSVG();
@@ -318,7 +319,7 @@
       dataCurrent.truePercent = calculateCorrectPercentage(dataBar1, dataBar2);
     }
 
-
+    <!-- Generates Pie Chart-->
     function generatePieChart() {
       dataCurrent.vis = "Pie Chart";
       setUpSVG();
@@ -401,7 +402,7 @@
       dataCurrent.truePercent = calculateCorrectPercentage(dataSlice1, dataSlice2);
     }
 
-
+    <!--Generates Stacked Bar Chart-->
     function generateStackedBarChart() {
       dataCurrent.vis = "Stacked Bar Chart";
 
@@ -564,8 +565,7 @@
     }
 
 
-
-    //function for calculating what the actual correct ratio percentage is given two values
+    <!--Function for calculating what the actual correct ratio percentage is given two values -->
     function calculateCorrectPercentage(val1, val2) {
       var largerVal = Math.max(val1, val2);
       var smallerVal = Math.min(val1, val2);
@@ -576,6 +576,7 @@
       return correctPercentage;
     }
 
+    <!--Displays graphs-->
     function displayRandomGraph() {
       //  console.log("Display Random Graph");
       dataCurrent.participantID = participantID;
@@ -594,7 +595,7 @@
       }
     }
 
-    //ADD this
+    <!--Function to make sure inputs are not submitted empty -->
     function checkAnswers(answer) {
       var value = document.getElementById("txtAnswer").value;
       if (value == "") {
@@ -607,7 +608,8 @@
       return true;
     }
 
-    //display pages and buttons
+
+    <!--Display pages and buttons -->
     function display() {
       //  console.log("display   tracker " + tracker + "  currentPage " + currentPage);
 
@@ -627,7 +629,8 @@
     }
 
 
-    //Pressing Agree/Next/Save/Download button
+
+   <!--Pressing Agree/Next/Save/Download button -->
     function saveNext() {
       //console.log("nextPrev currentPage " + currentPage)
       if (tracker == numDisplay + 1) {
@@ -660,7 +663,7 @@
       display();
     }
 
-    //Pressing Disagree Button
+   <!--Pressing disagree button -->
     function disagree() {
       var p = document.getElementsByClassName("page");
       p[currentPage].style.display = "none";
