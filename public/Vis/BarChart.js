@@ -99,7 +99,7 @@ class BarChart extends Chart
         {
             this.svg.append("circle")
                 .attr("cx", x(this.features[i]) + x.bandwidth() / 2)
-                .attr("cy", this.height + 6)
+                .attr("cy", this.height - 15)
                 .attr("r", 8)
                 .attr("fill", "black");
         }
