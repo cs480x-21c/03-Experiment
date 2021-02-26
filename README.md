@@ -48,17 +48,17 @@ Above is an image of the graph of visualization vs log 2 error from R + ggplot.
 Design Achievement
 ---
 There are multiple design achievements that we would like to acknowledge. It is listed below:
--We were able to move and center the survey components on the screen.
--We were able to implement button functionality that worked with the text box for ease in entering data for users.
--We were able to display the final overall error and the error for each visualization type to the user once the survey was completed.
--An alert message appears if a user fails to enter in a value for the shown visualization to inform the user to enter in a value.
--Numbering of which visualization number out of 30 is being shown. It makes the test not seem endless for the user.
--In R, the confidence interval upper and lower bounds were shown on the graph as error bars when creating the 95% bootstrap confidence interval.
+- We were able to move and center the survey components on the screen.
+- We were able to implement button functionality that worked with the text box for ease in entering data for users.
+- We were able to display the final overall error and the error for each visualization type to the user once the survey was completed.
+- An alert message appears if a user fails to enter in a value for the shown visualization to inform the user to enter in a value.
+- Numbering of which visualization number out of 30 is being shown. It makes the test not seem endless for the user.
+- In R, the confidence interval upper and lower bounds were shown on the graph as error bars when creating the 95% bootstrap confidence interval.
 
 Technical Achievement
 ---
 There is one technical achievement that we would like to acknowledge. It is listed below:
--We were able to record and store the survey results using glitch on an external server. The information was retireved as a csv file for statistical analysis.
+- We were able to record and store the survey results using glitch on an external server. The information was retireved as a csv file for statistical analysis.
 
 References/Citations
 ---
