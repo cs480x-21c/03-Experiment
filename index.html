@@ -336,7 +336,27 @@
         [150, toRet[2][1]*50],
         [150, toRet[2][2]*50]
       ]
-       
+      
+      var width = 200;
+      var height = 200;
+      var margin = {top: 20, right: 20, bottom: 30, left: 40};
+      var chartWidth = width - margin.left - margin.right;
+      var chartHeight = height - margin.top - margin.bottom;
+      svg.attr('width', width).attr('height', height);
+      g = svg.append('g').attr('transform', 'translate('+ margin.bottom +',' + margin.top +')');
+      var x = d3.scaleLinear()
+        .range([0,chartWidth])
+        .domain([30, 180]);
+      var xAxis = g.append('g')
+        .attr('transform', 'translate(0,' + chartHeight + ')')
+        .call(d3.axisBottom(x));
+      
+      var y = d3.scaleLinear()
+        .range([chartHeight, 0])
+        .domain([0, 100]);
+      var yAxis = g.append('g')
+        .call(d3.axisLeft(y));
+      
       svg.append('path')
       .attr('d', lineVar(pointsA))
       .attr("stroke", "#000000");
