@@ -28,12 +28,14 @@ const listener = app.listen(process.env.PORT, () =>
     console.log("Your app is listening on port " + listener.address().port);
 });
 
+// URL for starting the experiment, user clicks the start button
 app.get('/startExperiment', (request, response) =>
 {
     console.log("Start Experiment");
     response.sendFile(path.join(__dirname + '/views/index.html'));
 });
 
+// URL for ending the experiment, user finnishes the survey
 app.get('/endExperiment', (request, response) =>
 {
     console.log("End Experiment");

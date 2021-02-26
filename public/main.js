@@ -49,62 +49,55 @@ function main()
 
 function makeNewChart()
 {
-    if(notFirstTrial === true)
+    let answer = document.getElementById("answer").valueAsNumber;
+    // If the person did not provide an answer, and it is any trial after the initial
+    //  they forgot to provide an answer
+    if ((answer !== answer) && notFirstTrial)
     {
-        let answer = document.getElementById("answer").value;
-        console.log(answer);
-        if(answer === '')
-        {
-            document.getElementById("answer").style.backgroundColor = "red";
-            return;
-        }
-    }
-
-    // Check if the vis index needs to be reset
-    if (gVisIndex === gVisArray.length)
-    {
-        gVisIndex = 0;
-
-        if (gTrialIndex === TRIALS)
-        {
-            // Fetch answer and enter the result
-            let answer = document.getElementById("answer").valueAsNumber;
-            gResults.enterResult(gVis.type, gVis.answer, answer);
-
-            // Saves the result
-            gResults.saveResult();
-
-            // should not be active on the end page
-            window.removeEventListener("keydown", enter, {passive: true});
-
-            // Ends the test, redirects users
-            //window.location.replace("endExperiment");
-        }
-        else
-        {
-            gTrialIndex++;
-        }
-    }
-    // make the new vis with the current index
-
-    // first trial will not have an input
-    if (notFirstTrial)
-    {
-        // Fetch answer and enter the result
-        let answer = document.getElementById("answer").valueAsNumber;
-        gResults.enterResult(gVis.type, gVis.answer, answer);
-        console.log(gVis);
-
-        // Update needs to happen after previous answer is recorded
-        gVis = gVisArray[gVisIndex];
+        document.getElementById("answer").style.backgroundColor = "red";
     }
     else
     {
+        // Check if the vis index needs to be reset
+        if (gVisIndex === gVisArray.length)
+        {
+            gVisIndex = 0;
+
+            // Trial ended
+            if (gTrialIndex === TRIALS)
+            {
+                end();
+                return;
+            }
+            else
+            {
+                gTrialIndex++;
+            }
+        }
+
+        // first trial will not have an input
+        if (notFirstTrial)
+        {
+            // Person typed a result, so enter it
+            gResults.enterResult(gVis.type, gVis.answer, answer);
+        }
+        else
+        {
+            notFirstTrial = true;
+        }
+
+        // Set the current chart to the next one
         gVis = gVisArray[gVisIndex];
+
+        // Make the next chart, it is safe to do so
+        nextChart();
+
+        gVisIndex++;
     }
+}
 
-    notFirstTrial = true;
-
+function nextChart()
+{
     // remove current vis
     gVis.remove();
 
@@ -114,10 +107,23 @@ function makeNewChart()
 
     // Clear answer field
     document.getElementById("answer").value = '';
-
-    gVisIndex++;
 }
 
+function end()
+{
+    // Fetch answer and enter the result
+    let answer = document.getElementById("answer").valueAsNumber;
+    gResults.enterResult(gVis.type, gVis.answer, answer);
+
+    // Saves the result
+    gResults.saveResult();
+
+    // should not be active on the end page
+    window.removeEventListener("keydown", enter, {passive: true});
+
+    // Ends the test, redirects users
+    window.location.replace("endExperiment");
+}
 
 function enter(event)
 {
