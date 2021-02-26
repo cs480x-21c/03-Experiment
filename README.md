@@ -48,7 +48,7 @@ The above image is an example of a possible pie chart that is displayed in our e
 ![excel example](img/Excel.png)
 
 This is a small subset of our collected data. All our user submissions are collected in the userSubmissions directory. We merged all of the user datasets into one
-Excel file called fullData.xlsx. The error calculation was done in Excel. First, we applied the error formula given in Cleveland and McGill(log with base 2 of (abs(ReportedPercent – TruePercent) +1/8)) in column called logr. Then in column logError, we checked for -3 values and converted them to 0. -3 value is for cases when the reportedPercent matches truePercent(the guess was 100% correct), and in this case, the error should be 0. We only eliminated one outlier in the data. The truePercent was 80, and the reportedPercent was 1000 which created an outlier. We believe that this is due to an input/human error, inputing 1000 instead of 100. We decided to exclude that row from calculations.
+Excel file called fullData.xlsx. The error calculation was done in Excel. First, we applied the error formula given in Cleveland and McGill `log with base 2 of (abs(ReportedPercent – TruePercent) +1/8)` in column called logr. Then in column logError, we checked for -3 values and converted them to 0. -3 value is for cases when the reportedPercent matches truePercent(the guess was 100% correct), and in this case, the error should be 0. We only eliminated one outlier in the data. The truePercent was 80, and the reportedPercent was 1000 which created an outlier. We believe that this is due to an input/human error, inputing 1000 instead of 100. We decided to exclude that row from calculations.
 vis and logError columns were used to create a visualization in R.
 
 ![results](img/Results.png)
