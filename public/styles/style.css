@@ -1,3 +1,12 @@
+.home {
+    text-align: left;
+    line-height: 0.5;
+    margin: auto;
+    width: 600px;
+    padding: 70px 0;
+    font-size: 20px;
+}
+
 .block {
     margin: 0 auto;
     width: 600px;
@@ -14,6 +23,7 @@
 .Instructions p {
     text-align: left;
     line-height: 0.5;
+    font-size: 18px;
 }
 
 .button {
