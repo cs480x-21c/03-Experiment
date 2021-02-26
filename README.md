@@ -34,14 +34,14 @@ The above image is an example of a possible bar chart that is displayed in our e
 
 ![stacked bar chart example](img/StackedEx.png)
 
-The above image is an example of a possible stacked bar chart that is displayed in our experiment given during our trials. The two selected graphical elements participants were asked to compare were again generated randomly and decided upon randomly for every visualization of a stacked bar chart. The height of the two bars in the stacked bar chart were based on randomly generated numbers between 50 and 100. Then, the heights of the data blocks within each bar were randomly generated numbers between 3 and a varying maximum. The maximum for each point was calculated using the formula `100 - sumTillNow - (8*numsRemaining)` where sumTillNow represented the sum of the previously generated values in the set and numsRemaining represented the number of data points that still needed to be generated. This ensured the generation of a pseudo-random number while still leaving enough "space" for appropriately sized data blocks farther up the bar. The last block in each bar was calculated based on a simple difference between the height of the previously generated data blocks and the height of the total bar.
+The above image is an example of a possible stacked bar chart that is displayed in our experiment given during our trials. The two selected graphical elements participants were asked to compare were again generated randomly and decided upon randomly for every visualization of a stacked bar chart. The height of the two bars in the stacked bar chart were based on randomly generated numbers between 50 and 100. Then, the heights of the data blocks within each bar were randomly generated numbers between 3 and a varying maximum. The maximum for each point was calculated using the formula `100 - sumTillNow - (8*numsRemaining)` where sumTillNow represented the sum of the previously generated values in the set and numsRemaining represented the number of data points that still needed to be generated. This ensured the generation of a pseudo-random number while still leaving enough "space" for appropriately sized data blocks farther up the bar. The last block in each bar was calculated based on a simple difference between the height of the previously generated data blocks and the height of the total bar. One stacked piece from each bar was chosen at random for comparison. 
 
 ## Pie Chart
 
 
 ![pie chart example](img/PieChartEx.png)
 
-The above image is an example of a possible pie chart that is displayed in our experiment given during our trials. The two selected graphical elements or 'slices' presented to the participants were again generated randomly for every pie chart generation. In order to place the dots and mark which slices to compare, the built in d3 centroid() function was used to calculate the location at the middle of the slice we would like the participant to reference when comparing. The sizes of the pie portions were randomly generated numbers between 3 and a varying maximum. The maximum for each point was calculated using the formula `100 - sumTillNow - (8*numsRemaining)` where sumTillNow represented the sum of the previously generated values in the set and numsRemaining represented the number of data points that still needed to be generated. This ensured the generation of a pseudo-random number while still leaving enough "space" for appropriately sized pie portions to fill the rest of the pie chart. The last pie portion in the chart was calculated based on a simple difference between the sum of the previously generated data and 100, to ensure the pie chart was completely filled. In addition, the output dataset was shuffled after generation since the data tended to skew towards larger numbers towards the beginning of data generation and smaller towards the end of the data generation. Finally, d3's automatic pie chart sorting (which sorts the data from largest to smallest) was disabled for displaying our pie charts. 
+The above image is an example of a possible pie chart that is displayed in our experiment given during our trials. The two selected graphical elements or 'slices' presented to the participants were again generated randomly for every pie chart generation. In order to place the dots and mark which slices to compare, the built in d3 centroid() function was used to calculate the location at the middle of the slice we would like the participant to reference when comparing. The sizes of the pie portions were randomly generated numbers between 3 and a varying maximum. The maximum for each point was calculated using the formula `100 - sumTillNow - (8*numsRemaining)` where sumTillNow represented the sum of the previously generated values in the set and numsRemaining represented the number of data points that still needed to be generated. This ensured the generation of a pseudo-random number while still leaving enough "space" for appropriately sized pie portions to fill the rest of the pie chart. The last pie portion in the chart was calculated based on a simple difference between the sum of the previously generated data and 100, to ensure the pie chart was completely filled. In addition, the output dataset was shuffled after generation since the data tended to skew towards larger numbers towards the beginning of data generation and smaller towards the end of the data generation. Finally, d3's automatic pie chart sorting (which sorts the data from largest to smallest) was disabled for displaying our pie charts. Two pie portions were chosen at random for comparison. 
 
 # Results/Error Analysis
 
@@ -58,13 +58,16 @@ Looking at the logError and analyzing the results, we can see that our hypothesi
 # Technical Achievements
 
   - We utilized d3, html/javascript, R, and Excel to complete this assignment
-  - We eliminated data outliers in our final dataset
+  - We eliminated evident data outliers in our final dataset
   - We converted -3 log error values to 0
+  - We set up the data generation for the stacked bar and pie charts in a manner to prevent heavily skewed sizes (very large to start leaving very small portions at the end). See descriptions above under each chart type for specifics. 
 
 # Design Achievements
 
-  - Our experiment resembles the example given
+  - The experiment webpage contains a status counter to let the experiment participants know how far they are through the experiment
   - The final results graph produced in R has the chart types ordered by the value of errors
+  - We implemented functionality for the experiment participants to use the enter key to move between trials instead of having to click the "next" button. 
+  - We shuffled the experiment order so users were being exposed to a semi-random order of the three types of charts throughout the experiment. 
 
 
 Resources used:
@@ -72,3 +75,4 @@ Resources used:
 -   csv download https://seegatesite.com/tutorial-read-and-write-csv-file-with-javascript/
 -  https://www.learnhowtoprogram.com/user-interfaces/building-layouts-preprocessors/multi-page-html-sites
 -   <https://www.d3-graph-gallery.com/index.html>
+-   shuffle algorithm for experiment trials ordering and pie chart slice ordering https://stackoverflow.com/a/12646864
