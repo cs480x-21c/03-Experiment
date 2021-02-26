@@ -1,20 +1,34 @@
+/**
+ * main.js
+ *
+ * date created: 2/20/2021
+ * Author: Benjamin M'Sadoques and Nicolas Fish
+ *
+ * Provides the starting point and controls the survey
+ */
 
 let gVisArray = [];
 let gVisIndex = 0;
 let gTrialIndex = 0;
 let gVis;
-// const TRIALS = 20;
-const TRIALS = 2;
+const TRIALS = 19;
 
 let notFirstTrial = false;
 
 let gResults;
 
+/**
+ * Action for the person clicking on the start button
+ */
 function start()
 {
     window.location.replace(window.location.href + "startExperiment");
 }
 
+/**
+ * Ran before the start of the survey to build all of the vis objects and
+ * to load the first chart
+ */
 function main()
 {
     // new chart on enter
@@ -45,6 +59,10 @@ function main()
     makeNewChart();
 }
 
+/**
+ * Makes a new chart when the person enters something and clicks the submit button
+ * or presses enter
+ */
 function makeNewChart()
 {
     let answer = document.getElementById("answer").valueAsNumber;
@@ -94,6 +112,9 @@ function makeNewChart()
     }
 }
 
+/**
+ * makes the next chart
+ */
 function nextChart()
 {
     // remove current vis
@@ -107,6 +128,9 @@ function nextChart()
     document.getElementById("answer").value = '';
 }
 
+/**
+ * Triggers when the survey ends
+ */
 function end()
 {
     // Fetch answer and enter the result
@@ -123,6 +147,10 @@ function end()
     window.location.replace("endExperiment");
 }
 
+/**
+ * event handler for the keyboard
+ * @param event
+ */
 function enter(event)
 {
     if(event.key)
