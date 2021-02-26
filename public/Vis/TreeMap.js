@@ -1,8 +1,23 @@
+/**
+ * TreeMap.js
+ *
+ * date created: 2/20/2021
+ * Author: Benjamin M'Sadoques and Nicolas Fish
+ *
+ * Provides the Tree map
+ */
+
+// example: https://www.d3-graph-gallery.com/graph/treemap_json.html
 
 class TreeMap extends Chart
 {
-    // example: https://www.d3-graph-gallery.com/graph/treemap_json.html
-
+    /**
+     * Sets the key variables used for tree maps
+     * data is an object that contains
+     * @param svg d3svg
+     * @param width of the chart
+     * @param height of the chart
+     */
     constructor(svg, width, height)
     {
         super(svg, width, height);
@@ -10,6 +25,10 @@ class TreeMap extends Chart
         this.type = "TreeMap";
     }
 
+    /**
+     * Generates a new random set of data
+     *  calls the super method to generate points of interest
+     */
     newRandom()
     {
         super.newRandom();
@@ -24,6 +43,9 @@ class TreeMap extends Chart
         }
     }
 
+    /**
+     * makes the tree map
+     */
     make()
     {
         // Here the size of each leave is given in the 'value' field in input data
