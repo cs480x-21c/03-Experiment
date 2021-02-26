@@ -28,20 +28,20 @@ We received datasets from 12 participants totaling 240 trials per chart to analy
 
 ![bar chart example](img/BarChartEx.png)
 
-The above image is an example of a possible bar chart that is displayed in our experiment given during our trials. The two selected graphical elements participants were asked to compare were generated randomly for every generated bar chart.
+The above image is an example of a possible bar chart that is displayed in our experiment given during our trials. The two selected graphical elements participants were asked to compare were generated randomly for every generated bar chart. The randomly generated data consisted of 10 bars, each with a randomly generated value between 3 and 100. In addition, no bars of the same height were included. If a bar with the same height as a different bar was generated, that data point was discarded and another random number was generated. The two bars selected for comparison were chosen at random. 
 
 ## Stacked Bar Charts
 
 ![stacked bar chart example](img/StackedEx.png)
 
-The above image is an example of a possible stacked bar chart that is displayed in our experiment given during our trials. The two selected graphical elements participants were asked to compare were again generated randomly and decided upon randomly for every visualization of a stacked bar chart.
+The above image is an example of a possible stacked bar chart that is displayed in our experiment given during our trials. The two selected graphical elements participants were asked to compare were again generated randomly and decided upon randomly for every visualization of a stacked bar chart. The height of the two bars in the stacked bar chart were based on randomly generated numbers between 50 and 100. Then, the heights of the data blocks within each bar were randomly generated numbers between 3 and a varying maximum. The maximum for each point was calculated using the formula `100 - sumTillNow - (8*numsRemaining)` where sumTillNow represented the sum of the previously generated values in the set and numsRemaining represented the number of data points that still needed to be generated. This ensured the generation of a pseudo-random number while still leaving enough "space" for appropriately sized data blocks farther up the bar. The last block in each bar was calculated based on a simple difference between the height of the previously generated data blocks and the height of the total bar.
 
 ## Pie Chart
 
 
 ![pie chart example](img/PieChartEx.png)
 
-The above image is an example of a possible pie chart that is displayed in our experiment given during our trials. The two selected graphical elements or 'slices' presented to the participants were again generated randomly for every pie chart generation. In order to place the dots and mark which slices to compare, the built in d3 centroid() function was used to calculate the location at the middle of the slice we would like the participant to reference when comparing.
+The above image is an example of a possible pie chart that is displayed in our experiment given during our trials. The two selected graphical elements or 'slices' presented to the participants were again generated randomly for every pie chart generation. In order to place the dots and mark which slices to compare, the built in d3 centroid() function was used to calculate the location at the middle of the slice we would like the participant to reference when comparing. The sizes of the pie portions were randomly generated numbers between 3 and a varying maximum. The maximum for each point was calculated using the formula `100 - sumTillNow - (8*numsRemaining)` where sumTillNow represented the sum of the previously generated values in the set and numsRemaining represented the number of data points that still needed to be generated. This ensured the generation of a pseudo-random number while still leaving enough "space" for appropriately sized pie portions to fill the rest of the pie chart. The last pie portion in the chart was calculated based on a simple difference between the sum of the previously generated data and 100, to ensure the pie chart was completely filled. In addition, the output dataset was shuffled after generation since the data tended to skew towards larger numbers towards the beginning of data generation and smaller towards the end of the data generation. Finally, d3's automatic pie chart sorting (which sorts the data from largest to smallest) was disabled for displaying our pie charts. 
 
 # Results/Error Analysis
 
