@@ -24,25 +24,25 @@ We had two hypotheses when creating this experiment: all visualization types wou
 
 Pictures/Images
 ---
-[!Immersive Image](img/SampleStartSurveyScreen.png)
+![Immersive Image](img/SampleStartSurveyScreen.png)
 Above is an image of the survey front page.
 
-[!Immersive Image](img/SampleTreeMap.png)
+![Immersive Image](img/SampleTreeMap.png)
 Above is an image of the tree map from the survey that was generated.
 
-[!Immersive Image](img/SampleStackedBarChart.png)
+![Immersive Image](img/SampleStackedBarChart.png)
 Above is an image of the stacked bar chart from the survey that was generated.
 
-[!Immersive Image](img/SamplePieChart.png)
+![Immersive Image](img/SamplePieChart.png)
 Above is an image of the pie chart from the survey that was generated.The text box in this one is filled in with a value that a user would be entering.
 
-[!Immersive Image](img/UnenteredValueAlert.png)
+![Immersive Image](img/UnenteredValueAlert.png)
 Above is an image of an alert message that appears if a user does not enter in a value for a particular visualization. In other words, hitting next without entering in a value.
 
-[!Immersive Image](img/SampleEndSurveyScreen.png)
+![Immersive Image](img/SampleEndSurveyScreen.png)
 Above is an image of the final page of the survey, showing overall error and error for each specific data visualization to the user. Permission was obtained to show this image.
 
-[!Immersive Image](img/BootstrapConfidenceIntervalGraph.png)
+![Immersive Image](img/BootstrapConfidenceIntervalGraph.png)
 Above is an image of the graph of visualization vs log 2 error from R + ggplot.
 
 Design Achievement
