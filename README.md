@@ -7,119 +7,104 @@ Code edit: https://glitch.com/edit/#!/a3-a-classic-experiment-2
 
 Description
 ---
-This project was inspired by Cleveland and McGill's 1984 paper, where they researched people's perception on different types.
+This project was inspired by Cleveland and McGill's 1984 paper, where they researched people's 
+perception on different types of vis. 
 In this experiment we tested people’s perception on three types of charts: Bar, Radar, and Tree map.
+We left the charts colorless, so we do not bias results.
+
+The Bar chart was our baseline, and we expect this chart to be perceived
+most accurately as the bars are aligned.
+It is also the most common of the three charts so testers may be familiar with it.
 
 ![Bar chart](img/BarChart.png)
 
-The Bar chart was our baseline, and we expect this chart to be perceived most accurately as the bars are aligned. It is also the most common of the three charts that testers may be more familiar with.
+Those that have not seen this chart before may have difficulty reading the Radar chat
+and may largely impact the error. We expect this chart to preform the worst,
+even though it is a type of circular bar chart the tester may have difficulty
+comparing two bars as they are not aligned. We choose this chart type because 
+we wanted to test a circular scale chart, but we wanted to choose one that is less common 
+than a pie chart. We have seen radar charts a few times, some video games use them 
+to visualize attribute points for different character skills. 
 
 ![Radar chart](img/RadarChart.png)
 
-Those that have not seen this chart before may have difficulty reading the Radar chat and may largely impact the error. We expect this chart to preform the worst, even though it is a type of circular bar chart the tester may have difficulty comparing two bars as they are not aligned.
+Humans are not good at judging area, so we expect this chart to perform poorly.
+We expect the tree map comparison to out perform the Radar chart and under preform the Bar chart. 
+We placed the indicator circles in the bottom right of the areas rather than the center as we 
+believe this will interfere less with perception as it does not give the tester a center point 
+of reference. We choose a tree chart because we wanted to compare area to other types of charts 
+tree maps are somewhat common area charts.
 
 ![Tree map](img/TreeMap.png)
 
-The Tree map we expect in comparison to out preform the Radar chart and under preform the Bar chart. We placed the indicator circles in the bottom right of the areas rather than the center as we believe this will interfere less with perception as it does not give the tester a center point of reference.
 
-Description of the technical achievements you attempted with this project.
-ADD
-
-Description of the design achievements you attempted with this project.
-Our design achievement took the form of styling. With the creation of a start and end page and all the test charts neatly aligned. We even added our every own Icon. The input field also turns red if the tester tries to submit without a response.
-
-Assignment
----
-For the scope of this project, assume the role of a scientist who runs experiments for a living.
-
-Q: How do we know that bar charts are "better" than pie charts?  
-A: Controlled experiments!
-
-In this assignment you'll implement a simple controlled experiment using some of the visualizations you’ve been building in this class. 
-You'll need to develop support code for the experiment sequence, results file output, and other experiment components. 
-(These are all simple with Javascript buttons and forms.)
-The main goals for you are to a) test three competing visualizations, b) implement data generation and error calculation functions inspired by Cleveland and McGill's 1984 paper, c) run the experiment with 10 participants (or a trial equivalent), and d) do some basic analysis and reporting of the results.
-
-For this assignment you should aim to write everything from scratch. For experimentation it is often necessary to control all elements of the chart.
-You should definitely *reference* demo programs from books or the web, and if you do please provide a References section with links at the end of your Readme.
-
-Requirements
+Results
 ---
 
-- Look it over Cleveland and McGill's original experiment (see the section below) and [watch this video](experiment-example.mp4) to get a sense of the experiment structure and where your visualizations will go.
-- When viewing the example experiment video, note the following:
-    - Trials are in random order.  
-    - Each trial has a randomly generated set of 5-10 data points.  
-    - Two of these data points are marked.  
-    - (Note: the experiment UI and User Experience could be better. Plenty of design achievements here).
-- Implement the data generation code **as described in the Cleveland & McGill paper**. 
-    - The goal is to generate a set of random datapoints (usually 5 or 10, with values be between 0 and 100) and to mark two of them for comparison in the trial. 
-- Add 3 visualizations (i.e. conditions) to your experiment. When you are adding these visualizations, think about *why* these visualizations are interesting to test. In other words, keep in mind a *testable hypothesis* for each of the added visualization. Some good options include bar charts, pie charts, stacked-bar charts, and treemaps. You can also rotate your bar chart to be horizontal or upside-down as one of your conditions. You are encouraged to test unorthodox charts -- radar charts come to mind, but there are MANY possibilities here-- feel free to be creative!
-    - Follow the style from Cleveland and McGill closely (e.g. no color, simple lines) unless you are specifically testing a hypothesis (e.g. color versus no color). Pay attention to spacing between elements like bars. Do not mark bars for comparison using color-- this makes the perceptual task too easy.
-- After each trial, implement code that grades and stores participant’s responses.
-- At the end of the experiment, to get the data, one easy option use Javascript to show the data from the current experiment\* (i.e. a comma separated list in a text box) and copy it into your master datafile. See the Background section below for an example of what this file should look like. (\*Alternately implement a server, if you're experienced with that sort of thing.)
+TODO: get later
 
-- Figure out how to calculate "Error", the difference between the true percentage and the reported percentage.
-- Scale this error using Cleveland and McGill’s log-base-2 error equation. For details, see the background section (there’s a figure with the equation). This becomes your “Error” column in the output. Make sure you use whole percentages (not decimal) in the log-base-2 equation. Make sure you handle the case of when a person gets the exact percentage correct (log-base-2 of 1/8 is -3, it is better to set this to 0). 
-- Run your experiment with 10 or more participants, or-- make sure you get at least 200 trials **per visualization type** in total.  
-    - Grab friends or people in the class.   
-    - Run at least 20 trials per visualization type, per participant. This is to ensure that you cover the range of possible answers (e.g. 5%, 10%, ..., 95%)
-- Make sure to save the resulting CSV after each participant. Compile the results into a master csv file (all participants, all trials).
-- Produce a README with figures that shows the visualizations you tested and results, ordered by best performance to worst performance. Follow the modern Cleveland-McGill figure below -- though note that using names instead of icons is fine.
-- To obtain the ranking, calculate and report the average log2Error for each visualization across all trials and participants. This should be straightforward to do in a spreadsheet.
-- Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. Include these in your figures. Bootstrapped confidence intervals are easily implemented in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. Bootstrapped 95% CIs are **very** useful in modern experiment practice.
-- Include example images of each visualization as they appeared in your experiment (i.e. if you used a pie chart show the actual pie chart you used in the experiment along with the markings, not an example from Google Images).
-
-## General Requirements
-
-0. Your code should be forked from the GitHub repo and linked using GitHub pages.
-2. Your project should use d3 to build visualizations. 
-3. Your writeup (readme.md in the repo) should contain the following:
-
-- Working link to the experiment hosted on gh-pages or some other site.
-- Concise description and screenshot of your experiment.
-- Description of the technical achievements you attempted with this project.
-- Description of the design achievements you attempted with this project.
-
-Background
+Technical Achievement
 ---
+The technical achievement for this project was to have the survey record results automatically in one master CSV file.
+On the server. 
 
-In 1984, William Cleveland and Robert McGill published the results of several controlled experiments that pitted bar charts against pies and stacked-bar variants. 
-Their paper (http://www.cs.ubc.ca/~tmm/courses/cpsc533c-04-spr/readings/cleveland.pdf) (http://info.slis.indiana.edu/~katy/S637-S11/cleveland84.pdf) is considered a seminal paper in data visualization.
-In particular, they ran a psychology-style experiment where users were shown a series of randomly-generated charts with two graphical elements marked like this:
+The first step to this process was to find a method to communicate with the server side.
+Pure Javascript only runs on the client side, the only way to get results would be to have the user
+download the CSV and give it to us. This result would allow the user to tamper with the test.
+We found that github pages offers no server side interactions, it only hosts a static site, 
+so there is no way to put the results on the server. We found that Node Js would provide 
+javascript on both the server and client side, so we can use libraries such as d3 on the 
+server to read the CSV.<br><br>
 
-![cleveland bar chart](img/cleveland-bar.png)
+The second step was to find a hosting service that allowed us to make a simple node js server application.
+We looked at a few such as Azure, and IBM, but eventually we found glitch.com. It provided free hosting
+at the cost that the website is shut down when it is inactive. It provided a simple Node JS project 
+with express js to start us off. <br><br>
 
-Participants were then asked, "What percentage is the smaller of the larger?". 
-This was repeated hundreds of time with varying data and charts. 
-By the end of the study, Cleveland and McGill had amassed a large dataset that looked like this:
+link to hosting service website: <br>
+https://glitch.com/ <br><br>
 
-![cleveland table](img/cleveland-table.png)
+the third step was to communicate with the server side to enter the results.
+At first, I thought to get the result index at the start of the survey, 
+then enter the result with that index at the end of they survey. This process made sense,
+until I realized that there was a race condition, if two people start at about the same time 
+they will get the exact same result number, since results are only entered at the end of the survey. 
+I changed the code, so it gets the result number when it tries to enter the result.
+This process should not have a race condition, but it may be possible to have the same result number 
+if two people submit the survey at the same time. We could have used a more-unique identifier, 
+such as a name or IP address, but we wanted to keep people anonymous. We could have used a large random number, 
+but we were not sure if that would play well when we had to make the final chart.
 
-__Log-base-2 or "cm-error"__: The true percent is the actual percentage of the smaller to the larger, while the reported percent is what participants reported. 
-Cleveland and McGill recognized that their analyses would be biased if they took `abs(ReportedPercent – TruePercent)` as their score for error. 
-To compensate, they came up with a logarithmic scale for error with this equation:
+The fourth step was to create a start and end page to the survey. We wanted a separate start and end page to the 
+survey, but we were not sure how to have the server direct people to separate pages.
+Eventually we figured out that we can have express js listen for a http get request on any url in our domain.
+On the client side, we just redirect the user to a different URL, then the server sends them the html document.
 
-![cleveland equation](img/cleveland-equation.png)
-
-You’ll be implementing this error score as part of the lab. 
-(Hint: it’s not a trick question, this is just to familiarize you with the experiment protocol). 
-With this Cleveland-McGill error score you can better compare the performance of the charts you test to figure out which one performs the best.
-
-As a baseline, compare your average Error scores to the following chart, which include both Cleveland and McGill’s results as well as more recent extensions of this experiment (lower error indicates better performance, and error bars are bootstrapped 95% confidence intervals (`http://en.wikipedia.org/wiki/Confidence_interval#Meaning_and_interpretation`)):
-
-![cleveland results](img/cleveland-results.png)
-
-GitHub Details
+Design Achievement
 ---
+Our design achievement for this project was styling and making the survey look professional. 
 
-- Fork the GitHub Repository. You now have a copy associated with your username.
-- Make changes to index.html to fulfill the project requirements. 
-- Make sure your "master" branch matches your "gh-pages" branch. See the GitHub Guides referenced above if you need help.
-- Edit this README.md with a link to your gh-pages site: e.g. http://YourUsernameGoesHere.github.io/Experiment/index.html
-- Replace this file (README.md) with your writeup and Design/Technical achievements.
-- To submit, make a [Pull Request](https://help.github.com/articles/using-pull-requests/) on the original repository.
-- Name your submission using the following scheme: 
-```
-a3-FirstLastnameMember1-FirstLastnameMember2-FirstLastnameMember3-...
-```
+The first step was to style the survey itself. We decided to center the charts on the page 
+and align the text left, so it is easier to read. We made the text box turn red if the user did not enter
+something, as a reminder to have them enter a result. We made it so people can either press enter 
+or click the button to get to the next chart.
+
+![Survey In Progress](img/surveyInProgress.png)
+
+The second step was to add the icon. Every professional page has an icon, so it just made sense. 
+We wanted a simple icon that clearly shows the site is about charts. Bar charts are recognizable, 
+and it is possible to encode one with low resolution. We created a small and simple icon png
+that shows a bar chart.
+
+![icon](public/BarIcon.png)
+
+The third step was to create a start page to the survey. We wanted to inform participants
+properly on why they are taking this survey, how information will be collected, and what 
+they will be doing during the survey. We created a bigger version of the icon to serve 
+as our project logo.
+
+![survey start](img/surveyStart.png)
+
+Finally, we created an end page to stop the survey and thank the participant.
+
+TODO: Get ending page after we get all the results.
