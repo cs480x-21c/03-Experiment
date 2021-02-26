@@ -6,6 +6,7 @@ This experiment tested three different types of visualizations to determine thei
 
 Our hypotheses for each visualization were:
 * The pie chart would perform better than the bar chart.
+* The circular bar chart would preform in between the bar chart and the pie chart 
 * TODO: insert other hypotheses here
 
 To test the visualizations, participants were asked to complete a form showing 60 of them in a random order. Each visualization contained two marked elements, and participants were asked to input the percentage the smaller element was of the larger element.
@@ -38,4 +39,5 @@ To determine how effective each visualization was, we calculated the error of pa
 
 ## References
 * https://www.d3-graph-gallery.com/graph/pie_annotation.html
+* https://www.d3-graph-gallery.com/graph/circular_barplot_basic.html
 * TODO: put in other references
