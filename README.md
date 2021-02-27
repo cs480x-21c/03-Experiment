@@ -107,7 +107,8 @@ survey, but we were not sure how to have the server direct people to separate pa
 Eventually we figured out that we can have express js listen for a http get request on any url in our domain.
 On the client side, we just redirect the user to a different URL, then the server sends them the html document.
 
-##Design Achievement
+Design Achievement
+---
 
 Our design achievement for this project was styling and making the survey look professional. 
 

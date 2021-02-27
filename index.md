@@ -109,6 +109,7 @@ On the client side, we just redirect the user to a different URL, then the serve
 
 Design Achievement
 ---
+
 Our design achievement for this project was styling and making the survey look professional.
 
 The first step was to style the survey itself. We decided to center the charts on the page
