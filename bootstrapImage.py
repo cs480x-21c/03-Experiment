@@ -172,41 +172,41 @@ def connectpoints(x,y,p1,p2):
     y1, y2 = y[p1], y[p2]
     plt.plot([x1,x2],[y1,y2],'-k')
 
+def fullGraph():
+    viz1Array = toArray('Visualization', 'viz1')
+    viz2Array = toArray('Visualization', 'viz2')
+    viz3Array = toArray('Visualization', 'viz3')
 
-viz1Array = toArray('Visualization', 'viz1')
-viz2Array = toArray('Visualization', 'viz2')
-viz3Array = toArray('Visualization', 'viz3')
+    viz1Error = listOfError(viz1Array)
+    viz2Error = listOfError(viz2Array)
+    viz3Error = listOfError(viz3Array)
 
-viz1Error = listOfError(viz1Array)
-viz2Error = listOfError(viz2Array)
-viz3Error = listOfError(viz3Array)
+    x1 = [1,1,1]
+    y1 = [lowerinterval(viz1Error),upperinterval(viz1Error),mean(viz1Error)]
+    x2 = [2,2,2]
+    y2 = [lowerinterval(viz2Error),upperinterval(viz2Error),mean(viz2Error)]
+    x3 = [3,3,3]
+    y3 = [lowerinterval(viz3Error),upperinterval(viz3Error),mean(viz3Error)]
 
-x1 = [1,1,1]
-y1 = [lowerinterval(viz1Error),upperinterval(viz1Error),mean(viz1Error)]
-x2 = [2,2,2]
-y2 = [lowerinterval(viz2Error),upperinterval(viz2Error),mean(viz2Error)]
-x3 = [3,3,3]
-y3 = [lowerinterval(viz3Error),upperinterval(viz3Error),mean(viz3Error)]
+    connectpoints(x1, y1, 0, 1)
+    connectpoints(x2, y2, 0, 1)
+    connectpoints(x3, y3, 0, 1)
+    # plt.plot(x1,y1,x2,y2,x3,y3,'ro')
+    plt.plot(x1,y1, color='black',marker='o', ms=5)
+    plt.plot(x2,y2,  color='black',marker='o', ms=5)
+    plt.plot(x3,y3,  color='black',marker='o', ms=5)
 
-connectpoints(x1, y1, 0, 1)
-connectpoints(x2, y2, 0, 1)
-connectpoints(x3, y3, 0, 1)
-# plt.plot(x1,y1,x2,y2,x3,y3,'ro')
-plt.plot(x1,y1, color='black',marker='o', ms=5)
-plt.plot(x2,y2,  color='black',marker='o', ms=5)
-plt.plot(x3,y3,  color='black',marker='o', ms=5)
+    labelAdder('Pie Chart',x1,y1)
+    labelAdder('Tree Map',x2,y2)
+    labelAdder('Line Bar',x3,y3)
 
-labelAdder('Pie Chart',x1,y1)
-labelAdder('Tree Map',x2,y2)
-labelAdder('Line Bar',x3,y3)
-
-plt.axes().set_xlim([0.5,3.75])
-plt.axes().set_ylim([0.5,5])
-plt.axes().set_xticks([1,2,3])
+    plt.axes().set_xlim([0.5,3.75])
+    plt.axes().set_ylim([0.5,5])
+    plt.axes().set_xticks([1,2,3])
 
 
-plt.title('Visualization vs Error')
-plt.grid()
-plt.xlabel('Visualization Number')
-plt.ylabel('Error')
-plt.show()
+    plt.title('Visualization vs Error')
+    plt.grid()
+    plt.xlabel('Visualization Number')
+    plt.ylabel('Error')
+    plt.show()
