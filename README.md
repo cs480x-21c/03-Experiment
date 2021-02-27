@@ -22,14 +22,18 @@ The third and final page presented the participant with their average log2error 
 ![Page 3](screen3.PNG)
 
 # Experiment Results
-In conclusion, there was no evidence to support that adding color to a bar plot would improve the accuracy of predicting bar height. While individual participants had varying averages across the different charts, the compiled averages were extremely close. The Grayscale had a mean error of 1.525, followed by 1.591 and 1.592 from the Plain and Colored charts, respectively. The variability between these results is too minor to justify concluding any chart type performed better than another.
+In conclusion, there was no evidence to support that adding color to a bar plot would improve the accuracy of predicting bar height. While individual participants had varying averages across the different charts, the compiled averages were extremely close. The Grayscale had a mean error of 1.525, followed by 1.591 and 1.592 from the Plain and Colored charts, respectively. The variability between these results is too minor to justify concluding any chart type performed better than another. The 95% confidence intervals are displayed below.
+
+![Confidence Intervals](confidence_interval.PNG)
 
 # Referenced Code
 - https://www.d3-graph-gallery.com/graph/barplot_basic.html
-This example was referenced for the structure of creating a barplot in d3 v4
+
+This example was referenced for the structure of creating a barplot in d3 v4.
 
 # Achievements
 ## Design Achievements
 My design achievement was making this experiment as user friendly as possible. To start, I used JavaScript Bootstrap to make the interface. Boostrap results in a clean, that most users would already be familiar with the style. Furthermore, for the colored plot, I used a colorblind friendly palette. I found the palette on a [popular website made by David Nichols](https://davidmathlogic.com/colorblind/#%23332288-%23117733-%2344AA99-%2388CCEE-%23DDCC77-%23CC6677-%23AA4499-%23882255). 
 
 ## Technical Achievements
+My technical achievement was collecting user inputs as variables in order to use the data throughout the remainder of the experiment. By doing this, I was able to compile the predictions in a dictionary alongside the type of chart and true value. On the results page, I created a link for the user to press which would open their JSON results in a new tab to copy and send to me. Each dictionary could be appended to a main dictionary within my analysis notebook to allow for easy compilation of results. 
