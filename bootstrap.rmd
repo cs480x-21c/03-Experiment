@@ -1,0 +1,11 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+In this notebook, we will explore the data collected with our experements
+
+```{r}
+library(tidyverse)
+
+```
