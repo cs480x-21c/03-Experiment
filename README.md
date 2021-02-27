@@ -1,17 +1,21 @@
 Assignment 3 - Paul Mara, Lucas Fernandes, El Sallie, Kenneth Rhodes
 ===
+**LINK TO SITE- NOT GH PAGES**
+IMPORTANT!! We are hosting this site on a website, NOT GH pages
+Link below:
+http://www.kennyrhodes.com/projects/cs4802/project3/experiment
 
 
 **Our Charts and Hypotheses**
 
 Chart 1: 
-![Screenshot of chart1 ]()
+![Screenshot of chart1 ](./bar.png)
 
 Chart2:
-![Screenshot of chart2 ]()
+![Screenshot of chart2 ](./gradient.png)
 
 Chart3:
-![Screenshot of chart3 ]()
+![Screenshot of chart3 ](./circle.png)
 
 **Chart selection / Hypothesis**
 
@@ -24,8 +28,15 @@ Our second hypothesis/test was between the bar chart and the circle chart. The c
  
  The results of the experiments were as follows:
 
- ![Screenshot of results ]()
+ <!-- ![Screenshot of results ]() -->
 
+As expected, the bubble plot had the highest error and was statistically signifigantly worse than the two other chart types (the confidence levels do not overlap)
+
+The other two charts were closer. The calculated error of the gradient was slightly lower than that of the normal bar chart, but not in a statistically signifigant way. We guess that maybe participants used the gradient to gain a slight edge on how far up a bar a result was. 
+
+We used the cleveland McGill error equation in the assignment:
+
+ ![Screenshot of cleveland equation ](./img/cleveland-equation.png)
 
 **Design achievements**
  - Prompts given to the user were dependant on the graph selected
@@ -33,28 +44,12 @@ Our second hypothesis/test was between the bar chart and the circle chart. The c
 
 **Tech Achievements**
  - Implemented a server/hosted backend that allowed each participant to add their results as they were filling it out
- - Implemented a live stats update vis where we could update as more results came in
- - Handcoded the 95% confident bootstrap algorithm in js so that we could do this
- - 
+    - Implemented every experiment as a react component (modular design, can add/remove graphs in the future)
+ - Implemented a live stats update vis where we could refresh as more results came in
+    - Handcoded the 95% confident bootstrap algorithm in js so that we could do this
 
 
-
-   
-- Produce a README with figures that shows the visualizations you tested and results, ordered by best performance to worst performance. Follow the modern Cleveland-McGill figure below -- though note that using names instead of icons is fine.
-- To obtain the ranking, calculate and report the average log2Error for each visualization across all trials and participants. This should be straightforward to do in a spreadsheet.
-- Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. Include these in your figures. Bootstrapped confidence intervals are easily implemented in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. Bootstrapped 95% CIs are **very** useful in modern experiment practice.
-- Include example images of each visualization as they appeared in your experiment (i.e. if you used a pie chart show the actual pie chart you used in the experiment along with the markings, not an example from Google Images).
-
-GitHub Details
----
-
-- Fork the GitHub Repository. You now have a copy associated with your username.
-- Make changes to index.html to fulfill the project requirements. 
-- Make sure your "master" branch matches your "gh-pages" branch. See the GitHub Guides referenced above if you need help.
-- Edit this README.md with a link to your gh-pages site: e.g. http://YourUsernameGoesHere.github.io/Experiment/index.html
-- Replace this file (README.md) with your writeup and Design/Technical achievements.
-- To submit, make a [Pull Request](https://help.github.com/articles/using-pull-requests/) on the original repository.
-- Name your submission using the following scheme: 
+PR NAME:
 ```
-a3-FirstLastnameMember1-FirstLastnameMember2-FirstLastnameMember3-...
+a3-KennyRhodes-PaulMara-RachelSallie-LucasFernandes
 ```

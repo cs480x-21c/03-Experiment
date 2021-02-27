@@ -322,7 +322,7 @@
       g = svg.append('g');
 
       //  [Value, lower bound, upper bound] 
-      //  1: Gradient 2: Bar 3: Circle
+      // 1: Bubble 2: Gradient 3: Bar
       toRet = []
       for (var i = 0; i < 3; i++) {
         toRet.push([listOfErrors[i], listOfBootstrapErrors[i][0], listOfBootstrapErrors[i][1]]);
@@ -335,7 +335,7 @@
         .attr('transform', 'translate('+margin.right+', 0)')
         .call(d3.axisLeft(y));
       
-      var experiments = ["Gradient", "Bar Chart", "Bubble Plot"];
+      var experiments = ["Bubble Plot", "Gradient", "Bar Chart", ];
       var xScale = d3.scalePoint()
         .range([5,chartWidth-15])
         .domain(experiments.map(function(d){
