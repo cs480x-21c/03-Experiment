@@ -1,0 +1,49 @@
+/**
+ * style.css
+ *
+ * date created: 2/25/2021
+ * Author: Nicolas Fish
+ *
+ * Main style sheet used for the project
+ */
+
+.home
+{
+    text-align: left;
+    line-height: 0.5;
+    margin: auto;
+    width: 600px;
+    padding: 20px;
+    font-size: 20px;
+}
+
+.block
+{
+    margin: 0 auto;
+    width: 600px;
+    padding: 20px;
+}
+
+.form
+{
+    text-align: center;
+    margin: 0 auto;
+    width: 500px;
+    padding: 20px;
+}
+
+.Instructions
+{
+    text-align: left;
+    line-height: 0.5;
+    font-size: 18px;
+}
+
+.button
+{
+    text-align: center;
+    background-color: #4c6baf;
+    padding: 6px 50px;
+    color: white;
+    font-size: 20px;
+}
