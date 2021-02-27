@@ -67,7 +67,9 @@ Calculated error for distance between bars:
 Scatter plot and linear regression comparing distance between bars and error
 -
 
-![scatter](img/scatters.png)
+![scatters](img/scatters.png)
+
+![scatter](img/scatter.png)
 
 Violin plot showing distribution of error for each experiment type
 -
