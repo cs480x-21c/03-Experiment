@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap');
+
+body {
+  font-family: Helvetica, sans-serif ;
+}
+
+h1, h2, h3 {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+footer {
+  text-align: center;
+  background-color: rgb(230, 238, 243);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  min-height: 5em;
+}
+
+footer > h3 {
+  margin-top: .5em;
+  margin-bottom: 0;
+}
+
+label {
+  font-weight: normal;
+}
+
+.form-control {
+  padding: 6px 10px;
+}
+
+.invalid-feedback {
+  color: rgb(185, 38, 38);
+  display: none;
+}
+
+.is-invalid ~ .invalid-feedback {
+  display: block;
+}
+.is-invalid,
+.is-invalid ~ .form-check-label {
+  border-color: rgb(185, 38, 38);
+}
+
+.no-margin {
+  margin: 0;
+}
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 5em;
+}
+
+#chart-container {
+  /*outline: 1px solid rgb(99, 97, 102);*/
+  width: 500px;
+  margin: 1em auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#hdiv {height: 50px;
+  width: 500px;
+  margin: 1em auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#intro {
+  margin: 1em auto;
+}
+
+#form-container {
+  width: 1000px;
+  margin: 1em auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#next-button {
+  left: 50%;
+}
+
+#number-wrapper {
+  width: 4em;
+}
+
+#number-input {
+  width: 3em;
+  text-align: center;
+}
+
+/* nvm about different screen sizes
+@media (max-width: 550px){
+  #chart-container {
+    height: 300px;
+    width: 300px;
+  }
+}
+*/
+
+/* removing spin button*/
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

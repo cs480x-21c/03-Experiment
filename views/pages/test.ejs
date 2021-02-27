@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include("../partials/header.ejs"); -%>
+
+</head>
+
+<body>
+    <div id="page-container">
+        <div class="container" id="content-wrap">
+            <div id="intro">
+                <h2>Test Format</h2>
+                <p>This survey takes 10-15 minutes. You will be shown thirty line charts and thirty horizon charts in random order. </p>
+                   <p> Each chart will have between two to six sets of data on it.</p>
+                <p>For each chart, two datasets will be identified and one value on the x-axis will be labeled (besides 0 and 20). You will be asked two questions:
+                <ol> 
+                <li>Which dataset has the greater y value at the marked x value?</li>
+                <li>What percent of the larger value is the smaller value? (e.g. if the smaller value is half the size of the other,
+                    you would answer 50%)</li>
+                </ol>
+                Don't worry if it is hard to tell which is larger or what the percent is - just make your best judgment. If the values look the same, pick either for the first question and put 100% for the second question. </p>
+                <p>Below is an example horizon chart and an explanation of how to read it. 
+                </p>
+                <img src="img/hc.jpg" alt="Horizon charts for 2 datasets">
+                <p>The goal of a horizon chart is to condense the information
+                in a chart so that more charts can be shown on one screen.
+                This is done by cutting off the original chart at a certain value - 50 say -
+                and dropping the part of the graph above the cutoff down to layer on top of the lower band.
+                Color is used to show the layers: lighter colors mean lower layers,
+                darker colors mean higher ones. Usually there are 2 to 3 layers.
+                On the horizon charts in this survey, there are 2 layers. The x-axis is 0-20,
+                and the y axis is always 0-50, with y values ranging from 1-100.
+                In the horizon charts above, the Dataset A y values from x=1 to x=6 are 43, 48, 45, 57, 40, 72.
+                Note how 50 is the top of the graph, and for y values over 50 the top section is dropped
+                down to overlay the bottom section in a darker color.
+                For Dataset B, the y values from x=1 to x=6 are 18, 20, 62, 43, 69, 41.</p>
+                <p>Once you are ready to begin the test, click start test below.</p>
+                    <button type="button" id="start-button" class="btn btn-primary">Start Test</button>
+            </div>
+            <div id="question" style="display: none;">
+                <div id="chart-container" class="container"><svg id="chart"></svg></div>
+                <div id="hdiv" class="container">
+                    <svg id="h-axis"></svg>
+                </div>
+                <div id="form-container" class="container">
+                    <form id="viz-form" class="form-check form-group">
+                        <label for="greater">Which y is greater at the labeled x-value?</label><br>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="datasetA" name="greater" value="1"
+                                required>
+                            <label class="form-check-label" for="datasetA">Dataset A</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="datasetB" name="greater" value="2">
+                            <label class="form-check-label" for="datasetB">Dataset B</label>
+                        </div>
+                        <div class="invalid-feedback">Please select an option.</div>
+                        <label class="no-margin">What percent is the smaller value of the larger?</label><br>
+                        <small class="form-text text-muted">
+                            (e.g. if one is half the size of the
+                            other, you would write 50)
+                        </small>
+                        <small class="form-text text-muted">
+                            For horizon charts, note that the height of each chart is always 50.
+                        </small>
+                        <div id="number-wrapper" class="input-group has-validation mb-3 col-xs-2">
+                            <input id="number-input" type="number" class="form-control" min="0" max="100" required>
+                            <div class="input-group-addon">
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback">Please enter a number between 1-100.</div>
+
+
+                        <br>
+                        <button type="button" id="next-button" class="btn btn-primary">Next Chart</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <%- include ("../partials/footer.ejs") %>
+    </div>
+    <script src="/javascripts/viz-test.js"></script>
+</body>
+
+</html>
