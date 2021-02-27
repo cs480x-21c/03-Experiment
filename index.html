@@ -1,13 +1,104 @@
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<head>
+    <title>CS4820 Assignment III</title>
 
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBZmMg_JSRGBDOsJpmPbsNLYf8EHX69FUI",
+            authDomain: "cs-4820-assignment-3.firebaseapp.com",
+            projectId: "cs-4820-assignment-3",
+            storageBucket: "gs://cs-4820-assignment-3.appspot.com",
+            messagingSenderId: "683275659371",
+            appId: "1:683275659371:web:cb1587309518208356692e"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
 
-<style>
-</style>
+    <!-- FingerprintJS -->
+    <script async src="//cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
 
-<body>
-  <h1> Experiment </h1>
+    <!-- Material Components for Web -->
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+    <!-- D3.js -->
+    <script src="https://d3js.org/d3.v6.js"></script>
+
+    <!-- Stylesheet -->
+    <link href="main.css" rel="stylesheet">
+
+    <!-- JavaScript Source -->
+    <script src="main.js"></script>
+</head>
+
+<body onload="main()">
+    <main id="mainContent">
+        <div class="viz mdc-card mdc-card-outlined mdc-elevation--z3" id="viz1">
+            <form name="viz-1">
+                <p style="text-align: center;">
+                    Two values are marked with dots. <br> What do you think the percent of the smaller value to the larger value is?<br> Please put your answer Below.<br> e.g. If you think the smaller one is exactly a half of the bigger one,<br> please input
+                    "50".
+                </p>
+                <div class="fieldOuter">
+                    <label class="mdc-text-field mdc-text-field--filled">
+                        <span class="mdc-text-field__ripple"></span>
+                        <span class="mdc-floating-label" id="label-1">Answer</span>
+                        <input class="mdc-text-field__input" type="number" aria-labelledby="label-1" id="viz1">
+                        <span class="mdc-line-ripple"></span>
+                    </label>
+                    <button type="submit" class="mdc-button mdc-button--raised">
+                        <span class="mdc-button__label">Send</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="viz mdc-card mdc-card-outlined mdc-elevation--z3" id="viz2">
+            <form name="viz-2">
+                <p style="text-align: center;">
+                    Two values are marked with dots. <br> What do you think the percent of the smaller value to the larger value?<br> Please put your answer Below.<br> e.g. If you think the smaller one is exactly a half of the bigger one,<br> please input
+                    "50".
+                </p>
+                <div class="fieldOuter">
+                    <label class="mdc-text-field mdc-text-field--filled">
+                        <span class="mdc-text-field__ripple"></span>
+                        <span class="mdc-floating-label" id="label-2">Answer</span>
+                        <input class="mdc-text-field__input" type="number" aria-labelledby="label-2" id="viz2">
+                        <span class="mdc-line-ripple"></span>
+                    </label>
+                    <button type="submit" class="mdc-button mdc-button--raised">
+                        <span class="mdc-button__label">Send</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="viz mdc-card mdc-card-outlined mdc-elevation--z3" id="viz3">
+            <form name="viz-3">
+                <p style="text-align: center;">
+                    Two values are marked with dots. <br> What do you think the percent of the smaller value to the larger value?<br> Please put your answer Below.<br> e.g. If you think the smaller one is exactly a half of the bigger one,<br> please input
+                    "50".
+                </p>
+                <div class="fieldOuter">
+                    <label class="mdc-text-field mdc-text-field--filled">
+                        <span class="mdc-text-field__ripple"></span>
+                        <span class="mdc-floating-label" id="label-3">Answer</span>
+                        <input class="mdc-text-field__input" type="number" aria-labelledby="label-3" id="viz3">
+                        <span class="mdc-line-ripple"></span>
+                    </label>
+                    <button type="submit" class="mdc-button mdc-button--raised">
+                        <span class="mdc-button__label">Send</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="mdc-card mdc-card-outlined mdc-elevation--z3" id="complete">
+            <h1 style="text-align: center;">Thanks for participating</h1>
+            <h3>Click <a href="/">here</a> to retake</h3>
+        </div>
+
+    </main>
 </body>
-
-<script>
-  console.log(d3); // test if d3 is loaded
-</script>
