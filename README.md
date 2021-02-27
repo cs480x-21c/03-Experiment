@@ -3,10 +3,12 @@ Assignment 3 - Paul Mara, Lucas Fernandes, El Sallie, Kenneth Rhodes
 **LINK TO SITE- NOT GH PAGES**
 IMPORTANT!! We are hosting this site on a website, NOT GH pages
 Link below:
-http://www.kennyrhodes.com/projects/cs4802/project3/experiment
+http://www.kennyrhodes.com/projects/cs4802/project3/disclaimer
 
-Link to results:
+Link to current results:
 http://www.kennyrhodes.com/projects/cs4802/project3/results
+
+Link to download current experiment CSV: http://karoad-psite-api.herokuapp.com/api/cs4802/project3/currentdatacsv
 
 
 **Our Charts and Hypotheses**
