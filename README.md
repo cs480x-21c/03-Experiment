@@ -24,7 +24,7 @@ The third and final page presented the participant with their average log2error 
 # Experiment Results
 In conclusion, there was no evidence to support that adding color to a bar plot would improve the accuracy of predicting bar height. While individual participants had varying averages across the different charts, the compiled averages were extremely close. The Grayscale had a mean error of 1.525, followed by 1.591 and 1.592 from the Plain and Colored charts, respectively. The variability between these results is too minor to justify concluding any chart type performed better than another. The 95% confidence intervals are displayed below.
 
-![Confidence Intervals](confidence_interval.PNG)
+![Confidence Intervals](confidence_interval.png)
 
 # Referenced Code
 - https://www.d3-graph-gallery.com/graph/barplot_basic.html
