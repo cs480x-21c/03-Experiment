@@ -47,8 +47,9 @@ tree maps are somewhat common area charts.
 
 ##Results
 
+![results](img/results.png)
 
-TODO: get later
+After looking through the data we did receive some questionable results though the error rates are not too far from the baseline. Comparing the error results to those of the Cleveland and McGill’s paper we predict that some testers may have been confused by the instructions as we see the overall error rate increased. Surprisingly, the Radar chart did perform better than the Tree map as testers had a more difficult time perceiving area rather than the unconventional Radar chart.
 
 ##Technical Achievement
 The technical achievement for this project was to have the survey record results automatically in one master CSV file.
@@ -115,3 +116,4 @@ Finally, we created an end page to stop the survey and thank the participant.
 We used the same picture from the start of the survey.
 
 ![survey end](img/surveyEnd.png)
+
