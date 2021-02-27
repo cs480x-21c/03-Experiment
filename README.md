@@ -1,96 +1,79 @@
-Assignment 3 - Replicating a Classic Experiment  
-===
+# The Visualization/Experiment
 
-For the scope of this project, assume the role of a scientist who runs experiments for a living.
+authors: Kavtaradze Elene, McKeen Joshua, Truong Shannon
 
-Q: How do we know that bar charts are "better" than pie charts?  
-A: Controlled experiments!
 
-In this assignment you'll implement a simple controlled experiment using some of the visualizations you’ve been building in this class. 
-You'll need to develop support code for the experiment sequence, results file output, and other experiment components. 
-(These are all simple with Javascript buttons and forms.)
-The main goals for you are to a) test three competing visualizations, b) implement data generation and error calculation functions inspired by Cleveland and McGill's 1984 paper, c) run the experiment with 10 participants (or a trial equivalent), and d) do some basic analysis and reporting of the results.
+Our experiment is hosted live and can be found at: <https://ekavtaradze.github.io/03-Experiment/>
 
-For this assignment you should aim to write everything from scratch. For experimentation it is often necessary to control all elements of the chart.
-You should definitely *reference* demo programs from books or the web, and if you do please provide a References section with links at the end of your Readme.
 
-Requirements
----
+# Our hypothesis:
 
-- Look it over Cleveland and McGill's original experiment (see the section below) and [watch this video](experiment-example.mp4) to get a sense of the experiment structure and where your visualizations will go.
-- When viewing the example experiment video, note the following:
-    - Trials are in random order.  
-    - Each trial has a randomly generated set of 5-10 data points.  
-    - Two of these data points are marked.  
-    - (Note: the experiment UI and User Experience could be better. Plenty of design achievements here).
-- Implement the data generation code **as described in the Cleveland & McGill paper**. 
-    - The goal is to generate a set of random datapoints (usually 5 or 10, with values be between 0 and 100) and to mark two of them for comparison in the trial. 
-- Add 3 visualizations (i.e. conditions) to your experiment. When you are adding these visualizations, think about *why* these visualizations are interesting to test. In other words, keep in mind a *testable hypothesis* for each of the added visualization. Some good options include bar charts, pie charts, stacked-bar charts, and treemaps. You can also rotate your bar chart to be horizontal or upside-down as one of your conditions. You are encouraged to test unorthodox charts -- radar charts come to mind, but there are MANY possibilities here-- feel free to be creative!
-    - Follow the style from Cleveland and McGill closely (e.g. no color, simple lines) unless you are specifically testing a hypothesis (e.g. color versus no color). Pay attention to spacing between elements like bars. Do not mark bars for comparison using color-- this makes the perceptual task too easy.
-- After each trial, implement code that grades and stores participant’s responses.
-- At the end of the experiment, to get the data, one easy option use Javascript to show the data from the current experiment\* (i.e. a comma separated list in a text box) and copy it into your master datafile. See the Background section below for an example of what this file should look like. (\*Alternately implement a server, if you're experienced with that sort of thing.)
+We predict that the ranking of effectiveness in human perception of data will be the most effective in the bar chart, followed by the stacked bar chart and pie chart, respectively. Users will be able to more accurately compare two given data structures in the bar chart because it has been shown that the magnitude channels on ordered attributes rank positioning on a common scale (bar chart) to be the most effective, followed by the position on an unaligned scale (stack bar chart) and the angle (pie chart) to be the least effective.
 
-- Figure out how to calculate "Error", the difference between the true percentage and the reported percentage.
-- Scale this error using Cleveland and McGill’s log-base-2 error equation. For details, see the background section (there’s a figure with the equation). This becomes your “Error” column in the output. Make sure you use whole percentages (not decimal) in the log-base-2 equation. Make sure you handle the case of when a person gets the exact percentage correct (log-base-2 of 1/8 is -3, it is better to set this to 0). 
-- Run your experiment with 10 or more participants, or-- make sure you get at least 200 trials **per visualization type** in total.  
-    - Grab friends or people in the class.   
-    - Run at least 20 trials per visualization type, per participant. This is to ensure that you cover the range of possible answers (e.g. 5%, 10%, ..., 95%)
-- Make sure to save the resulting CSV after each participant. Compile the results into a master csv file (all participants, all trials).
-- Produce a README with figures that shows the visualizations you tested and results, ordered by best performance to worst performance. Follow the modern Cleveland-McGill figure below -- though note that using names instead of icons is fine.
-- To obtain the ranking, calculate and report the average log2Error for each visualization across all trials and participants. This should be straightforward to do in a spreadsheet.
-- Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. Include these in your figures. Bootstrapped confidence intervals are easily implemented in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. Bootstrapped 95% CIs are **very** useful in modern experiment practice.
-- Include example images of each visualization as they appeared in your experiment (i.e. if you used a pie chart show the actual pie chart you used in the experiment along with the markings, not an example from Google Images).
+# Working on the d3 Visualizations and the Experiment Design
 
-## General Requirements
+The experiment uses the following graphs:
 
-0. Your code should be forked from the GitHub repo and linked using GitHub pages.
-2. Your project should use d3 to build visualizations. 
-3. Your writeup (readme.md in the repo) should contain the following:
+-   Bar chart
+-   Pie chart
+-   Stacked bar chart
 
-- Working link to the experiment hosted on gh-pages or some other site.
-- Concise description and screenshot of your experiment.
-- Description of the technical achievements you attempted with this project.
-- Description of the design achievements you attempted with this project.
+The graphs utilized in this experiment were generated with reference to examples listed on the d3 graph gallery. The experiment itself includes 60 pages with 20 examples of each graph. The order of the graphs is randomly generated. Additionally, the data we display in our charts are also generated randomly using a randomly generated number script. The experiment itself is taken and a reference to the Cleveland and McGill Graphical Perception experiment. Similar to the Cleveland and McGill Experiment, the participants are asked to compare the two marked graphical elements and to provide their closest guess in the text box before moving forward.
 
-Background
----
+**Note: Our visualization and error reports require a csv file to be downloaded from the experiment site upon submission. These reports were submitted to us via email.**
 
-In 1984, William Cleveland and Robert McGill published the results of several controlled experiments that pitted bar charts against pies and stacked-bar variants. 
-Their paper (http://www.cs.ubc.ca/~tmm/courses/cpsc533c-04-spr/readings/cleveland.pdf) (http://info.slis.indiana.edu/~katy/S637-S11/cleveland84.pdf) is considered a seminal paper in data visualization.
-In particular, they ran a psychology-style experiment where users were shown a series of randomly-generated charts with two graphical elements marked like this:
+We received datasets from 12 participants totaling 240 trials per chart to analyze by the end of the experimentation phase.
 
-![cleveland bar chart](img/cleveland-bar.png)
+## Bar Charts
 
-Participants were then asked, "What percentage is the smaller of the larger?". 
-This was repeated hundreds of time with varying data and charts. 
-By the end of the study, Cleveland and McGill had amassed a large dataset that looked like this:
+![bar chart example](img/BarChartEx.png)
 
-![cleveland table](img/cleveland-table.png)
+The above image is an example of a possible bar chart that is displayed in our experiment given during our trials. The two selected graphical elements participants were asked to compare were generated randomly for every generated bar chart. The randomly generated data consisted of 10 bars, each with a randomly generated value between 3 and 100. In addition, no bars of the same height were included. If a bar with the same height as a different bar was generated, that data point was discarded and another random number was generated. The two bars selected for comparison were chosen at random. 
 
-__Log-base-2 or "cm-error"__: The true percent is the actual percentage of the smaller to the larger, while the reported percent is what participants reported. 
-Cleveland and McGill recognized that their analyses would be biased if they took `abs(ReportedPercent – TruePercent)` as their score for error. 
-To compensate, they came up with a logarithmic scale for error with this equation:
+## Stacked Bar Charts
 
-![cleveland equation](img/cleveland-equation.png)
+![stacked bar chart example](img/StackedEx.png)
 
-You’ll be implementing this error score as part of the lab. 
-(Hint: it’s not a trick question, this is just to familiarize you with the experiment protocol). 
-With this Cleveland-McGill error score you can better compare the performance of the charts you test to figure out which one performs the best.
+The above image is an example of a possible stacked bar chart that is displayed in our experiment given during our trials. The two selected graphical elements participants were asked to compare were again generated randomly and decided upon randomly for every visualization of a stacked bar chart. The height of the two bars in the stacked bar chart were based on randomly generated numbers between 50 and 100. Then, the heights of the data blocks within each bar were randomly generated numbers between 3 and a varying maximum. The maximum for each point was calculated using the formula `100 - sumTillNow - (8*numsRemaining)` where sumTillNow represented the sum of the previously generated values in the set and numsRemaining represented the number of data points that still needed to be generated. This ensured the generation of a pseudo-random number while still leaving enough "space" for appropriately sized data blocks farther up the bar. The last block in each bar was calculated based on a simple difference between the height of the previously generated data blocks and the height of the total bar. One stacked piece from each bar was chosen at random for comparison. 
 
-As a baseline, compare your average Error scores to the following chart, which include both Cleveland and McGill’s results as well as more recent extensions of this experiment (lower error indicates better performance, and error bars are bootstrapped 95% confidence intervals (`http://en.wikipedia.org/wiki/Confidence_interval#Meaning_and_interpretation`)):
+## Pie Chart
 
-![cleveland results](img/cleveland-results.png)
 
-GitHub Details
----
+![pie chart example](img/PieChartEx.png)
 
-- Fork the GitHub Repository. You now have a copy associated with your username.
-- Make changes to index.html to fulfill the project requirements. 
-- Make sure your "master" branch matches your "gh-pages" branch. See the GitHub Guides referenced above if you need help.
-- Edit this README.md with a link to your gh-pages site: e.g. http://YourUsernameGoesHere.github.io/Experiment/index.html
-- Replace this file (README.md) with your writeup and Design/Technical achievements.
-- To submit, make a [Pull Request](https://help.github.com/articles/using-pull-requests/) on the original repository.
-- Name your submission using the following scheme: 
-```
-a3-FirstLastnameMember1-FirstLastnameMember2-FirstLastnameMember3-...
-```
+The above image is an example of a possible pie chart that is displayed in our experiment given during our trials. The two selected graphical elements or 'slices' presented to the participants were again generated randomly for every pie chart generation. In order to place the dots and mark which slices to compare, the built in d3 centroid() function was used to calculate the location at the middle of the slice we would like the participant to reference when comparing. The sizes of the pie portions were randomly generated numbers between 3 and a varying maximum. The maximum for each point was calculated using the formula `100 - sumTillNow - (8*numsRemaining)` where sumTillNow represented the sum of the previously generated values in the set and numsRemaining represented the number of data points that still needed to be generated. This ensured the generation of a pseudo-random number while still leaving enough "space" for appropriately sized pie portions to fill the rest of the pie chart. The last pie portion in the chart was calculated based on a simple difference between the sum of the previously generated data and 100, to ensure the pie chart was completely filled. In addition, the output dataset was shuffled after generation since the data tended to skew towards larger numbers towards the beginning of data generation and smaller towards the end of the data generation. Finally, d3's automatic pie chart sorting (which sorts the data from largest to smallest) was disabled for displaying our pie charts. Two pie portions were chosen at random for comparison. 
+
+# Results/Error Analysis
+
+![excel example](img/Excel.png)
+
+This is a small subset of our collected data. All our user submissions are collected in the userSubmissions directory. We merged all of the user datasets into one
+Excel file called fullData.xlsx. The error calculation was done in Excel. First, we applied the error formula given in Cleveland and McGill `log with base 2 of (abs(ReportedPercent – TruePercent) +1/8)` in column called logr. Then in column logError, we checked for -3 values and converted them to 0. -3 value is for cases when the reportedPercent matches truePercent(the guess was 100% correct), and in this case, the error should be 0. We only eliminated one outlier in the data. The truePercent was 80, and the reportedPercent was 1000 which created an outlier. We believe that this is due to an input/human error, inputing 1000 instead of 100. We decided to exclude that row from calculations.
+vis and logError columns were used to create a visualization in R.
+
+![results](img/Results.png)
+
+Looking at the logError and analyzing the results, we can see that our hypothesis above holds true. The true percent is the actual percentage of the smaller to the larger graphical element in each chart, while the reported percent is what participants reported in the trials. Utilizing the Cleveland and McGill method, `abs(ReportedPercent – TruePercent) +1/8`, as their score for error and having this be on a logarithmic scale with base 2 to propagate error, we can see in the graphical analysis above that participants most likely were able to perceive data more accurately when presented using a bar chart. The pie chart clearly resulted in a more inaccurate reading of data, whereas the stacked bar chart came in as the second most effective graphical display. It is important to note that the error calculated for the stacked bar chart, however, was evidently closer to the error in accuracy when reading a pie chart.
+
+# Technical Achievements
+
+  - We utilized d3, html/javascript, R, and Excel to complete this assignment
+  - We eliminated evident data outliers in our final dataset
+  - We converted -3 log error values to 0
+  - We set up the data generation for the stacked bar and pie charts in a manner to prevent heavily skewed sizes (very large to start leaving very small portions at the end). See descriptions above under each chart type for specifics. 
+
+# Design Achievements
+
+  - The experiment webpage contains a status counter to let the experiment participants know how far they are through the experiment
+  - The final results graph produced in R has the chart types ordered by the value of errors
+  - We implemented functionality for the experiment participants to use the enter key to move between trials instead of having to click the "next" button. 
+  - We shuffled the experiment order so users were being exposed to a semi-random order of the three types of charts throughout the experiment. 
+
+
+Resources used:
+
+-   csv download https://seegatesite.com/tutorial-read-and-write-csv-file-with-javascript/
+-   https://www.learnhowtoprogram.com/user-interfaces/building-layouts-preprocessors/multi-page-html-sites
+-   <https://www.d3-graph-gallery.com/index.html>
+-   Centroid d3 function for Pie Charts: https://bl.ocks.org/d3indepth/c9fd848b9410cc543a437b34c266ac64
+-   shuffle algorithm for experiment trials ordering and pie chart slice ordering https://stackoverflow.com/a/12646864
