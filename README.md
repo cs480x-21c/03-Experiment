@@ -49,7 +49,7 @@ The graph displays the error of the visualization. The points flanking the avera
 - Smooth transitions between visualizations
 - Data is automatically sent to a Firebase database
 - Node.js script to get data from firebase into csv
-- CSV is autmoatically split into matricies, which are automatically manipulated to derive bootstrap intervals, which are then automatically plotted with the averages and labled; plotting is done with matplotlip
+- CSV is autmoatically split into matricies, which are automatically manipulated to derive bootstrap intervals, which are then automatically plotted with the averages and labled; plotting is done with matplotlib
 
 # Authorship
 
