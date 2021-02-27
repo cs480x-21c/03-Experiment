@@ -28,7 +28,7 @@ Our second hypothesis/test was between the bar chart and the circle chart. The c
  
  The results of the experiments were as follows:
 
- <!-- ![Screenshot of results ]() -->
+![Screenshot of live stats viz](./LiveResults.PNG)
 
 As expected, the bubble plot had the highest error and was statistically signifigantly worse than the two other chart types (the confidence levels do not overlap)
 
@@ -44,8 +44,10 @@ We used the cleveland McGill error equation in the assignment:
 
 **Tech Achievements**
  - Implemented a server/hosted backend that allowed each participant to add their results as they were filling it out
-    - Implemented every experiment as a react component (modular design, can add/remove graphs in the future)
- - Implemented a live stats update vis where we could refresh as more results came in
+    - Implemented get and post http requests via the django rest framework for a database of participant results
+    - Implemented experiments as a react component (modular design, can add/remove graphs in the future)
+ - Implemented a live stats update vis react component where experiment results are calculated live as more results came in
+    - Implemented generating and serving a CSV from a django db model 
     - Handcoded the 95% confident bootstrap algorithm in js so that we could do this
 
 
