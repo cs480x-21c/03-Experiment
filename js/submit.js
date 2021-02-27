@@ -19,6 +19,7 @@ function textBoxSubmit() {
 
     // Submit button
     var submit = document.createElement("Button");
+    submit.classList.add("submitButton");
     var submitText = document.createTextNode("Submit");
 
     // Function for when a request is submitted

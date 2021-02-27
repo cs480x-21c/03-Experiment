@@ -8,7 +8,46 @@ div {
     align-items: center;
     justify-content: center;
     text-align: center;
+}
 
+.startButton{
+    background-color: #A0522D;
+    padding: 15px 15px;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 9px #AAA;
+    outline: none;
+}
+
+.startButton:hover, .submitButton:hover{
+    background-color: saddlebrown;
+}
+
+.startButton:active{
+    background-color: #800000;
+    box-shadow: 0 6px #AAA;
+    transform: translateY(3px);
+}
+
+.submitButton{
+    background-color: #A0522D;
+    padding: 8px 8px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 4px #AAA;
+    outline: none;
+}
+
+.submitButton:active{
+    background-color: #800000;
+    box-shadow: 0 2px #AAA;
+    transform: translateY(2px);
 }
 
 .svgdiv {
@@ -27,11 +66,5 @@ div {
     flex-direction: column;
     height: 100vh;
     align-items: center;
-}
-#startbuttonDiv{
-
-}
-#pDiv{
-
 }
 

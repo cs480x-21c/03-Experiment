@@ -21,12 +21,12 @@ function startPage() {
     pDiv.appendChild(intro);
 
     // Start button info
-    var start = document.createElement("BUTTON");
+    var start = document.createElement("button");
     var startText = document.createTextNode("Start");
     start.appendChild(startText);
     startbuttonDiv.appendChild(start);
-    start.classList.add('StartButton')
-    start.classList.add('StartPage')
+    start.classList.add('startButton');
+    start.classList.add('StartPage');
     start.onclick = function () {
         startDiv.style.display = "none";
         // Un-hide the svg div
@@ -34,5 +34,4 @@ function startPage() {
         textBoxSubmit();
         drawNextChart(randArray[numSubmits]);
     }
-
 }
