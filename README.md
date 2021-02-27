@@ -7,7 +7,7 @@ Note:You will probably get a short loading screen since the website goes to slee
 
 Code Host: https://glitch.com/edit/#!/a3-a-classic-experiment-2
 
-github pages:
+github pages: https://bgmsadoques-wpi.github.io/03-Experiment/ <br>
 Note: only hosts the index.md file<br>
 
 Description
