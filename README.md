@@ -36,19 +36,21 @@ Below are a screenshot of the survey introductory explanation and a screenshot o
 
 # Results 
 
+We calculated percent correctly identified (A is higher) and average log base 2 error for each chart type.
+
+[0.9014285714285715, 0.8928571428571429, 0.8880952380952379, 0.9833333333333334, 0.6866666666666668, 0.5]
+[5.850308807458906, 5.883511636599286, 6.071480293462024, 5.64199470150577, 6.143865040538033, 6.617486980527845]
+
 Basically we just need to replicate this chart, but can use names instead of icons, ordered from best to worst: 
 
 ![clevelnd](img/cleveland.JPG)
 
-Calc error -> logbase2 error equation: Log2( | judged percent - true percent | + ⅛ | )
-- Make sure you use whole percentages (not decimal) in the log-base-2 equation. 
-Make sure you handle the case of when a person gets the exact percentage correct (log-base-2 of 1/8 is -3, it is better to set this to 0). 
-- To obtain the ranking, calculate and report the average log2Error for each visualization across all trials and participants. 
 - Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. 
 Include these in your figures. Bootstrapped confidence intervals are easily implemented 
 in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. 
 
 ? comment on number of participants/trials
+& discussion
 
 # Technical Achievements
 
