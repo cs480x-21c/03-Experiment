@@ -42,7 +42,7 @@ class HeaderBar extends Component {
                     </li>
 
                     <li>
-                        <Button className="navButton" to="/project3" component={Link}>
+                        <Button className="navButton" to="/projects/cs4802/project3/disclaimer" component={Link}>
                             a3
                         </Button>
                     </li>

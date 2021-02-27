@@ -5,6 +5,7 @@ import MyCircle from '../components/MyCircle'
 import MyRect from '../components/MyRect'
 import MyLine from '../components/MyLine'
 import MyPoly from '../components/MyPoly'
+import Project3ExperimentViz from '../components/Project3ExperimentViz'
 
 class Project1PageView extends React.Component{
 
@@ -16,6 +17,7 @@ class Project1PageView extends React.Component{
         return(
             <div>
                 <HeaderBar/>
+                <Project3ExperimentViz/>
                 <MyCircle/>
                 <MyLine/>
                 <MyRect/>

@@ -1,8 +1,8 @@
 import React from 'react';
-import HeaderBar from '../components/HeaderBar'
+import HeaderBar from '../components/HeaderBar';
 import DatabaseExample from '../components/DatabaseExample'
 
-class Project5PageView extends React.Component{
+class Project3PageView extends React.Component{
 
     state = {
             
@@ -10,16 +10,15 @@ class Project5PageView extends React.Component{
 
     render(){
         return(
-            <div>
+            <div className="pageFlex">
                 <HeaderBar/>
-                <h5>
-                    This project has not been completed yet!
-                </h5>
-                
-                <DatabaseExample></DatabaseExample>
+                <div className='homePageList'>
+                    <h2> Experiment </h2>
+                    <DatabaseExample></DatabaseExample>
+                </div>
             </div>
         );
     }
 }
 
-export default Project5PageView;
+export default Project3PageView;
