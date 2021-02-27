@@ -36,7 +36,8 @@ Below are a screenshot of the survey introductory explanation and a screenshot o
 
 # Results 
 
-We calculated percent correctly identified (A is higher) and average log base 2 error for each chart type.
+We calculated percent correctly identified (if A is higher at the marked x value,
+ percent of viewers that correctly identified A is higher) and average log base 2 error for each chart type.
 
 [0.9014285714285715, 0.8928571428571429, 0.8880952380952379, 0.9833333333333334, 0.6866666666666668, 0.5]
 [5.850308807458906, 5.883511636599286, 6.071480293462024, 5.64199470150577, 6.143865040538033, 6.617486980527845]
