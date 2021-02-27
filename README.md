@@ -64,6 +64,16 @@ Calculated error for distance between bars:
 
 ![distance](img/distance.png)
 
+Scatter plot and linear regression of each experiment type
+-
+
+![scatter](img/scatters.png)
+
+Violin plot showing distribution of error for each experiment type
+-
+
+![violin](img/violinplot.png)
+
 Design Achievements:
 ---
 
