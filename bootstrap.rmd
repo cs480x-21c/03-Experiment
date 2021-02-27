@@ -8,4 +8,6 @@ In this notebook, we will explore the data collected with our experements
 ```{r}
 library(tidyverse)
 
+df <- read.csv("results.csv", header = TRUE)
+
 ```
