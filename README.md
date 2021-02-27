@@ -11,15 +11,15 @@ Thirteen participants were presented with 20 of each type of chart, in random or
 
 The first page of the experiment explained the instructions and provided relevant information to the participants.
 
-![Page 1](screen1.jpg)
+![Page 1](screen1.PNG)
 
 The second page of the experiment was where the participants would spend most of the time. This page generated random charts and collected participant predictions.
 
-![Page 2](screen2.jpg)
+![Page 2](screen2.PNG)
 
 The third and final page presented the participant with their average log2error for each type of chart as well as instructions for submitting their data.
 
-![Page 3](screen3.jpg)
+![Page 3](screen3.PNG)
 
 # Experiment Results
 In conclusion, there was no evidence to support that adding color to a bar plot would improve the accuracy of predicting bar height. While individual participants had varying averages across the different charts, the compiled averages were extremely close. The Grayscale had a mean error of 1.525, followed by 1.591 and 1.592 from the Plain and Colored charts, respectively. The variability between these results is too minor to justify concluding any chart type performed better than another.
