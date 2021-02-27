@@ -1,5 +1,6 @@
 # CS 4802 Assignment 3
 ## Colby Frechette, Jason Dykstra
+Hosted at: https://jasondykstra.github.io/03-Experiment/
 
 ## Statistics
 For the statistics, we used R with ggplot2 to analyze the trends in the error. We found that the bar charts were the most easily guessed ratios, as expected. The stacked bar charts and pie charts were almost identical in spread and error, which we found to be interesting. We noticed a large amount of outliers in the stacked bar charts and even a couple in the regular bar charts, and almost none in the pie charts. This was interesting to us and led us to believe that the position of our dots could have been better to prevent mistakenly comparing the wrong bars, and other human errors from interpreting the charts. We also concluded that the point of reference for the beginning of each segment of each chart probably accounted a lot for the difference in ability o measure the percentages. E.g. pie charts and stacked bar charts' segments can start anywhere and end anywhere, however, the bar charts always begin in the same place.
