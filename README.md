@@ -50,7 +50,7 @@ comment on number of participants/trials
 
 - We also compared using completely random data for each dataset with using slightly ordered data. Completely random datasets were really really hard to read (see screenshot below). They are also uncommon as real-world datasets, and thus might be perceived as meaningless by the viewer. For these reasons, we created slightly ordered data that follows a sine wave, plus or minus some random amount of variation. This made the data much easier to read for viewers. If we were doing this again, we would use smoother data so that the user tasks were more similar to real-life tasks.
 
-Completely random data on left, slightly ordered data on right: 
+The pictures below show completely random data on left, slightly ordered data on right: 
 
 ![random line](img/random%20line.png) ![ordered line](img/ordered%20line.png)
 
@@ -60,14 +60,29 @@ Completely random data on left, slightly ordered data on right:
 
 - Horizon charts: We used studies on the factors that make horizon charts more or less effective to design our horizon charts. For example, in a 2009 study by Heer et al., researchers found that horizon charts with 2 bands are most readable (with 3 layers perception was fair; 4 or more bands were difficult to read). For this reason our horizon charts use two color bands. If we were doing this again, we would make x and y axes for each chart rather than only one (valiant efforts were made but our d3 capabilities were stymied by the challenge at this time). 
 
-- Survey
-
+- Survey:
   - We used css_____ and such to make the survey look nice. If we were doing this again, we would make the survey more visually appealing (more centered, less whitespace) to make it easier for viewers 
   to look at repeatedly. 
-  - We would add some kind of progress indicator so that viewers know how far through the survey they are, and don’t get discouraged. We would also decrease the number of charts per survey or increase the incentive for viewers to move through the survey. We wrote a survey introduction and explanation of horizon charts. If we were doing this again, we would provide a video or demonstration of the horizon charts and allow users to practice reading them to make sure they understand them. 
+  - We wrote a survey introduction and explanation of horizon charts. If we were doing this again, we would provide a video or demonstration of the horizon charts and allow users to practice reading them to make sure they understand them. 
+  - As additional future improvements to the survey, we would add some kind of progress indicator so that viewers know how far through the survey they are, and don’t get discouraged. 
+  We would also decrease the number of charts per survey or increase the incentive for viewers to move through the survey. 
+  
 
 ## File descriptions
 
+The files for this project include the following: 
+- img folder: contains images for the README
+- public folder: contains:
+  - csv folder with the datasets;
+  - img folder with the image for the survey intro;
+  - javascript folder with the scripts to create a line chart, horizon chart, 
+  and run the survey; and
+  - stylesheets folder with the .css file. 
+- views folder: contains:
+  - pages folder with pages for the survey home and database;
+  - partials folder with the survey header and footer
+- README: describes project
+- other files @Beck
 
 ## References
 
@@ -84,5 +99,6 @@ Heer, Jeffrey; Kong, Nicholas; & Agrawala, Maneesh. “Sizing the Horizon: The E
 - To submit, make a [Pull Request](https://help.github.com/articles/using-pull-requests/) on the original repository.
 - Name your submission using the following scheme: 
 ```
+
 a3-FirstLastnameMember1-FirstLastnameMember2-FirstLastnameMember3-...
 ```
