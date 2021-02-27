@@ -23,7 +23,7 @@ The Bar chart was our baseline, and we expect this chart to be perceived
 most accurately as the bars are aligned.
 It is also the most common of the three charts so testers may be familiar with it.
 
-![Bar chart](img/BarChart.png)
+![Bar chart](../img/BarChart.png)
 
 Radar Chart
 ---
@@ -34,7 +34,7 @@ comparing two bars as they are not aligned. We choose this chart type because
 we wanted to test a circular scale chart, but we wanted to choose one that is less common 
 than a pie chart. 
 
-![Radar chart](img/RadarChart.png)
+![Radar chart](../img/RadarChart.png)
 
 Tree Map
 ---
@@ -45,12 +45,12 @@ believe this will interfere less with perception as it does not give the tester 
 of reference. We choose a tree chart because we wanted to compare area to other types of charts 
 tree maps are somewhat common area charts.
 
-![Tree map](img/TreeMap.png)
+![Tree map](../img/TreeMap.png)
 
 
 Results
 ---
-![results](img/results.png)
+![results](../img/results.png)
 
 After looking through the data we found some questionable results though the error rates 
 are not too far from the baseline. Comparing the error results to those of the Cleveland and 
@@ -116,24 +116,24 @@ and align the text left, so it is easier to read. We made the text box turn red 
 something, as a reminder to have them enter a result. We made it so people can either press enter 
 or click the button to get to the next chart.
 
-![Survey In Progress](img/surveyInProgress.png)
+![Survey In Progress](../img/surveyInProgress.png)
 
 The second step was to add the icon. Every professional page has an icon, so it just made sense. 
 We wanted a simple icon that clearly shows the site is about charts. Bar charts are recognizable, 
 and it is possible to encode one with low resolution. We created a small and simple icon png
 that shows a bar chart.
 
-![icon](public/BarIcon.png)
+![icon](../public/BarIcon.png)
 
 The third step was to create a start page to the survey. We wanted to inform participants
 properly on why they are taking this survey, how information will be collected, and what 
 they will be doing during the survey. We created a bigger version of the icon to serve 
 as our project logo.
 
-![survey start](img/surveyStart.png)
+![survey start](../img/surveyStart.png)
 
 Finally, we created an end page to stop the survey and thank the participant.
 We used the same picture from the start of the survey.
 
-![survey end](img/surveyEnd.png)
+![survey end](../img/surveyEnd.png)
 
