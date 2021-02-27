@@ -35,6 +35,10 @@ Our hypothesis was that sequential bar graphs would best allow, from our 3 graph
 ### Data
 From the data we collected and put into report.csv we found that the sequential bar graph had the lowest errors. It was followed by the tree map then the pie chart.
 
+![Visualization Error](img/visualizationErrorV2.png)
+The graph displays the error of the visualization. The points flanking the average, Top CI and Bottom CI, denote the maximum and minimum respectively of the bootstrapped
+95% confidence interval.
+
 # Achievements
 ### Design
 - Size-dependent coloring on Visualization 1
