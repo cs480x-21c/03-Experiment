@@ -83,12 +83,13 @@ Based on the data and plots above, it was clear that error was smaller in plots 
 
 Design Achievements:
 ---
-
+- Centered the text below the bar graphs
 
 Technical Achievements:
 ---
--Used sessionStorage to store and retrieve data between pages within the experiment
--Analyzed data from 11 participants
+- Used sessionStorage to store and retrieve data between pages within the experiment
+- Analyzed data from 11 participants
+- Created more plots to analyze the data
 
 Resources:
 ---
