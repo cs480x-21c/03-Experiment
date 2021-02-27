@@ -7,7 +7,9 @@ The hypothesis being tested in this experiment was that adding categorical color
     1. Plain (no categorical varibality)
     2. Grayscale (colorless categorical variability)
     3. Colored (colored categorical variability)
-Thirteen participants were presented with 20 of each type of chart, in random order. There were 260 data points collected for each chart, totalling 780 predictions.
+Thirteen participants were presented with 20 of each type of chart, in random order. There were 260 data points collected for each chart, totalling 780 predictions. The three chart types are presented below.
+
+![Three Chart Types](chart_types.png)
 
 The first page of the experiment explained the instructions and provided relevant information to the participants.
 
@@ -20,6 +22,7 @@ The second page of the experiment was where the participants would spend most of
 The third and final page presented the participant with their average log2error for each type of chart as well as instructions for submitting their data.
 
 ![Page 3](screen3.PNG)
+
 
 # Experiment Results
 In conclusion, there was no evidence to support that adding color to a bar plot would improve the accuracy of predicting bar height. While individual participants had varying averages across the different charts, the compiled averages were extremely close. The Grayscale had a mean error of 1.525, followed by 1.591 and 1.592 from the Plain and Colored charts, respectively. The variability between these results is too minor to justify concluding any chart type performed better than another. The 95% confidence intervals are displayed below.
