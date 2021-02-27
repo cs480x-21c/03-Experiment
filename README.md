@@ -18,48 +18,49 @@ Our experiment was created using d3 and javascript. The start page navigated the
 Screenshots from experiment:
 ---
 Barplot with a grid
---
+-
 
 ![barplot](img/barplot_withgrid.PNG)
 
 Barplot without a grid
---
+-
 
 ![barplot](img/barplot_withoutgrid.PNG)
 
 Barplot with more markers and a grid
---
+-
 
 ![barplot](img/barplot_moremarkers_withgrid.PNG)
 
 Barplot with more markers and no grid
---
+-
 
 ![barplot](img/barplot_moremarkers_withoutgrid.PNG)
 
 Barplot with less markers and a grid
---
+-
 
 ![barplot](img/barplot_lessmarkers_withgrid.PNG)
 
 Barplot with less markers and no grid
---
+-
 
 ![barplot](img/barplot_lessmarkers_withoutgrid.PNG)
 
 Analysis by calculating error between actual values and participants' answers:
 ---
 Calculated error for grid versus no grid:
---
+-
 
 ![grid](img/grid.png)
 
 Calculated error for markers on y-axis:
---
+-
 
 ![markers](img/markers.png)
 
 Calculated error for distance between bars:
+-
 
 ![distance](img/distance.png)
 
