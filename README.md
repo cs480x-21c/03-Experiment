@@ -30,6 +30,10 @@ This visualization, designed by Dyllan, is a standard tree map.
 This visualization, designed by Alan, is a standard pie chart.
 
 # Results
+### Hypothesis
+Our hypothesis was that sequential bar graphs would best allow, from our 3 graphs, for the user to determine differences in data points.
+### Data
+From the data we collected and put into report.csv we found that the sequential bar graph had the lowest errors. It was followed by the tree map then the pie chart.
 
 # Achievements
 ### Design
@@ -39,6 +43,7 @@ This visualization, designed by Alan, is a standard pie chart.
 ### Technical
 - Smooth transitions between visualizations
 - Data is automatically sent to a Firebase database
+- Node.js script to get data from firebase into csv
 
 # Authorship
 
