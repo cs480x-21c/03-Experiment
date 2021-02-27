@@ -9,9 +9,12 @@ As per the assignments, each visualization randomly consists of 5-10 items with 
 
 A number of libraries were used to aid us in the development of this assignment:
 * D3.js for the visualizations
-* Firebase for storing data
+* Firebase for storing & retrieving data
 * Fingerprint.js for identifying users
 * Google's Material Components for Web for input components
+* Matplotlib in python for csv reading and graphing
+* csv-writer in node.js to creat csv
+
 
 
 ## Visualization 1
