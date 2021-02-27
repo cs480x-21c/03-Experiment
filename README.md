@@ -1,96 +1,101 @@
 Assignment 3 - Replicating a Classic Experiment  
 ===
 
-For the scope of this project, assume the role of a scientist who runs experiments for a living.
+Victoria Grasso, Matthew Hurlbut-Coke, and Nicole Shedd
 
-Q: How do we know that bar charts are "better" than pie charts?  
-A: Controlled experiments!
+Link to experiment: https://nshedd.github.io/03-Experiment/index
 
-In this assignment you'll implement a simple controlled experiment using some of the visualizations you’ve been building in this class. 
-You'll need to develop support code for the experiment sequence, results file output, and other experiment components. 
-(These are all simple with Javascript buttons and forms.)
-The main goals for you are to a) test three competing visualizations, b) implement data generation and error calculation functions inspired by Cleveland and McGill's 1984 paper, c) run the experiment with 10 participants (or a trial equivalent), and d) do some basic analysis and reporting of the results.
+Our experiment compared different aspects of bar plots to determine their effectiveness. We analyzed bar plots that had a grid or not, had more marks on the y-axis, and had less marks on the y-axis. We additionally analyzed the distance between the selected bars and how that affected the results.
 
-For this assignment you should aim to write everything from scratch. For experimentation it is often necessary to control all elements of the chart.
-You should definitely *reference* demo programs from books or the web, and if you do please provide a References section with links at the end of your Readme.
+Our hypotheses were:
+1. A bar plot with a grid behind the bars would be more effective than without the grid.
+2. More marks on the y-axis would be be more effective than less marks on the y-axis.
+3. More marks on the y-axis with a grid would be the most effective visualization.
+4. The closer the bars were together, the less error between estimated percentage and actual.
 
-Requirements
+Our experiment was created using d3 and javascript. The start page navigated the participant to the 6 different html files which randomly generated barplots under the 6 conditions: includes a grid, does not include a grid, has more markers on the y-axis with a grid, has more markers on the y-axis without a grid, has less markers on the y-axis with a grid, and has less markers on the y-axis without a grid. Once the participant had gone through the random order of trials, their data was then stored in a csv file. We compiled all the data into one csv file and used R and ggplot to analyze it.
+
+Screenshots from experiment:
 ---
+Barplot with a grid
+-
 
-- Look it over Cleveland and McGill's original experiment (see the section below) and [watch this video](experiment-example.mp4) to get a sense of the experiment structure and where your visualizations will go.
-- When viewing the example experiment video, note the following:
-    - Trials are in random order.  
-    - Each trial has a randomly generated set of 5-10 data points.  
-    - Two of these data points are marked.  
-    - (Note: the experiment UI and User Experience could be better. Plenty of design achievements here).
-- Implement the data generation code **as described in the Cleveland & McGill paper**. 
-    - The goal is to generate a set of random datapoints (usually 5 or 10, with values be between 0 and 100) and to mark two of them for comparison in the trial. 
-- Add 3 visualizations (i.e. conditions) to your experiment. When you are adding these visualizations, think about *why* these visualizations are interesting to test. In other words, keep in mind a *testable hypothesis* for each of the added visualization. Some good options include bar charts, pie charts, stacked-bar charts, and treemaps. You can also rotate your bar chart to be horizontal or upside-down as one of your conditions. You are encouraged to test unorthodox charts -- radar charts come to mind, but there are MANY possibilities here-- feel free to be creative!
-    - Follow the style from Cleveland and McGill closely (e.g. no color, simple lines) unless you are specifically testing a hypothesis (e.g. color versus no color). Pay attention to spacing between elements like bars. Do not mark bars for comparison using color-- this makes the perceptual task too easy.
-- After each trial, implement code that grades and stores participant’s responses.
-- At the end of the experiment, to get the data, one easy option use Javascript to show the data from the current experiment\* (i.e. a comma separated list in a text box) and copy it into your master datafile. See the Background section below for an example of what this file should look like. (\*Alternately implement a server, if you're experienced with that sort of thing.)
+![barplot](img/barplot_withgrid.PNG)
 
-- Figure out how to calculate "Error", the difference between the true percentage and the reported percentage.
-- Scale this error using Cleveland and McGill’s log-base-2 error equation. For details, see the background section (there’s a figure with the equation). This becomes your “Error” column in the output. Make sure you use whole percentages (not decimal) in the log-base-2 equation. Make sure you handle the case of when a person gets the exact percentage correct (log-base-2 of 1/8 is -3, it is better to set this to 0). 
-- Run your experiment with 10 or more participants, or-- make sure you get at least 200 trials **per visualization type** in total.  
-    - Grab friends or people in the class.   
-    - Run at least 20 trials per visualization type, per participant. This is to ensure that you cover the range of possible answers (e.g. 5%, 10%, ..., 95%)
-- Make sure to save the resulting CSV after each participant. Compile the results into a master csv file (all participants, all trials).
-- Produce a README with figures that shows the visualizations you tested and results, ordered by best performance to worst performance. Follow the modern Cleveland-McGill figure below -- though note that using names instead of icons is fine.
-- To obtain the ranking, calculate and report the average log2Error for each visualization across all trials and participants. This should be straightforward to do in a spreadsheet.
-- Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. Include these in your figures. Bootstrapped confidence intervals are easily implemented in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. Bootstrapped 95% CIs are **very** useful in modern experiment practice.
-- Include example images of each visualization as they appeared in your experiment (i.e. if you used a pie chart show the actual pie chart you used in the experiment along with the markings, not an example from Google Images).
+Barplot without a grid
+-
 
-## General Requirements
+![barplot](img/barplot_withoutgrid.PNG)
 
-0. Your code should be forked from the GitHub repo and linked using GitHub pages.
-2. Your project should use d3 to build visualizations. 
-3. Your writeup (readme.md in the repo) should contain the following:
+Barplot with more markers and a grid
+-
 
-- Working link to the experiment hosted on gh-pages or some other site.
-- Concise description and screenshot of your experiment.
-- Description of the technical achievements you attempted with this project.
-- Description of the design achievements you attempted with this project.
+![barplot](img/barplot_moremarkers_withgrid.PNG)
 
-Background
+Barplot with more markers and no grid
+-
+
+![barplot](img/barplot_moremarkers_withoutgrid.PNG)
+
+Barplot with less markers and a grid
+-
+
+![barplot](img/barplot_lessmarkers_withgrid.PNG)
+
+Barplot with less markers and no grid
+-
+
+![barplot](img/barplot_lessmarkers_withoutgrid.PNG)
+
+Analysis by calculating error between actual values and participants' answers:
 ---
+Calculated error for grid versus no grid:
+-
 
-In 1984, William Cleveland and Robert McGill published the results of several controlled experiments that pitted bar charts against pies and stacked-bar variants. 
-Their paper (http://www.cs.ubc.ca/~tmm/courses/cpsc533c-04-spr/readings/cleveland.pdf) (http://info.slis.indiana.edu/~katy/S637-S11/cleveland84.pdf) is considered a seminal paper in data visualization.
-In particular, they ran a psychology-style experiment where users were shown a series of randomly-generated charts with two graphical elements marked like this:
+![grid](img/grid.png)
 
-![cleveland bar chart](img/cleveland-bar.png)
+Calculated error for markers on y-axis:
+-
 
-Participants were then asked, "What percentage is the smaller of the larger?". 
-This was repeated hundreds of time with varying data and charts. 
-By the end of the study, Cleveland and McGill had amassed a large dataset that looked like this:
+![markers](img/markers.png)
 
-![cleveland table](img/cleveland-table.png)
+Calculated error for distance between bars:
+-
 
-__Log-base-2 or "cm-error"__: The true percent is the actual percentage of the smaller to the larger, while the reported percent is what participants reported. 
-Cleveland and McGill recognized that their analyses would be biased if they took `abs(ReportedPercent – TruePercent)` as their score for error. 
-To compensate, they came up with a logarithmic scale for error with this equation:
+![distance](img/distance.png)
 
-![cleveland equation](img/cleveland-equation.png)
+Scatter plot and linear regression comparing distance between bars and error
+-
 
-You’ll be implementing this error score as part of the lab. 
-(Hint: it’s not a trick question, this is just to familiarize you with the experiment protocol). 
-With this Cleveland-McGill error score you can better compare the performance of the charts you test to figure out which one performs the best.
+![scatters](img/scatters.png)
 
-As a baseline, compare your average Error scores to the following chart, which include both Cleveland and McGill’s results as well as more recent extensions of this experiment (lower error indicates better performance, and error bars are bootstrapped 95% confidence intervals (`http://en.wikipedia.org/wiki/Confidence_interval#Meaning_and_interpretation`)):
+![scatter](img/scatter.png)
 
-![cleveland results](img/cleveland-results.png)
+Violin plot showing distribution of error for each experiment type
+-
 
-GitHub Details
+![violin](img/violinplot.png)
+
+Interpretations
+--
+
+Based on the data and plots above, it was clear that error was smaller in plots with the gridlines. In addition, error decreased as the number of markers or gridlines increased. Both of these supported our original hypothesis. However, our hypothesis that error would increase as distance between bars increased was not fully supported. In some of the conditions, linear regression was positive. However, when considered overall, the regression and bootstrapped confidence interval of the data overall did not show a clear enough positive trend to support the hypothesis.
+
+Design Achievements:
 ---
+- Centered the text below the bar graphs
 
-- Fork the GitHub Repository. You now have a copy associated with your username.
-- Make changes to index.html to fulfill the project requirements. 
-- Make sure your "master" branch matches your "gh-pages" branch. See the GitHub Guides referenced above if you need help.
-- Edit this README.md with a link to your gh-pages site: e.g. http://YourUsernameGoesHere.github.io/Experiment/index.html
-- Replace this file (README.md) with your writeup and Design/Technical achievements.
-- To submit, make a [Pull Request](https://help.github.com/articles/using-pull-requests/) on the original repository.
-- Name your submission using the following scheme: 
-```
-a3-FirstLastnameMember1-FirstLastnameMember2-FirstLastnameMember3-...
-```
+Technical Achievements:
+---
+- Used sessionStorage to store and retrieve data between pages within the experiment
+- Analyzed data from 11 participants
+- Created more plots to analyze the data
+
+Resources:
+---
+https://www.codexworld.com/export-html-table-data-to-csv-using-javascript/
+https://www.w3schools.com/jsref/jsref_push.asp
+https://www.codegrepper.com/code-examples/delphi/add+to+an+array+local+javascript
+https://programminghead.com/how-to-link-submit-button-to-another-page-in-html.php
+
+

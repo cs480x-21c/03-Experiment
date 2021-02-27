@@ -6,8 +6,75 @@
 
 <body>
   <h1> Experiment </h1>
-</body>
 
 <script>
   console.log(d3); // test if d3 is loaded
+  var svg = d3.select("body")
+   .append("svg")
+   .attr("width", 1600)
+   .attr("height", 160);
+  svg.append('text')
+     .text("In this experiment, you are asked to judge what is the percent of a smaller value to a larger value in several charts.")
+     .attr("y", 20)
+     .attr("font-size","20px")
+  svg.append('text')
+     .text("For example, if the smaller bar is 50% of the larger bar's height, please write 50.")
+     .attr("y", 50)
+     .attr("font-size","20px")
+  svg.append('text')
+     .text("We won't record any other information from you except your answers.")
+     .attr("y", 80)
+     .attr("font-size","20px")
+ svg.append('text')
+     .text("Once the experiment is over a csv file will download. Please send us this file as it is your results.")
+     .attr("y", 110)
+     .attr("font-size","20px")
+  svg.append('text')
+     .text("Please click the agree button to begin. Thank you!")
+     .attr("y", 140)
+     .attr("font-size","20px")
+  </script>
+
+<a id="link">
+   <button style="margin-top:10px;">Agree</button>
+</a>
+  <script>
+    const links = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+               2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+               3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+               4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+               5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+               6, 6, 6, 6, 6, 6, 6, 6, 6, 6]
+
+d3.shuffle(links);
+var i = 0;
+  
+sessionStorage.setItem("links", JSON.stringify(links));
+sessionStorage.setItem("i", JSON.stringify(i));
+var plots = JSON.parse(sessionStorage.getItem("links"));
+console.log(plots)
+
+var goToNum = plots[i];
+if (goToNum == '1') {
+  var goTo = 'barplot_withgrid.html'
+} else if (goToNum == '2') {
+  var goTo = 'barplot_withoutgrid.html'
+} else if (goToNum == '3') {
+  var goTo = 'barplot_lessmarkers_withgrid.html'
+} else if (goToNum == '4') {
+  var goTo = 'barplot_lessmarkers_withoutgrid.html'
+} else if (goToNum == '5') {
+  var goTo = 'barplot_moremarkers_withgrid.html'
+} else if (goToNum == '6') {
+  var goTo = 'barplot_moremarkers_withoutgrid.html'
+}
+console.log(goTo);
+
+i = i + 1;
+console.log(i)
+sessionStorage.setItem("i", JSON.stringify(i))
+  
+document.getElementById("link").setAttribute("href",goTo);
+
 </script>
+</body>

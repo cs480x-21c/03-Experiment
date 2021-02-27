@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CS480X Experiment</title>
+    <style> /* set the CSS */
+    body {
+        margin: 0px;
+        overflow: hidden;
+    }
+
+    rect {
+        fill: "black";
+        stroke: "black";
+    }
+
+    text {
+        font-family: sans-serif;
+    }
+
+    .tick text {
+        font-size: 2em;
+        fill: #635F5D;
+    }
+
+    .tick line {
+        stroke: #C0C0BB;
+    }
+
+    .axis-label {
+        font-size: 3em;
+        fill: 'black'
+    }
+
+    </style>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+  </head>
+  <body>
+    
+    <svg width="950" height="650"></svg>
+    
+    <form name="myform" onSubmit="return handleClick()">
+        <input name="Submit"  type="submit" value="Submit" style="margin-left:50px;">
+        <input type="text" id="myVal" placeholder="Add some text&hellip;">
+    </form>
+
+    <div id="vis-container"></div>
+
+    <script>
+        const svg = d3.select('svg');
+
+        //set svg size
+        const width = +svg.attr('width');
+        const height = +svg.attr('height');
+
+        
+        //generate random numbers
+        const val1 = d3.randomInt(0,90)();
+        const val2 = d3.randomInt(0,90)();
+        const val3 = d3.randomInt(0,90)();
+        const val4 = d3.randomInt(0,90)();
+        const val5 = d3.randomInt(0,90)();
+        const val6 = d3.randomInt(0,90)();
+        const val7 = d3.randomInt(0,90)();
+        const val8 = d3.randomInt(0,90)();
+        const val9 = d3.randomInt(0,90)();
+        const val10 = d3.randomInt(0,90)();
+
+        //shuffle index and select the first 2
+        //this is how to randomly select 2 bars to highlight without replacement
+        const compValue = [0,1,2,3,4,5,6,7,8,9];
+        d3.shuffle(compValue);
+        const compValues = [compValue[0], compValue[1]]
+        compValues.sort(d3.ascending)
+
+        //create matrix with the data
+        //index 1-10
+        //value is the randomly generated bar height
+        //circle indicates which 2 bars will be marked with a circle (used for circle radius), default 0
+        const data = [
+            {index: 1, value: val1, circle: 0},
+            {index: 2, value: val2, circle: 0},
+            {index: 3, value: val3, circle: 0},
+            {index: 4, value: val4, circle: 0},
+            {index: 5, value: val5, circle: 0},
+            {index: 6, value: val6, circle: 0},
+            {index: 7, value: val7, circle: 0},
+            {index: 8, value: val8, circle: 0},
+            {index: 9, value: val9, circle: 0},
+            {index: 10, value: val10, circle: 0}]
+
+
+        //change circle value of the 2 randomly generated bars to 10
+        //this means that those 2 bars will be marked on the bottom with a circle r=10
+        //all others will have a "circle" with r=0, so no circle
+        const loc1 = compValues[0];
+        const loc2 = compValues[1];
+        data[loc1]['circle'] = 10;
+        data[loc2]['circle'] = 10;
+
+        //calculate the number of bars in between the 2 marked bars
+        const barsBetween = loc2-loc1-1
+        
+        //set variables
+        const xValue = d => d.index;
+        const yValue = d => d.value;
+
+        //set margins
+        const margin = { top: 20, right: 20, bottom: 100, left: 50 };
+        const innerWidth = width - margin.left - margin.right;
+        const innerHeight = height - margin.top - margin.bottom;
+        
+        //yScale for y axis
+        const yScale = d3.scaleLinear()
+            .domain([0, 100])
+            .range([innerHeight, 0]);
+        
+        //xScale for x axis
+        const xScale = d3.scaleBand()
+            .domain(data.map(xValue))
+            .range([0, innerWidth])
+            .padding(0.1);
+        
+        //create g for the plot to go on (inside margin)
+        const g = svg.append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
+
+        //create axes
+        const xAxis = d3.axisBottom(xScale);
+
+        const yAxis = d3.axisLeft(yScale);
+        
+        yAxisG = g.append('g').call(yAxis);
+        yAxisG.selectAll('.domain').remove();
+
+        
+        const xAxisG = g.append('g').call(xAxis)
+            .attr('transform', `translate(0,${innerHeight})`);
+        
+        xAxisG.select('.domain').remove();
+        
+        //insert bars
+        //it actually displays 100-the randomly generated value, just to make the plot bottom to top
+        //will account for when recording the data
+        g.selectAll('rect').data(data)
+            .enter().append('rect')
+                .attr('x', d => xScale(xValue(d)))
+                .attr('y', d => yScale(100-yValue(d)))
+                .attr('width', xScale.bandwidth())
+                .attr('height', d => yScale(yValue(d)));
+
+        //add circles to the bottom of the bars
+        g.selectAll('circle').data(data)
+            .enter().append('circle')
+                .attr('cx', d => 40 + xScale(xValue(d)))
+                .attr('cy', d => yScale(5))
+                .attr('r', d => d.circle)
+                .attr('fill', "white")
+                .attr('stroke', "white")
+
+        //question text
+        g.append('text')
+            .text("What percentage is the smaller of the larger? For example, if the smaller bar is half the larger bar's height, please write 50.")
+            .attr('y', innerHeight+80)
+            .attr('font-size', '1em')
+      
+        //sorting those values in ascending order to make the percent calculation easier
+        const vals = [100-data[loc2]['value'], 100-data[loc1]['value']]
+        vals.sort(d3.ascending)
+        
+        const actualSizeDiff = (vals[0])/(vals[1]) * 100
+        
+        var plots = JSON.parse(sessionStorage.getItem("links"));
+        var i = JSON.parse(sessionStorage.getItem("i"));
+        const oldi = i
+        
+        var goToNum = plots[i];
+        if (goToNum == '1') {
+          var goTo = 'barplot_withgrid.html'
+        } else if (goToNum == '2') {
+          var goTo = 'barplot_withoutgrid.html'
+        } else if (goToNum == '3') {
+          var goTo = 'barplot_lessmarkers_withgrid.html'
+        } else if (goToNum == '4') {
+          var goTo = 'barplot_lessmarkers_withoutgrid.html'
+        } else if (goToNum == '5') {
+          var goTo = 'barplot_moremarkers_withgrid.html'
+        } else if (goToNum == '6') {
+          var goTo = 'barplot_moremarkers_withoutgrid.html'
+        }
+        
+        //Supposed to grab the typed text when the user clicks the submit button
+        function handleClick(event){
+            i = i + 1;            
+            sessionStorage.setItem("i", JSON.stringify(i))
+          
+            var index = JSON.parse(sessionStorage.getItem("index"))
+            if(index == "") {
+                index = 1;
+                sessionStorage.setItem("index", JSON.stringify(index));
+            } else {
+                index = index + 1;
+                sessionStorage.setItem("index", JSON.stringify(index));
+            }
+            const estVal = document.getElementById("myVal").value;
+            var dataset = JSON.parse(sessionStorage.getItem("dataset"));
+            if(dataset == null) {
+                dataset = ["Estimated Value", "Actual Value", "Distance Between Bars", "Visualization"];
+                sessionStorage.setItem("dataset", JSON.stringify(dataset));
+            }
+            dataset.push(estVal, actualSizeDiff, barsBetween, "barplotWithoutGrid");
+            sessionStorage.setItem("dataset", JSON.stringify(dataset));
+          
+            var output = JSON.parse(sessionStorage.getItem("dataset"));
+                      
+            if(index >= 60) {
+              downloadCSV(output.join("\n"), 'barplotdata.csv');
+              goTo = 'index.html';
+            }
+
+            location = goTo;
+          
+            return false;
+        }
+        
+        function downloadCSV(csv, filename) {
+          var csvFile;
+          var downloadLink;
+          
+          //Create a new CSV file
+          csvFile = new Blob([csv], {type: "text/csv"});
+
+          downloadLink = document.createElement("a");
+
+          //Name of file
+          downloadLink.download = filename;
+
+          //Create a link to the file
+          downloadLink.href = window.URL.createObjectURL(csvFile);
+          downloadLink.style.display = "none";
+
+          //Add the link to DOM
+          document.body.appendChild(downloadLink);
+
+          //Click download link
+          downloadLink.click();
+        }
+        
+
+        //TODO Do data analysis - I can do in R
+
+
+    </script>
+  </body>
+</html>
