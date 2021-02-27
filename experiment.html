@@ -1,0 +1,349 @@
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+<body>
+
+  <ul class="nav" style="background-color: #e3f2fd;">
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="experiment.html">Restart</a>
+  </ul>
+
+</body>
+
+<div id="vis"></div>
+
+<script>
+  console.log(d3); // test if d3 is loaded
+
+  // {chart_number: [chart_type, true_percent, predicted_percent]}
+  var result = {}
+  // evaluation
+  var errorsPlain = []
+  var errorsGrayscale = []
+  var errorsColor = []
+
+  // count for each type of plot
+  var type0_count = 0
+  var type1_count = 0
+  var type2_count = 0
+  var total = 0
+
+  // Generates random ints from 0-max
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  onButtonClick()
+
+  // clear prior chart, pick chart type, draw chart.
+  function onButtonClick(isValue){
+
+    // save their percentage value
+    if (isValue == 1) {
+
+      // save input percentage value
+      var input = document.getElementById("inputValue").value
+      var input = input.replace(/[%]+/g, '')
+      if (input == ""){
+        input = 0
+      }
+
+      console.log("input: ", input)
+
+      // clear text field for usability
+      document.getElementById("inputValue").value = ""
+
+      // add predicted value to list
+      result[total].push(input)
+
+      // append error difference
+      error = Math.log2(Math.abs( result[total][2] - result[total][1] + (1/8) ))
+      if (error == -3) {
+        error = 0
+      }
+
+      result[total].push(error)
+
+      if (Math.abs(result[total][0] == 0)) {
+        errorsPlain.push(error)
+      }
+
+      if (Math.abs(result[total][0] == 1)) {
+        errorsGrayscale.push(error)
+      }
+
+      if (Math.abs(result[total][0] == 2)) {
+        errorsColor.push(error)
+      }    
+
+    }
+    
+    // remove prior chart
+    d3.select("svg").remove()
+
+    // set the dimensions and margins of the graph
+    var margin = {top: 30, right: 30, bottom: 70, left: 60},
+      width = 460 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+    var svg = d3.select("#vis")
+      .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .attr("id", "visSvg")
+      .append("g")
+        .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")");
+            
+    // Generate 5 random points from 0-100
+    // [[0, value],[1, value], ... [4, value]]
+    var data = [];
+      for (var i = 0; i < 5; i++) {
+        var rand_height = getRandomInt(100);
+        var point = [i, rand_height]
+        data.push(point)
+      }
+
+    // randomly pick two bar indices to conduct experiment on
+    var rand_point_1 = Math.floor(Math.random() * 5)
+    var rand_point_2 = Math.floor(Math.random() * 5)
+    while (rand_point_2 == rand_point_1) {
+      var rand_point_2 = Math.floor(Math.random() * 5)
+    }
+
+    grayscale_pallete = ['#303030', '#696969', '#A8A8A8', '#D3D3D3', '#FFFFFF']
+    colorblind_pallete = ['#44AA99', '#88CCEE', '#DDCC77', '#CC6677', '#AA4499']
+
+    // pick chart type
+    if (type0_count < 20 || type1_count < 20 || type2_count < 20) {
+      options = []
+      if (type0_count < 20) {options.push("type0")}
+      if (type1_count < 20) {options.push("type1")}
+      if (type2_count < 20) {options.push("type2")}
+      
+      // randomly pick one available type
+      type_index = Math.floor(Math.random() * options.length)
+
+      if (options[type_index] == "type0") {
+        type0_count++
+        type = 0
+      }
+
+      if (options[type_index] == "type1") {
+        type1_count++
+        type = 1
+      }
+
+      if (options[type_index] == "type2") {
+        type2_count++
+        type = 2
+      }
+
+      total += 1
+    }
+    else {
+
+      // Calculate Metrics
+      // calculate Plain charts mean error
+      var temp = 0
+      for(var i = 0; i < errorsPlain.length; i++) {
+        temp += errorsPlain[i];
+      }
+      var avgPlain = temp / errorsPlain.length;
+      var avgPlain = Math.round((avgPlain + Number.EPSILON) * 100) / 100
+      // calculate grayscale charts mean error
+      var temp = 0
+      for(var i = 0; i < errorsGrayscale.length; i++) {
+        temp += errorsGrayscale[i];
+      }
+      var avgGrayscale = temp / errorsGrayscale.length;
+      var avgGrayscale = Math.round((avgGrayscale + Number.EPSILON) * 100) / 100
+
+      // calculate colored charts mean error
+      var temp = 0
+      for(var i = 0; i < errorsColor.length; i++) {
+        temp += errorsColor[i];
+      }
+      var avgColor = temp / errorsColor.length;
+      var avgColor = Math.round((avgColor + Number.EPSILON) * 100) / 100
+
+      var dictResult = JSON.stringify(result)
+      var cleanedResult = dictResult.replace(/['"]+/g, '')
+      var blobResult = new Blob([cleanedResult])
+      var objectURL = window.webkitURL.createObjectURL(blobResult)
+      console.log(cleanedResult)
+      console.log(objectURL)
+
+      document.getElementById("userInput").setAttribute("style","visibility: hidden")
+      document.getElementById("finishedButton").setAttribute("style","visibility: visible")
+      document.getElementById("finishedButton").setAttribute("onclick", "window.open('" + objectURL + "')")
+
+      document.getElementById("vis").setAttribute("style","display: none")
+      document.getElementById("finishedText").setAttribute("style","display: unset")
+      
+      document.getElementById("errorValuePlain").textContent=avgPlain+"%";
+      document.getElementById("errorValueGrayscale").textContent=avgGrayscale+"%";
+      document.getElementById("errorValueColor").textContent=avgColor+"%";
+
+      return
+    }
+
+    // console.log(type, total, type0_count, type1_count, type2_count)
+
+    // draw the Chart
+    // X axis
+    var x = d3.scaleBand()
+      .range([ 0, width ])
+      .domain(data.map(function(d) { return d[0] }))
+      .padding(0.2);
+    svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x).tickSize(0))
+      .selectAll("text")
+        .style("opacity", 0);
+
+    // Add Y axis
+    var y = d3.scaleLinear()
+      .domain([0, 100])
+      .range([ height, 0]);
+    svg.append("g")
+      .call(d3.axisLeft(y).tickSize(0))
+      .selectAll("text")
+        .style("opacity", 0)
+
+    // Bars
+    // this process mimics having an 'outer' stroke
+    // done in order to place stroke on axis instead of above
+    // generate bar with thick stroke
+    svg.selectAll("mybar")
+      .data(data)
+      .enter()
+      .append("rect")
+        .attr("x", function(d) { return x(d[0])})
+        .attr("y", function(d) { return y(d[1])})
+        .attr("width", 35)
+        .attr("height", function(d) { return height - y(d[1]) })
+        .attr("fill", function(d) { 
+          if (type == 0)
+            return 'white'
+          else if (type == 1)
+            return grayscale_pallete[d[0]]
+          else if (type == 2)
+            return colorblind_pallete[d[0]]
+          })
+        .attr("stroke", "black")
+        .attr("stroke-width", "2")
+    // overlay bar with no stroke
+    svg.selectAll("mybar")
+      .data(data)
+      .enter()
+      .append("rect")
+        .attr("x", function(d) { return x(d[0])})
+        .attr("y", function(d) { return y(d[1])})
+        .attr("width", 35)
+        .attr("height", function(d) { return height - y(d[1]) })
+        .attr("fill", function(d) { 
+          if (type == 0)
+            return 'white'
+          else if (type == 1)
+            return grayscale_pallete[d[0]]
+          else if (type == 2)
+            return colorblind_pallete[d[0]]
+          })
+
+    // label the two randomly picked bars
+    svg.append('circle')
+      .attr('cx', function(d) { return x(data[rand_point_1][0]) + 18})
+      .attr('cy', y(-5))
+      .attr('r', 5)
+      .style('fill', 'black')
+
+    svg.append('circle')
+      .attr('cx', function(d) { return x(data[rand_point_2][0]) + 18})
+      .attr('cy', y(-5))
+      .attr('r', 5)
+      .style('fill', 'black')
+      
+    // calculate true percentage
+    var val1 = data[rand_point_1][1]
+    var val2 = data[rand_point_2][1]
+    
+    if (val1 == 0 && val2 == 0) {
+      percentage = 1
+    }
+    if (val1 == 0 || val2 == 0) {
+      percentage == 0
+    }
+    if (val1 < val2) {
+      var percentage = val1/val2
+    }
+    if (val2 < val1) {
+      var percentage = val2/val1
+    }
+    if (val1 == val2) {
+      var percentage = 1
+    }
+
+    true_percentage = Math.round(percentage * 100)
+    result[total] = [type, true_percentage]
+  } 
+
+</script>
+
+<body>
+
+  <div class="p-5">
+
+    <div class="row g-3 align-items-center" id="userInput">
+
+      <div class="col-auto">
+        <input type="text" id="inputValue" class="form-control" aria-describedby="ValueHelpInline">
+      </div>
+
+      <div class="col-auto">
+        <button type="submit" value="onButtonClick" class="btn btn-primary" onclick="onButtonClick(1)">Next Chart</button>
+      </div>
+
+      <span id="ValueHelpInline" class="form-text">
+        Input Percentage (Integer Value)
+      </span>
+
+    </div>
+    
+    <span id="finishedText" style="display: none" class="form-text">
+      <h4>Thank you for completing the experiment!</h4>
+
+      <h4> Following is the mean log error of each chart type.<h4>
+
+      <h6> Plain Chart:
+      <span id="errorValuePlain", style="color:blue"></span>
+      </h6>
+      <h6> Grayscale Chart:
+      <span id="errorValueGrayscale", style="color:blue"></span>
+      </h6>
+      <h6> Colored Chart:
+      <span id="errorValueColor", style="color:blue"></span>
+      </h6>
+
+      <h4>I need you to send me your results.</h4>
+      <h6>
+        <ol>
+          <li>Click the button below</li>
+          <li>Copy the results</li>
+          <li>Paste into an email</li>
+          <li>Send to: jlovering@wpi.edu</li>
+        </ol>  
+      </h6>
+      <h6>I will keep your data anonymous unless you ask me to record your name</h6>
+
+    </span>
+    
+    <button onclick="NULL" id="finishedButton" class="btn btn-primary" style="display: none">click here for results</button>
+
+  </div>
+</body>
