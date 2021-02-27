@@ -114,10 +114,3 @@ The files for this project include the following:
 
 Heer, Jeffrey; Kong, Nicholas; & Agrawala, Maneesh. “Sizing the Horizon: The Effects of Chart Size and Layering on the Graphical Perception of Time Series Visualizations.” 2009. ACM Conference on Human Factors in Computing Systems (CHI). 
 
-
-# left over from OG - delete- Make sure your "master" branch matches your "gh-pages" branch. See the GitHub Guides referenced above if you need help.
-- To submit, make a [Pull Request](https://help.github.com/articles/using-pull-requests/) on the original repository.
-- Name your submission using the following scheme: 
-```
-a3-FirstLastnameMember1-FirstLastnameMember2-FirstLastnameMember3-...
-```
