@@ -45,7 +45,7 @@ Barplot with less markers and a grid
 Barplot with less markers and no grid
 --
 
-![barwithgrid](img/barplot_lessmarkers_withnogrid.PNG)
+![barwithgrid](img/barplot_lessmarkers_withoutgrid.PNG)
 
 Analysis by calculating error between actual values and participants' answers:
 ---
