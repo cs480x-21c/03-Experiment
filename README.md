@@ -19,20 +19,20 @@ we presented the 60 charts in random order. For each chart, one x value was mark
 
 Each line chart had 2-6 datasets, a y-axis from 0-100, an x-axis from 0-20 with one other x value marked, and a legend identifying the two datasets of interest. We used color because lines of dots and dashes for 6 datasets were difficult to discern. Having taken the survey to test it, we would use better line patterns and no color if we were doing this again. Further notes on design and future changes are in the technical and design achievements sections. 
 
-![line chart example]()
+![line chart example](img/line%20chart.png)
 
 ## Horizon chart
 
 As a refresher, horizon charts condense the information in a set of charts so that more 
 charts can be shown on one screen. This is done by cutting off the original chart at a certain y value - 50 say - and dropping the part of the graph above the cutoff down to layer on top of the lower band. Color is used to show the layers: lighter colors mean lower layers, darker colors mean higher ones. Usually there are 2 to 3 layers. On the horizon charts in this survey, there are 2 layers. The x-axis is 0-20, and the y axis is always 0-50, with y values ranging from 1-100. One value on the x axis is marked; two datasets of interest are marked. Further notes on design and future changes are in the technical and design achievements sections. 
 
-![horizon chart example]()
+![horizon chart example](img/horizon%20chart.png)
 
 ## Survey Screenshots
 
 Below are a screenshot of the survey introductory explanation and a screenshot of an example question in the survey. 
 
-![survey intro]() ![survey question]()
+![survey intro](img/intro%20survey.png) ![survey question](img/survey%20question.png)
 
 # Results - best to worst
 
@@ -52,20 +52,21 @@ comment on number of participants/trials
 
 Completely random data on left, slightly ordered data on right: 
 
-![random line]() ![ordered line]()
+![random line](img/random%20line.png) ![ordered line](img/ordered%20line.png)
 
 # Design Achievements
 
-Line charts - We used a color selection from colorbrewer to make sure the colors were color-blind safe and qualitatively different. If we were doing this again we would do black and white with discernable line patterns. But if we had to do it in color, we would pick some darker colors and make sure that the colors paired against each other are always easily differentiable from each other (for example, comparing an orange to a blue rather than a green to a blue). We made a legend for the marked datasets; doing this again we could compare marking the points on the graph versus having a legend so that the viewer doesn’t have to look back and forth. 
+- Line charts: We used a color selection from colorbrewer to make sure the colors were color-blind safe and qualitatively different. If we were doing this again we would do black and white with discernable line patterns. But if we had to do it in color, we would pick some darker colors and make sure that the colors paired against each other are always easily differentiable from each other (for example, comparing an orange to a blue rather than a green to a blue). We made a legend for the marked datasets; doing this again we could compare marking the points on the graph versus having a legend so that the viewer doesn’t have to look back and forth. 
 
-Horizon charts
-We used studies on the factors that make horizon charts more or less effective to design our horizon charts. For example, in a 2009 study by Heer et al., researchers found that horizon charts with 2 bands are most readable (with 3 layers perception was fair; 4 or more bands were difficult to read). For this reason our horizon charts use two color bands. If we were doing this again, we would make x and y axes for each chart rather than only one (valiant efforts were made but our d3 capabilities were stymied by the challenge at this time). 
+- Horizon charts: We used studies on the factors that make horizon charts more or less effective to design our horizon charts. For example, in a 2009 study by Heer et al., researchers found that horizon charts with 2 bands are most readable (with 3 layers perception was fair; 4 or more bands were difficult to read). For this reason our horizon charts use two color bands. If we were doing this again, we would make x and y axes for each chart rather than only one (valiant efforts were made but our d3 capabilities were stymied by the challenge at this time). 
 
-Survey
+- Survey
 
-We used css_____ and such to make the survey look nice. If we were doing this again, we would make the survey more visually appealing (more centered, less whitespace) to make it easier for viewers to look at repeatedly. We would add some kind of progress indicator so that viewers know how far through the survey they are, and don’t get discouraged. We would also decrease the number of charts per survey or increase the incentive for viewers to move through the survey. We wrote a survey introduction and explanation of horizon charts. If we were doing this again, we would provide a video or demonstration of the horizon charts and allow users to practice reading them to make sure they understand them. 
+  - We used css_____ and such to make the survey look nice. If we were doing this again, we would make the survey more visually appealing (more centered, less whitespace) to make it easier for viewers 
+  to look at repeatedly. 
+  - We would add some kind of progress indicator so that viewers know how far through the survey they are, and don’t get discouraged. We would also decrease the number of charts per survey or increase the incentive for viewers to move through the survey. We wrote a survey introduction and explanation of horizon charts. If we were doing this again, we would provide a video or demonstration of the horizon charts and allow users to practice reading them to make sure they understand them. 
 
-Description of what’s in each file / how it works
+## File descriptions
 
 
 ## References
