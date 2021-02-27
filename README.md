@@ -41,20 +41,23 @@ We calculated percent correctly identified (A is higher) and average log base 2 
 [0.9014285714285715, 0.8928571428571429, 0.8880952380952379, 0.9833333333333334, 0.6866666666666668, 0.5]
 [5.850308807458906, 5.883511636599286, 6.071480293462024, 5.64199470150577, 6.143865040538033, 6.617486980527845]
 
-Basically we just need to replicate this chart, but can use names instead of icons, ordered from best to worst: 
+Chart types, ordered from best to worst by average log base 2 error with bootstrapped 95% confidence intervals: 
 
-![clevelnd](img/cleveland.JPG)
+![results graph]() 
 
-- Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. 
-Include these in your figures. Bootstrapped confidence intervals are easily implemented 
-in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. 
-
-? comment on number of participants/trials
-& discussion
+Based on our results, it is easier on both line charts and horizon charts to identify maximums
+and estimate percentages with fewer datasets. 
+With respect to picking the higher value, horizon charts with 2 datasets were better than 
+line charts with 2, but fell off sharply with 4 and 6. 
+Similarly, horizon charts were better than line charts for estimating percents
+with 2 datasets, but worse than line charts for 4 and 6 datasets. 
+We think the sharp dropoff for horizon charts may be because viewers were unfamiliar 
+with horizon charts and didn't have labeled
+x and y axes for each horizon chart, and so struggled to read them with more datasets. 
 
 # Technical Achievements
 
-We decided to host our experiment on a server considering that gh-pages only supports static content. We used the Heroku cloud application platform with a Postgres database for storing participant responses. The server is built with the Express framework for Node.js. This was learned specifically for this project, as none of the team members had experience in back-end web development. We followed the [Heroku tutorial for Node.js](https://devcenter.heroku.com/articles/getting-started-with-nodejs) and made modifications to suit the project.
+- We decided to host our experiment on a server considering that gh-pages only supports static content. We used the Heroku cloud application platform with a Postgres database for storing participant responses. The server is built with the Express framework for Node.js. This was learned specifically for this project, as none of the team members had experience in back-end web development. We followed the [Heroku tutorial for Node.js](https://devcenter.heroku.com/articles/getting-started-with-nodejs) and made modifications to suit the project.
 
 - We also compared using completely random data for each dataset with using slightly ordered data. Completely random datasets were really really hard to read (see screenshot below). They are also uncommon as real-world datasets, and thus might be perceived as meaningless by the viewer. For these reasons, we created slightly ordered data that follows a sine wave, plus or minus some random amount of variation. This made the data much easier to read for viewers. If we were doing this again, we would use smoother data so that the user tasks were more similar to real-life tasks.
 
