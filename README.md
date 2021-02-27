@@ -54,7 +54,7 @@ in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or
 
 # Technical Achievements
 
-@beck: Express / node.js Server, postgres db
+We decided to host our experiment on a server considering that gh-pages only supports static content. We used the Heroku cloud application platform with a Postgres database for storing participant responses. The server is built with the Express framework for Node.js. This was learned specifically for this project, as none of the team members had experience in back-end web development. We followed the [Heroku tutorial for Node.js](https://devcenter.heroku.com/articles/getting-started-with-nodejs) and made modifications to suit the project.
 
 - We also compared using completely random data for each dataset with using slightly ordered data. Completely random datasets were really really hard to read (see screenshot below). They are also uncommon as real-world datasets, and thus might be perceived as meaningless by the viewer. For these reasons, we created slightly ordered data that follows a sine wave, plus or minus some random amount of variation. This made the data much easier to read for viewers. If we were doing this again, we would use smoother data so that the user tasks were more similar to real-life tasks.
 
@@ -64,13 +64,13 @@ The pictures below show completely random data on left, slightly ordered data on
 
 # Design Achievements
 
-- Line charts: We used a color selection from colorbrewer to make sure the colors were color-blind safe and qualitatively different. If we were doing this again we would do black and white with discernable line patterns. But if we had to do it in color, we would pick some darker colors and make sure that the colors paired against each other are always easily differentiable from each other (for example, comparing an orange to a blue rather than a green to a blue). We made a legend for the marked datasets; doing this again we could compare marking the points on the graph versus having a legend so that the viewer doesn’t have to look back and forth. 
+- **Line Charts:** We used a color selection from colorbrewer to make sure the colors were color-blind safe and qualitatively different. If we were doing this again we would do black and white with discernable line patterns. But if we had to do it in color, we would pick some darker colors and make sure that the colors paired against each other are always easily differentiable from each other (for example, comparing an orange to a blue rather than a green to a blue). We made a legend for the marked datasets; doing this again we could compare marking the points on the graph versus having a legend so that the viewer doesn’t have to look back and forth. 
 
-- Horizon charts: We used studies on the factors that make horizon charts more or less effective to design our horizon charts. For example, in a 2009 study by Heer et al., researchers found that horizon charts with 2 bands are most readable (with 3 layers perception was fair; 4 or more bands were difficult to read). For this reason our horizon charts use two color bands. If we were doing this again, we would make x and y axes for each chart rather than only one (valiant efforts were made but our d3 capabilities were stymied by the challenge at this time). 
+- **Horizon Charts:** We used studies on the factors that make horizon charts more or less effective to design our horizon charts. For example, in a 2009 study by Heer et al., researchers found that horizon charts with 2 bands are most readable (with 3 layers perception was fair; 4 or more bands were difficult to read). For this reason our horizon charts use two color bands. If we were doing this again, we would make x and y axes for each chart rather than only one (valiant efforts were made but our d3 capabilities were stymied by the challenge at this time). 
 
-- Survey:
-  - We used css_____ and such to make the survey look nice. If we were doing this again, we would make the survey more visually appealing (more centered, less whitespace) to make it easier for viewers 
-  to look at repeatedly. 
+- **Survey:**
+  - Participant responses are recorded upon proceeding to the next chart, since there is little to no incentive to complete this survey. The order that the charts are presented is recorded for further analysis in regards to participant learning and fatigue - participants may become better at reading the charts over time, but they may also become tired of the repetitive questions. In the future, timing how long it takes for participants to perform each task could be a valuable addition.
+  - We used Bootstrap CSS to style the survey. If we were doing this again, we would make the survey more visually appealing (more centered, colored background to offset the main content) to make it easier for viewers to look at repeatedly. 
   - We wrote a survey introduction and explanation of horizon charts. If we were doing this again, we would provide a video or demonstration of the horizon charts and allow users to practice reading them to make sure they understand them. 
   - As additional future improvements to the survey, we would add some kind of progress indicator so that viewers know how far through the survey they are, and don’t get discouraged. 
   We would also decrease the number of charts per survey or increase the incentive for viewers to move through the survey. 
@@ -83,14 +83,21 @@ The files for this project include the following:
 - public folder: contains:
   - csv folder with the datasets;
   - img folder with the image for the survey intro;
-  - javascript folder with the scripts to create a line chart, horizon chart, 
+  - javascripts folder with the scripts to create a line chart, horizon chart, 
   and run the survey; and
-  - stylesheets folder with the .css file. 
+  - stylesheets folder with the additional styling for our survey. 
 - views folder: contains:
   - pages folder with pages for the survey home and database;
-  - partials folder with the survey header and footer
+  - partials folder with the header and webpage footer
+- .gitignore: specifies intentionally untracked files
+- Procfile: specifies commands executed on startup of app, by Heroku
 - README: describes project
-- other files @Beck
+- app.json: describes application
+- bootstrap.rmd: R code for analysing results
+- index.js: server code, connects with database
+- package-lock.json: automatically generated file, specifies exact versions of installed packages
+- package.json: metadata regarding app, declares dependencies
+- test.js: server code
 
 ## References
 
