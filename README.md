@@ -34,15 +34,21 @@ Below are a screenshot of the survey introductory explanation and a screenshot o
 
 ![survey intro](img/intro%20survey.png) ![survey question](img/survey%20question.png)
 
-# Results - best to worst
+# Results 
 
+Basically we just need to replicate this chart, but can use names instead of icons, ordered from best to worst: 
 
-Data Analysis
-Calculate error: difference between true percentage and reported percentage + also the greater than less than bit - log2error
-Scale error using Cleveland and McGill’s log-base-2 error equation
-Log2( | judged percent - true percent | + ⅛ | )
-Bootstrapped 95% CIs
-comment on number of participants/trials
+![clevelnd](img/cleveland.JPG)
+
+Calc error -> logbase2 error equation: Log2( | judged percent - true percent | + ⅛ | )
+- Make sure you use whole percentages (not decimal) in the log-base-2 equation. 
+Make sure you handle the case of when a person gets the exact percentage correct (log-base-2 of 1/8 is -3, it is better to set this to 0). 
+- To obtain the ranking, calculate and report the average log2Error for each visualization across all trials and participants. 
+- Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. 
+Include these in your figures. Bootstrapped confidence intervals are easily implemented 
+in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. 
+
+? comment on number of participants/trials
 
 # Technical Achievements
 
@@ -89,16 +95,9 @@ The files for this project include the following:
 Heer, Jeffrey; Kong, Nicholas; & Agrawala, Maneesh. “Sizing the Horizon: The Effects of Chart Size and Layering on the Graphical Perception of Time Series Visualizations.” 2009. ACM Conference on Human Factors in Computing Systems (CHI). 
 
 
-# left over from OG - delete
-- Figure out how to calculate "Error", the difference between the true percentage and the reported percentage.
-- Scale this error using Cleveland and McGill’s log-base-2 error equation. For details, see the background section (there’s a figure with the equation). This becomes your “Error” column in the output. Make sure you use whole percentages (not decimal) in the log-base-2 equation. Make sure you handle the case of when a person gets the exact percentage correct (log-base-2 of 1/8 is -3, it is better to set this to 0). 
-- Produce a README with figures that shows the visualizations you tested and results, ordered by best performance to worst performance. Follow the modern Cleveland-McGill figure below -- though note that using names instead of icons is fine.
-- To obtain the ranking, calculate and report the average log2Error for each visualization across all trials and participants. This should be straightforward to do in a spreadsheet.
-- Use Bootstrapped 95\% confidence intervals for your error upper and lower bounds. Include these in your figures. Bootstrapped confidence intervals are easily implemented in R + ggplot2 using the `stat_summary` geom. You can also use Excel, Python, or many many other tools. Bootstrapped 95% CIs are **very** useful in modern experiment practice.
-- Make sure your "master" branch matches your "gh-pages" branch. See the GitHub Guides referenced above if you need help.
+# left over from OG - delete- Make sure your "master" branch matches your "gh-pages" branch. See the GitHub Guides referenced above if you need help.
 - To submit, make a [Pull Request](https://help.github.com/articles/using-pull-requests/) on the original repository.
 - Name your submission using the following scheme: 
 ```
-
 a3-FirstLastnameMember1-FirstLastnameMember2-FirstLastnameMember3-...
 ```
