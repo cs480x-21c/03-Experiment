@@ -1,22 +1,27 @@
-Assignment 3 - Replicating a Classic Experiment  
-===
+#Assignment 3 - Replicating a Classic Experiment
+
+Project By Benjamin M'Sadoques and Nicolas Fish
 
 Site: https://a3-a-classic-experiment-2.glitch.me
 
-Code edit: https://glitch.com/edit/#!/a3-a-classic-experiment-2
+Code Host: https://glitch.com/edit/#!/a3-a-classic-experiment-2
 
-Description
----
+##Description
+
 This project was inspired by Cleveland and McGill's 1984 paper, where they researched people's 
 perception on different types of vis. 
 In this experiment we tested people’s perception on three types of charts: Bar, Radar, and Tree map.
 We left the charts colorless, so we do not bias results.
+
+###Bar Chart
 
 The Bar chart was our baseline, and we expect this chart to be perceived
 most accurately as the bars are aligned.
 It is also the most common of the three charts so testers may be familiar with it.
 
 ![Bar chart](img/BarChart.png)
+
+###Radar Chart
 
 Those that have not seen this chart before may have difficulty reading the Radar chat
 and may largely impact the error. We expect this chart to preform the worst,
@@ -28,6 +33,8 @@ to visualize attribute points for different character skills.
 
 ![Radar chart](img/RadarChart.png)
 
+###Tree Map
+
 Humans are not good at judging area, so we expect this chart to perform poorly.
 We expect the tree map comparison to out perform the Radar chart and under preform the Bar chart. 
 We placed the indicator circles in the bottom right of the areas rather than the center as we 
@@ -38,13 +45,12 @@ tree maps are somewhat common area charts.
 ![Tree map](img/TreeMap.png)
 
 
-Results
----
+##Results
+
 
 TODO: get later
 
-Technical Achievement
----
+##Technical Achievement
 The technical achievement for this project was to have the survey record results automatically in one master CSV file.
 On the server. 
 
@@ -80,8 +86,8 @@ survey, but we were not sure how to have the server direct people to separate pa
 Eventually we figured out that we can have express js listen for a http get request on any url in our domain.
 On the client side, we just redirect the user to a different URL, then the server sends them the html document.
 
-Design Achievement
----
+##Design Achievement
+
 Our design achievement for this project was styling and making the survey look professional. 
 
 The first step was to style the survey itself. We decided to center the charts on the page 
@@ -106,5 +112,6 @@ as our project logo.
 ![survey start](img/surveyStart.png)
 
 Finally, we created an end page to stop the survey and thank the participant.
+We used the same picture from the start of the survey.
 
-TODO: Get ending page after we get all the results.
+![survey end](img/surveyEnd.png)
