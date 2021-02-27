@@ -64,7 +64,7 @@ Calculated error for distance between bars:
 
 ![distance](img/distance.png)
 
-Scatter plot and linear regression of each experiment type
+Scatter plot and linear regression comparing distance between bars and error
 -
 
 ![scatter](img/scatters.png)
@@ -73,6 +73,11 @@ Violin plot showing distribution of error for each experiment type
 -
 
 ![violin](img/violinplot.png)
+
+Interpretations
+--
+
+Based on the data and plots above, it was clear that error was smaller in plots with the gridlines. In addition, error decreased as the number of markers or gridlines increased. Both of these supported our original hypothesis. However, our hypothesis that error would increase as distance between bars increased was not fully supported. In some of the conditions, linear regression was positive. However, when considered overall, the regression and bootstrapped confidence interval of the data overall did not show a clear enough positive trend to support the hypothesis.
 
 Design Achievements:
 ---
