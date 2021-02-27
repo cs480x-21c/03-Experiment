@@ -39,19 +39,13 @@ Below are a screenshot of the survey introductory explanation and a screenshot o
 We calculated percent correctly identified (if A is higher at the marked x value,
  percent of viewers that correctly identified A is higher) and average log base 2 error for each chart type.
  
-Chart types, ordered from best to worst by percent correctly identified with bootstrapped 95% confidence intervals:
+Chart types, ordered from best to worst, bottom to top, by percent correctly identified with bootstrapped 95% confidence intervals:
  
  2-dataset horizon chart, 2-dataset line chart, 4-dataset line chart, 
  6-dataset line chart, 4-dataset horizon chart, 6-dataset horizon chart
 [0.9014285714285715, 0.8928571428571429, 0.8880952380952379, 0.9833333333333334, 0.6866666666666668, 0.5]
-![identification graph]() 
+![identification graph](img/rankedCharts.png) 
 
-Chart types, ordered from best to worst by average log base 2 error with bootstrapped 95% confidence intervals:
-
- 2-dataset horizon chart, 2-dataset line chart, 4-dataset line chart, 
- 6-dataset line chart, 4-dataset horizon chart, 6-dataset horizon chart 
-[5.850308807458906, 5.883511636599286, 6.071480293462024, 5.64199470150577, 6.143865040538033, 6.617486980527845]
-![estimation graph]() 
 
 Based on our results, it is easier on both line charts and horizon charts to identify maximums
 and estimate percentages with fewer datasets. 
