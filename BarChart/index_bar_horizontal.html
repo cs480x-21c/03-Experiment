@@ -1,0 +1,169 @@
+<script src="https://d3js.org/d3.v6.min.js"></script>
+
+
+<style>
+</style>
+<link rel="stylesheet" href="/style.css">
+<script src="/script.js" defer></script>
+
+<!--<iframe-->
+<!--        width="560" height="315"-->
+<!--        src="https://www.youtube.com/embed/_8V5o2UHG0E" frameborder="0"-->
+<!--        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
+<!--        allowfullscreen>-->
+
+<!--</iframe>-->
+
+
+<body class="background">
+<!--  <h1> Experiment </h1>-->
+
+<div class="father">
+  <svg width="600" height="500"></svg>
+  <div class="ansBox">
+    <!--    <input type="text">-->
+    <table>
+      <tr>
+        <th><input type="text" class="ansInput" placeholder="your answer here"></th>
+        <th><input class="bar_h" type="button" id="ansSubmit" value="Next" onclick="recordAns(this)"></th>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="description">
+  <div class="dscpText">
+    What do you think is the percentage of LENGTH of Bar 3 to Bar 4?
+  </div>
+  <div class="dscpText">
+    Please input the answer into the answer box above.
+  </div>
+  <div class="dscpText">
+    For example, if you think the LENGTH of Bar 3 is 50% of Bar 4, please input 50.
+  </div>
+</div>
+</body>
+
+<!--This is a example from https://www.youtube.com/watch?v=_8V5o2UHG0E&t=33209s
+I modified this code and added some new things-->
+
+<script>
+
+
+
+  console.log(d3); // test if d3 is loaded
+  const svg = d3.select('svg')
+  const width = +svg.attr('width')
+  const height = +svg.attr('height')
+
+
+  console.log(innerWidth)
+
+  const barChart = data =>{
+
+    const xValue = d=> d.Value;
+
+    const yValue = d=> d.Group;
+
+
+
+    ///// random variable generation
+
+    var random_group = [1, 2, 3, 4, 5, 6, 7, 8];
+    // shuffle the list
+    const shuffledArray = random_group.sort((a, b) => 0.5 - Math.random());
+    console.log(random_group)
+    // select two random number
+    while( random_group.length > 2 ) {
+      console.log( random_group.pop() );
+    }
+    console.log(random_group)
+
+    console.log(random_group[0])
+    const colorLable = d=>{
+      if(parseInt(d) === 3 || parseInt(d) === 4){
+        return 'red'
+      }
+      else return 'black'
+    }
+    /////
+
+
+
+
+    const margin = {top: 50, left: 50, bottom: 50, right: 50};
+
+    // define inner width  and height
+    const innerWidth = width-margin.left- margin.right;
+    const innerHeight = height- margin.top- margin.bottom;
+
+    const xScale = d3.scaleLinear()
+            .domain([0, 100])// .domain([0, d3.max(data, d=>d.Value)])
+            .range([0,innerWidth]);
+
+    console.log(xScale.domain());
+
+    const yScale = d3.scaleBand()
+    .domain(data.map(yValue))
+    .range([0, innerHeight])
+    .padding(0.2); // get some gap between bars
+
+
+    ////////////////
+
+
+    const g = svg.append('g')
+            .attr('transform', `translate(${margin.right},${margin.top})`);
+
+
+
+    // y axis
+    const yAxis = g.append('g').call(d3.axisLeft(yScale)).selectAll('text').style('fill', d => colorLable(d));
+    // .selectAll('.domain, .tick line').remove(); // remove the domain and extra lines
+
+    // x axis
+    const xAxis = g.append('g')
+            .call(d3.axisBottom(xScale).ticks(1, "f")) //.tickSize(-innerHeight)
+            .attr('transform', `translate(${0},${innerHeight})`);
+
+    // add x label
+    xAxis.append('text')
+            .attr('y', 60)
+            .attr('x', innerWidth/2)
+            .attr('fill','black')
+            .text('Magnitude')
+
+
+    g.append('text')
+            .attr('y', -30)
+            .attr('x', 100)
+            .text('Bar Chart Horizontal')
+
+
+
+    g.selectAll('rect').data(data)
+    .enter().append('rect')
+            .attr('y', d=>yScale(yValue(d)))
+            .attr('width', d=>xScale(xValue(d)))
+            .attr('height', yScale.bandwidth())
+            .style('fill', '#ffffff');
+    // .style('fill', '#3ba0f7');
+  };
+
+
+  // tick grid line
+
+
+//////////////////////////////////
+
+  d3.csv('index.csv').then(data => {
+    console.log(data)
+    data.forEach(d=>{
+      d.Value = +d.Value; // parse
+    })
+
+    barChart(data)
+  });
+
+  const answer = 10;
+
+</script>

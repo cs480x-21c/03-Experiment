@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+</head>
+<body class="background">
+<div class="father" >
+    <div class="texts">
+        In this experiment,
+    </div>
+    <div class="texts">
+        you are asked to judge
+    </div>
+    <div class="texts">
+        what is the percentage of a smaller value to a larger value in several charts.
+    </div>
+    <div class="texts">
+        We won't record any information from you except your answers.
+    </div>
+    <div class="texts">
+        Click the "Agree" button to begin.
+    </div>
+    <div class="texts">
+        Thank you!
+    </div>
+    <div id="agreeBtn">
+        <input type="button" value="Agree" id="agree">
+    </div>
+
+</div>
+
+</body>
+<script>
+    var agree = document.getElementById("agree")
+    agree.onclick = function(){
+        console.log("agreed")
+        window.location.href="/nextPage"
+    }
+</script>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pie Chart</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js" defer></script>
+</head>
+<body class="background">
+<div class="father" style="text-align: center">
+    <svg width="600" height="500"></svg>
+    <div class="ansBox">
+        <!--    <input type="text">-->
+        <table>
+            <tr>
+                <th><input type="text" class="ansInput" placeholder="your answer here"></th>
+                <th><input class="pie" type="button" id="ansSubmit" value="Next" onclick="recordAns(this)"></th>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="description">
+    <div class="dscpText">
+        What do you think is the percentage of AREA of Slice 5 to Slice 1?
+    </div>
+    <div class="dscpText">
+        Please input the answer into the answer box above.
+    </div>
+    <div class="dscpText">
+        For example, if you think the AREA of Slice 5 is 50% of Slice 1, please input 50.
+    </div>
+</div>
+</body>
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+    <script type="text/javascript">
+        function handleClick(){
+
+            let val = document.getElementById("myVal").value;
+
+            if(isNaN(document.getElementById("myVal").value)){
+                document.writeln("The number you entered is not a number");
+                document.writeln("Please reload the page and try again");
+            }
+            else{
+                document.writeln("Thank you for completing this form");
+                console.log(val);
+            }
+        }
+    </script>
+
+    <!--suppress JSUnresolvedFunction -->
+<script>
+        console.log(d3);
+        var margin = {top: 10, right: 30, bottom: 40, left: 40},
+        width = 300 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
+
+        var data = [39.661742221649845, 29.509233506901, 36.63603606588454, 17.83527414853302,  5.10776627090217,
+                    37.631556434971934, 27.974214164762813,  18.950135599904915];
+
+
+        var svg = d3.select("svg")
+                        // .append("svg")
+                        .data([data])
+                        .attr("width", 600)
+                        .attr("height", 500)
+                        .append("g")
+                        .attr("transform", "translate(" + 300 + "," + 250 + ")")
+                        // .attr("transform", "translate(" + 110 + "," + 110 + ")")
+            // .attr("width", width + margin.left + margin.right)
+            // .attr("height", height + margin.top + margin.bottom)
+
+        var pie = d3.pie()
+
+        var arc = d3.arc()
+                    .innerRadius(0)
+                    .outerRadius(200)
+
+        var arcs = svg.selectAll("arc")
+                    .data(pie(data))
+                    .enter()
+                    .append("g")
+                    .attr("class", "arc")
+                    .style("stroke", "black")
+
+        arcs.append("path")
+            .attr("fill", "white")
+            .attr("d", arc);
+
+        arcs.append("svg:text")
+            .attr("transform", function(d) {
+                d.innerRadius = 0;
+                d.outerRadius = 100;
+                return "translate(" + arc.centroid(d) + ")";
+            })
+            .attr("text-anchor", "middle")
+            .text(function(d, i) { return i + 1 })
+            .style("font-size", "15px");
+
+        // svg.append("text")
+        //         .text("What percentage is slice 5 of slice 1?")
+        //         .attr("transform", "translate(" +  (-100) + "," + (200) + ")")
+
+        console.log(d3.min(data));
+        console.log(d3.max(data));
+
+        console.log(d3.min(data)/d3.max(data));
+    </script>
+<!--<form name="myform" onsubmit="handleClick()">-->
+<!--    <input name="Submit"  type="submit" value="Submit" >-->
+<!--    <input type="text" id="myVal" placeholder="Enter Number Here...">-->
+</form>
+</body>
+</html>

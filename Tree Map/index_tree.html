@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tree Map</title>
+</head>
+<link rel="stylesheet" href="/style.css">
+<script src="/script.js" defer></script>
+<body style="display: block" class="background">
+<div class="father">
+    <svg width="600" height="500"></svg>
+    <div class="ansBox">
+        <!--    <input type="text">-->
+        <table>
+            <tr>
+                <th><input type="text" class="ansInput" placeholder="your answer here"></th>
+                <th><input class="tree" type="button" id="ansSubmit" value="Next" onclick="recordAns(this)"></th>
+<!--                <th><a href="/index_bar_horizontal.html">Contact</a></th>-->
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="description">
+    <div class="dscpText">
+        What do you think is the area of height of RECTANGLE 0 to Rectangle 5?
+    </div>
+    <div class="dscpText">
+        Please input the answer into the answer box above.
+    </div>
+    <div class="dscpText">
+        For example, if you think the area of RECTANGLE 0 is 50% of Rectangle 5, please input 50.
+    </div>
+</div>
+
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script type="text/javascript">
+</script>
+
+
+<script>
+    console.log(d3);
+    var margin = {top: 10, right: 30, bottom: 40, left: 40},
+        width = 300 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
+
+    var svg = d3.select("svg")
+        .attr("width", 600)
+        .attr("height", 500)
+        .append("g")
+        .attr("transform", "translate(" +  150 + "," + 150 + ")")
+        // .attr("transform", "translate(" + 110 + "," + 110 + ")")
+
+    // Read data
+    d3.csv('index1.csv', function(data) {
+
+        // stratify the data: reformatting for d3.js
+        var root = d3.stratify()
+            .id(function(d) { return d.name; })
+            .parentId(function(d) { return d.parent; })
+            (data);
+        root.sum(function(d) { return +d.value })
+
+        d3.treemap()
+            .size([width, height])
+            .padding(0)
+            (root)
+
+        console.log(root.leaves())
+
+        // now add the rectangles corresponding
+        svg
+            .selectAll("rect")
+            .data(root.leaves())
+            .enter()
+            .append("rect")
+            .attr('x', function (d) { return d.x0+20; })
+            .attr('y', function (d) { return d.y0-30; })
+            .attr('width', function (d) { return (d.x1 - d.x0); })
+            .attr('height', function (d) { return (d.y1 - d.y0); })
+            .style("stroke", "black")
+            .style("fill", "white");
+
+        // and to add the text labels
+        svg
+            .selectAll("text")
+            .data(root.leaves())
+            .enter()
+            .append("text")
+            .attr("x", function(d){ return (d.x0+30)})
+            .attr("y", function(d){ return (d.y0)})
+            .text(function(d, i){ return i })
+            .attr("font-size", "15px")
+            .attr("fill", "black")
+
+        // svg.append("text")
+        //     .text("What percentage is rectangle 3 of rectangle 4?")
+        // .attr("transform", "translate(" +  -40 + "," + (275) + ")")
+    })
+
+
+
+
+
+
+</script>
+<!--<form name="myform" onsubmit="handleClick()">-->
+<!--    <input name="Submit"  type="submit" value="Submit" >-->
+<!--    <input type="text" id="myVal" placeholder="Enter Number Here...">-->
+<!--</form>-->
+</body>
+</html>

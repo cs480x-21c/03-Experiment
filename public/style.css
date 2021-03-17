@@ -1,0 +1,120 @@
+.background {
+    /* The image used */
+    background-image: url("parallax.png");
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.father{
+    width:600px;
+    height:500px;
+    background-color: dodgerblue;
+    font-family: "Lato", sans-serif;
+    color: white;
+    font-weight: bold;
+    margin: auto;
+    position: relative;
+    top: 20px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.thankyoumsg{
+    font-size: 40px;
+}
+.description{
+    width: 700px;
+    height: 200px;
+    font-family: Lato, sans-serif;
+    color: white;
+    margin: auto;
+    position: fixed;
+    top: 76%;
+    left: 27%;
+    text-align: center;
+    font-size: 20px;
+    /*right: auto;*/
+}
+
+/*body{*/
+/*    background-color: red;*/
+/*}*/
+.texts{
+    /*width:200px;*/
+    /*height:200px;*/
+    /*position:absolute;*/
+    /*top:50%;*/
+    /*left:50%;*/
+    /*margin-top:-100px;*/
+    /*margin-left:-100px;*/
+    /*background-color:black;*/
+    text-align: center;
+    padding-top: 40px;
+}
+
+.ansBox{
+    width: 600px;
+    height: 50px;
+    background-color: burlywood;
+    margin: auto;
+    position: relative;
+    /*top: 50px;*/
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.dscpText{
+    padding-top: 10px;
+}
+
+#agreeBtn{
+    position: absolute;
+    right: 20px;
+    bottom: 50px;
+}
+
+table, table td, table th{
+    margin: 0 auto;
+}
+input{
+    height: 40px;
+    width: 200px;
+    font-size: 20px;
+    border-radius: 4px;
+}
+#ansSubmit{
+    width: 60px;
+}
+
+
+/*.title {*/
+/*    font-size: 3.7em;*/
+/*    fill: #206cc9;*/
+/*}*/
+
+
+.axis-label {
+    font-size: 3em;
+    fill: #206cc9;
+}
+
+/*text {*/
+/*    font-size: 6em;*/
+/*    font-family: sans-serif;*/
+/*}*/
+
+.tick text {
+    font-size: 3em;
+    fill: #211821;
+}
+
+.tick line {
+    stroke: #211821;
+}
+
