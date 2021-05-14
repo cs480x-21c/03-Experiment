@@ -2,7 +2,7 @@
 
 N'yoma Diamond, Felix Chen, Luke Gebler
 
-Github Pages/Survey Link: [https://nyoma-diamond.github.io/03-Experiment/](https://nyoma-diamond.github.io/03-Experiment/)
+Github Pages/Survey Link: [https://nyoma-diamond.github.io/CS4802-03-Experiment/](https://nyoma-diamond.github.io/CS4802-03-Experiment/)
 
 ## Experiment
 
