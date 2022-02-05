@@ -1,13 +1,38 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
-
-
-<style>
-</style>
-
+<head>
+	<link rel="stylesheet" type="text/css" href="css/style.css?version=1"/>
+</head>
 <body>
-  <h1> Experiment </h1>
+	<h1 id='questionNum' class = "center">CS 4802 Survey</h1>
+	<div id='explanation' margin='auto' class = "center">
+		<header>
+		This is a study-style survey for an assignment for CS 4802. <br>
+		In this survey you will be asked to estimate the relative sizes of parts of various figures. <br>
+		There will be 60 questions: 20 with pie charts, 20 with boxplots, and 20 with barcharts. <br>
+		The survey should take at most 15 minutes to complete. <br>
+		Click the Start button to begin.
+		</header>
+	</div>
+	<div class = "center">
+
+  	<div id='plot'></div>
+  	<header id='message'></header>
+	
+
+	<button id='START' onclick='startTest()'>Start</button>
+
+  	<input id='INPUT' style="display:none" type='number' min='0.01' max='0.99' step='0.01'>
+  	<button id='SUBMIT' style="display:none" onclick='submit()'>Submit</button>
+  	<div id='error' style='color:red'></div>
+  	<form style="display:none" id="fs-frm" name="simple-contact-form" accept-charset="utf-8" action="https://formspree.io/f/mgepbqny" method="post">
+		<textarea id="testdata" style="display:none;" name="data"  required=""></textarea>
+		<input type="submit" value="Finish Survey" onclick='finish()'>
+	</form>
+	</div>
 </body>
 
-<script>
-  console.log(d3); // test if d3 is loaded
-</script>
+
+<script src="./js/boxplots.js"></script>
+<script src="./js/barchart.js"></script>
+<script src="./js/piechart.js"></script>
+<script src='./js/testing.js'></script>
