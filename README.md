@@ -1,6 +1,6 @@
 # Assignment 3 - Replicating a Classic Experiment  
 
-[Experiment Hosted on GitHub Pages](https://jalovering.github.io/03-Experiment/)
+[Experiment Hosted on GitHub Pages](https://jalovering.github.io/datavis_course_a3_experiment/)
 
 # Experiment Description
 The hypothesis being tested in this experiment was that adding categorical coloring to a bar chart would improve the accuracy of predicting bar height. Participants were asked to predict the percentage of a smaller bar to that of a larger bar in various charts. The three color palettes chosen to conduct this experiment were:
