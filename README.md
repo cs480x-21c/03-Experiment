@@ -1,6 +1,8 @@
 Assignment 3 - Replicating a Classic Experiment  
 ===
 
+https://robch.io/03-Experiment/
+
 For the scope of this project, assume the role of a scientist who runs experiments for a living.
 
 Q: How do we know that bar charts are "better" than pie charts?  
