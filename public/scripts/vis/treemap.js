@@ -6,9 +6,7 @@ class TreeMap extends Chart {
     draw() {
         super.draw();
 
-        this.root = d3.hierarchy({"children": this.data})
-            .sum(d => d)
-            .sort((a, b) => b.value - a.value);
+        this.root = d3.hierarchy({"children": this.data}).sum(d => d);
 
         d3.treemap()
             .size([this.width, this.height])

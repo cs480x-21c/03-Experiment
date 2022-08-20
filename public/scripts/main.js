@@ -76,7 +76,8 @@ function nextButton() {
     chart.clear();
 
     if (currentTrial >= numTrials) {
-        window.location.href="/done";
+        //window.location.href="/done";
+        return;
     } else {
         currentTrial++;
         document.getElementById("trial-tracker").innerHTML = currentTrial + " / " + numTrials;
