@@ -2,6 +2,7 @@ let chart;
 var numTrials = 60;
 var currentTrial = 1;
 var username = "ID_" + getTime();
+var visList = [];
 
 function main() {
     
@@ -13,7 +14,26 @@ function startSurvey() {
         return;
     }
 
+    for (var i = 0; i < numTrials / 3; i++) {
+        visList.push("bar");
+    }
 
+    for (var i = 0; i < numTrials / 3; i++) {
+        visList.push("pie");
+    }
+
+    for (var i = 0; i < numTrials / 3; i++) {
+        visList.push("treemap");
+    }
+
+    shuffle(visList);
+}
+
+function shuffle(list) {
+    for (let i = list.length-1; i > 0; --i) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [list[i], list[j]] = [list[j], list[i]];
+    }
 }
 
 function makeChart() {
@@ -27,7 +47,20 @@ function makeChart() {
         .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    chart = new TreeMap(svg, {width: width, height: height, margin: margin});
+    let params = {width: width, height: height, margin: margin};
+
+    switch (visList[currentTrial - 1]) {
+        case "bar":
+            chart = new BarChart(svg, params);
+            break;
+        case "pie":
+            chart = new PieChart(svg, params);
+            break;
+        case "treemap":
+            chart = new TreeMap(svg, params);
+            break;
+    }
+
     chart.draw();
 }
 
@@ -37,7 +70,7 @@ function nextButton() {
     let error = Math.log2(Math.abs(guess - actual) + (1/8));
     console.log("guess: " + guess + " actual: " + actual + " error: " + error);
 
-    postResults(guess, actual, error);
+    postResults(guess, actual, error, visList[currentTrial - 1]);
 
     document.getElementById("answer").value = "";
     chart.clear();
@@ -52,11 +85,11 @@ function nextButton() {
     }
 }
 
-function postResults(guess, actual, error) {
+function postResults(guess, actual, error, vis) {
     data = {
         id: username,
         trial: currentTrial,
-        vis: "bar",
+        vis: vis,
         guess: guess,
         actual: actual,
         error: error
