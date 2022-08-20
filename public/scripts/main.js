@@ -8,8 +8,12 @@ function main() {
 }
 
 function startSurvey() {
-    username = document.getElementById("username").value;
-    window.location.href = "/survey";
+    if (numTrials % 3 != 0) {
+        alert("Number of trials must be a multiple of 3");
+        return;
+    }
+
+
 }
 
 function makeChart() {
@@ -23,7 +27,7 @@ function makeChart() {
         .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    chart = new PieChart(svg, {width: width, height: height, margin: margin});
+    chart = new TreeMap(svg, {width: width, height: height, margin: margin});
     chart.draw();
 }
 
