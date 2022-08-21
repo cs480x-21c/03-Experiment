@@ -72,23 +72,27 @@ function nextButton() {
     let error = Math.log2(Math.abs(guess - actual) + (1/8));
     console.log("guess: " + guess + " actual: " + actual + " error: " + error);
 
-    postResults(guess, actual, error, visList[currentTrial - 1]);
-
     document.getElementById("answer").value = "";
     chart.clear();
 
-    if (currentTrial >= numTrials) {
-        //window.location.href="/done";
-        return;
-    } else {
-        currentTrial++;
-        document.getElementById("trial-tracker").innerHTML = currentTrial + " / " + numTrials;
+    currentTrial++;
+    document.getElementById("trial-tracker").innerHTML = Math.min(currentTrial, numTrials) + " / " + numTrials;
 
+    postResults(guess, actual, error, visList[currentTrial - 1]).then(res => {
+        if (currentTrial > numTrials) {
+            window.location.href="/done";
+            return;
+        }
+    }).catch(err => {
+        console.log(err);
+    });
+
+    if (currentTrial <= numTrials) {
         makeChart();
     }
 }
 
-function postResults(guess, actual, error, vis) {
+async function postResults(guess, actual, error, vis) {
     data = {
         id: username,
         trial: currentTrial,
@@ -98,15 +102,16 @@ function postResults(guess, actual, error, vis) {
         error: error
     }
 
-    console.log(data);
-    fetch("/submit", {
+    //console.log(data);
+    let res = await fetch("/submit", {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
         method: "POST",
         body: JSON.stringify(data)
-    }).then (function(response) {
-        console.debug(response);
     });
+
+    console.debug(res);
+    return res;
 }
