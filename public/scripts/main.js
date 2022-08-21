@@ -37,9 +37,11 @@ function shuffle(list) {
 }
 
 function makeChart() {
-    let width = 640;
-    let height = 480;
     let margin = {top: 20, right: 20, bottom: 20, left: 20};
+    //let width = Math.min(640, Math.floor(document.getElementById("canvas").width) - margin.left - margin.right);
+    let width = 640;
+    //let height = Math.min(480, Math.floor((width/4)*3) - margin.top - margin.bottom);
+    let height = 480;
 
     let svg = d3.select("#chart")
         .attr("width", width + margin.left + margin.right)
