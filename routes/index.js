@@ -3,19 +3,17 @@ var router = express.Router();
 
 var fs = require("fs");
 
-var title = "Cleveland-McGill Experiment";
-
 /* GET home page. */
 router.get("/", function(req, res, next) {
-    res.render("index", { title: title });
+    res.render("index");
 });
 
 router.get("/survey", function(req, res, next) {
-    res.render("survey", { title: title, numTrials: 60, currentTrial: 1 });
+    res.render("survey", { numTrials: 60, currentTrial: 1 });
 });
 
 router.get("/done", function(req, res, next) {
-    res.render("done", { title: title });
+    res.render("done");
 });
 
 router.post("/submit", function(req, res, next) {
