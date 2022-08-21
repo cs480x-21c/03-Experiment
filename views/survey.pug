@@ -16,9 +16,9 @@ block content
         div(class="section" id="form")
             form(onsubmit="nextButton(); return false;") 
                 div(class="row")
-                    div(class="col s4 offset-s3")
-                        input(type="number" min="0" max="100" step="1" name="answer" id="answer" class="validate" required)
-                        label(for="percentage") Percentage (0-100)
+                    div(class="col s12 offset-m2 m6 offset-l3 l4")
+                        input(type="number" min="0" max="100" step="1" id="answer" class="validate" placeholder="Percentage (0-100)" required)
+                        //- label(for="percentage") Percentage (0-100)
                         //- input(type="range" min="0" max="100" step="1" name="percentage")
-                    div(class="col s2")
-                        button(type="submit", class="btn-large right" id="next-button") Next
+                    div(class="col s12 m2 l2")
+                        button(type="submit", class="btn btn-wide" id="next-button") Next
