@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    script startSurvey();
+    div(class="container")
+        div(class="section center-align")
+            script. 
+                numTrials = !{numTrials};
+                currentTrial = !{currentTrial};
+            p(id="trial-tracker") #{currentTrial} / #{numTrials}
+        div(class="section center" id="canvas")
+            svg(id="chart" onload="makeChart()")
+        div(class="section center-align" id="instructions")
+            p Two of the data points shown above are marked with a black dot.
+            p One of these marked data points is larger than the other.
+            p What percentage do you think the smaller value is of the larger value?
+        div(class="section" id="form")
+            form(onsubmit="nextButton(); return false;") 
+                div(class="row")
+                    div(class="col s12 offset-m2 m6 offset-l3 l4")
+                        input(type="number" min="0" max="100" step="1" id="answer" class="validate" placeholder="Percentage (0-100)" required)
+                        //- label(for="percentage") Percentage (0-100)
+                        //- input(type="range" min="0" max="100" step="1" name="percentage")
+                    div(class="col s12 m2 l2")
+                        button(type="submit", class="btn btn-wide" id="next-button") Next

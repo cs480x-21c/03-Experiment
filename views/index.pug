@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    include partials/header.pug
+    div(class="container")
+        div(class="section center-align")
+            p Welcome to #{title}
+            a(href="/survey")
+                button(class="btn waves-effect waves-light") Start

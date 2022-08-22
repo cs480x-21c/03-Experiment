@@ -1,0 +1,19 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "semi": ["warn", "always"],
+        "quotes": ["warn", "double"],
+        "indent": ["warn", "tab", { "SwitchCase": 1 }]
+    }
+}
