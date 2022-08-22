@@ -69,7 +69,10 @@ function makeChart() {
 function nextButton() {
     let guess = document.getElementById("answer").valueAsNumber;
     let actual = chart.percentage;
-    let error = Math.log2(Math.abs(guess - actual) + (1/8));
+    let error = Math.log2(Math.abs(guess - actual) + (1/8)); // TODO: make this server-side? calculate later?
+    if (error == -3) {
+        error = 0;
+    }
     console.log("guess: " + guess + " actual: " + actual + " error: " + error);
 
     document.getElementById("answer").value = "";
@@ -78,7 +81,7 @@ function nextButton() {
     currentTrial++;
     document.getElementById("trial-tracker").innerHTML = Math.min(currentTrial, numTrials) + " / " + numTrials;
 
-    postResults(guess, actual, error, visList[currentTrial - 1]).then(res => {
+    postResults(guess, actual, error, visList[currentTrial - 2]).then(res => {
         if (currentTrial > numTrials) {
             window.location.href="/done";
             return;
