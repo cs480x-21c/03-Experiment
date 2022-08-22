@@ -81,7 +81,7 @@ function nextButton() {
     currentTrial++;
     document.getElementById("trial-tracker").innerHTML = Math.min(currentTrial, numTrials) + " / " + numTrials;
 
-    postResults(guess, actual, error, visList[currentTrial - 2]).then(res => {
+    postResults(currentTrial-1, guess, actual, error, visList[currentTrial - 2]).then(res => {
         if (currentTrial > numTrials) {
             window.location.href="/done";
             return;
@@ -95,10 +95,10 @@ function nextButton() {
     }
 }
 
-async function postResults(guess, actual, error, vis) {
+async function postResults(trial, guess, actual, error, vis) {
     data = {
         id: username,
-        trial: currentTrial,
+        trial: trial,
         vis: vis,
         guess: guess,
         actual: actual,
